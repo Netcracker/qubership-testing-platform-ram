@@ -1,0 +1,270 @@
+<html dir="ltr"><head>
+<style>
+<!--
+.Investigation
+	{background-color:#836FFF}
+.Error
+	{background-color:#836FFF}
+.Environment
+	{background-color:#F4A460}
+.EnvironmentIssue
+	{background-color:#F4A460}
+.AT
+	{background-color:#87CEFA}
+.Performance
+	{background-color:#FFFF00}
+.Design
+	{background-color:#32CD32}
+.Solution
+	{background-color:#FF0000}
+-->
+</style><style>
+<!--
+.product_row
+	{display:block}
+-->
+</style>
+<style type="text/css" id="owaParaStyle"></style><style type="text/css" id="owaTempEditStyle"></style></head>
+<body fpstyle="1" ocsi="1">
+
+<h3><b><a href='${RAM_ER_LINK}'>${RAM_ER_NAME}</a></b><br></h3>
+<h3><span style="font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Summary</span> </h3>
+<div style="border:solid; border-width:1px; border-color:#474747">
+<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100.0%; background:#F6FFF2">
+<tbody>
+<tr style="background:#E3FFE6">
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Execution Status:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;"><span id="fullExecStatus" style="font-size:12px; border:1px solid black; background:#71FF35; color:black; display:inline-block; font-size:12px">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&nbsp;&zwnj;&nbsp;</span>&nbsp;Finished
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Start Time:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">09/23/2018 22:02:55 (+04:00)
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Scenarios:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">25
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Actions:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">650
+</span></p>
+</td>
+</tr>
+<tr style="">
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Server:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;"><a href="redir.aspx?C=ZCR3G1RrcyVU4bp-Cz7bLgSwKslGIFAyYNIduzTqvjoHeHFf_SHWCA..&amp;URL=http%3a%2f%2fexample.com" target="_blank" rel="noopener noreferrer">http://example.com</a>
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">End time:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">09/24/2018 03:39:20 (+04:00)
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Scenarios passed:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">0
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Actions passed:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">345
+</span></p>
+</td>
+</tr>
+<tr style="background:#E3FFE6">
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Build:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">32_10.2.1.Project.PerfPM_CD19_rev3864
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Duration:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">5:36:25
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Scenarios failed:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">25
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Actions failed:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">305
+</span></p>
+</td>
+</tr>
+<tr style="">
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Browser:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;"></span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Threads:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">1
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Scenarios with warnings:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">0
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Actions with warnings:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">0
+</span></p>
+</td>
+</tr>
+<tr style="background:#E3FFE6">
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Scenario's failed rate:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">(25/25)*100= 100.0 %
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Scenario's passed rate:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">(0/25)*100= 0.0 %
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Scenario's with errors:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">0
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Actions with errors:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">305
+</span></p>
+</td>
+</tr>
+<tr style="">
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Scenario error's rate:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">(0/25)*100= 0.0 %
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Scenario warning's rate:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">(0/25)*100= 0.0 %
+</span></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm; min-width:50px"></td>
+<td style="padding:0cm 0cm 0cm 0cm; min-width:50px"></td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><b><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Actions failed rate:</span>
+</b></p>
+</td>
+<td style="padding:0cm 0cm 0cm 0cm">
+<p class="MsoNormal"><span style="font-size:7.5pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">46%
+</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3><span style="font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Scenarios</span> </h3>
+<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="100%" style="width:100.0%; background:#F6FFF2; border:outset black 1.0pt">
+<tbody>
+<tr style="">
+<td style="border:inset black 1.0pt; padding:1.5pt 1.5pt 1.5pt 1.5pt">
+<p class="MsoNormal"><b><span style="font-size:9.0pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Status</span></b>
+</p>
+</td>
+<td style="border:inset black 1.0pt; padding:1.5pt 1.5pt 1.5pt 1.5pt">
+<p class="MsoNormal"><b><span style="font-size:9.0pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Scenario</span></b>
+</p>
+</td>
+<td style="border:inset black 1.0pt; padding:1.5pt 1.5pt 1.5pt 1.5pt">
+<p class="MsoNormal"><b><span style="font-size:9.0pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Time</span></b>
+</p>
+</td>
+<td style="border:inset black 1.0pt; padding:1.5pt 1.5pt 1.5pt 1.5pt">
+<p class="MsoNormal"><b><span style="font-size:9.0pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Causes</span></b>
+</p>
+</td>
+<td style="border:inset black 1.0pt; padding:1.5pt 1.5pt 1.5pt 1.5pt">
+<p class="MsoNormal"><b><span style="font-size:9.0pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Failed Steps</span></b>
+</p>
+</td>
+<td style="border:inset black 1.0pt; padding:1.5pt 1.5pt 1.5pt 1.5pt">
+<p class="MsoNormal"><b><span style="font-size:9.0pt; font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Additional Information</span></b>
+</p>
+</td>
+</tr>
+${TEST_RUNS_ROWS}
+</tbody>
+</table>
+
+
+</body></html>

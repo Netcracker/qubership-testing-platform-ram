@@ -1,0 +1,246 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: akb-records-controller
+    description: Akb Records Controller
+paths:
+  /api/akbRecords:
+    get:
+      tags:
+        - akb-records-controller
+      summary: getAll
+      operationId: getAll
+      parameters:
+        - name: withRootCauseName
+          in: query
+          description: withRootCauseName
+          required: false
+          style: form
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AkbRecord'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/akbRecords/create:
+    post:
+      tags:
+        - akb-records-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AkbRecord'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AkbRecord'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/akbRecords/delete/{uuid}':
+    delete:
+      tags:
+        - akb-records-controller
+      summary: delete
+      operationId: delete
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/api/akbRecords/project/{projectUuid}':
+    get:
+      tags:
+        - akb-records-controller
+      summary: getRecordsByProjectUuid
+      operationId: getRecordsByProjectUuid
+      parameters:
+        - name: projectUuid
+          in: path
+          description: projectUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: withRootCauseName
+          in: query
+          description: withRootCauseName
+          required: false
+          style: form
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AkbRecord'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/akbRecords/save:
+    put:
+      tags:
+        - akb-records-controller
+      summary: save
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AkbRecord'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AkbRecord'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/akbRecords/{recordUuid}':
+    get:
+      tags:
+        - akb-records-controller
+      summary: getByUuid
+      operationId: getByUuid
+      parameters:
+        - name: recordUuid
+          in: path
+          description: recordUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AkbRecord'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    AkbContext:
+      title: AkbContext
+      type: object
+      properties:
+        testCasesName:
+          type: array
+          items:
+            type: string
+        testPlansId:
+          type: array
+          items:
+            type: string
+            format: uuid
+    RootCauseType:
+      type: string
+      enum:
+        - ATP_MAINTENCE
+        - AT_ISSUE
+        - DESIGN_CHANGE
+        - ENVIROMENT_ISSUE
+        - ERROR_IN_CONFIGURATION
+        - INVESTIGATION_NEEDED
+        - NETWORK_ISSUE
+        - NOT_ANALYZED
+        - PERFOMANCE_ISSUE
+        - SOLUTION_ISSUE
+        - TEST_DATA_ISSUE
+    MaskCondition:
+      type: string
+      enum:
+        - AND
+        - OR
+    AkbRecord:
+      title: AkbRecord
+      type: object
+      properties:
+        akbContext:
+          $ref: '#/components/schemas/AkbContext'
+        comments:
+          type: string
+        defaultRootCauseType:
+          $ref: '#/components/schemas/RootCauseType'
+        defectId:
+          type: string
+          format: uuid
+        maskCondition:
+          $ref: '#/components/schemas/MaskCondition'
+        messageRegularExpression:
+          type: string
+        name:
+          type: string
+        nameRegularExpression:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        rootCauseId:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid

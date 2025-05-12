@@ -1,0 +1,215 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: "1.0"
+  contact:
+    name: OurCompany
+    url: https://www.ourcompany.com/company/about-ourcompany/contact-us.html
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: system-category-controller
+    description: System Category Controller
+paths:
+  /api/system-categories:
+    get:
+      tags:
+        - system-category-controller
+      summary: getAll
+      operationId: getAllSystemCategories
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SystemCategory'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - system-category-controller
+      summary: update
+      operationId: updateSystemCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemCategoryImpl'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/SystemCategory'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - system-category-controller
+      summary: create
+      operationId: createSystemCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemCategoryImpl'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/SystemCategory'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/system-categories/short:
+    get:
+      tags:
+        - system-category-controller
+      summary: 'Getting system categories in abbreviated form :{id:"",name:""}'
+      operationId: getShortAll
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SystemCategoryNameView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/system-categories/{systemCategoryId}':
+    get:
+      tags:
+        - system-category-controller
+      summary: get
+      operationId: getSystemCategory
+      parameters:
+        - name: systemCategoryId
+          in: path
+          description: systemCategoryId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/SystemCategory'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - system-category-controller
+      summary: delete
+      operationId: deleteCategory
+      parameters:
+        - name: systemCategoryId
+          in: path
+          description: systemCategoryId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+components:
+  schemas:
+    SystemCategory:
+      title: SystemCategory
+      type: object
+      properties:
+        created:
+          type: integer
+          format: int64
+        createdBy:
+          type: string
+          format: uuid
+        description:
+          type: string
+        id:
+          type: string
+          format: uuid
+        modified:
+          type: integer
+          format: int64
+        modifiedBy:
+          type: string
+          format: uuid
+        name:
+          type: string
+    SystemCategoryImpl:
+      title: SystemCategoryImpl
+      type: object
+      properties:
+        created:
+          type: integer
+          format: int64
+        createdBy:
+          type: string
+          format: uuid
+        description:
+          type: string
+        id:
+          type: string
+          format: uuid
+        modified:
+          type: integer
+          format: int64
+        modifiedBy:
+          type: string
+          format: uuid
+        name:
+          type: string
+    SystemCategoryNameView:
+      title: SystemCategoryNameView
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string

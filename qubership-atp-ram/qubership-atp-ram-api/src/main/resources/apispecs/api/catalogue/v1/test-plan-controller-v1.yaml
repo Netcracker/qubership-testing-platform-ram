@@ -1,0 +1,1988 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: test-plan-controller
+    description: Test Plan Controller
+paths:
+  /catalog/api/v1/testplans:
+    get:
+      tags:
+        - test-plan-controller
+      summary: getAll
+      operationId: getAll
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestPlanResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - test-plan-controller
+      summary: update
+      operationId: update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestPlan'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - test-plan-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestPlan'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/TestPlanResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    patch:
+      tags:
+        - test-plan-controller
+      summary: patch
+      operationId: patch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/TestPlan'
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /catalog/api/v1/testplans/bulk:
+    put:
+      tags:
+        - test-plan-controller
+      summary: bulkUpdate
+      operationId: bulkUpdate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/TestPlan'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestPlanResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/testplans/clone:
+    post:
+      tags:
+        - test-plan-controller
+      summary: cloneTestPlan
+      operationId: cloneTestPlan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneTestPlanRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/testplans/patch:
+    put:
+      tags:
+        - test-plan-controller
+      summary: patchUpdate
+      operationId: patchUpdate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestPlan'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/testplans/update-qa-dsl:
+    put:
+      tags:
+        - test-plan-controller
+      summary: updateQaDslLibraryField
+      operationId: updateQaDslLibraryField
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestPlan'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{uuid}':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getTestPlanByUuid
+      operationId: getTestPlanByUuid
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/TestPlanDto'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - test-plan-controller
+      summary: delete
+      operationId: delete
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/catalog/api/v1/testplans/{uuid}/compound_from_ts':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getAllCompoundsMadeFromTestScenario
+      operationId: getAllCompoundsMadeFromTestScenario
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestScenario'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{uuid}/compounds':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getAllCompoundsByTestPlan
+      operationId: getAllCompoundsByTestPlan
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Compound'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{uuid}/compounds/compound_from_ts':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getAllCompoundsAndScenarioCompounds
+      operationId: getAllCompoundsAndScenarioCompounds
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AbstractTestScenario'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{uuid}/dslDependencies':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getDslDependencies
+      operationId: getDslDependencies
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DslDependencyNode'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{testPlanId}/dslMappings':
+    post:
+      tags:
+        - test-plan-controller
+      summary: getDslMappings
+      operationId: getDslMappings
+      parameters:
+        - name: testPlanId
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestPlanDslMappingsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/TestPlanDslMappingsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{uuid}/enriched':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getEntitiesForCopyByTestPlan
+      operationId: getEntitiesForCopyByTestPlan
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/TestPlanEntitiesResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{uuid}/labels':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getLabelsByTestPlanId
+      operationId: getLabelsByTestPlanId
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Label'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{uuid}/logcollectorconditions':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getLogCollectorConditionByTestPlan
+      operationId: getLogCollectorConditionByTestPlan
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogCollectorCondition'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{uuid}/qadsllibrary':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getTestPlanQaDslLibrary
+      operationId: getTestPlanQaDslLibrary
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/QaDslLibrary'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{uuid}/testcasegroups':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getTestCaseGroupedByTestPlanId
+      operationId: getTestCaseGroupedByTestPlanId
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestCaseGroup'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{uuid}/testcasegroups/short':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getAllNameByTestPlanId
+      operationId: getAllNameByTestPlanId
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestCaseGroup'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{uuid}/testcases':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getTestCasesByTestPlanId
+      operationId: getTestCasesByTestPlanId
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestCase'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{uuid}/testscopes':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getTestScopesByTestPlanId
+      operationId: getTestScopesByTestPlanId
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestScope'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testplans/{uuid}/testscopes/enriched':
+    get:
+      tags:
+        - test-plan-controller
+      summary: getTestScopesFullInfoByTestPlanUuid
+      operationId: getTestScopesFullInfoByTestPlanUuid
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestScopeFullInfo'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/testplans/compare:
+    post:
+      tags:
+        - test-plan-controller
+      summary: compareTestPlans
+      operationId: compareTestPlans
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompareTestPlansRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/CompareTestPlansResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/testplans/qadsllibraries/compare:
+    post:
+      tags:
+        - test-plan-controller
+      summary: compareTestPlanQaDsl
+      operationId: compareTestPlanQaDsl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompareTestPlansRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/CompareTestPlanQaDslResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    AbstractEntityResponse:
+      title: AbstractEntityResponse
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    AbstractTestScenario:
+      title: AbstractTestScenario
+      type: object
+      properties:
+        createdBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        createdWhen:
+          type: string
+          format: date-time
+        description:
+          type: string
+        metainfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetaInfo'
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - COMPOUND
+            - TESTSCENARIO
+        uuid:
+          type: string
+          format: uuid
+    ActionParameter:
+      title: ActionParameter
+      type: object
+      properties:
+        complexParam:
+          $ref: '#/components/schemas/ComplexActionParameter'
+        name:
+          type: string
+        prefix:
+          type: string
+        value:
+          type: string
+    BugTrackingSystemSynchronization:
+      title: BugTrackingSystemSynchronization
+      type: object
+      properties:
+        authorizationKey:
+          type: string
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/JiraComponent'
+        defaultTestCaseMapping:
+          type: string
+          enum:
+            - E2E
+            - TEST_CASE
+        projectKey:
+          type: string
+        projectName:
+          type: string
+        synchronizationType:
+          type: string
+          enum:
+            - AUTOMATIC
+            - MANUAL
+        systemType:
+          type: string
+          enum:
+            - JIRA
+        systemUrl:
+          type: string
+    BugTrackingSystemSynchronizationDto:
+      title: BugTrackingSystemSynchronizationDto
+      type: object
+      properties:
+        authorizationKey:
+          type: string
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/JiraComponent'
+        defaultTestCaseMapping:
+          type: string
+          enum:
+            - E2E
+            - TEST_CASE
+        projectKey:
+          type: string
+        projectName:
+          type: string
+        synchronizationType:
+          type: string
+          enum:
+            - AUTOMATIC
+            - MANUAL
+        systemType:
+          type: string
+          enum:
+            - JIRA
+        systemUrl:
+          type: string
+    CloneTestPlanRequest:
+      title: CloneTestPlanRequest
+      required:
+        - projectUuid
+        - testPlanId
+      type: object
+      properties:
+        dataSetListIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+        newDataSetStorageName:
+          type: string
+        newName:
+          type: string
+        newQaDslName:
+          type: string
+        projectUuid:
+          type: string
+          format: uuid
+        testCaseOutOfScopeIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+        testPlanId:
+          type: string
+          format: uuid
+        testScenarioOutOfCaseIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+        testScopeIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+        updateReferences:
+          type: boolean
+        postfix:
+          type: string
+        setPostfix:
+          type: boolean
+    ComplexActionParameter:
+      title: ComplexActionParameter
+      type: object
+      properties:
+        arrayParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameter'
+        mapParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/MapActionParameter'
+        type:
+          type: string
+          enum:
+            - ARRAY
+            - MAP
+    Compound:
+      title: Compound
+      type: object
+      properties:
+        comment:
+          type: string
+        createdBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        createdWhen:
+          type: string
+          format: date-time
+        deprecated:
+          type: boolean
+        description:
+          type: string
+        metainfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetaInfo'
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameter'
+        projectUuid:
+          type: string
+          format: uuid
+        qaDslLibraryId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - COMPOUND
+            - TESTSCENARIO
+        uuid:
+          type: string
+          format: uuid
+    DslDependencyNode:
+      title: DslDependencyNode
+      type: object
+      properties:
+        dependencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/DslDependencyNode'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    JiraComponent:
+      title: JiraComponent
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Label:
+      title: Label
+      type: object
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        testPlanId:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+    LogCollectorCondition:
+      title: LogCollectorCondition
+      type: object
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        resultJsonPath:
+          type: string
+        searchCondition:
+          type: string
+        searchPath:
+          type: string
+        testPlanId:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+    MapActionParameter:
+      title: MapActionParameter
+      type: object
+      properties:
+        paramKey:
+          $ref: '#/components/schemas/ActionParameter'
+        paramValue:
+          $ref: '#/components/schemas/ActionParameter'
+    MetaInfo:
+      title: MetaInfo
+      type: object
+      properties:
+        otherTextValue:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameter'
+        stepId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - ACTION
+            - COMPOUND
+            - DIRECTIVE
+            - FLAG
+            - OTHER
+    ObjectOperation:
+      title: ObjectOperation
+      type: object
+      properties:
+        name:
+          type: string
+        operationType:
+          type: string
+          enum:
+            - ADD
+            - REMOVE
+    QaDslLibrary:
+      title: QaDslLibrary
+      type: object
+      properties:
+        childrenOperations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectOperation'
+        createdBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        createdWhen:
+          type: string
+          format: date-time
+        description:
+          type: string
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        projectUuid:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+    TestCase:
+      title: TestCase
+      type: object
+      properties:
+        assignee:
+          $ref: '#/components/schemas/UserInfoRes'
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/JiraComponent'
+        createdBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        createdWhen:
+          type: string
+          format: date-time
+        datasetStorageUuid:
+          type: string
+          format: uuid
+        datasetUuid:
+          type: string
+          format: uuid
+        dependsOn:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseDependency'
+        description:
+          type: string
+        flags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseFlags'
+        groupId:
+          type: string
+          format: uuid
+        jiraTicket:
+          type: string
+        labelIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        lastRun:
+          type: string
+          format: uuid
+        lastRunStatus:
+          type: string
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        order:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseOrder'
+        priority:
+          type: string
+          enum:
+            - BLOCKER
+            - CRITICAL
+            - LOW
+            - MAJOR
+            - NORMAL
+        projectUuid:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+            - BLOCKED
+            - CANCELLED
+            - FAILED
+            - IN_PROGRESS
+            - NOT_DELIVERED
+            - OPEN
+            - PASSED
+            - PASSED_WITH_MINOR_DEFECTS
+        testCaseRepeatCounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseRepeatCount'
+        testPlanUuid:
+          type: string
+          format: uuid
+        testScenarioUuid:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+    TestCase0:
+      title: TestCase0
+      type: object
+      properties:
+        assignee:
+          $ref: '#/components/schemas/UserInfoRes'
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/JiraComponent'
+        createDate:
+          type: integer
+          format: int64
+        createdBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        dataset:
+          $ref: '#/components/schemas/AbstractEntityResponse'
+        datasetStorage:
+          $ref: '#/components/schemas/AbstractEntityResponse'
+        description:
+          type: string
+        groupId:
+          type: string
+          format: uuid
+        jiraTicket:
+          type: string
+        jiraTicketUrl:
+          type: string
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        lastModifiedBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        lastRun:
+          type: string
+          format: uuid
+        lastRunStatus:
+          type: string
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        priority:
+          type: string
+          enum:
+            - BLOCKER
+            - CRITICAL
+            - LOW
+            - MAJOR
+            - NORMAL
+        status:
+          type: string
+          enum:
+            - BLOCKED
+            - CANCELLED
+            - FAILED
+            - IN_PROGRESS
+            - NOT_DELIVERED
+            - OPEN
+            - PASSED
+            - PASSED_WITH_MINOR_DEFECTS
+        testScenario:
+          $ref: '#/components/schemas/TestScenario'
+        testScopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestScope'
+        uuid:
+          type: string
+          format: uuid
+    TestCaseDependency:
+      title: TestCaseDependency
+      type: object
+      properties:
+        testCaseId:
+          type: string
+          format: uuid
+        testScopeId:
+          type: string
+          format: uuid
+    TestCaseFlags:
+      title: TestCaseFlags
+      type: object
+      properties:
+        flags:
+          type: array
+          items:
+            type: string
+            enum:
+              - COLLECT_LOGS
+              - COLLECT_LOGS_ON_FAIL
+              - COLLECT_LOGS_ON_SKIPPED
+              - COLLECT_LOGS_ON_WARNING
+              - DO_NOT_PASS_INITIAL_CONTEXT
+              - EXECUTE_ANYWAY
+              - FAIL_IMMEDIATELY
+              - IGNORE_PREREQUISITE_IN_PASS_RATE
+              - IGNORE_VALIDATION_IN_PASS_RATE
+              - INVERT_RESULT
+              - SKIP
+              - SKIP_IF_DEPENDENCIES_FAIL
+              - STOP_ON_FAIL
+              - SKIP_ON_PASS
+              - TERMINATE_IF_FAIL
+              - TERMINATE_IF_PREREQUISITE_FAIL
+              - COLLECT_SSM_METRICS_ON_FAIL
+        testScopeId:
+          type: string
+          format: uuid
+    TestCaseGroup:
+      title: TestCaseGroup
+      type: object
+      properties:
+        childrenOperations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectOperation'
+        createdBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        createdWhen:
+          type: string
+          format: date-time
+        description:
+          type: string
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        parentGroupId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        testPlanId:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+    TestCaseGroup0:
+      title: TestCaseGroup0
+      type: object
+      properties:
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase0'
+        childGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseGroup0'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        parentGroupId:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+    TestCaseGroupResponse:
+      title: TestCaseGroupResponse
+      type: object
+      properties:
+        caseGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseGroup0'
+        emptyGroupCases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase0'
+    TestCaseOrder:
+      title: TestCaseOrder
+      type: object
+      properties:
+        sequenceNumber:
+          type: integer
+          format: int32
+        testScopeId:
+          type: string
+          format: uuid
+    TestCaseRepeatCount:
+      title: TestCaseRepeatCount
+      type: object
+      properties:
+        repeatCount:
+          type: integer
+          format: int32
+        testScopeId:
+          type: string
+          format: uuid
+    TestPlan:
+      title: TestPlan
+      type: object
+      properties:
+        childrenOperations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectOperation'
+        createdBy:
+          $ref: '#/components/schemas/UserInfoReq'
+        createdWhen:
+          type: string
+          format: date-time
+        description:
+          type: string
+        disableAutoSyncAtpTestCasesWithJiraTickets:
+          type: boolean
+        executionRequestClosingTimeoutMin:
+          type: integer
+          format: int32
+        jiraTicketsAutoClosing:
+          type: boolean
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfoReq'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        notificationMessageSubjectTemplate:
+          type: string
+        projectUuid:
+          type: string
+          format: uuid
+        qaDslLibraryId:
+          type: string
+          format: uuid
+        synchronization:
+          $ref: '#/components/schemas/BugTrackingSystemSynchronization'
+        taTools:
+          type: array
+          items:
+            type: string
+            format: uuid
+        uuid:
+          type: string
+          format: uuid
+    TestPlanResponse:
+      title: TestPlanResponse
+      type: object
+      properties:
+        createdBy:
+          $ref: '#/components/schemas/UserInfo0'
+        createdDate:
+          type: integer
+          format: int64
+        description:
+          type: string
+        disableAutoSyncAtpTestCasesWithJiraTickets:
+          type: boolean
+        executionRequestClosingTimeoutMin:
+          type: integer
+          format: int32
+        jiraTicketsAutoClosing:
+          type: boolean
+        lastModifiedBy:
+          $ref: '#/components/schemas/UserInfo0'
+        lastModifyDate:
+          type: integer
+          format: int64
+        name:
+          type: string
+        notificationMessageSubjectTemplate:
+          type: string
+        projectUuid:
+          type: string
+          format: uuid
+        qaDslLibraryId:
+          type: string
+          format: uuid
+        synchronization:
+          $ref: '#/components/schemas/BugTrackingSystemSynchronizationDto'
+        taTools:
+          type: array
+          items:
+            type: string
+            format: uuid
+        uuid:
+          type: string
+          format: uuid
+    TestPlanEntitiesResponse:
+      title: TestPlanEntitiesResponse
+      type: object
+      properties:
+        casesOutOfScope:
+          $ref: '#/components/schemas/TestCaseGroupResponse'
+        scenariosOutOfCase:
+          $ref: '#/components/schemas/TestScenarioGroupResponse'
+        testScopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestScope'
+    TestScenario:
+      title: TestScenario
+      type: object
+      properties:
+        alsoCompound:
+          type: boolean
+        createdBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        createdWhen:
+          type: string
+          format: date-time
+        description:
+          type: string
+        groupUuid:
+          type: string
+          format: uuid
+        lastEdit:
+          type: integer
+          format: int64
+        metainfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetaInfo'
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        projectUuid:
+          type: string
+          format: uuid
+        testPlanUuid:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - COMPOUND
+            - TESTSCENARIO
+        uuid:
+          type: string
+          format: uuid
+    TestScenarioGroup:
+      title: TestScenarioGroup
+      type: object
+      properties:
+        childGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestScenarioGroup'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        parentGroupId:
+          type: string
+          format: uuid
+        scenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestScenarioResponse'
+        uuid:
+          type: string
+          format: uuid
+    TestScenarioGroupResponse:
+      title: TestScenarioGroupResponse
+      type: object
+      properties:
+        emptyGroupScenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestScenarioResponse'
+        scenarioGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestScenarioGroup'
+    TestScenarioResponse:
+      title: TestScenarioResponse
+      type: object
+      properties:
+        alsoCompound:
+          type: boolean
+        description:
+          type: string
+        groupUuid:
+          type: string
+          format: uuid
+        lastEdit:
+          type: integer
+          format: int64
+        lastModifiedBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        projectUuid:
+          type: string
+          format: uuid
+        testPlanUuid:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+    TestScope:
+      title: TestScope
+      type: object
+      properties:
+        createdBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        createdWhen:
+          type: string
+          format: date-time
+        description:
+          type: string
+        environmentUuid:
+          type: string
+          format: uuid
+        executionCases:
+          type: array
+          items:
+            type: string
+            format: uuid
+        flags:
+          type: array
+          items:
+            type: string
+            enum:
+              - COLLECT_LOGS
+              - COLLECT_LOGS_ON_FAIL
+              - COLLECT_LOGS_ON_SKIPPED
+              - COLLECT_LOGS_ON_WARNING
+              - DO_NOT_PASS_INITIAL_CONTEXT
+              - EXECUTE_ANYWAY
+              - FAIL_IMMEDIATELY
+              - IGNORE_PREREQUISITE_IN_PASS_RATE
+              - IGNORE_VALIDATION_IN_PASS_RATE
+              - INVERT_RESULT
+              - SKIP
+              - SKIP_IF_DEPENDENCIES_FAIL
+              - STOP_ON_FAIL
+              - SKIP_ON_PASS
+              - TERMINATE_IF_FAIL
+              - TERMINATE_IF_PREREQUISITE_FAIL
+              - COLLECT_SSM_METRICS_ON_FAIL
+        groupUuid:
+          type: string
+          format: uuid
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfoRes'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        numberOfThreshold:
+          type: integer
+          format: int32
+        prerequisitesCases:
+          type: array
+          items:
+            type: string
+            format: uuid
+        projectUuid:
+          type: string
+          format: uuid
+        solutionBuild:
+          type: array
+          items:
+            type: string
+        systemUnderTestHost:
+          type: array
+          items:
+            type: string
+        taToolsUuid:
+          type: string
+          format: uuid
+        testPlanUuid:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+        validationCases:
+          type: array
+          items:
+            type: string
+            format: uuid
+        widgetConfigTemplateId:
+          type: string
+          format: uuid
+    TestScopeFullInfo:
+      title: TestScopeFullInfo
+      type: object
+      properties:
+        description:
+          type: string
+        environmentUuid:
+          type: string
+          format: uuid
+        flags:
+          type: array
+          items:
+            type: string
+            enum:
+              - COLLECT_LOGS
+              - COLLECT_LOGS_ON_FAIL
+              - COLLECT_LOGS_ON_SKIPPED
+              - COLLECT_LOGS_ON_WARNING
+              - DO_NOT_PASS_INITIAL_CONTEXT
+              - EXECUTE_ANYWAY
+              - FAIL_IMMEDIATELY
+              - IGNORE_PREREQUISITE_IN_PASS_RATE
+              - IGNORE_VALIDATION_IN_PASS_RATE
+              - INVERT_RESULT
+              - SKIP
+              - SKIP_IF_DEPENDENCIES_FAIL
+              - STOP_ON_FAIL
+              - SKIP_ON_PASS
+              - TERMINATE_IF_FAIL
+              - TERMINATE_IF_PREREQUISITE_FAIL
+              - COLLECT_SSM_METRICS_ON_FAIL
+        name:
+          type: string
+        numberOfThreshold:
+          type: integer
+          format: int32
+        order:
+          $ref: '#/components/schemas/TestCaseOrder'
+        tools:
+          $ref: '#/components/schemas/Tools'
+        uuid:
+          type: string
+          format: uuid
+        widgetConfigTemplateId:
+          type: string
+          format: uuid
+    Tools:
+      title: Tools
+      type: object
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    UserInfo0:
+      title: UserInfo0
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          type: string
+        id:
+          type: string
+          format: uuid
+        lastName:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+        username:
+          type: string
+    UserInfoReq:
+      title: UserInfoReq
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          type: string
+        id:
+          type: string
+          format: uuid
+        lastName:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+        username:
+          type: string
+    UserInfoRes:
+      title: UserInfoRes
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          type: string
+        fullName:
+          type: string
+        id:
+          type: string
+          format: uuid
+        lastName:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+        username:
+          type: string
+    TestPlanDto:
+      title: TestPlanDto
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        projectUuid:
+          type: string
+          format: uuid
+        qaDslLibraryId:
+          type: string
+          format: uuid
+        executionRequestClosingTimeoutMin:
+          type: integer
+          format: int32
+        taTools:
+          type: array
+          items:
+            type: string
+            format: uuid
+        lastModifiedBy:
+          $ref: '#/components/schemas/UserInfoReq'
+        lastModifyDate:
+          type: integer
+          format: int64
+        createdBy:
+          $ref: '#/components/schemas/UserInfoReq'
+        createdDate:
+          type: integer
+          format: int64
+        disableAutoSyncAtpTestCasesWithJiraTickets:
+          type: boolean
+        jiraTicketsAutoClosing:
+          type: boolean
+        notificationMessageSubjectTemplate:
+          type: string
+        synchronization:
+          $ref: '#/components/schemas/BugTrackingSystemSynchronization'
+    TestPlanDslMappingsRequest:
+      title: TestPlanDslMappingsRequest
+      type: object
+      properties:
+        testScopeIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        testCaseOutOfScopeIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    TestPlanDslMappingsResponse:
+      title: TestPlanDslMappingsResponse
+      type: object
+      properties:
+        testScopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestScopeItem'
+        testCasesOutOfScope:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseItem'
+    TestCaseItem:
+      title: TestCaseItem
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        dslId:
+          type: string
+          format: uuid
+    TestScopeItem:
+      title: TestScopeItem
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        testCases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseItem'
+    CompareTestPlansRequest:
+      title: CompareTestPlansRequest
+      type: object
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        leftTestPlanId:
+          type: string
+          format: uuid
+        rightTestPlanId:
+          type: string
+          format: uuid
+        page:
+          type: number
+        size:
+          type: number
+    CompareTestPlansResponse:
+      title: CompareTestPlansResponse
+      type: object
+      properties:
+        leftTestPlanId:
+          type: string
+          format: uuid
+        leftTestPlanName:
+          type: string
+        rightTestPlanId:
+          type: string
+          format: uuid
+        rightTestPlanName:
+          type: string
+        testCases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseCompare'
+        total:
+          type: number
+    TestCaseCompare:
+      title: TestCaseCompare
+      type: object
+      properties:
+        leftTestCaseId:
+          type: string
+          format: uuid
+        leftTestCaseName:
+          type: string
+        leftTestScenarioId:
+          type: string
+          format: uuid
+        rightTestCaseId:
+          type: string
+          format: uuid
+        rightTestCaseName:
+          type: string
+        rightTestScenarioId:
+          type: string
+          format: uuid
+    CompareTestPlanQaDslResponse:
+      title: CompareTestPlanQaDslResponse
+      type: object
+      properties:
+        leftTestPlanId:
+          type: string
+          format: uuid
+        leftTestPlanName:
+          type: string
+        leftQaDslName:
+          type: string
+        leftQaDslId:
+          type: string
+          format: uuid
+        rightTestPlanId:
+          type: string
+          format: uuid
+        rightTestPlanName:
+          type: string
+        rightQaDslName:
+          type: string
+        rightQaDslId:
+          type: string
+          format: uuid
+        compounds:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompoundCompare'
+        total:
+          type: number
+    CompoundCompare:
+      title: CompoundCompare
+      type: object
+      properties:
+        leftCompoundId:
+          type: string
+          format: uuid
+        leftCompoundName:
+          type: string
+        rightCompoundId:
+          type: string
+          format: uuid
+        rightCompoundName:
+          type: string
+        status:
+          type: string
+          enum:
+            - OK
+            - WARNING

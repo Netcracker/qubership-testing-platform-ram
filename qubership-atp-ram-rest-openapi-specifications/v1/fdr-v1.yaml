@@ -1,0 +1,421 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: fdr-controller
+    description: Fdr Controller
+paths:
+  /api/tsg-exchanger/check:
+    get:
+      tags:
+        - fdr-controller
+      summary: checkFinishedErs
+      operationId: checkFinishedErs
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/tsg-exchanger/dailyInfo/{daysFilter}':
+    get:
+      tags:
+        - fdr-controller
+      summary: getDailyInfo
+      operationId: getDailyInfo
+      parameters:
+        - name: daysFilter
+          in: path
+          description: daysFilter
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/tsg-exchanger/fdr:
+    post:
+      tags:
+        - fdr-controller
+      summary: sendToTsg
+      operationId: sendToTsg
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/tsg-exchanger/fill:
+    get:
+      tags:
+        - fdr-controller
+      summary: fillNotFinishedErs
+      operationId: fillNotFinishedErs
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/tsg-exchanger/getErs:
+    get:
+      tags:
+        - fdr-controller
+      summary: getErs
+      operationId: getErs
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExecutionRequest'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/tsg-exchanger/ping:
+    get:
+      tags:
+        - fdr-controller
+      summary: ping
+      operationId: ping
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/tsg-exchanger/report:
+    get:
+      tags:
+        - fdr-controller
+      summary: getReport
+      operationId: getReport
+      parameters:
+        - name: days
+          in: query
+          description: days
+          required: true
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/tsg-exchanger/{executionRequestUuid}/{testRunUuid}':
+    get:
+      tags:
+        - fdr-controller
+      summary: getFdrForTestRun
+      operationId: getFdrForTestRun
+      parameters:
+        - name: executionRequestUuid
+          in: path
+          description: executionRequestUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: testRunUuid
+          in: path
+          description: testRunUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TsgFdr'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/tsg-exchanger/{uuid}':
+    get:
+      tags:
+        - fdr-controller
+      summary: getByErUuid
+      operationId: getByErUuid
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TsgFdr'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    ExecutionRequest:
+      title: ExecutionRequest
+      allOf:
+        - $ref: '#/components/schemas/RamObject'
+        - type: object
+      properties:
+        previousExecutionRequestId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        testPlanId:
+          type: string
+          format: uuid
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        analyzedByQa:
+          type: boolean
+        passedRate:
+          type: integer
+          format: int32
+        warningRate:
+          type: integer
+          format: int32
+        failedRate:
+          type: integer
+          format: int32
+        countOfTestRuns:
+          type: integer
+          format: int32
+        solutionBuild:
+          type: string
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        finishDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        duration:
+          type: integer
+          format: int64
+        legacyMailRecipients:
+          type: string
+        ciJobUrl:
+          type: string
+        testScopeId:
+          type: string
+          format: uuid
+        environmentId:
+          type: string
+          format: uuid
+        taToolsGroupId:
+          type: string
+          format: uuid
+        labels:
+          type: array
+          items:
+            type: string
+            format: uuid
+        executorId:
+          type: string
+          format: uuid
+        executorName:
+          type: string
+        labelTemplateId:
+          type: string
+          format: uuid
+        widgetConfigTemplateId:
+          type: string
+          format: uuid
+        threads:
+          type: integer
+          format: int32
+        numberOfStarts:
+          type: integer
+          format: int32
+        autoSyncCasesWithJira:
+          type: boolean
+        autoSyncRunsWithJira:
+          type: boolean
+        emailTemplateId:
+          type: string
+          format: uuid
+        emailSubject:
+          type: string
+        logCollectorConditionId:
+          type: string
+          format: uuid
+        flagIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        countLogRecords:
+          type: integer
+          format: int64
+        filteredByLabels:
+          type: array
+          items:
+            type: string
+            format: uuid
+        failedLogrecordsCounter:
+          type: integer
+          format: int32
+        jointExecutionKey:
+          type: string
+        jointExecutionCount:
+          type: integer
+          format: int32
+        jointExecutionTimeout:
+          type: integer
+          format: int32
+        initialExecutionRequestId:
+          type: string
+          format: uuid
+        virtual:
+          type: boolean
+    ExecutionStatus:
+      type: string
+      enum:
+        - NOT_STARTED
+        - IN_PROGRESS
+        - FINISHED
+        - TERMINATED
+        - TERMINATED_BY_TIMEOUT
+        - SUSPENDED
+        - RESUMING
+        - SKIPPED
+    TsgCheckPoint:
+      title: TsgCheckPoint
+      type: object
+      properties:
+        Check Points:
+          type: array
+          items:
+            $ref: '#/components/schemas/TsgCheckPoint'
+        Message:
+          type: string
+        Name:
+          type: string
+        Status:
+          type: string
+    TsgFdr:
+      title: TsgFdr
+      type: object
+      properties:
+        Check Points:
+          type: array
+          items:
+            $ref: '#/components/schemas/TsgCheckPoint'
+        Environment:
+          type: array
+          items:
+            type: string
+        Execution Link:
+          type: string
+        Execution Request ID:
+          type: string
+          format: uuid
+        Finish Date:
+          type: string
+        Project:
+          type: string
+        Scope:
+          type: string
+        Start Date:
+          type: string
+        Status:
+          type: string
+        Test Case Name:
+          type: string
+        Test Run Id:
+          type: string
+          format: uuid
+        Test Run Name:
+          type: string
+    RamObject:
+      title: RamObject
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string

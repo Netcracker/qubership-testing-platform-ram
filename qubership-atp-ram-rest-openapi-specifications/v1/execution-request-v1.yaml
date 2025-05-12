@@ -1,0 +1,3372 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: execution-request-controller
+    description: Execution Request Controller
+paths:
+  /api/executionrequests:
+    get:
+      tags:
+        - execution-request-controller
+      summary: getAllSortedExecutionRequests
+      operationId: getAllSortedExecutionRequests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExecutionRequest'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/executionrequests/compare:
+    get:
+      tags:
+        - execution-request-controller
+      summary: getErsByUuids
+      operationId: getErsByUuids
+      parameters:
+        - name: uuids
+          in: query
+          description: uuids
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComparisonExecutionRequest'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/executionrequests/compareWithSteps:
+    get:
+      tags:
+        - execution-request-controller
+      summary: getErsWithStepsByUuids
+      operationId: getErsWithStepsByUuids
+      parameters:
+        - name: uuids
+          in: query
+          description: uuids
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComparisonExecutionRequest'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/executionrequests/create:
+    post:
+      tags:
+        - execution-request-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/ExecutionRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequest'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequest'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/executionrequests/environments:
+    get:
+      tags:
+        - execution-request-controller
+      summary: getExecutionRequestEnvironments
+      operationId: getExecutionRequestEnvironments
+      parameters:
+        - name: testPlanId
+          in: query
+          description: testPlanId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Environment'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/executionrequests/executors:
+    get:
+      tags:
+        - execution-request-controller
+      summary: getExecutionRequestExecutors
+      operationId: getExecutionRequestExecutors
+      parameters:
+        - name: testPlanId
+          in: query
+          description: testPlanId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Executor'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/project/{projectUuid}/testresults':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getLastErsByProjectUuidWithTestRuns
+      operationId: getLastErsByProjectUuidWithTestRuns
+      parameters:
+        - name: projectUuid
+          in: path
+          description: projectUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestResult'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/executionrequests/reanalyze:
+    post:
+      tags:
+        - execution-request-controller
+      summary: reanalyzeTestRuns
+      operationId: reanalyzeTestRuns
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  /api/executionrequests/recursiveDelete:
+    post:
+      tags:
+        - execution-request-controller
+      summary: recursiveDelete
+      operationId: recursiveDelete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/executionrequests/save:
+    put:
+      tags:
+        - execution-request-controller
+      summary: save
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequest'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  /api/executionrequests/stopresume:
+    post:
+      tags:
+        - execution-request-controller
+      summary: stopResumeExecutionRequests
+      operationId: stopResumeExecutionRequests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/executionrequests/terminate:
+    post:
+      tags:
+        - execution-request-controller
+      summary: terminateExecutionRequests
+      operationId: terminateExecutionRequests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RamTerminateRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/testScope/{testScopeUuid}':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getByRestScopeUuid
+      operationId: getByRestScopeUuid
+      parameters:
+        - name: testScopeUuid
+          in: path
+          description: testScopeUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestResult'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  '/api/executionrequests/testplan/{testPlanId}/search':
+    post:
+      tags:
+        - execution-request-controller
+      summary: getExecutionRequests
+      operationId: getExecutionRequests
+      parameters:
+        - name: testPlanId
+          in: path
+          description: testPlanId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionRequestSearchRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponseExecutionRequestResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/testplan/{testPlanUuid}':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getErsByTestPlanUuid
+      operationId: getErsByTestPlanUuid
+      parameters:
+        - name: testPlanUuid
+          in: path
+          description: testPlanUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExecutionRequestResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/testplan/{testPlanUuid}/startIndex/{startIndex}/endIndex/{endIndex}':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getErsPageByTestPlanUuidWithSort
+      operationId: getErsPageByTestPlanUuidWithSort
+      parameters:
+        - name: testPlanUuid
+          in: path
+          description: testPlanUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: startIndex
+          in: path
+          description: startIndex
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: endIndex
+          in: path
+          description: endIndex
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: columnType
+          in: query
+          description: columnType
+          required: true
+          style: form
+          schema:
+            type: string
+        - name: sortType
+          in: query
+          description: sortType
+          required: true
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExecutionRequestResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/testplan/{testPlanUuid}/startIndex/{startIndex}/endIndex/{endIndex}/filter':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getErsPageByTestPlanUuidWithSortAndFilters
+      operationId: getErsPageByTestPlanUuidWithSortAndFilters
+      parameters:
+        - name: testPlanUuid
+          in: path
+          description: testPlanUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: startIndex
+          in: path
+          description: startIndex
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: endIndex
+          in: path
+          description: endIndex
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: columnType
+          in: query
+          description: columnType
+          required: true
+          style: form
+          schema:
+            type: string
+        - name: sortType
+          in: query
+          description: sortType
+          required: true
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExecutionRequestResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  '/api/executionrequests/testplan/{testplanUuid}/testresults':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getLastErsByTestplanUuidWithTestRuns
+      operationId: getLastErsByTestplanUuidWithTestRuns
+      parameters:
+        - name: testplanUuid
+          in: path
+          description: testplanUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestResult'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{executionRequestId}/config':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getConfig
+      operationId: getConfig
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequestConfig'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    patch:
+      tags:
+        - execution-request-controller
+      summary: updateConfig
+      operationId: updateConfig
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionRequestConfigUpdateRequest'
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/api/executionrequests/{executionRequestId}/config/widgettemplate':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getWidgetConfigTemplate
+      operationId: getWidgetConfigTemplate
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequestWidgetConfigTemplateResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{executionRequestId}/issues':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getIssuedById
+      operationId: getIssuedById
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          allowReserved: true
+          schema:
+            type: string
+            format: uuid
+        - name: failPattern
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: failReason
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: failedTestRun
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: jiraTicket
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: logRecordIds
+          in: query
+          required: false
+          style: pipeDelimited
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+        - name: message
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: priority
+          in: query
+          required: false
+          style: form
+          schema:
+            $ref: '#/components/schemas/Priority'
+        - name: startIndex
+          in: query
+          description: startIndex
+          required: true
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: endIndex
+          in: query
+          description: endIndex
+          required: true
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: columnType
+          in: query
+          description: columnType
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: sortType
+          in: query
+          description: sortType
+          required: false
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueResponsesModel'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{executionRequestId}/issues/all':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getAllIssuedById
+      operationId: getAllIssuedById
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueResponsesModel'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{executionRequestId}/recalculateIssues':
+    post:
+      tags:
+        - execution-request-controller
+      summary: recalculateIssues
+      operationId: recalculateIssues
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{executionRequestUuid}/analyze':
+    get:
+      tags:
+        - execution-request-controller
+      summary: analyzeExecutionRequest
+      operationId: analyzeExecutionRequest
+      parameters:
+        - name: executionRequestUuid
+          in: path
+          description: executionRequestUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  '/api/executionrequests/{ids}/testRunsBySomeExecutionRequests':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getAllTestRunsBySomeExecutionRequests
+      operationId: getAllTestRunsBySomeExecutionRequests
+      parameters:
+        - name: ids
+          in: path
+          description: ids
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/TestRun'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/details':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getDetails
+      operationId: getDetails
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExecutionRequestDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - execution-request-controller
+      summary: createDetails
+      operationId: createDetails
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/ExecutionRequestDetails'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequestDetails'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/details/update':
+    put:
+      tags:
+        - execution-request-controller
+      summary: updateDetails
+      operationId: updateDetails
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionRequestDetails'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequestDetails'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/emailReporting':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getReporting
+      operationId: getReporting
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequestReporting'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - execution-request-controller
+      summary: createReporting
+      operationId: createReporting
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/ExecutionRequestReporting'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequestReporting'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/emailReporting/updateStatus/{status}':
+    put:
+      tags:
+        - execution-request-controller
+      summary: updateReportingStatus
+      operationId: updateReportingStatus
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: status
+          in: path
+          description: status
+          required: true
+          style: simple
+          schema:
+            $ref: '#/components/schemas/TestingStatus'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequestReporting'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/failedLogRecords/search':
+    post:
+      tags:
+        - execution-request-controller
+      summary: searchLogRecords
+      operationId: searchLogRecords
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogRecordRegexSearchRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecordRegexSearchResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/failedtestruns':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getAllFailedTestRuns
+      operationId: getAllFailedTestRuns
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestRun'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/failpatterns':
+    put:
+      tags:
+        - execution-request-controller
+      summary: updateFailPattern
+      operationId: updateFailPattern
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FailPattern'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailPattern'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - execution-request-controller
+      summary: createFailPattern
+      operationId: createFailPattern
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FailPattern'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailPattern'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/failpatterns/{failPatternId}':
+    delete:
+      tags:
+        - execution-request-controller
+      summary: deleteFailPattern
+      operationId: deleteFailPattern
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: failPatternId
+          in: path
+          description: failPatternId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/api/executionrequests/{id}/mainInfo':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getByIdMainInfo
+      operationId: getByIdMainInfo
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequestMainInfoResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/rates':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getRates
+      operationId: getRates
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequestRatesResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/stop':
+    get:
+      tags:
+        - execution-request-controller
+      summary: stopExecutionRequestsById
+      operationId: stopExecutionRequestsById
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  '/api/executionrequests/{id}/testplan/id':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getTestPlanIdByUuid
+      operationId: getTestPlanIdByUuid
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/testruns':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getAllEnrichedTestRuns
+      operationId: getAllEnrichedTestRuns
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnrichedTestRun'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/testruns/ids':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getAllTestRunIds
+      operationId: getAllTestRunIds
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/testruns/rates':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getTestRunsRates
+      operationId: getTestRunsRates
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestRunsRatesResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{uuidRequest}/removeLabel':
+    put:
+      tags:
+        - execution-request-controller
+      summary: removeLabel
+      operationId: removeLabel
+      parameters:
+        - name: uuidRequest
+          in: path
+          description: uuidRequest
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequest'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{uuidRequest}/setLabel':
+    put:
+      tags:
+        - execution-request-controller
+      summary: setLabel
+      operationId: setLabel
+      parameters:
+        - name: uuidRequest
+          in: path
+          description: uuidRequest
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequest'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{uuid}':
+    get:
+      tags:
+        - execution-request-controller
+      summary: getByUuid
+      operationId: getByUuid
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequest'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{uuid}/findByStepName/{searchValue}':
+    get:
+      tags:
+        - execution-request-controller
+      summary: findStepBySearchValue
+      operationId: findStepBySearchValue
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: searchValue
+          in: path
+          description: searchValue
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StepPath'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{uuid}/updExecutionStatus/{executionStatus}':
+    put:
+      tags:
+        - execution-request-controller
+      summary: updateExecutionStatus
+      operationId: updateExecutionStatus
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: executionStatus
+          in: path
+          description: executionStatus
+          required: true
+          style: simple
+          schema:
+            $ref: '#/components/schemas/ExecutionStatus'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequest'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/{id}/testruns/validationlabels/search':
+    post:
+      tags:
+        - execution-request-controller
+      summary: searchTestRunsByValidationLabels
+      operationId: searchTestRunsByValidationLabels
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: page
+          in: query
+          description: page
+          required: false
+          style: simple
+          schema:
+            type: string
+            format: integer
+        - name: size
+          in: query
+          description: size
+          required: false
+          style: simple
+          schema:
+            type: string
+            format: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestRunsByValidationLabelsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRunsByValidationLabelsResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/screenshots/compare-report/export':
+    post:
+      tags:
+        - execution-request-controller
+      summary: getScreenshotsHtmlReport
+      operationId: getScreenshotsHtmlReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionRequestsForCompareScreenshotsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html: {}
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/compare/screenshots/executionrequest':
+    post:
+      tags:
+        - execution-request-controller
+      summary: compareExecutionRequestsWithScreenshots
+      operationId: compareExecutionRequestsWithScreenshots
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionRequestsForCompareScreenshotsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionRequestsCompareScreenshotResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/compare/logrecord':
+    post:
+      tags:
+        - execution-request-controller
+      summary: getCompareInfo
+      operationId: getCompareInfo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogRecordCompareRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/compare/environment':
+    post:
+      tags:
+        - execution-request-controller
+      summary: getEnvironmentsCompareInfo
+      operationId: getEnvironmentsCompareInfo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentsCompareRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/compare/screenshots/executionrequest':
+    post:
+      tags:
+        - execution-request-controller
+      summary: getCompareScreenshotsExecutionRequests
+      operationId: getCompareScreenshotsExecutionRequests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/compare/screenshots/logrecord':
+    post:
+      tags:
+        - execution-request-controller
+      summary: getCompareScreenshotsSubSteps
+      operationId: getCompareScreenshotsSubSteps
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/RowScreenshotRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/executionrequests/compare/testrun':
+    post:
+      tags:
+        - execution-request-controller
+      summary: getTestRunCompareInfo
+      operationId: getTestRunCompareInfo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/compare/defect':
+    post:
+      tags:
+        - execution-request-controller
+      summary: getDefectStatisticInfo
+      operationId: getDefectStatisticInfo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/executionrequests/joint/search:
+    post:
+      tags:
+        - execution-request-controller
+      summary: searchJointExecutionRequests
+      operationId: searchJointExecutionRequests
+      requestBody:
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/JointExecutionRequestSearchRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JointExecutionRequestSearchResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/executionrequests/{id}/failureReasons:
+    get:
+      tags:
+        - execution-request-controller
+      summary: getFailureReasons
+      operationId: getFailureReasons
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RootCause'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    AbstractFilter:
+      title: AbstractFilter
+      type: object
+      properties:
+        column:
+          type: string
+        type:
+          type: string
+    BooleanFilter:
+      title: BooleanFilter
+      properties:
+        column:
+          type: string
+        type:
+          type: string
+        value:
+          type: boolean
+      allOf:
+        - $ref: '#/components/schemas/AbstractFilter'
+        - title: BooleanFilter
+          type: object
+          properties:
+            column:
+              type: string
+            type:
+              type: string
+            value:
+              type: boolean
+    ColumnVisibility:
+      title: ColumnVisibility
+      type: object
+      properties:
+        name:
+          type: string
+        visible:
+          type: boolean
+    ComparisonExecutionRequest:
+      title: ComparisonExecutionRequest
+      type: object
+      properties:
+        erName:
+          type: string
+        nonComparisonTestRuns:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ComparisonTestRun'
+        testRuns:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ComparisonTestRun'
+    ComparisonStep:
+      title: ComparisonStep
+      type: object
+      properties:
+        duration:
+          type: integer
+          format: int64
+        statuses:
+          $ref: '#/components/schemas/TestingStatus'
+        stepName:
+          type: string
+    ComparisonTestRun:
+      title: ComparisonTestRun
+      type: object
+      properties:
+        duration:
+          type: integer
+          format: int64
+        id:
+          type: string
+          format: uuid
+        statuses:
+          $ref: '#/components/schemas/TestingStatus'
+        steps:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ComparisonStep'
+        testCaseId:
+          type: string
+          format: uuid
+        trName:
+          type: string
+    FilterType:
+      type: string
+      enum:
+        - RANGE
+        - VALUE
+    DateFilter:
+      title: DateFilter
+      properties:
+        column:
+          type: string
+        filterType:
+          $ref: '#/components/schemas/FilterType'
+        from:
+          type: string
+        to:
+          type: string
+        type:
+          type: string
+        value:
+          type: string
+        valueFilterType:
+          $ref: '#/components/schemas/ValueFilterType'
+      allOf:
+        - $ref: '#/components/schemas/AbstractFilter'
+        - title: DateFilter
+          type: object
+          properties:
+            column:
+              type: string
+            filterType:
+              $ref: '#/components/schemas/FilterType'
+            from:
+              type: string
+            to:
+              type: string
+            type:
+              type: string
+            value:
+              type: string
+            valueFilterType:
+              $ref: '#/components/schemas/ValueFilterType'
+    EnrichedTestRun:
+      title: EnrichedTestRun
+      allOf:
+        - $ref: '#/components/schemas/TestRun'
+        - type: object
+      properties:
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        failureReason:
+          $ref: '#/components/schemas/RootCause'
+    Comment:
+      title: Comment
+      type: object
+      properties:
+        text:
+          type: string
+        html:
+          type: string
+    TestingStatus:
+      type: string
+      enum:
+        - STOPPED
+        - FAILED
+        - WARNING
+        - PASSED
+        - SKIPPED
+        - BLOCKED
+        - NOT_STARTED
+        - UNKNOWN
+    TestScopeSections:
+      type: string
+      enum:
+        - PREREQUISITES
+        - EXECUTION
+        - VALIDATION
+    Environment:
+      title: Environment
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    ExecutionRequestConfig:
+      title: ExecutionRequestConfig
+      type: object
+      properties:
+        defaultLabelTemplateChanged:
+          type: boolean
+        executionRequestId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+        widgetConfigTemplateId:
+          type: string
+          format: uuid
+    ExecutionRequestConfigUpdateRequest:
+      title: ExecutionRequestConfigUpdateRequest
+      type: object
+      properties:
+        widgetConfigTemplateId:
+          type: string
+          format: uuid
+    ExecutionRequestDetails:
+      title: ExecutionRequestDetails
+      type: object
+      properties:
+        message:
+          type: string
+        status:
+          $ref: '#/components/schemas/TestingStatus'
+        executionRequestId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        date:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+    ExecutionStatus:
+      type: string
+      enum:
+        - NOT_STARTED
+        - IN_PROGRESS
+        - FINISHED
+        - TERMINATED
+        - TERMINATED_BY_TIMEOUT
+        - SUSPENDED
+        - RESUMING
+        - SKIPPED
+    ExecutionRequestMainInfoResponse:
+      title: ExecutionRequestMainInfoResponse
+      type: object
+      properties:
+        countOfTestRuns:
+          type: integer
+          format: int32
+        duration:
+          type: integer
+          format: int64
+        environmentId:
+          type: string
+          format: uuid
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        executor:
+          $ref: '#/components/schemas/Executor'
+        finishDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        id:
+          type: string
+          format: uuid
+        missionControlToolUrl:
+          type: string
+        monitoringToolUrl:
+          type: string
+        name:
+          type: string
+        passCount:
+          type: integer
+          format: int32
+        passRate:
+          type: integer
+          format: int32
+        recompilation:
+          type: boolean
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        taToolsGroupId:
+          type: string
+          format: uuid
+        testScopeId:
+          type: string
+          format: uuid
+        threads:
+          type: integer
+          format: int32
+        troubleShooterUrl:
+          type: string
+        initialExecutionRequestId:
+          type: string
+          format: uuid
+        virtual:
+          type: boolean
+    ExecutionRequestRatesResponse:
+      title: ExecutionRequestRatesResponse
+      type: object
+      properties:
+        duration:
+          type: integer
+          format: int64
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        executor:
+          type: string
+        failedRate:
+          type: number
+          format: float
+        failedRateCount:
+          type: integer
+          format: int32
+        finishDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        notStartedRate:
+          type: number
+          format: float
+        notStartedRateCount:
+          type: integer
+          format: int32
+        passedRate:
+          type: number
+          format: float
+        passedRateCount:
+          type: integer
+          format: int32
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        stoppedRate:
+          type: number
+          format: float
+        stoppedRateCount:
+          type: integer
+          format: int32
+        testCasesCount:
+          type: integer
+          format: int32
+        threads:
+          type: integer
+          format: int32
+        warningRate:
+          type: number
+          format: float
+        warningRateCount:
+          type: integer
+          format: int32
+    ExecutionRequestReporting:
+      title: ExecutionRequestReporting
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/TestingStatus'
+        subject:
+          type: string
+        recipients:
+          type: array
+          items:
+            type: string
+        executionRequestId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+    ExecutionRequest:
+      title: ExecutionRequest
+      allOf:
+        - $ref: '#/components/schemas/RamObject'
+        - type: object
+      properties:
+        previousExecutionRequestId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        testPlanId:
+          type: string
+          format: uuid
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        analyzedByQa:
+          type: boolean
+        passedRate:
+          type: integer
+          format: int32
+        warningRate:
+          type: integer
+          format: int32
+        failedRate:
+          type: integer
+          format: int32
+        countOfTestRuns:
+          type: integer
+          format: int32
+        solutionBuild:
+          type: string
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        finishDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        duration:
+          type: integer
+          format: int64
+        legacyMailRecipients:
+          type: string
+        ciJobUrl:
+          type: string
+        testScopeId:
+          type: string
+          format: uuid
+        environmentId:
+          type: string
+          format: uuid
+        taToolsGroupId:
+          type: string
+          format: uuid
+        labels:
+          type: array
+          items:
+            type: string
+            format: uuid
+        executorId:
+          type: string
+          format: uuid
+        executorName:
+          type: string
+        labelTemplateId:
+          type: string
+          format: uuid
+        widgetConfigTemplateId:
+          type: string
+          format: uuid
+        threads:
+          type: integer
+          format: int32
+        numberOfStarts:
+          type: integer
+          format: int32
+        autoSyncCasesWithJira:
+          type: boolean
+        autoSyncRunsWithJira:
+          type: boolean
+        emailTemplateId:
+          type: string
+          format: uuid
+        emailSubject:
+          type: string
+        logCollectorConditionId:
+          type: string
+          format: uuid
+        flagIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        countLogRecords:
+          type: integer
+          format: int64
+        filteredByLabels:
+          type: array
+          items:
+            type: string
+            format: uuid
+        failedLogrecordsCounter:
+          type: integer
+          format: int32
+        jointExecutionKey:
+          type: string
+        jointExecutionCount:
+          type: integer
+          format: int32
+        jointExecutionTimeout:
+          type: integer
+          format: int32
+        initialExecutionRequestId:
+          type: string
+          format: uuid
+        virtual:
+          type: boolean
+    ExecutionRequestResponse:
+      title: ExecutionRequestResponse
+      type: object
+      properties:
+        analyzedByQa:
+          type: boolean
+        duration:
+          type: integer
+          format: int64
+        environment:
+          $ref: '#/components/schemas/Environment'
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        executor:
+          $ref: '#/components/schemas/Executor'
+        failedRate:
+          type: integer
+          format: int32
+        finishDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        initialExecutionRequest:
+          $ref: '#/components/schemas/InitialExecutionRequest'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        name:
+          type: string
+        passedRate:
+          type: integer
+          format: int32
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        uuid:
+          type: string
+          format: uuid
+        warningRate:
+          type: integer
+          format: int32
+    ExecutionRequestSearchRequest:
+      title: ExecutionRequestSearchRequest
+      type: object
+      properties:
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/AbstractFilter'
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortingParams'
+    ExecutionRequestWidgetConfigTemplateResponse:
+      title: ExecutionRequestWidgetConfigTemplateResponse
+      type: object
+      properties:
+        defaultLabelTemplateChanged:
+          type: boolean
+        template:
+          $ref: '#/components/schemas/WidgetConfigTemplate'
+    Executor:
+      title: Executor
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        username:
+          type: string
+    FailPattern:
+      title: FailPattern
+      type: object
+      properties:
+        failReasonId:
+          type: string
+          format: uuid
+        jiraTickets:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+        name:
+          type: string
+        patternDescription:
+          type: string
+        priority:
+          $ref: '#/components/schemas/Priority'
+        projectId:
+          type: string
+          format: uuid
+        rule:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    Priority:
+      type: string
+      enum:
+        - BLOCKER
+        - CRITICAL
+        - LOW
+        - MAJOR
+        - NORMAL
+    FailPatternResponse:
+      title: FailPatternResponse
+      type: object
+      properties:
+        failReason:
+          $ref: '#/components/schemas/RamObjectResponse'
+        jiraTickets:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+        name:
+          type: string
+        patternDescription:
+          type: string
+        priority:
+          $ref: '#/components/schemas/Priority'
+        project:
+          $ref: '#/components/schemas/RamObjectResponse'
+        rule:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    IssueResponse:
+      title: IssueResponse
+      type: object
+      properties:
+        executionRequestId:
+          type: string
+          format: uuid
+        failPattern:
+          $ref: '#/components/schemas/FailPatternResponse'
+        failReason:
+          $ref: '#/components/schemas/RamObjectResponse'
+        jiraTickets:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+        name:
+          type: string
+        priority:
+          $ref: '#/components/schemas/Priority'
+        testRuns:
+          type: array
+          items:
+            $ref: '#/components/schemas/IssueTestRunResponse'
+        uuid:
+          type: string
+          format: uuid
+    IssueResponsesModel:
+      title: IssueResponsesModel
+      type: object
+      properties:
+        params:
+          type: array
+          items:
+            $ref: '#/components/schemas/IssueResponse'
+        totalCount:
+          type: integer
+          format: int32
+    IssueTestRunResponse:
+      title: IssueTestRunResponse
+      type: object
+      properties:
+        name:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    Label:
+      title: Label
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+    LogRecordRatesResponse:
+      title: LogRecordRatesResponse
+      type: object
+      properties:
+        duration:
+          type: integer
+          format: int64
+        endDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        message:
+          type: string
+        name:
+          type: string
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        uuid:
+          type: string
+          format: uuid
+    LogRecordRegexSearchRequest:
+      title: LogRecordRegexSearchRequest
+      required:
+        - regex
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+        regex:
+          type: string
+        size:
+          type: integer
+          format: int32
+    LogRecordRegexSearchResponse:
+      title: LogRecordRegexSearchResponse
+      type: object
+      properties:
+        logRecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/LogRecordResponse'
+        total:
+          type: integer
+          format: int32
+    LogRecordResponse:
+      title: LogRecordResponse
+      type: object
+      properties:
+        logRecordId:
+          type: string
+          format: uuid
+        logRecordMessage:
+          type: string
+        logRecordName:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        scenarioId:
+          type: string
+          format: uuid
+        testCaseId:
+          type: string
+          format: uuid
+        testCaseName:
+          type: string
+        testPlanId:
+          type: string
+          format: uuid
+        testRunId:
+          type: string
+          format: uuid
+    MetaInfo:
+      title: MetaInfo
+      type: object
+      properties:
+        scenarioId:
+          type: string
+          format: uuid
+        line:
+          type: integer
+          format: int32
+        scenarioHashSum:
+          type: string
+        definitionId:
+          type: string
+          format: uuid
+        hidden:
+          type: boolean
+    NumberFilter:
+      title: NumberFilter
+      properties:
+        column:
+          type: string
+        filterType:
+          $ref: '#/components/schemas/FilterType'
+        from:
+          type: integer
+          format: int32
+        to:
+          type: integer
+          format: int32
+        type:
+          type: string
+        valueFilterType:
+          $ref: '#/components/schemas/ValueFilterType'
+      allOf:
+        - $ref: '#/components/schemas/AbstractFilter'
+        - title: NumberFilter
+          type: object
+          properties:
+            column:
+              type: string
+            filterType:
+              $ref: '#/components/schemas/FilterType'
+            from:
+              type: integer
+              format: int32
+            to:
+              type: integer
+              format: int32
+            type:
+              type: string
+            valueFilterType:
+              $ref: '#/components/schemas/ValueFilterType'
+    ValueFilterType:
+      type: string
+      enum:
+        - EQUAL
+        - FROM
+        - TO
+    PaginatedResponseExecutionRequestResponse:
+      title: PaginatedResponseExecutionRequestResponse
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExecutionRequestResponse'
+        total:
+          type: integer
+          format: int32
+    RamObjectResponse:
+      title: RamObjectResponse
+      type: object
+      properties:
+        name:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    RateFilter:
+      title: RateFilter
+      properties:
+        column:
+          type: string
+        filterType:
+          $ref: '#/components/schemas/FilterType'
+        from:
+          type: integer
+          format: int32
+        to:
+          type: integer
+          format: int32
+        type:
+          type: string
+        value:
+          type: integer
+          format: int32
+        valueFilterType:
+          $ref: '#/components/schemas/ValueFilterType'
+      allOf:
+        - $ref: '#/components/schemas/AbstractFilter'
+        - title: RateFilter
+          type: object
+          properties:
+            column:
+              type: string
+            filterType:
+              $ref: '#/components/schemas/FilterType'
+            from:
+              type: integer
+              format: int32
+            to:
+              type: integer
+              format: int32
+            type:
+              type: string
+            value:
+              type: integer
+              format: int32
+            valueFilterType:
+              $ref: '#/components/schemas/ValueFilterType'
+    ReferenceFilter:
+      title: ReferenceFilter
+      properties:
+        column:
+          type: string
+        type:
+          type: string
+        values:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+      allOf:
+        - $ref: '#/components/schemas/AbstractFilter'
+        - title: ReferenceFilter
+          type: object
+          properties:
+            column:
+              type: string
+            type:
+              type: string
+            values:
+              uniqueItems: true
+              type: array
+              items:
+                type: string
+                format: uuid
+    ReportLabelParameterData:
+      title: ReportLabelParameterData
+      type: object
+      properties:
+        isPassed:
+          type: boolean
+        passedCount:
+          type: integer
+          format: int32
+        failedCount:
+          type: integer
+          format: int32
+    RootCause:
+      title: RootCause
+      required:
+        - type
+      type: object
+      properties:
+        parentId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - CUSTOM
+            - GLOBAL
+        disabled:
+          type: boolean
+        isDefault:
+          type: boolean
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+    SortingParams:
+      title: SortingParams
+      type: object
+      properties:
+        column:
+          type: string
+        sortType:
+          type: string
+          enum:
+            - ASC
+            - DESC
+    StatusFilter:
+      title: StatusFilter
+      properties:
+        column:
+          type: string
+        type:
+          type: string
+        value:
+          type: array
+          items:
+            type: string
+      allOf:
+        - $ref: '#/components/schemas/AbstractFilter'
+        - title: StatusFilter
+          type: object
+          properties:
+            column:
+              type: string
+            type:
+              type: string
+            value:
+              type: array
+              items:
+                type: string
+    StepPath:
+      title: StepPath
+      type: object
+      properties:
+        uuidSteps:
+          type: array
+          items:
+            type: string
+            format: uuid
+    TestResult:
+      title: TestResult
+      type: object
+      properties:
+        executionRequest:
+          $ref: '#/components/schemas/ExecutionRequest'
+        qaHosts:
+          type: array
+          items:
+            type: string
+        taHosts:
+          type: array
+          items:
+            type: string
+    Flags:
+      type: string
+      enum:
+        - SKIP_IF_DEPENDENCY_FAILED
+        - STOP_ON_FAIL
+        - TERMINATE_IF_FAIL
+        - IGNORE_PREREQUISITE_IN_PASS_RATE
+        - IGNORE_VALIDATION_IN_PASS_RATE
+    TestRun:
+      title: TestRun
+      type: object
+      properties:
+        parentTestRunId:
+          type: string
+          format: uuid
+        isGroupedTestRun:
+          type: boolean
+        executionRequestId:
+          type: string
+          format: uuid
+        testCaseId:
+          type: string
+          format: uuid
+        testCaseName:
+          type: string
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        finishDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        duration:
+          type: integer
+          format: int64
+        executor:
+          type: string
+        jiraTicket:
+          type: string
+        taHost:
+          type: array
+          items:
+            type: string
+        qaHost:
+          type: array
+          items:
+            type: string
+        solutionBuild:
+          type: array
+          items:
+            type: string
+        rootCauseId:
+          type: string
+          format: uuid
+        dataSetUrl:
+          type: string
+        flags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Flags'
+        dataSetListUrl:
+          type: string
+        logCollectorData:
+          type: string
+        fdrWasSent:
+          type: boolean
+        fdrLink:
+          type: string
+        numberOfScreens:
+          type: integer
+          format: int32
+        urlToBrowserOrLogs:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        urlToBrowserSession:
+          type: string
+        passedRate:
+          type: integer
+          format: int32
+        warningRate:
+          type: integer
+          format: int32
+        failedRate:
+          type: integer
+          format: int32
+        comment:
+          $ref: '#/components/schemas/Comment'
+        metaInfo:
+          $ref: '#/components/schemas/MetaInfo'
+        statistic:
+          $ref: '#/components/schemas/TestRunStatistic'
+        testScopeSection:
+          $ref: '#/components/schemas/TestScopeSections'
+        order:
+          type: integer
+          format: int32
+        labelIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        browserNames:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        isFinalTestRun:
+          type: boolean
+        initialTestRunId:
+          type: string
+          format: uuid
+    TestRunStatistic:
+      title: TestRunStatistic
+      type: object
+      properties:
+        reportLabelParams:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ReportLabelParameterData'
+    TestRunsRatesResponse:
+      title: TestRunsRatesResponse
+      type: object
+      properties:
+        duration:
+          type: integer
+          format: int64
+        endDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        failureReason:
+          type: string
+        firstFailedLogrecord:
+          $ref: '#/components/schemas/LogRecordRatesResponse'
+        linkToTestCaseJira:
+          type: string
+        linkToTestRunJira:
+          type: string
+        name:
+          type: string
+        passedRate:
+          type: integer
+          format: int32
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        testCaseId:
+          type: string
+          format: uuid
+        testScenarioId:
+          type: string
+          format: uuid
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        uuid:
+          type: string
+          format: uuid
+    TextFilter:
+      title: TextFilter
+      properties:
+        caseSensitive:
+          type: boolean
+        column:
+          type: string
+        filterType:
+          type: string
+          enum:
+            - CONTAINS
+            - STARTS_WITH
+        type:
+          type: string
+        value:
+          type: string
+      allOf:
+        - $ref: '#/components/schemas/AbstractFilter'
+        - title: TextFilter
+          type: object
+          properties:
+            caseSensitive:
+              type: boolean
+            column:
+              type: string
+            filterType:
+              type: string
+              enum:
+                - CONTAINS
+                - STARTS_WITH
+            type:
+              type: string
+            value:
+              type: string
+    WidgetConfig:
+      title: WidgetConfig
+      type: object
+      properties:
+        columnVisibilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnVisibility'
+        isExecutionRequestsSummary:
+          type: boolean
+        labelTemplateId:
+          type: string
+          format: uuid
+        sizeLimit:
+          type: integer
+          format: int32
+        validationTemplateId:
+          type: string
+          format: uuid
+        widgetId:
+          type: string
+          format: uuid
+    WidgetConfigTemplate:
+      title: WidgetConfigTemplate
+      type: object
+      properties:
+        name:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+        widgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/WidgetConfig'
+    TestRunsByValidationLabelsRequest:
+      title: TestRunsByValidationLabelsRequest
+      type: object
+      properties:
+        labelsPath:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelRequest'
+        testRunNames:
+          type: array
+          items:
+            type: string
+        validationLabelFilters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationLabelFilterRequest'
+    LabelRequest:
+      title: LabelRequest
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    ValidationLabelFilterRequest:
+      title: ValidationLabelFilterRequest
+      type: object
+      properties:
+        name:
+          type: string
+        statuses:
+          type: array
+          items:
+            type: string
+    TestRunsByValidationLabelsResponse:
+      title: TestRunsByValidationLabelsResponse
+      type: object
+      properties:
+        validationLabels:
+          type: array
+          items:
+            type: string
+        testRuns:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunWithValidationLabelsResponse'
+        totalCount:
+          type: integer
+    TestRunWithValidationLabelsResponse:
+      title: TestRunWithValidationLabelsResponse
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        status:
+          type: string
+        validationLabels:
+          type: array
+          items:
+            type: string
+    ExecutionRequestsForCompareScreenshotsRequest:
+      title: ExecutionRequestsForCompareScreenshotsRequest
+      type: object
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        executionRequestIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    ExecutionRequestsCompareScreenshotResponse:
+      title: ExecutionRequestsCompareScreenshotResponse
+      type: object
+      properties:
+        executionRequests:
+          type: array
+          items:
+            type: object
+        tree:
+          type: array
+          items:
+            type: object
+    RamTerminateRequest:
+      title: TerminateRequest
+      type: object
+      properties:
+        executionRequestIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        isGracefully:
+          type: boolean
+    RamObject:
+      title: RamObject
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+    LogRecordCompareRequest:
+      title: LogRecordCompareRequest
+      type: object
+      properties:
+        compareType:
+          type: string
+        logRecordCompareRequestItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/LogRecordCompareRequestItem'
+    LogRecordCompareRequestItem:
+      title: LogRecordCompareRequestItem
+      type: object
+      properties:
+        executionRequestId:
+          type: string
+          format: uuid
+        itemId:
+          type: string
+          format: uuid
+    EnvironmentsCompareRequest:
+      title: EnvironmentsCompareRequest
+      type: object
+      properties:
+        environmentIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        executionRequestIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    RowScreenshotRequest:
+      title: RowScreenshotRequest
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: string
+            format: uuid
+    InitialExecutionRequest:
+      title: InitialExecutionRequest
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+    JointExecutionRequestSearchRequest:
+      title: JointExecutionRequestSearchRequest
+      type: object
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        key:
+          type: string
+    JointExecutionRequestSearchResponse:
+      title: JointExecutionRequestSearchRequest
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string

@@ -1,0 +1,25 @@
+@startuml
+
+class BvStep {
+    message: String
+    server: String
+    startDate: Timestamp
+    finishDate: Timestamp
+    duration: String
+    stepContext: JSONObject
+    uuid: UUID
+    type: TypeAction
+    testingStatus: TestingStatus
+    validation: Validation[]
+}
+
+class Validation {
+    status: String
+    bvStatus: String
+    expectedResult: String
+    actualResult: String
+    name: String
+}
+
+BvStep --> Validation
+@enduml

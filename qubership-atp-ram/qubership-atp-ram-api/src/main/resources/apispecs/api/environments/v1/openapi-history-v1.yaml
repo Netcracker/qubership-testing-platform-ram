@@ -1,0 +1,229 @@
+openapi: 3.0.3
+
+info:
+  title: 'history-controller'
+  description: 'Model History API'
+  version: "1.0.0"
+  contact:
+    name: OurCompany
+    url: https://www.ourcompany.com/company/about-ourcompany/contact-us.html
+
+tags:
+  - name: history-controller
+    description: Model History API
+
+paths:
+  /api/history/restore/{projectId}/{itemType}/{id}/revision/{revisionId}:
+    post:
+      tags:
+        - history-controller
+      summary: Restore the state of the provided entity to defined revision
+      operationId: restoreToRevision
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: project id for current entity
+          required: true
+        - name: itemType
+          in: path
+          schema:
+            type: string
+            description: values from /components/schemas/HistoryItemType must be used
+          required: true
+          example: 'environment'
+        - name: id
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: uuid of restored entity
+          required: true
+          example: '83b22327-2f68-4f8b-96ab-1d3670248b9f'
+        - name: revisionId
+          in: path
+          schema:
+            type: integer
+            description: target revision number for restored entity
+          required: true
+          example: 3
+      responses:
+        '200':
+          description: Revision was restored successfully
+        '400':
+          description: Restore for Entity type = '" + itemType + "' is not supported
+        '403':
+          description: Forbidden
+        '404':
+          description: Entity Id not found
+        '500':
+          description: Revision was not restored. Reference to the one of the systems is invalid.
+
+  /api/history/{projectId}/{itemType}/{id}:
+    get:
+      tags:
+        - history-controller
+      summary: finds all changes history for defined object
+      operationId: getAllHistory
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: project id for current entity
+          required: true
+        - name: itemType
+          in: path
+          schema:
+            type: string
+            description: values from /components/schemas/HistoryItemType must be used
+          required: true
+        - name: id
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryItemResponse'
+        '400':
+          description: History for Entity type = '" + itemType + "' is not supported
+        '404':
+          description: Entity Id not found
+
+  /api/history/version/{projectId}/{itemType}/{id}/revision/{revisionIds}:
+    get:
+      tags:
+        - history-controller
+      summary: finds all entity's states for provided version ids
+      operationId: getEntitiesByVersion
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: project id for current entity
+          required: true
+        - name: itemType
+          in: path
+          schema:
+            type: string
+            description: values from /components/schemas/HistoryItemType must be used
+          required: true
+        - name: id
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - name: revisionIds
+          in: path
+          schema:
+            type: array
+            items:
+              type: string
+          required: true
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompareEntityResponse'
+        '400':
+          description: Versioning for Entity type = '" + itemType + "' is not supported
+        '404':
+          description: Entity Id not found
+
+components:
+  schemas:
+    HistoryItemType:
+      type: string
+      enum:
+        - environment
+        - tatool
+        - system
+      example: 'environment'
+
+    PageInfo:
+      type: object
+      properties:
+        offset:
+          type: integer
+        limit:
+          type: integer
+        itemsTotalCount:
+          type: integer
+
+    HistoryItemResponse:
+      type: object
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/PageInfo'
+        historyItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryItem'
+
+    HistoryItem:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/HistoryItemType'
+        version:
+          type: integer
+          minimum: 1
+          description: commit nubmer of current changes
+        modifiedWhen:
+          type: string
+          format: 'date-time'
+          example: '2020-04-15T12:34:56.789Z'
+        modifiedBy:
+          type: string
+          example: 'Administrator'
+        added:
+          type: array
+          items:
+            type: string
+            example: 'connection'
+        deleted:
+          type: array
+          items:
+            type: string
+            example: 'connection'
+        changed:
+          type: array
+          items:
+            type: string
+            example: 'name'
+
+    CompareEntityResponse:
+      type: object
+      properties:
+        revision:
+          type: string
+        compareEntity:
+          type: object
+      required: [revision,compareEntity]

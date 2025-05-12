@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: email-subject-macros-controller
+    description: Email Subject Macros Controller
+paths:
+  /api/emailsubjectmacros:
+    get:
+      tags:
+        - email-subject-macros-controller
+      summary: getAll
+      operationId: getAll
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmailSubjectMacrosResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    EmailSubjectMacrosResponse:
+      title: EmailSubjectMacrosResponse
+      type: object
+      properties:
+        description:
+          type: string
+        name:
+          type: string

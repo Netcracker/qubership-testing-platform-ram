@@ -1,0 +1,198 @@
+openapi: 3.0.0
+
+info:
+  title: 'history-controller'
+  description: 'Model History API'
+  version: 1.0.0
+
+tags:
+  - name: history-controller
+    description: Model History API
+
+paths:
+  /api/history/restore/{projectId}/datasetlist/{id}/revision/{revisionId}:
+    post:
+      tags:
+        - history-controller
+      summary: Restore the state of the provided entity to defined revision
+      operationId: restoreToRevision
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: project id for current entity
+          required: true
+        - name: id
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: uuid of restored entity
+          required: true
+          example: '83b22327-2f68-4f8b-96ab-1d3670248b9f'
+        - name: revisionId
+          in: path
+          schema:
+            type: integer
+            description: target revision number for restored entity
+          required: true
+          example: 1
+      responses:
+        '200':
+          description: 'Revision was restored successfully'
+        '403':
+          description: 'Forbidden'
+        '404':
+          description: 'Entity Id not found'
+        '500':
+          description: 'Revision was not restored'
+
+  /api/history/{projectId}/datasetlist/{id}:
+    get:
+      tags:
+        - history-controller
+      summary: Finds all changes history for defined data set list
+      operationId: getAllHistory
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: project id for current entity
+          required: true
+        - name: id
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryItemResponse'
+        '404':
+          description: Entity Id not found
+          
+  /api/history/{projectId}/datasetlist/revisionDetails/{entityId}/{revision}:
+    get:
+      tags:
+        - history-controller
+      summary: Find model of Dataset List by revision
+      operationId: getRevisionDetails
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: project id for current entity
+          required: true
+        - name: entityId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: uuid of entity
+          required: true
+          example: '83b22327-2f68-4f8b-96ab-1d3670248b9f'
+        - name: revision
+          in: path
+          schema:
+            type: integer
+            description: target revision number
+          required: true
+          example: 3
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UiManDataSetListJ'
+        '404':
+          description: Entity Id not found
+
+
+components:
+  schemas:
+    UiManDataSetListJ:
+      type: object
+      properties:
+        author:
+          type: string
+        name:
+          type: string
+        dataSets:
+          type: array
+          items:
+            type: object
+        attributes:
+          type: array
+          items:
+            type: object
+      required: [author,name,dataSets,attributes]
+
+    PageInfo:
+      type: object
+      properties:
+        offset:
+          type: integer
+        limit:
+          type: integer
+        itemsTotalCount:
+          type: integer
+
+    HistoryItemResponse:
+      type: object
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/PageInfo'
+        historyItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryItem'
+
+    HistoryItem:
+      type: object
+      properties:
+        version:
+          type: integer
+          minimum: 1
+          description: Version nubmer of current changes
+        modifiedWhen:
+          type: string
+          example: '2020-04-15T12:34:56.789Z'
+        modifiedBy:
+          type: string
+          example: 'Administrator'
+        attribute:
+          type: string
+          example: 'Account'
+        dataSet:
+          type: string
+          example: 'TLNT-BASE-BVC-002'
+        changeSummary:
+          type: string
+          example: 'Changed'
+        oldValue:
+          type: string
+          example: 'OldValue23'
+        newValue:
+          type: string
+          example: 'NewValue42'

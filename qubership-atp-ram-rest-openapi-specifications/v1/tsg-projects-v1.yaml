@@ -1,0 +1,195 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: tsg-projects-controller
+    description: Tsg Projects Controller
+paths:
+  /api/tsg-projects:
+    get:
+      tags:
+        - tsg-projects-controller
+      summary: getAllTsgProjects
+      operationId: getAllTsgProjects
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/tsg-projects/ping:
+    get:
+      tags:
+        - tsg-projects-controller
+      summary: ping
+      operationId: ping
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/tsg-projects/settings/get:
+    get:
+      tags:
+        - tsg-projects-controller
+      summary: getSettings
+      operationId: getSettings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TsgConfiguration'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/tsg-projects/settings/put:
+    put:
+      tags:
+        - tsg-projects-controller
+      summary: updateSettings
+      operationId: updateSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TsgConfiguration'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TsgConfiguration'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/tsg-projects/{projectUuid}':
+    put:
+      tags:
+        - tsg-projects-controller
+      summary: setTsgProjectName
+      operationId: setTsgProjectName
+      parameters:
+        - name: projectUuid
+          in: path
+          description: projectUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    Project:
+      title: Project
+      type: object
+      properties:
+        missionControlToolUrl:
+          type: string
+        monitoringToolUrl:
+          type: string
+        name:
+          type: string
+        troubleShooterUrl:
+          type: string
+        tsgIntegration:
+          type: boolean
+        tsgProjectName:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    StatusConfig:
+      title: StatusConfig
+      type: object
+      properties:
+        executionStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExecutionStatus'
+        testingStatuses:
+          $ref: '#/components/schemas/TestingStatus'
+    ExecutionStatus:
+      type: string
+      enum:
+        - NOT_STARTED
+        - IN_PROGRESS
+        - FINISHED
+        - TERMINATED
+        - TERMINATED_BY_TIMEOUT
+        - SUSPENDED
+        - RESUMING
+        - SKIPPED
+    TestingStatus:
+      type: string
+      enum:
+        - STOPPED
+        - FAILED
+        - WARNING
+        - PASSED
+        - SKIPPED
+        - BLOCKED
+        - NOT_STARTED
+        - UNKNOWN
+    TsgConfiguration:
+      title: TsgConfiguration
+      type: object
+      properties:
+        statuses:
+          $ref: '#/components/schemas/StatusConfig'
+        tsgReceiverUrl:
+          type: string

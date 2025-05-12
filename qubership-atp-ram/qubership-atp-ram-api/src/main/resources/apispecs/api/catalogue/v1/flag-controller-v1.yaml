@@ -1,0 +1,34 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: flag-controller
+    description: Flag Controller
+paths:
+  /catalog/api/v1/flags/collection:
+    get:
+      tags:
+        - flag-controller
+      summary: getAllCollectionFlags
+      operationId: getAllCollectionFlags
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components: {}

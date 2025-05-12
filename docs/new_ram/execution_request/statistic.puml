@@ -1,0 +1,23 @@
+@startuml
+
+class Statistic {
+    _id: UUID
+    name: String
+    testRunUuid: UUID
+    parentUuid: UUID
+    tcCount: int
+    passedTcCount: int
+    passRate: int
+    bpp: int
+    revenue: int
+    executed: int
+    executionRequestId: UUID
+    type: StatisticType
+}
+
+enum StatisticType {
+    SUMMARY_STATISTIC
+    SUMMARY_STATISTIC_FOR_USAGES
+    SUMMARY_STATISTIC_SCENARIO_TYPE
+}
+@enduml

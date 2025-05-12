@@ -1,0 +1,323 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: root-cause-controller
+    description: Root Cause Controller
+paths:
+  /api/rootcauses:
+    get:
+      tags:
+        - root-cause-controller
+      summary: getAllRootCauses
+      operationId: getAllRootCauses
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RootCause'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - root-cause-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RootCauseUpsertRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RootCause'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/rootcauses/tree:
+    get:
+      tags:
+        - root-cause-controller
+      summary: getRootCauseTree
+      operationId: getRootCauseTree
+      parameters:
+        - name: projectId
+          in: query
+          description: projectId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RootCauseTreeNode'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/rootcauses/{id}':
+    get:
+      tags:
+        - root-cause-controller
+      summary: getRootCause
+      operationId: getRootCause
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RootCause'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - root-cause-controller
+      summary: update
+      operationId: update
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RootCauseUpsertRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RootCause'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - root-cause-controller
+      summary: delete
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/rootcauses/{id}/disable:
+    post:
+      tags:
+        - root-cause-controller
+      summary: disableRootCause
+      operationId: disableRootCause
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RootCause'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/rootcauses/{id}/enable:
+    post:
+      tags:
+        - root-cause-controller
+      summary: enableRootCause
+      operationId: enableRootCause
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RootCause'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    RootCause:
+      title: RootCause
+      required:
+        - type
+      type: object
+      properties:
+        parentId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - CUSTOM
+            - GLOBAL
+        disabled:
+          type: boolean
+        isDefault:
+          type: boolean
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+    RootCauseType:
+      type: string
+      enum:
+        - CUSTOM
+        - GLOBAL
+    RootCauseTreeNode:
+      title: RootCauseTreeNode
+      type: object
+      properties:
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/TreeNodeRootCause'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        parentId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/RootCauseType'
+    RootCauseUpsertRequest:
+      title: RootCauseUpsertRequest
+      required:
+        - name
+        - type
+      type: object
+      properties:
+        name:
+          type: string
+        parentId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/RootCauseType'
+    TreeNodeRootCause:
+      title: TreeNodeRootCause
+      type: object
+      properties:
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/TreeNodeRootCause'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        parentId:
+          type: string
+          format: uuid
+    RamObject:
+      title: RamObject
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string

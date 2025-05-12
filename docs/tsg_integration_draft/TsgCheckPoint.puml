@@ -1,0 +1,12 @@
+@startuml
+class TsgCheckPoint {
+    @JsonProperty("Name")
+    String name;
+    @JsonProperty("Status")
+    String status;
+    @JsonProperty("Message")
+    String message;
+    @JsonProperty("Check Points")
+    List<TsgCheckPoint> checkPoints;
+}
+@enduml

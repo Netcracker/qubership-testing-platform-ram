@@ -1,0 +1,35 @@
+@startuml
+class ItfStep {
+    message: String
+    server: String
+    startDate: Timestamp
+    finishDate: Timestamp
+    duration: String
+    stepContext: JSONObject
+    uuid: UUID
+    type: TypeAction
+    testingStatus: TestingStatus
+    validationTable: JSONObject
+    request: Request
+    response: Response
+}
+
+class Request {
+    endpoint: String
+    headers: String
+    timestamp: Timestamp
+    method: String
+    body: String
+}
+
+class Response {
+    endpoint: String
+    headers: String
+    timestamp: Timestamp
+    code: int
+    body: String
+}
+
+ItfStep --> Response
+ItfStep --> Request
+@enduml

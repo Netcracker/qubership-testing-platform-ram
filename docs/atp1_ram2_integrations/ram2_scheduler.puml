@@ -1,0 +1,15 @@
+@startuml
+title ExecutionRequestScheduler
+start
+:getNotFinishedEr;
+:ExecutionRequestScheduler.syncErWithAtp(ER_ID);
+
+if (ER contains \nTestRuns with \nstatus InProgress) then(yes)
+else (no)
+    :ExecutionRequestService.stopExecutionRequest;
+    :TsgService.sendFdrs(ER_ID);
+    :MailService.send(ER_ID);
+endif
+
+end
+@enduml

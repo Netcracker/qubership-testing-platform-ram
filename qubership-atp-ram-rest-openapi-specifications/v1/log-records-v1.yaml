@@ -1,0 +1,291 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: log-records-controller
+    description: Log Records Controller
+paths:
+  /api/executor/logrecords/findOrCreate:
+    post:
+      tags:
+        - log-records-controller
+      summary: findOrCreate
+      operationId: findOrCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogRecordRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecordResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  '/api/executor/logrecords/upload/{logRecordUuid}/stream':
+    post:
+      tags:
+        - log-records-controller
+      summary: upload
+      operationId: upload
+      parameters:
+        - name: logRecordUuid
+          in: path
+          description: logRecordUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: contentType
+          in: query
+          description: contentType
+          required: true
+          style: form
+          schema:
+            type: string
+        - name: fileName
+          in: query
+          description: fileName
+          required: true
+          style: form
+          schema:
+            type: string
+        - name: snapshotSource
+          in: query
+          description: snapshotSource
+          required: true
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadFileResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  '/api/executor/logrecords/{uuid}/update':
+    post:
+      tags:
+        - log-records-controller
+      summary: updateTestingStatusMessageAndRequestResponse
+      operationId: updateTestingStatusMessageAndRequestResponse
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLogRecordFields'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecordResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+components:
+  schemas:
+    LogRecordRequest:
+      title: LogRecordRequest
+      type: object
+      properties:
+        configInfo:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        finishDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        isCompound:
+          type: boolean
+        isSection:
+          type: boolean
+        logRecordId:
+          type: string
+          format: uuid
+        message:
+          type: string
+        metaInfo:
+          $ref: '#/components/schemas/MetaInfo'
+        name:
+          type: string
+        parentRecordId:
+          type: string
+          format: uuid
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        testRunId:
+          type: string
+          format: uuid
+        testingStatus:
+          type: string
+    LogRecordResponse:
+      title: LogRecordResponse
+      type: object
+      properties:
+        logRecordId:
+          type: string
+          format: uuid
+    MetaInfo:
+      title: MetaInfo
+      type: object
+      properties:
+        scenarioId:
+          type: string
+          format: uuid
+        line:
+          type: integer
+          format: int32
+        scenarioHashSum:
+          type: string
+        definitionId:
+          type: string
+          format: uuid
+        hidden:
+          type: boolean
+    Request:
+      title: Request
+      type: object
+      properties:
+        body:
+          type: string
+        endpoint:
+          type: string
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        headersList:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestHeader'
+        method:
+          type: string
+        timestamp:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+    Response:
+      title: Response
+      type: object
+      properties:
+        body:
+          type: string
+        code:
+          type: string
+        endpoint:
+          type: string
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        headersList:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestHeader'
+        timestamp:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+    RequestHeader:
+      title: RequestHeader
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        description:
+          type: string
+    UpdateLogRecordFields:
+      title: UpdateLogRecordFields
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileMetadata'
+        message:
+          type: string
+        request:
+          $ref: '#/components/schemas/Request'
+        response:
+          $ref: '#/components/schemas/Response'
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+    TestingStatus:
+      type: string
+      enum:
+        - STOPPED
+        - FAILED
+        - WARNING
+        - PASSED
+        - SKIPPED
+        - BLOCKED
+        - NOT_STARTED
+        - UNKNOWN
+    UploadFileResponse:
+      title: UploadFileResponse
+      type: object
+      properties:
+        fileId:
+          type: string
+        preview:
+          type: string
+    FileMetadata:
+      title: FileMetadata
+      type: object
+      properties:
+        fileName:
+          type: string
+        type:
+          type: string
+          enum:
+            - COMMON
+            - POT

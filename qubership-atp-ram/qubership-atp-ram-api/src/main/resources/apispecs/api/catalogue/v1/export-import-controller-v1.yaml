@@ -1,0 +1,162 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: export-import-controller
+    description: Export Import Controller
+paths:
+  '/ei/api/v1/flow/export/projects/{projectUuid}/candidates':
+    get:
+      tags:
+        - export-import-controller
+      summary: getCandidatesForExport
+      operationId: getCandidatesForExport
+      parameters:
+        - name: projectUuid
+          in: path
+          description: projectUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExportCandidate'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /ei/api/v1/flow/export/run:
+    post:
+      tags:
+        - export-import-controller
+      summary: runExportProcess
+      operationId: runExportProcess
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunProcessRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/RunProcessResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /ei/api/v1/flow/export/scope:
+    post:
+      tags:
+        - export-import-controller
+      summary: getExportScopeByCandidates
+      operationId: getExportScopeByCandidates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportScope'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ExportScope'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    ExportCandidate:
+      title: ExportCandidate
+      type: object
+      properties:
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExportCandidate'
+        groupId:
+          type: string
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    ExportImportTask:
+      title: ExportImportTask
+      type: object
+      properties:
+        serviceName:
+          type: string
+        serviceUrl:
+          type: string
+        taskId:
+          type: string
+    ExportScope:
+      title: ExportScope
+      type: object
+      properties:
+        entities:
+          type: object
+          additionalProperties:
+            uniqueItems: true
+            type: array
+            items:
+              type: string
+    RunProcessRequest:
+      title: RunProcessRequest
+      type: object
+      properties:
+        exportFormat:
+          type: string
+          enum:
+            - ATP
+            - Executor
+            - Postman
+        exportScope:
+          $ref: '#/components/schemas/ExportScope'
+        processName:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        startedBy:
+          type: string
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExportImportTask'
+    RunProcessResponse:
+      title: RunProcessResponse
+      type: object
+      properties:
+        processId:
+          type: string
+          format: uuid

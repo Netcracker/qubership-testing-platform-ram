@@ -1,0 +1,39 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: atp-link-provider-controller
+    description: Atp Link Provider Controller
+paths:
+  /api/atp/editor/link:
+    get:
+      tags:
+        - atp-link-provider-controller
+      summary: getLinkToEditor
+      operationId: getLinkToEditor
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditorLinkDto'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    EditorLinkDto:
+      title: EditorLinkDto
+      type: object
+      properties:
+        url:
+          type: string

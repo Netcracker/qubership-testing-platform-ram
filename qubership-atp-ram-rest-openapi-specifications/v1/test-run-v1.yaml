@@ -1,0 +1,2803 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: test-run-controller
+    description: Test Run Controller
+paths:
+  /api/testruns/analyzed:
+    post:
+      tags:
+        - test-run-controller
+      summary: getAnalyzedTestRuns
+      operationId: getAnalyzedTestRuns
+      parameters:
+        - name: page
+          in: query
+          description: page
+          required: true
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          description: size
+          required: true
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: sortColumn
+          in: query
+          description: sortColumn
+          required: true
+          style: form
+          schema:
+            type: string
+            enum:
+              - FAILURE_REASON
+              - LABEL
+              - TESTCASE_NAME
+              - TESTING_STATUS
+        - name: sortType
+          in: query
+          description: sortType
+          required: true
+          style: form
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestRunSearchRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnalyzedTestRunResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/analyzed/{uuid}/update':
+    post:
+      tags:
+        - test-run-controller
+      summary: updateAnalyzedTestRun
+      operationId: updateAnalyzedTestRun
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalyzedTestRunRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/testruns/create:
+    post:
+      tags:
+        - test-run-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestRun'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  '/api/testruns/delete/{uuid}':
+    delete:
+      tags:
+        - test-run-controller
+      summary: delete
+      operationId: delete
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/testruns/enriched/search:
+    post:
+      tags:
+        - test-run-controller
+      summary: searchEnriched
+      operationId: searchEnriched
+      parameters:
+        - name: page
+          in: query
+          description: page
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          description: size
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestRunSearchRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginationResponseEnrichedTestRun'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/testruns/failureReasons:
+    get:
+      tags:
+        - test-run-controller
+      summary: getFailureReasons
+      operationId: getFailureReasons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/testruns/failurereason/bulk:
+    patch:
+      tags:
+        - test-run-controller
+      summary: setFailureReasonToTestRuns
+      operationId: setFailureReasonToTestRuns
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestRunsFailureReasonSetBulkRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestRun'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/testruns/nongrouped:
+    get:
+      tags:
+        - test-run-controller
+      summary: getNonGroupedTestRuns
+      operationId: getNonGroupedTestRuns
+      parameters:
+        - name: executionRequestId
+          in: query
+          description: executionRequestId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NonGroupedTestRunResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/project/{uuid}':
+    get:
+      tags:
+        - test-run-controller
+      summary: getTestRunsForProject
+      operationId: getTestRunsForProject
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestRun'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/project/{uuid}/testCasesList':
+    get:
+      tags:
+        - test-run-controller
+      summary: getTestCasesList
+      operationId: getTestCasesList
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/testruns/save:
+    put:
+      tags:
+        - test-run-controller
+      summary: save
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestRun'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  /api/testruns/saveRootCause:
+    put:
+      tags:
+        - test-run-controller
+      summary: saveRootCausesForOfListTestRuns
+      operationId: saveRootCausesForOfListTestRuns
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTestRunsRootCause'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestRun'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/testruns/search:
+    post:
+      tags:
+        - test-run-controller
+      summary: search
+      operationId: search
+      parameters:
+        - name: page
+          in: query
+          description: page
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          description: size
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestRunSearchRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginationResponseTestRun'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/testruns/statusUpdate:
+    post:
+      tags:
+        - test-run-controller
+      summary: getStatusUpdate
+      operationId: getStatusUpdate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusUpdateRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusUpdateResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/testruns/stopresume:
+    post:
+      tags:
+        - test-run-controller
+      summary: stopResume
+      operationId: stopResume
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/testruns/terminate:
+    post:
+      tags:
+        - test-run-controller
+      summary: terminate
+      operationId: terminate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/testcase/{uuid}':
+    get:
+      tags:
+        - test-run-controller
+      summary: getByTestCase
+      operationId: getByTestCase
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/testruns/testingStatuses:
+    get:
+      tags:
+        - test-run-controller
+      summary: getTestingStatuses
+      operationId: getTestingStatuses
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - test-run-controller
+      summary: updateTestRunsTestingStatus
+      operationId: updateTestRunsTestingStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/TestingStatusUpdateRequest'
+      responses:
+        '201':
+          description: Created
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{executionRequestId}/setStatusToTerminated':
+    put:
+      tags:
+        - test-run-controller
+      summary: updateTestRunsStatusToTerminatedByErId
+      operationId: updateTestRunsStatusToTerminatedByErId
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{id}/logrecords/previews':
+    get:
+      tags:
+        - test-run-controller
+      summary: getAllLogRecordPreviews
+      operationId: getAllLogRecordPreviews
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: statuses
+          in: query
+          description: statuses
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: types
+          in: query
+          description: types
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: showNotAnalyzedItemsOnly
+          in: query
+          description: showNotAnalyzedItemsOnly
+          required: false
+          style: form
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogRecordPreviewResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{id}/testcase':
+    get:
+      tags:
+        - test-run-controller
+      summary: getTestRunTestCase
+      operationId: getTestRunTestCase
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseEntityResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}':
+    get:
+      tags:
+        - test-run-controller
+      summary: getById
+      operationId: getById
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/finish':
+    put:
+      tags:
+        - test-run-controller
+      summary: finishTestRun
+      operationId: finishTestRun
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/logrecords':
+    get:
+      tags:
+        - test-run-controller
+      summary: getAllLogRecords
+      operationId: getAllLogRecords
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogRecord'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - test-run-controller
+      summary: getAllFilteredLogRecords
+      operationId: getAllFilteredLogRecords
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogRecordFilteringRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogRecord'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/logrecords/updTestingStatus/{testingStatus}':
+    put:
+      tags:
+        - test-run-controller
+      summary: updNotStartedLogRecordsTestingStatus
+      operationId: updNotStartedLogRecordsTestingStatus
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: testingStatus
+          in: path
+          description: testingStatus
+          required: true
+          style: simple
+          schema:
+            $ref: '#/components/schemas/TestingStatus'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogRecord'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/parent':
+    get:
+      tags:
+        - test-run-controller
+      summary: getTestRunByIdWithParent
+      operationId: getTestRunByIdWithParent
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRunTreeResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/saveRootCause/{rootCauseId}':
+    put:
+      tags:
+        - test-run-controller
+      summary: saveRootCause
+      operationId: saveRootCause
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: rootCauseId
+          in: path
+          description: rootCauseId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{testRunId}/contextVariables/all':
+    get:
+      tags:
+        - test-run-controller
+      summary: getAllContextVariables
+      operationId: getAllContextVariables
+      parameters:
+        - name: testRunId
+          in: path
+          description: testRunId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContextVariable'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/start':
+    put:
+      tags:
+        - test-run-controller
+      summary: startTestRun
+      operationId: startTestRun
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/statistic/reportLabelParams/{name}':
+    post:
+      tags:
+        - test-run-controller
+      summary: upsertTestRunStatisticReportLabelParam
+      operationId: upsertTestRunStatisticReportLabelParam
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: name
+          in: path
+          description: name
+          required: true
+          style: simple
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportLabelParameterData'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/topLevelLogRecords':
+    get:
+      tags:
+        - test-run-controller
+      summary: getTopLevelLogRecords
+      operationId: getTopLevelLogRecords
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: statuses
+          in: query
+          description: statuses
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: types
+          in: query
+          description: types
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: showNotAnalyzedItemsOnly
+          in: query
+          description: showNotAnalyzedItemsOnly
+          required: false
+          style: form
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogRecord'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/updExecutionStatus/{executionStatus}':
+    put:
+      tags:
+        - test-run-controller
+      summary: updExecutionStatus
+      operationId: updExecutionStatus
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: executionStatus
+          in: path
+          description: executionStatus
+          required: true
+          style: simple
+          schema:
+            $ref: '#/components/schemas/ExecutionStatus'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/updTestingStatus':
+    put:
+      tags:
+        - test-run-controller
+      summary: updTestingStatusByLogRecords
+      operationId: updTestingStatusByLogRecords
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/updTestingStatus/{testingStatus}':
+    put:
+      tags:
+        - test-run-controller
+      summary: updTestingStatus
+      operationId: updTestingStatus
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: testingStatus
+          in: path
+          description: testingStatus
+          required: true
+          style: simple
+          schema:
+            $ref: '#/components/schemas/TestingStatus'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/updTestingStatus/{testingStatus}/hard':
+    put:
+      tags:
+        - test-run-controller
+      summary: updTestingStatusHard
+      operationId: updTestingStatusHard
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: testingStatus
+          in: path
+          description: testingStatus
+          required: true
+          style: simple
+          schema:
+            $ref: '#/components/schemas/TestingStatus'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/updTestingStatusHard':
+    put:
+      tags:
+        - test-run-controller
+      summary: updTestingStatusWithTestRunStatusHardReplace
+      operationId: updTestingStatusWithTestRunStatusHardReplace
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/executor/testruns/create:
+    post:
+      tags:
+        - test-run-controller
+      summary: executorCreate
+      operationId: executorCreate
+      requestBody:
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/StartRunRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRunResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  /api/executor/testruns/stop:
+    post:
+      tags:
+        - test-run-controller
+      summary: stopTestRun
+      operationId: stopTestRun
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  /api/executor/testruns/stopTestRuns:
+    post:
+      tags:
+        - test-run-controller
+      summary: stopTestRuns
+      operationId: stopTestRuns
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  /api/executor/testruns/updateOrCreate:
+    post:
+      tags:
+        - test-run-controller
+      summary: updateOrCreate
+      operationId: updateOrCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  /api/testruns/comment:
+    post:
+      tags:
+        - test-run-controller
+      summary: updateTestRunsWithComment
+      operationId: updateTestRunsWithComment
+      requestBody:
+        description: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestRunsCommentSetBulkRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /api/testruns/labelspath/search:
+    post:
+      tags:
+        - test-run-controller
+      summary: labelsPathSearch
+      operationId: labelsPathSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelsPathSearchRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestRunResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/{uuid}/updTestingStatus/{testingStatus}/updBrowserNames':
+    put:
+      tags:
+        - test-run-controller
+      summary: updTestingStatusHardAndBrowserNames
+      operationId: updTestingStatusHardAndBrowserNames
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: testingStatus
+          in: path
+          description: testingStatus
+          required: true
+          style: simple
+          schema:
+            $ref: '#/components/schemas/TestingStatus'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/testruns/jiraTickets:
+    put:
+      tags:
+        - test-run-controller
+      summary: updateTestRunsWithJiraTicket
+      operationId: updateTestRunsWithJiraTicket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/JiraTicketUpdateRequest'
+      responses:
+        '201':
+          description: Created
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/setFinal':
+    post:
+      tags:
+        - test-run-controller
+      summary: updateTestRunsWithFinalStatus
+      operationId: updateTestRunsWithFinalStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetBulkFinalTestRuns'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/testruns/propagateDefectsToComments':
+    post:
+      tags:
+        - test-run-controller
+      summary: propagateDefectsToComments
+      operationId: propagateDefectsToComments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestRunDefectsPropagationRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRunDefectsPropagationResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    JiraTicketUpdateRequest:
+      title: JiraTicketUpdateRequest
+      type: object
+      properties:
+        jiraTicket:
+          type: string
+        testRunId:
+          type: string
+          format: uuid
+    MetaInfo:
+      title: MetaInfo
+      type: object
+      properties:
+        scenarioId:
+          type: string
+          format: uuid
+        line:
+          type: integer
+          format: int32
+        scenarioHashSum:
+          type: string
+        definitionId:
+          type: string
+          format: uuid
+        hidden:
+          type: boolean
+    StartRunRequest:
+      title: StartRunRequest
+      type: object
+      properties:
+        projectName:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        testPlanName:
+          type: string
+        testPlanId:
+          type: string
+          format: uuid
+        testSuiteName:
+          type: string
+        testCaseName:
+          type: string
+        testCaseId:
+          type: string
+          format: uuid
+        executionRequestName:
+          type: string
+        atpExecutionRequestId:
+          type: string
+          format: uuid
+        isFinalTestRun:
+          type: boolean
+        initialTestRunId:
+          type: string
+          format: uuid
+        testRunName:
+          type: string
+        testRunId:
+          type: string
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        taHost:
+          type: string
+        qaHost:
+          type: string
+        executor:
+          type: string
+        executorId:
+          type: string
+          format: uuid
+        solutionBuild:
+          type: string
+        mailList:
+          type: string
+        testScopeId:
+          type: string
+          format: uuid
+        environmentId:
+          type: string
+          format: uuid
+        metaInfo:
+          $ref: '#/components/schemas/MetaInfo'
+        labelTemplateId:
+          type: string
+        widgetConfigTemplateId:
+          type: string
+        dataSetListId:
+          type: string
+        dataSetId:
+          type: string
+        threads:
+          type: integer
+          format: int32
+        autoSyncCasesWithJira:
+          type: boolean
+        autoSyncRunsWithJira:
+          type: boolean
+        flagIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        testScopeSection:
+          $ref: '#/components/schemas/TestScopeSections'
+        order:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    StartRunResponse:
+      title: StartRunResponse
+      type: object
+      properties:
+        executionRequestId:
+          type: string
+          format: uuid
+        testRunId:
+          type: string
+          format: uuid
+    FailureReason:
+      type: string
+      enum:
+        - ATP_MAINTENCE
+        - AT_ISSUE
+        - DESIGN_CHANGE
+        - ENVIROMENT_ISSUE
+        - ERROR_IN_CONFIGURATION
+        - INVESTIGATION_NEEDED
+        - NETWORK_ISSUE
+        - NOT_ANALYZED
+        - PERFOMANCE_ISSUE
+        - SOLUTION_ISSUE
+        - TEST_DATA_ISSUE
+    TestingStatus:
+      type: string
+      enum:
+        - STOPPED
+        - FAILED
+        - WARNING
+        - PASSED
+        - SKIPPED
+        - BLOCKED
+        - NOT_STARTED
+        - UNKNOWN
+    AnalyzedTestRunRequest:
+      title: AnalyzedTestRunRequest
+      type: object
+      properties:
+        failureReason:
+          $ref: '#/components/schemas/FailureReason'
+        jiraTicket:
+          type: string
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+    AnalyzedTestRunResponse:
+      title: AnalyzedTestRunResponse
+      type: object
+      properties:
+        executionRequestId:
+          type: string
+          format: uuid
+        failureReasonId:
+          type: string
+          format: uuid
+        jiraTicket:
+          type: string
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        name:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        scenarioId:
+          type: string
+          format: uuid
+        testCaseId:
+          type: string
+          format: uuid
+        testCaseName:
+          type: string
+        testPlanId:
+          type: string
+          format: uuid
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        uuid:
+          type: string
+          format: uuid
+    BaseEntityResponse:
+      title: BaseEntityResponse
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    BaseStatusUpdateResponse:
+      title: BaseStatusUpdateResponse
+      type: object
+      properties:
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        id:
+          type: string
+          format: uuid
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+    Child:
+      title: Child
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/TypeAction'
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+    EnrichedTestRun:
+      title: EnrichedTestRun
+      allOf:
+        - $ref: '#/components/schemas/TestRun'
+        - type: object
+      properties:
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        failureReason:
+          $ref: '#/components/schemas/RootCause'
+    FileMetadata:
+      title: FileMetadata
+      type: object
+      properties:
+        fileName:
+          type: string
+        type:
+          type: string
+          enum:
+            - COMMON
+            - POT
+    Label:
+      title: Label
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+    LogRecord:
+      title: LogRecord
+      type: object
+      properties:
+        protocolType:
+          type: string
+        lastUpdated:
+          type: string
+          format: date-time
+        createdDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        createdDateStamp:
+          type: integer
+          format: int64
+        message:
+          type: string
+        parentRecordId:
+          type: string
+          format: uuid
+        testRunId:
+          type: string
+          format: uuid
+        isSection:
+          type: boolean
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        server:
+          type: string
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        endDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        duration:
+          type: integer
+          format: int64
+        rootCause:
+          $ref: '#/components/schemas/RootCause'
+        stackTrace:
+          type: string
+        isCompaund:
+          type: boolean
+        snapshotId:
+          type: string
+        configInfoId:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        urlToLogCollectorData:
+          type: string
+        linkToSvp:
+          type: string
+        type:
+          $ref: '#/components/schemas/TypeAction'
+        duplicateId:
+          type: array
+          items:
+            type: string
+            format: uuid
+        taToolsLogs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaToolLog'
+        validationTable:
+          $ref: '#/components/schemas/ValidationTable'
+        validationLabels:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        fileMetadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileMetadata'
+        #        @JsonIgnore
+        #        messageParameters:
+        #          type: array
+        #          items:
+        #            $ref: '#/components/schemas/MessageParameter'
+        #        contextVariables:
+        #          type: array
+        #          items:
+        #            $ref: '#/components/schemas/ContextVariable'
+        #        stepContextVariables:
+        #          type: array
+        #          items:
+        #            $ref: '#/components/schemas/ContextVariable'
+        isBrowserConsoleLogsPresent:
+          type: boolean
+        isMessageParametersPresent:
+          type: boolean
+        table:
+          $ref: '#/components/schemas/Table'
+        preview:
+          type: string
+        metaInfo:
+          $ref: '#/components/schemas/MetaInfo'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Child'
+        isContextVariablesPresent:
+          type: boolean
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          UI: '#/components/schemas/UiLogRecord'
+          ITF: '#/components/schemas/ItfLogRecord'
+          ITF_LITE: '#/components/schemas/ItfLogRecord'
+          BV: '#/components/schemas/BvLogRecord'
+          NEWMAN: '#/components/schemas/TechnicalLogRecord'
+          R_B_M: '#/components/schemas/RbmLogRecord'
+          MIA: '#/components/schemas/MiaLogRecord'
+          REST: '#/components/schemas/RestLogRecord'
+          SQL: '#/components/schemas/SqlLogRecord'
+          SSH: '#/components/schemas/SshLogRecord'
+          COMPOUND: '#/components/schemas/CompoundLogRecord'
+          TECHNICAL: '#/components/schemas/TechnicalLogRecord'
+          TRANSPORT: '#/components/schemas/RestLogRecord'
+    CompoundLogRecordParameter:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    LogRecordParent:
+      type: object
+      properties:
+        depth:
+          type: integer
+        type:
+          $ref: '#/components/schemas/TypeAction'
+        metaInfo:
+          $ref: '#/components/schemas/MetaInfo'
+    RequestHeader:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        description:
+          type: string
+    Request:
+      title: Request
+      type: object
+      properties:
+        body:
+          type: string
+        endpoint:
+          type: string
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        headersList:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestHeader'
+        method:
+          type: string
+        timestamp:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+    Response:
+      title: Response
+      type: object
+      properties:
+        body:
+          type: string
+        code:
+          type: string
+        endpoint:
+          type: string
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        headersList:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestHeader'
+        timestamp:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+    CommandInfo:
+      type: object
+      properties:
+        passedMarkers:
+          type: array
+          items:
+            type: string
+        failedMarkers:
+          type: array
+          items:
+            type: string
+        timeout:
+          type: string
+    BvLogRecord:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+        - type: object
+          properties:
+            rules:
+              type: object
+              additionalProperties:
+                type: string
+            linkToTool:
+              type: string
+    CompoundLogRecord:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+        - type: object
+          properties:
+            parameters:
+              type: array
+              items:
+                $ref: '#/components/schemas/CompoundLogRecordParameter'
+    ItfLogRecord:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+        - type: object
+          properties:
+            linkToTool:
+              type: string
+    LogRecordQueryResult:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+        - type: object
+          properties:
+            parent:
+              type: object
+              additionalProperties:
+                type: object
+    LogRecordWithParentListResponse:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+        - type: object
+          properties:
+            parent:
+              type: array
+              items:
+                $ref: '#/components/schemas/LogRecordParent'
+    MiaLogRecord:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+        - type: object
+          properties:
+            isGroup:
+              type: boolean
+    RbmLogRecord:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+        - type: object
+          properties:
+            stage:
+              type: string
+            command:
+              type: string
+            result:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+    RestLogRecord:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+        - type: object
+          properties:
+            request:
+              $ref: '#/components/schemas/Request'
+            response:
+              $ref: '#/components/schemas/Response'
+    SqlLogRecord:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+        - type: object
+          properties:
+            command:
+              type: string
+            result:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+            connectionInfo:
+              type: object
+              additionalProperties:
+                type: string
+    SshLogRecord:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+        - type: object
+          properties:
+            command:
+              type: string
+            output:
+              type: string
+            commandInfo:
+              $ref: '#/components/schemas/CommandInfo'
+            connectionInfo:
+              type: object
+              additionalProperties:
+                type: string
+    TechnicalLogRecord:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+    UiLogRecord:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+        - type: object
+          properties:
+            screenId:
+              type: string
+            browserName:
+              type: string
+            browserMonitoringLink:
+              type: string
+    VerifyLogRecord:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+    WaitLogRecord:
+      allOf:
+        - $ref: '#/components/schemas/LogRecord'
+    LogRecordPreviewResponse:
+      title: LogRecordPreviewResponse
+      type: object
+      properties:
+        logRecordId:
+          type: string
+          format: uuid
+        preview:
+          type: string
+        testRunId:
+          type: string
+          format: uuid
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+    NonGroupedTestRunResponse:
+      title: NonGroupedTestRunResponse
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+    PaginationResponse:
+      title: PaginationResponse
+      type: object
+      properties:
+        totalCount:
+          type: integer
+          format: int64
+    PaginationResponseEnrichedTestRun:
+      title: PaginationResponseEnrichedTestRun
+      allOf:
+        - $ref: '#/components/schemas/PaginationResponse'
+        - type: object
+          properties:
+            entities:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnrichedTestRun'
+    PaginationResponseTestRun:
+      title: PaginationResponseTestRun
+      allOf:
+        - $ref: '#/components/schemas/PaginationResponse'
+        - type: object
+          properties:
+            entities:
+              type: array
+              items:
+                $ref: '#/components/schemas/TestRun'
+    ReportLabelParameterData:
+      title: ReportLabelParameterData
+      type: object
+      properties:
+        isPassed:
+          type: boolean
+        passedCount:
+          type: integer
+          format: int32
+        failedCount:
+          type: integer
+          format: int32
+    RootCause:
+      title: RootCause
+      required:
+        - type
+      type: object
+      properties:
+        parentId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - CUSTOM
+            - GLOBAL
+        disabled:
+          type: boolean
+        isDefault:
+          type: boolean
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+    SimpleTestRunResponse:
+      title: SimpleTestRunResponse
+      type: object
+      properties:
+        dataSetUrl:
+          type: string
+        duration:
+          type: integer
+          format: int64
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        finishDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        logCollectorData:
+          type: string
+        name:
+          type: string
+        rootCause:
+          $ref: '#/components/schemas/BaseEntityResponse'
+        solutionBuild:
+          type: array
+          items:
+            type: string
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        taHost:
+          type: array
+          items:
+            type: string
+        testCase:
+          $ref: '#/components/schemas/BaseEntityResponse'
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        urlToBrowserSession:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+        passedLogRecordsCount:
+          type: integer
+          format: int64
+        allLogRecordsCount:
+          type: integer
+          format: int64
+    StatusUpdateRequest:
+      title: StatusUpdateRequest
+      type: object
+      properties:
+        lastLoaded:
+          type: string
+          format: date-time
+        testRunsIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    StatusUpdateResponse:
+      title: StatusUpdateResponse
+      type: object
+      properties:
+        lastLoaded:
+          type: string
+          format: date-time
+        testRuns:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunStatusUpdateResponse'
+    TaToolLog:
+      title: TaToolLog
+      type: object
+      properties:
+        message:
+          type: string
+        screenShotId:
+          type: string
+    TestRunForRefreshFromJiraDto:
+      title: TestRunForRefreshFromJiraDto
+      type: object
+      properties:
+        jiraTicket:
+          type: string
+        lastRun:
+          type: boolean
+          example: false
+        name:
+          type: string
+        testCaseId:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+    TestRun:
+      title: TestRun
+      type: object
+      properties:
+        parentTestRunId:
+          type: string
+          format: uuid
+        isGroupedTestRun:
+          type: boolean
+        executionRequestId:
+          type: string
+          format: uuid
+        testCaseId:
+          type: string
+          format: uuid
+        testCaseName:
+          type: string
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        finishDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        duration:
+          type: integer
+          format: int64
+        executor:
+          type: string
+        jiraTicket:
+          type: string
+        taHost:
+          type: array
+          items:
+            type: string
+        qaHost:
+          type: array
+          items:
+            type: string
+        solutionBuild:
+          type: array
+          items:
+            type: string
+        rootCauseId:
+          type: string
+          format: uuid
+        dataSetUrl:
+          type: string
+        flags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Flags'
+        dataSetListUrl:
+          type: string
+        logCollectorData:
+          type: string
+        fdrWasSent:
+          type: boolean
+        fdrLink:
+          type: string
+        numberOfScreens:
+          type: integer
+          format: int32
+        urlToBrowserOrLogs:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        urlToBrowserSession:
+          type: string
+        passedRate:
+          type: integer
+          format: int32
+        warningRate:
+          type: integer
+          format: int32
+        failedRate:
+          type: integer
+          format: int32
+        comment:
+          $ref: '#/components/schemas/Comment'
+        metaInfo:
+          $ref: '#/components/schemas/MetaInfo'
+        statistic:
+          $ref: '#/components/schemas/TestRunStatistic'
+        testScopeSection:
+          $ref: '#/components/schemas/TestScopeSections'
+        order:
+          type: integer
+          format: int32
+        labelIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        browserNames:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        isFinalTestRun:
+          type: boolean
+        initialTestRunId:
+          type: string
+          format: uuid
+    TestRunSearchRequest:
+      title: TestRunSearchRequest
+      type: object
+      properties:
+        executionRequestId:
+          type: string
+          format: uuid
+        failureReasons:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+        inTestingStatuses:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TestingStatus'
+        labelName:
+          type: string
+        nameContains:
+          type: string
+        notInTestingStatuses:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TestingStatus'
+        testCaseName:
+          type: string
+        testRunIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+    TestRunStatistic:
+      title: TestRunStatistic
+      type: object
+      properties:
+        reportLabelParams:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ReportLabelParameterData'
+    TestRunStatusUpdateResponse:
+      title: TestRunStatusUpdateResponse
+      type: object
+      properties:
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        id:
+          type: string
+          format: uuid
+        logRecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseStatusUpdateResponse'
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+    TestRunToJiraInfoDto:
+      title: TestRunToJiraInfoDto
+      type: object
+      properties:
+        environmentInfo:
+          type: string
+        executionRequestId:
+          type: string
+          format: uuid
+        jiraTicket:
+          type: string
+        lastRun:
+          type: boolean
+          example: false
+        name:
+          type: string
+        testCaseId:
+          type: string
+          format: uuid
+        testRunAtpLink:
+          type: string
+        testingStatus:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    TestRunTreeResponse:
+      title: TestRunTreeResponse
+      type: object
+      properties:
+        simpleTestRun:
+          $ref: '#/components/schemas/SimpleTestRunResponse'
+    TestRunsFailureReasonSetBulkRequest:
+      title: TestRunsFailureReasonSetBulkRequest
+      type: object
+      properties:
+        failureReasonId:
+          type: string
+          format: uuid
+        testRunIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+    TestingStatusUpdateRequest:
+      title: TestingStatusUpdateRequest
+      type: object
+      properties:
+        testRunId:
+          type: string
+          format: uuid
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+    UpdateTestRunsRootCause:
+      title: UpdateTestRunsRootCause
+      type: object
+      properties:
+        rootCauseId:
+          type: string
+          format: uuid
+        testRunIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    ValidationTable:
+      title: ValidationTable
+      type: object
+      properties:
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationTableLine'
+    BvStatus:
+      type: string
+      enum:
+        - UNDEFINED
+        - MODIFIED
+        - SIMILAR
+        - CHANGED
+        - IDENTICAL
+        - MISSED
+        - EXTRA
+        - ERROR
+        - BROKEN_STEP_INDEX
+        - HIDDEN
+        - SUCCESS
+        - SKIPPED
+        - IGNORED
+        - PASSED
+        - AR_MISSED
+        - ER_MISSED
+        - FAILED
+    ValidationTableLine:
+      title: ValidationTableLine
+      type: object
+      properties:
+        name:
+          type: string
+        expectedResult:
+          type: string
+        actualResult:
+          type: string
+        status:
+          $ref: '#/components/schemas/TestingStatus'
+        bvStatus:
+          $ref: '#/components/schemas/BvStatus'
+        isImportant:
+          type: boolean
+        validationLabels:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    TestRunsCommentSetBulkRequest:
+      title: TestRunsCommentSetBulkRequest
+      type: object
+      properties:
+        comment:
+          $ref: '#/components/schemas/Comment'
+        testRunIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    Comment:
+      title: Comment
+      type: object
+      properties:
+        html:
+          type: string
+        text:
+          type: string
+    LabelsPathSearchRequest:
+      title: LabelsPathSearchRequest
+      type: object
+      properties:
+        executionRequestId:
+          type: string
+          format: uuid
+        labelsPath:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelRequest'
+    LabelRequest:
+      title: LabelRequest
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    TestRunResponse:
+      title: TestRunResponse
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    TestScopeSections:
+      type: string
+      enum:
+        - PREREQUISITES
+        - EXECUTION
+        - VALIDATION
+    ExecutionStatus:
+      type: string
+      enum:
+        - NOT_STARTED
+        - IN_PROGRESS
+        - FINISHED
+        - TERMINATED
+        - TERMINATED_BY_TIMEOUT
+        - SUSPENDED
+        - RESUMING
+        - SKIPPED
+    ContextVariable:
+      title: ContextVariable
+      type: object
+      properties:
+        name:
+          type: string
+        beforeValue:
+          type: string
+        afterValue:
+          type: string
+    MessageParameter:
+      title: MessageParameter
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    Table:
+      title: Table
+      type: object
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Row'
+    Row:
+      title: Row
+      type: object
+      properties:
+        cells:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cell'
+    Cell:
+      title: Cell
+      type: object
+      properties:
+        value:
+          type: string
+    TypeAction:
+      type: string
+      enum:
+        - UI
+        - ITF
+        - BV
+        - NEWMAN
+        - R_B_M
+        - MIA
+        - REST
+        - SQL
+        - SSH
+        - COMPOUND
+        - TECHNICAL
+        - TRANSPORT
+    Flags:
+      type: string
+      enum:
+        - SKIP_IF_DEPENDENCY_FAILED
+        - STOP_ON_FAIL
+        - TERMINATE_IF_FAIL
+        - IGNORE_PREREQUISITE_IN_PASS_RATE
+        - IGNORE_VALIDATION_IN_PASS_RATE
+    RamObject:
+      title: RamObject
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+    SetBulkFinalTestRuns:
+      title: SetBulkFinalTestRuns
+      type: object
+      properties:
+        executionRequestId:
+          type: string
+          format: uuid
+        testRunIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    LogRecordFilteringRequest:
+      type: object
+      properties:
+        statuses:
+          type: array
+          items:
+            type: string
+        types:
+          type: array
+          items:
+            type: string
+        showNotAnalyzedItemsOnly:
+          type: boolean
+    TestRunDefectsPropagationRequest:
+        type: object
+        properties:
+          projectId:
+            type: string
+            format: uuid
+          executionRequestId:
+            type: string
+            format: uuid
+          testRunIds:
+            type: array
+            items:
+              type: string
+              format: uuid
+    TestRunDefectsPropagationResponse.Item:
+          type: object
+          properties:
+            name:
+              type: string
+    TestRunDefectsPropagationResponse:
+        type: object
+        properties:
+          successTestRuns:
+            type: array
+            items:
+              $ref: '#/components/schemas/TestRunDefectsPropagationResponse.Item'
+          failedTestRuns:
+            type: array
+            items:
+              $ref: '#/components/schemas/TestRunDefectsPropagationResponse.Item'

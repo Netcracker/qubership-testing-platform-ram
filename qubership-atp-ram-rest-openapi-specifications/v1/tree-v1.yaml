@@ -1,0 +1,490 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: tree-controller
+    description: Tree Controller
+paths:
+  '/api/tree/executionrequests/{executionRequestId}/potfiles':
+    get:
+      tags:
+        - tree-controller
+      summary: getPotStatistics
+      operationId: getPotStatistics
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PotsStatisticsPerTestCase'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/tree/executionrequests/{executionRequestId}/potfiles/{testRunId}':
+    get:
+      tags:
+        - tree-controller
+      summary: getPotStatisticsPerTestRun
+      operationId: getPotStatisticsPerTestRun
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: testRunId
+          in: path
+          description: testRunId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PotsStatisticsPerAction'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/tree/executionrequests/{executionRequestId}/potfilesArchive':
+    get:
+      tags:
+        - tree-controller
+      summary: downloadArchiveWithPotFilesInExecutionRequest
+      operationId: downloadArchiveWithPotFilesInExecutionRequest
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/tree/executionrequests/{executionRequestId}/testruns':
+    get:
+      tags:
+        - tree-controller
+      summary: getExecutionRequestTestRunTree
+      operationId: getExecutionRequestTestRunTree
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: fields
+          in: query
+          description: fields
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  '/api/tree/executionrequests/{executionRequestId}/widgets/{widgetId}':
+    get:
+      tags:
+        - tree-controller
+      summary: getExecutionRequestTreeNodeByWidgetId
+      operationId: getExecutionRequestTreeNodeByWidgetId
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: widgetId
+          in: path
+          description: widgetId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: labelTemplateId
+          in: query
+          description: labelTemplateId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: validationTemplateId
+          in: query
+          description: validationTemplateId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: fields
+          in: query
+          description: fields
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: skipOverride
+          in: query
+          description: skipOverride
+          required: false
+          style: form
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/tree/executionrequests/{id}':
+    get:
+      tags:
+        - tree-controller
+      summary: getExecutionRequestTreeNode
+      operationId: getExecutionRequestTreeNode
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: labelTemplateId
+          in: query
+          description: labelTemplateId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: fields
+          in: query
+          description: fields
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: includeAll
+          in: query
+          description: Adds all execution steps to the tree
+          required: false
+          style: form
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/tree/executionrequests/{id}/search/{nodeName}':
+    get:
+      tags:
+        - tree-controller
+      summary: searchExecutionRequestTreeNode
+      operationId: searchExecutionRequestTreeNode
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: nodeName
+          in: path
+          description: nodeName
+          required: true
+          style: simple
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: fields
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/tree/testruns/{testRunId}/logrecords':
+    get:
+      tags:
+        - tree-controller
+      summary: getExecutionRequestTestRunLogRecordsTree
+      operationId: getExecutionRequestTestRunLogRecordsTree
+      parameters:
+        - name: testRunId
+          in: path
+          description: testRunId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: statuses
+          in: query
+          description: statuses
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: types
+          in: query
+          description: types
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: showNotAnalyzedItemsOnly
+          in: query
+          description: showNotAnalyzedItemsOnly
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: fields
+          in: query
+          description: fields
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/tree/{logRecordUuid}/logRecordChildNodes':
+    get:
+      tags:
+        - tree-controller
+      summary: getLogRecordNodesByParentLogRecord
+      operationId: getLogRecordNodesByParentLogRecord
+      parameters:
+        - name: logRecordUuid
+          in: path
+          description: logRecordUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: statuses
+          in: query
+          description: statuses
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: types
+          in: query
+          description: types
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: showNotAnalyzedItemsOnly
+          in: query
+          description: showNotAnalyzedItemsOnly
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: fields
+          in: query
+          description: fields
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    InputStream:
+      title: InputStream
+      type: object
+    PotsStatisticsPerAction:
+      title: PotsStatisticsPerAction
+      type: object
+      properties:
+        logRecordId:
+          type: string
+        name:
+          type: string
+        potFileName:
+          type: string
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+    PotsStatisticsPerTestCase:
+      title: PotsStatisticsPerTestCase
+      type: object
+      properties:
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/PotsStatisticsPerAction'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+    TestingStatus:
+      type: string
+      enum:
+        - STOPPED
+        - FAILED
+        - WARNING
+        - PASSED
+        - SKIPPED
+        - BLOCKED
+        - NOT_STARTED
+        - UNKNOWN
+    Resource:
+      title: Resource
+      type: object
+      properties:
+        description:
+          type: string
+        file:
+          type: string
+          format: binary
+        filename:
+          type: string
+        inputStream:
+          $ref: '#/components/schemas/InputStream'
+        open:
+          type: boolean
+        readable:
+          type: boolean
+        uri:
+          type: string
+          format: uri
+        url:
+          type: string
+          format: url

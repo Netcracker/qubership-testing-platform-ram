@@ -1,0 +1,179 @@
+@startuml
+
+class TemplateReport {
+    _id: UUID
+    name: String
+    projectUuid: UUID
+    testPlanUuid: UUID
+    entities: List<TemplateEntity>
+}
+
+interface TemplateEntity {
+    required: boolean
+    params: Map<String, Object>,
+    type: ?
+    order: int
+}
+
+class MailEntity {
+    required: boolean = true
+    params: Map<String, Object> =
+                {subject:String,
+                recipients: List<String>}
+    order: int = 0
+}
+
+class TestCasesSummaryEntity {
+    required: boolean = false
+    params: Map<String, Object> =
+                {testCasesCount:int,
+                passedCount: int,
+                passedRate: int,
+                failedCount: int,
+                failedRate: int,
+                warningCount: int,
+                warningRate: int,
+                executionRequestId: UUID}
+    order: int = 2
+}
+
+class BuildEntity {
+    required: boolean = false
+    params: Map<String, Object> =
+                {server:String,
+                build: String}
+    order: int = 1
+}
+
+class TopIssuesEntity {
+    type: ? = Table
+    required: boolean = false
+    params: Map<String, Object> = {
+                rows: List<TopIssueRow>}
+    order: int = 3
+}
+
+class TestCasesEntity {
+    type: ? = Table
+    required: boolean = false
+    params: Map<String, Object> = {
+                    rows: List<TestRunRow>}
+    availableColumns: Map<String, String> = {
+                        "testCaseName": "Test case name"
+                        "status": "Status"
+                        "rate": "Rate"
+                        "issue": "Issue"
+                        "duration": "Duration"
+                        "failureReason": "Failure reason"
+                        "failedSteps": "Failed steps"
+                        "dataset": "Dataset"
+                        "browserLog": "Browser log"}
+    currentColumns: Map<String, String> = {
+                        "testCaseName": "Test case name"
+                        "status": "Status"
+                        "rate": "Rate"
+                        "issue": "Issue"}
+    order: int = 4
+}
+
+class RootCauseStatisticsEntity {
+    type: ? = Table
+        required: false
+        params Map<String, Object> = {
+                        rows: List<RootCauseRow>}
+    order: int = 5
+}
+
+class CommentEntity {
+    required: boolean = false
+    order: int
+    elements: List<TemplateEntity>
+}
+
+class TopIssueRow {
+    priority: Priority
+    issue: Issue
+    message: String
+    countOfTrs: int
+    failedSteps: List<LogRecordShort>
+    component: String
+    tmsTicket: String
+}
+
+enum Priority {
+    LOW,
+    MAJOR,
+    NORMAL,
+    CRITICAL,
+    BLOCKER
+}
+
+class Issue {
+    id: UUID
+    name: String
+}
+
+class LogRecordShort {
+    id: UUID
+    name: String
+}
+
+enum Component {
+    Prerequisites
+    Functional Core
+}
+
+class TestRunRow {
+    id: UUID
+    name: String
+    status: TestingStatuses
+    passedRate: int
+    issue: Issue
+    duration: long
+    failureReason: DefaultRootCauseType
+    failedSteps: List<LogRecordShort>
+    dataset: Dataset
+    browserLog: String
+}
+
+class Dataset {
+    datasetId: UUID
+    datasetStorageId: UUID
+    name: String
+}
+
+
+class RootCauseRow {
+    startDate: Timestamp
+    executionRequestName: String
+    notAnalyzed: NotAnalyzedDto
+}
+
+class NotAnalyzedDto {
+    count: int
+    rate: int
+}
+
+TemplateEntity <|.. MailEntity
+TemplateEntity <|.. TestCasesSummaryEntity
+TemplateEntity <|.. BuildEntity
+TemplateEntity <|.. TopIssuesEntity
+TemplateEntity <|.. TestCasesEntity
+TemplateEntity <|.. RootCauseStatisticsEntity
+TemplateEntity <|.. CommentEntity
+
+TopIssueRow --* TopIssuesEntity
+TemplateEntity --* TemplateReport
+TestRunRow --* TestCasesEntity
+RootCauseRow --* RootCauseStatisticsEntity
+
+Priority --> TopIssueRow
+Issue --> TopIssueRow
+LogRecordShort --> TopIssueRow
+Component --> TopIssueRow
+Issue --> TestRunRow
+Dataset --> TestRunRow
+LogRecordShort --> TestRunRow
+NotAnalyzedDto --> RootCauseRow
+
+@enduml

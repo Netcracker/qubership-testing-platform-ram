@@ -1,0 +1,193 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: data-set-list-lazy-loading-controller
+    description: Data Set List Lazy Loading Controller
+paths:
+  '/dsl/lazy/{dataSetListId}':
+    get:
+      tags:
+        - data-set-list-lazy-loading-controller
+      summary: Returns information about the selected DSL.
+      operationId: getDataSetListFlat
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/DataSetListFlat'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/lazy/{dataSetListId}/ReferenceByPath/{attributePath}':
+    get:
+      tags:
+        - data-set-list-lazy-loading-controller
+      summary: Returns information about the selected DSL.
+      operationId: getReferencedDataSetList
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: attributePath
+          in: path
+          description: attributePath
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/RefDataSetListFlat'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    AttributeFlat:
+      title: AttributeFlat
+      type: object
+      properties:
+        containsAttributes:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParameterFlat'
+        type:
+          $ref: '#/components/schemas/AttributeType'
+    DataSetFlat:
+      title: DataSetFlat
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelFlat'
+        name:
+          type: string
+    DataSetListFlat:
+      title: DataSetListFlat
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeFlat'
+        dataSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSetFlat'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    LabelFlat:
+      title: LabelFlat
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    ParameterFlat:
+      title: ParameterFlat
+      type: object
+      properties:
+        dataSet:
+          type: string
+          format: uuid
+        overlap:
+          type: boolean
+        value:
+          type: string
+        valueRef:
+          type: string
+    RefDataSetListAttribute:
+      title: RefDataSetListAttribute
+      type: object
+      properties:
+        containsAttributes:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefParameter'
+        type:
+          $ref: '#/components/schemas/AttributeType'
+    RefDataSetListFlat:
+      title: RefDataSetListFlat
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefDataSetListAttribute'
+    RefParameter:
+      title: RefParameter
+      type: object
+      properties:
+        dataSet:
+          type: string
+          format: uuid
+        overlap:
+          type: boolean
+        value:
+          type: string
+        valueRef:
+          type: string
+    AttributeType:
+      type: string
+      enum:
+        - CHANGE
+        - DSL
+        - ENCRYPTED
+        - FILE
+        - LIST
+        - TEXT

@@ -1,0 +1,125 @@
+@startuml
+
+class MiaSqlStep {
+    validation: Validation[]
+    message: String
+    server: String
+    startDate: Timestamp
+    finishDate: Timestamp
+    duration: String
+    connectionInfo: ConnectionInfoSql
+    stepContext: JSONObject
+    uuid: UUID
+    type: TypeAction
+    testingStatus: TestingStatus
+}
+
+class Validation {
+    sqlQuery: String
+    validationTable: ValidationTable
+    output: JSONObject
+}
+
+class ConnectionInfoSql {
+    connectionString: String
+    user: String
+}
+
+class ValidationTable {
+    data: ValidationTableData
+}
+
+class ValidationTableData {
+    columns: String[]
+    rows: Row[]
+}
+
+class Row {
+    data: String[]
+}
+
+MiaSqlStep --> Validation
+MiaSqlStep --> ConnectionInfoSql
+Validation --> ValidationTable
+ValidationTable --> ValidationTableData
+ValidationTableData --> Row
+
+class MiaSshStep {
+    message: String
+    server: String
+    startDate: Timestamp
+    finishDate: Timestamp
+    duration: String
+    stepContext: JSONObject
+    uuid: UUID
+    type: TypeAction
+    testingStatus: TestingStatus
+    sshCommands: SshCommand[]
+    commandInfo: CommandInfo
+    connectionInfo: ConnectionInfoSsh
+}
+
+class SshCommand {
+    command: String
+    startDate?: Timestamp
+    finishDate?: Timestamp
+    output: String
+}
+
+class CommandInfo {
+    passedMarker: String[]
+    failedMarker: String[]
+    warningMarker: String[]
+    timeout: int
+}
+
+class ConnectionInfoSsh {
+    host: String
+    port: int
+    user: String
+}
+MiaSshStep --> SshCommand
+MiaSshStep --> CommandInfo
+MiaSshStep --> ConnectionInfoSsh
+
+class MiaRestStep {
+    message: String
+    server: String
+    startDate: Timestamp
+    finishDate: Timestamp
+    duration: String
+    stepContext: JSONObject
+    uuid: UUID
+    type: TypeAction
+    testingStatus: TestingStatus
+    connectionInfo: ConnectionInfoRest
+    request: Request
+    response: Response
+}
+
+class ConnectionInfoRest {
+    user: String
+    port: int
+}
+
+class Request {
+    endpoint: String
+    headers: String
+    timestamp: Timestamp
+    method: String
+    body: String
+}
+
+class Response {
+    endpoint: String
+    headers: String
+    timestamp: Timestamp
+    code: int
+    body: String
+}
+
+MiaRestStep --> ConnectionInfoRest
+MiaRestStep --> Request
+MiaRestStep --> Response
+
+@enduml

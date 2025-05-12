@@ -1,0 +1,10 @@
+@startuml
+class FdrResponse {
+    String testRunId
+    String fdrLink
+    void setTestRunId(String testRunId)
+    String getTestRunId()
+    void setFdrLink(String fdrLink)
+    String getFdrLink()
+}
+@enduml

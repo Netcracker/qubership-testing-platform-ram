@@ -1,0 +1,247 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: report-templates-controller
+    description: Report Templates Controller
+paths:
+  '/api/templates/project/{projectId}':
+    get:
+      tags:
+        - report-templates-controller
+      summary: getAll
+      operationId: getAll
+      parameters:
+        - name: projectId
+          in: path
+          description: projectId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReportTemplate'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - report-templates-controller
+      summary: create
+      operationId: create
+      parameters:
+        - name: projectId
+          in: path
+          description: projectId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportTemplate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportTemplate'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/templates/project/{projectId}/template/default':
+    get:
+      tags:
+        - report-templates-controller
+      summary: getDefaultTemplate
+      operationId: getDefaultTemplate
+      parameters:
+        - name: projectId
+          in: path
+          description: projectId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportTemplate'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/templates/project/{projectId}/template/{uuid}':
+    get:
+      tags:
+        - report-templates-controller
+      summary: getByUuid
+      operationId: getByUuid
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: projectId
+          in: path
+          description: projectId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportTemplate'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - report-templates-controller
+      summary: save
+      operationId: save
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: projectId
+          in: path
+          description: projectId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportTemplate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportTemplate'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - report-templates-controller
+      summary: delete
+      operationId: delete
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: projectId
+          in: path
+          description: projectId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+components:
+  schemas:
+    ReportTemplate:
+      title: ReportTemplate
+      required:
+        - subject
+      type: object
+      properties:
+        active:
+          type: boolean
+        name:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        recipients:
+          type: array
+          items:
+            type: string
+        subject:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+        widgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/WidgetsType'
+    WidgetsType:
+      type: string
+      enum:
+        - ENVIRONMENTS_INFO
+        - EXECUTION_SUMMARY
+        - ROOT_CAUSES_STATISTIC
+        - SERVER_SUMMARY
+        - SUMMARY
+        - TEST_CASES
+        - TOP_ISSUES

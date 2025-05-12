@@ -1,0 +1,31 @@
+@startuml
+
+class EnvironmentsInfo {
+    _id: UUID
+    name: String = 'Environments info'
+    executionRequestId: UUID
+    startDate: Timestamp
+    finishDate: Timestamp
+    duration: long
+    toolsInfo: ToolsInfo
+    qaEnvironments: List<Environment>
+    taEnvironments: List<Environment>
+}
+
+class ToolsInfo {
+    wdShellVersion: String
+    shellVersion: String
+    sessionId: String
+    selenoid: String
+    dealer: String
+    tool: String
+}
+
+class Environment {
+    name: String
+    status: TestingStatuses
+    version: String
+    url: String
+}
+
+@enduml

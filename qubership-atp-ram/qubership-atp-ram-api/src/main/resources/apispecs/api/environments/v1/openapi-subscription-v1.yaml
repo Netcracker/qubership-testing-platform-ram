@@ -1,0 +1,366 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: "1.0"
+  contact:
+    name: OurCompany
+    url: https://www.ourcompany.com/company/about-ourcompany/contact-us.html
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: subscription-controller
+    description: Subscription Controller
+paths:
+  /api/subscriptions:
+    get:
+      tags:
+        - subscription-controller
+      summary: getAll
+      operationId: getAll
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - subscription-controller
+      summary: update
+      operationId: update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionDto'
+      responses:
+        '201':
+          description: Created
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - subscription-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionDto'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/subscriptions/environment/{environmentId}':
+    get:
+      tags:
+        - subscription-controller
+      summary: getEnvironmentSubscriptions
+      operationId: getEnvironmentSubscriptions
+      parameters:
+        - name: environmentId
+          in: path
+          description: environmentId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/subscriptions/project/{projectId}':
+    get:
+      tags:
+        - subscription-controller
+      summary: getProjectSubscriptions
+      operationId: getProjectSubscriptions
+      parameters:
+        - name: projectId
+          in: path
+          description: projectId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/subscriptions/subscriber/{subscriberId}':
+    get:
+      tags:
+        - subscription-controller
+      summary: getSubscriberSubscriptions
+      operationId: getSubscriberSubscriptions
+      parameters:
+        - name: subscriberId
+          in: path
+          description: subscriberId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/subscriptions/system/{systemId}':
+    get:
+      tags:
+        - subscription-controller
+      summary: getSystemSubscriptions
+      operationId: getSystemSubscriptions
+      parameters:
+        - name: systemId
+          in: path
+          description: systemId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/subscriptions/{subscriptionId}':
+    get:
+      tags:
+        - subscription-controller
+      summary: getSubscription
+      operationId: getSubscription
+      parameters:
+        - name: subscriptionId
+          in: path
+          description: subscriptionId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - subscription-controller
+      summary: delete
+      operationId: delete
+      parameters:
+        - name: subscriptionId
+          in: path
+          description: subscriptionId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+components:
+  schemas:
+    Subscriber:
+      title: Subscriber
+      type: object
+      properties:
+        host:
+          type: string
+        hostStatus:
+          type: integer
+          format: int32
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        notificationURL:
+          type: string
+        registrationDate:
+          type: integer
+          format: int64
+        signature:
+          type: string
+        subscriberType:
+          type: integer
+          format: int32
+        subscriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subscription'
+        tagList:
+          type: string
+    Subscription:
+      title: Subscription
+      type: object
+      properties:
+        environmentId:
+          type: string
+          format: uuid
+        id:
+          type: string
+          format: uuid
+        lastUpdated:
+          type: integer
+          format: int64
+        projectId:
+          type: string
+          format: uuid
+        status:
+          type: integer
+          format: int32
+        subscriberId:
+          $ref: '#/components/schemas/Subscriber'
+        subscriptionType:
+          type: integer
+          format: int32
+        systemId:
+          type: string
+          format: uuid
+        updateEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateEvent'
+    SubscriptionDto:
+      title: SubscriptionDto
+      type: object
+      properties:
+        description:
+          type: string
+        environmentId:
+          type: string
+          format: uuid
+        id:
+          type: string
+          format: uuid
+        lastUpdated:
+          type: integer
+          format: int64
+        name:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        status:
+          type: integer
+          format: int32
+        subscriberId:
+          type: string
+          format: uuid
+        subscriptionType:
+          type: integer
+          format: int32
+        systemId:
+          type: string
+          format: uuid
+    UpdateEvent:
+      title: UpdateEvent
+      type: object
+      properties:
+        entityId:
+          type: string
+          format: uuid
+        entityType:
+          type: string
+        lastEventDate:
+          type: integer
+          format: int64
+        status:
+          type: integer
+          format: int32
+        subscriptionId:
+          type: string
+          format: uuid
+        tagList:
+          type: string

@@ -1,0 +1,28 @@
+{{- if eq .Values.PAAS_PLATFORM "KUBERNETES" }}
+{{- if .Values.EXTERNAL_LINK_ENABLED }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: '{{ .Values.SERVICE_NAME }}'
+  annotations:
+    haproxy.router.openshift.io/timeout: 10h
+    haproxy.router.openshift.io/balance: leastconn
+spec:
+  rules:
+    {{- if .Values.ATP_RAM_URL }}
+    - host: '{{ regexReplaceAll "http(s)?://(.*)" .Values.ATP_RAM_URL "${2}" }}'
+    {{- else }}
+    - host: '{{ .Values.SERVICE_HOSTNAME }}'
+    {{- end }}
+      http:
+        paths:
+          - path: /
+            pathType: "Prefix"
+            backend:
+              service:
+                port:
+                  number: 8080
+                name: '{{ .Values.SERVICE_NAME }}'
+{{- end }}
+{{- end }}

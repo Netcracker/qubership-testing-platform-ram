@@ -1,0 +1,401 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: qa-dsl-library-controller
+    description: Qa Dsl Library Controller
+paths:
+  /catalog/api/v1/qadsllibrary:
+    delete:
+      tags:
+        - qa-dsl-library-controller
+      summary: delete
+      operationId: delete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /catalog/api/v1/qadsllibrary/compounds/search:
+    get:
+      tags:
+        - qa-dsl-library-controller
+      summary: searchQaDslLibraryCompoundsByName
+      operationId: searchQaDslLibraryCompoundsByName
+      parameters:
+        - name: name
+          in: query
+          description: name
+          required: true
+          style: form
+          schema:
+            type: string
+        - name: project
+          in: query
+          description: project
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QaDslLibraryResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/qadsllibrary/create:
+    post:
+      tags:
+        - qa-dsl-library-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QaDslLibrary'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QaDslLibrary'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/qadsllibrary/rename:
+    put:
+      tags:
+        - qa-dsl-library-controller
+      summary: renameQaDsl
+      operationId: renameQaDsl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QaDslLibrary'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/qadsllibrary/{uuid}/compounds':
+    get:
+      tags:
+        - qa-dsl-library-controller
+      summary: getAllCompoundsInQaDslLibrary
+      operationId: getAllCompoundsInQaDslLibrary
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: short
+          in: query
+          description: short
+          required: false
+          style: form
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Compound'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/qadsllibrary/{uuid}/copy':
+    post:
+      tags:
+        - qa-dsl-library-controller
+      summary: copy
+      operationId: copy
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QaDslCopyRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    ActionParameter:
+      title: ActionParameter
+      type: object
+      properties:
+        complexParam:
+          $ref: '#/components/schemas/ComplexActionParameter'
+        name:
+          type: string
+        prefix:
+          type: string
+        value:
+          type: string
+    ComplexActionParameter:
+      title: ComplexActionParameter
+      type: object
+      properties:
+        arrayParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameter'
+        mapParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/MapActionParameter'
+        type:
+          type: string
+          enum:
+            - ARRAY
+            - MAP
+    Compound:
+      title: Compound
+      type: object
+      properties:
+        comment:
+          type: string
+        createdBy:
+          $ref: '#/components/schemas/UserInfo'
+        createdWhen:
+          type: string
+          format: date-time
+        deprecated:
+          type: boolean
+        description:
+          type: string
+        metainfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetaInfo'
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfo'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameter'
+        projectUuid:
+          type: string
+          format: uuid
+        qaDslLibraryId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - COMPOUND
+            - TESTSCENARIO
+        uuid:
+          type: string
+          format: uuid
+    MapActionParameter:
+      title: MapActionParameter
+      type: object
+      properties:
+        paramKey:
+          $ref: '#/components/schemas/ActionParameter'
+        paramValue:
+          $ref: '#/components/schemas/ActionParameter'
+    MetaInfo:
+      title: MetaInfo
+      type: object
+      properties:
+        otherTextValue:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameter'
+        stepId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - ACTION
+            - COMPOUND
+            - DIRECTIVE
+            - FLAG
+            - OTHER
+    ObjectOperation:
+      title: ObjectOperation
+      type: object
+      properties:
+        name:
+          type: string
+        operationType:
+          type: string
+          enum:
+            - ADD
+            - REMOVE
+    QaDslCopyRequest:
+      title: QaDslCopyRequest
+      type: object
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        testPlanId:
+          type: string
+          format: uuid
+    QaDslLibrary:
+      title: QaDslLibrary
+      type: object
+      properties:
+        childrenOperations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectOperation'
+        createdBy:
+          $ref: '#/components/schemas/UserInfo'
+        createdWhen:
+          type: string
+          format: date-time
+        description:
+          type: string
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfo'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        projectUuid:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+    QaDslLibraryResponse:
+      title: QaDslLibraryResponse
+      type: object
+      properties:
+        compounds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Compound'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        qaDslLibraryId:
+          type: string
+          format: uuid
+        testPlan:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestPlanResponse'
+    TestPlanResponse:
+      title: TestPlanResponse
+      type: object
+      properties:
+        modifiedWhen:
+          type: string
+          format: date-time
+        testPlanId:
+          type: string
+          format: uuid
+        testPlanName:
+          type: string
+    UserInfo:
+      title: UserInfo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string

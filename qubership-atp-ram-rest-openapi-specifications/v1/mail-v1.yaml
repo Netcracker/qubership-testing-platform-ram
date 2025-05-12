@@ -1,0 +1,170 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: mail-controller
+    description: Mail Controller
+paths:
+  /api/mail/config/get:
+    get:
+      tags:
+        - mail-controller
+      summary: getConfig
+      operationId: getConfig
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailSenderConfig'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/mail/config/put:
+    put:
+      tags:
+        - mail-controller
+      summary: setConfig
+      operationId: setConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailSenderConfig'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailSenderConfig'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/mail/ping:
+    get:
+      tags:
+        - mail-controller
+      summary: ping
+      operationId: ping
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/mail/send/er/report:
+    post:
+      tags:
+        - mail-controller
+      summary: sendExecutionRequestReport
+      operationId: sendExecutionRequestReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  /api/mail/send/er/report/v2:
+    post:
+      tags:
+        - mail-controller
+      summary: sendExecutionRequestReportV2
+      operationId: sendExecutionRequestReportV2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportMailParams'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    MailSenderConfig:
+      title: MailSenderConfig
+      type: object
+      properties:
+        mailSenderUrl:
+          type: string
+    ReportMailParams:
+      title: ReportMailParams
+      type: object
+      properties:
+        executionRequestUuid:
+          type: string
+          format: uuid
+        recipients:
+          type: array
+          items:
+            type: string
+        subject:
+          type: string
+    ReportParams:
+      title: ReportParams
+      type: object
+      properties:
+        descriptions:
+          type: object
+          additionalProperties:
+            type: string
+        executionRequestUuid:
+          type: string
+          format: uuid
+        isExecutionRequestsSummary:
+          type: boolean
+        recipients:
+          type: string
+        subject:
+          type: string
+        templateId:
+          type: string
+          format: uuid

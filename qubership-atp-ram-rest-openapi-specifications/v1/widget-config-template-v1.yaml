@@ -1,0 +1,222 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: widget-config-template-controller
+    description: Widget Config Template Controller
+paths:
+  /api/widgetconfigtemplates:
+    get:
+      tags:
+        - widget-config-template-controller
+      summary: getAll
+      operationId: getAll
+      parameters:
+        - name: name
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: projectId
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WidgetConfigTemplate'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - widget-config-template-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WidgetConfigTemplate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WidgetConfigTemplate'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/widgetconfigtemplates/{id}':
+    get:
+      tags:
+        - widget-config-template-controller
+      summary: getById
+      operationId: getById
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WidgetConfigTemplate'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - widget-config-template-controller
+      summary: update
+      operationId: update
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WidgetConfigTemplate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WidgetConfigTemplate'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - widget-config-template-controller
+      summary: delete
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/api/widgetconfigtemplates/default':
+    get:
+      tags:
+        - widget-config-template-controller
+      summary: getDefaultWidgetConfigTemplate
+      operationId: getDefaultWidgetConfigTemplate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WidgetConfigTemplate'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    ColumnVisibility:
+      title: ColumnVisibility
+      type: object
+      properties:
+        name:
+          type: string
+        visible:
+          type: boolean
+    WidgetConfig:
+      title: WidgetConfig
+      type: object
+      properties:
+        columnVisibilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnVisibility'
+        labelTemplateId:
+          type: string
+          format: uuid
+        sizeLimit:
+          type: integer
+          format: int32
+        validationTemplateId:
+          type: string
+          format: uuid
+        widgetId:
+          type: string
+          format: uuid
+    WidgetConfigTemplate:
+      title: WidgetConfigTemplate
+      type: object
+      properties:
+        name:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+        widgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/WidgetConfig'

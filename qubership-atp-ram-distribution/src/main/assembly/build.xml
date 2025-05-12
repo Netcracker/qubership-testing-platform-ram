@@ -1,0 +1,102 @@
+<assembly xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <id>custom-build</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+
+    <fileSets>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>run.cmd</include>
+            </includes>
+            <lineEnding>dos</lineEnding>
+            <filtered>true</filtered>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>*.sh</include>
+            </includes>
+            <lineEnding>unix</lineEnding>
+            <filtered>true</filtered>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>version.txt</include>
+            </includes>
+            <filtered>true</filtered>
+        </fileSet>
+
+        <!--RAM API-->
+        <fileSet>
+            <directory>../qubership-atp-ram/qubership-atp-ram-api/target/</directory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+            <outputDirectory>/lib</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>../qubership-atp-ram/qubership-atp-ram-api/target/lib</directory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+            <outputDirectory>/lib</outputDirectory>
+        </fileSet>
+        <!--RAM APP-->
+        <fileSet>
+            <directory>../qubership-atp-ram/qubership-atp-ram-app/target/</directory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+            <outputDirectory>/lib</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>../qubership-atp-ram/qubership-atp-ram-app/target/lib</directory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+            <outputDirectory>/lib</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>../qubership-atp-ram/qubership-atp-ram-app/target/config</directory>
+            <outputDirectory>config</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>../qubership-atp-ram/web</directory>
+            <outputDirectory>web</outputDirectory>
+        </fileSet>
+        <!--RAM MODEL-->
+        <fileSet>
+            <directory>../qubership-atp-ram/qubership-atp-ram-model/target/</directory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+            <outputDirectory>/lib</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>../qubership-atp-ram/qubership-atp-ram-model/target/lib</directory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+            <outputDirectory>/lib</outputDirectory>
+        </fileSet>
+
+    </fileSets>
+
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>/lib</outputDirectory>
+        </dependencySet>
+    </dependencySets>
+
+</assembly>

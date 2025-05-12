@@ -1,0 +1,18 @@
+[
+  {
+    "_class": "org.qubership.atp.ram.models.ReportTemplate",
+    "uuid": "97b9d3b2-dc83-4a9d-9b75-f8a1307f89f7",
+    "name": "System Default Report Template",
+    "subject": "System Default Report",
+    "recipients": [],
+    "projectId": null,
+    "active": true,
+    "widgets": [
+      "EXECUTION_SUMMARY",
+      "SERVER_SUMMARY",
+      "TOP_ISSUES",
+      "TEST_CASES",
+      "ROOT_CAUSES_STATISTIC"
+    ]
+  }
+]

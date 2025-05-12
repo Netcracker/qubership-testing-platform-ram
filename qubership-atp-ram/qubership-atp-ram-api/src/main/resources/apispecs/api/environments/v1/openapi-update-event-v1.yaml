@@ -1,0 +1,325 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: "1.0"
+  contact:
+    name: OurCompany
+    url: https://www.ourcompany.com/company/about-ourcompany/contact-us.html
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: update-event-controller
+    description: Update Event Controller
+paths:
+  /api/updateEvents:
+    get:
+      tags:
+        - update-event-controller
+      summary: getAll
+      operationId: getAll
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UpdateEvent'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - update-event-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEventImpl'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/UpdateEvent'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/updateEvents/entity/{entityId}':
+    get:
+      tags:
+        - update-event-controller
+      summary: getEntityEvents
+      operationId: getEntityEvents
+      parameters:
+        - name: entityId
+          in: path
+          description: entityId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/UpdateEvent'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/updateEvents/subscription/{subscriptionId}':
+    get:
+      tags:
+        - update-event-controller
+      summary: getSubscriptionUpdateEvents
+      operationId: getSubscriptionUpdateEvents
+      parameters:
+        - name: subscriptionId
+          in: path
+          description: subscriptionId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/UpdateEvent'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/updateEvents/subscription/{subscriptionId}/entity/{entityId}':
+    get:
+      tags:
+        - update-event-controller
+      summary: getUpdateEvent
+      operationId: getUpdateEvent
+      parameters:
+        - name: subscriptionId
+          in: path
+          description: subscriptionId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: entityId
+          in: path
+          description: entityId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/UpdateEvent'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - update-event-controller
+      summary: update
+      operationId: update
+      parameters:
+        - name: subscriptionId
+          in: path
+          description: subscriptionId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: entityId
+          in: path
+          description: entityId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEventImpl'
+      responses:
+        '201':
+          description: Created
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - update-event-controller
+      summary: delete
+      operationId: delete
+      parameters:
+        - name: subscriptionId
+          in: path
+          description: subscriptionId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: entityId
+          in: path
+          description: entityId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+components:
+  schemas:
+    Subscriber:
+      title: Subscriber
+      type: object
+      properties:
+        host:
+          type: string
+        hostStatus:
+          type: integer
+          format: int32
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        notificationURL:
+          type: string
+        registrationDate:
+          type: integer
+          format: int64
+        signature:
+          type: string
+        subscriberType:
+          type: integer
+          format: int32
+        subscriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subscription'
+        tagList:
+          type: string
+    Subscription:
+      title: Subscription
+      type: object
+      properties:
+        environmentId:
+          type: string
+          format: uuid
+        id:
+          type: string
+          format: uuid
+        lastUpdated:
+          type: integer
+          format: int64
+        projectId:
+          type: string
+          format: uuid
+        status:
+          type: integer
+          format: int32
+        subscriberId:
+          $ref: '#/components/schemas/Subscriber'
+        subscriptionType:
+          type: integer
+          format: int32
+        systemId:
+          type: string
+          format: uuid
+        updateEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateEvent'
+    UpdateEvent:
+      title: UpdateEvent
+      type: object
+      properties:
+        entityId:
+          type: string
+          format: uuid
+        entityType:
+          type: string
+        lastEventDate:
+          type: integer
+          format: int64
+        status:
+          type: integer
+          format: int32
+        subscriptionId:
+          type: string
+          format: uuid
+        tagList:
+          type: string
+    UpdateEventImpl:
+      title: UpdateEventImpl
+      type: object
+      properties:
+        entityId:
+          type: string
+          format: uuid
+        entityType:
+          type: string
+        lastEventDate:
+          type: integer
+          format: int64
+        status:
+          type: integer
+          format: int32
+        subscription:
+          $ref: '#/components/schemas/Subscription'
+        subscriptionId:
+          type: string
+          format: uuid
+        tagList:
+          type: string

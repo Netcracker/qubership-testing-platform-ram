@@ -1,0 +1,481 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: report-controller
+    description: Report Controller
+paths:
+  '/api/reports/{uuid}/executionSummary':
+    get:
+      tags:
+        - report-controller
+      summary: getExecutionSummary
+      operationId: getExecutionSummary
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionSummaryResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/reports/{uuid}/rootCausesStatistic':
+    get:
+      tags:
+        - report-controller
+      summary: getRootCausesStatisticForExecutionRequestAndPrevious
+      operationId: getRootCausesStatisticForExecutionRequestAndPrevious
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RootCausesStatisticResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/reports/{uuid}/serverSummary':
+    get:
+      tags:
+        - report-controller
+      summary: getServerSummaryForExecutionRequest
+      operationId: getServerSummaryForExecutionRequest
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServerSummaryResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/reports/{uuid}/testCases':
+    post:
+      tags:
+        - report-controller
+      summary: getTestCasesForExecutionRequest
+      operationId: getTestCasesForExecutionRequest
+      requestBody:
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/TestCaseWidgetReportRequest'
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: labelTemplateId
+          in: query
+          description: labelTemplateId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: validationTemplateId
+          in: query
+          description: validationTemplateId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: isExecutionRequestsSummary
+          in: query
+          description: isExecutionRequestsSummary
+          required: false
+          style: simple
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelNodeReportResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/reports/{uuid}/testCases/export/csv':
+    post:
+      tags:
+        - report-controller
+      summary: exportTestCasesWidgetIntoCsv
+      operationId: exportTestCasesWidgetIntoCsv
+      requestBody:
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/TestCaseWidgetReportRequest'
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: labelTemplateId
+          in: query
+          description: labelTemplateId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: validationTemplateId
+          in: query
+          description: validationTemplateId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/reports/ssmMetricsReport/{reportId}':
+    get:
+      tags:
+        - report-controller
+      summary: getSsmMetricsReport
+      operationId: getSsmMetricsReport
+      parameters:
+        - name: reportId
+          in: path
+          description: report identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    ExecutionSummaryResponse:
+      title: ExecutionSummaryResponse
+      type: object
+      properties:
+        browserSessionLink:
+          type: array
+          items:
+            type: string
+        duration:
+          type: integer
+          format: int64
+        environmentId:
+          type: string
+          format: uuid
+        environmentLink:
+          type: string
+        failedCount:
+          type: integer
+          format: int32
+        failedRate:
+          type: number
+          format: float
+        finishDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        name:
+          type: string
+        notStartedCount:
+          type: integer
+          format: int32
+        notStartedRate:
+          type: number
+          format: float
+        passedCount:
+          type: integer
+          format: int32
+        passedRate:
+          type: number
+          format: float
+        skippedCount:
+          type: integer
+          format: int32
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        stoppedCount:
+          type: integer
+          format: int32
+        stoppedRate:
+          type: number
+          format: float
+        testCasesCount:
+          type: integer
+          format: int32
+        threads:
+          type: integer
+          format: int32
+        uuid:
+          type: string
+          format: uuid
+        warningCount:
+          type: integer
+          format: int32
+        warningRate:
+          type: number
+          format: float
+    FailedLogRecordNodeResponse:
+      title: FailedLogRecordNodeResponse
+      type: object
+      properties:
+        name:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    LabelNodeReportResponse:
+      title: LabelNodeReportResponse
+      type: object
+      properties:
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelNodeReportResponse'
+        duration:
+          type: integer
+          format: int64
+        groupedNode:
+          type: boolean
+        labelName:
+          type: string
+        labelParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestingReportLabelParam'
+        labelTemplateId:
+          type: string
+          format: uuid
+        labelTemplateName:
+          type: string
+        passedRate:
+          type: integer
+          format: int32
+        status:
+          $ref: '#/components/schemas/TestingStatus'
+        testRuns:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunNodeResponse'
+        validationLabelsOrder:
+          type: array
+          items:
+            type: string
+    RootCausesGroup:
+      title: RootCausesGroup
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        percent:
+          type: integer
+          format: int64
+        rootCauseName:
+          type: string
+    RootCausesStatisticResponse:
+      title: RootCausesStatisticResponse
+      type: object
+      properties:
+        executionRequestName:
+          type: string
+        rootCausesGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/RootCausesGroup'
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+    ServerSummaryResponse:
+      title: ServerSummaryResponse
+      type: object
+      properties:
+        build:
+          type: array
+          items:
+            type: string
+        server:
+          type: string
+    TestRunNodeResponse:
+      title: TestRunNodeResponse
+      type: object
+      properties:
+        dataSetListUrl:
+          type: string
+        dataSetName:
+          type: string
+        dataSetUrl:
+          type: string
+        duration:
+          type: integer
+          format: int64
+        failedStep:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedLogRecordNodeResponse'
+        failureReason:
+          type: string
+        finalRun:
+          $ref: '#/components/schemas/FinalRunData'
+        firstStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        finalStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        jiraTicket:
+          type: string
+        labelParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestingReportLabelParam'
+        name:
+          type: string
+        passedRate:
+          type: integer
+          format: int32
+        testCaseId:
+          type: string
+          format: uuid
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        uuid:
+          type: string
+          format: uuid
+    TestingStatus:
+      type: string
+      enum:
+        - STOPPED
+        - FAILED
+        - WARNING
+        - PASSED
+        - SKIPPED
+        - BLOCKED
+        - NOT_STARTED
+        - UNKNOWN
+    TestingReportLabelParam:
+      title: TestingReportLabelParam
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/TestingStatus'
+    FinalRunData:
+      title: FinalRunData
+      type: object
+      properties:
+        executionRequestId:
+          type: string
+          format: uuid
+        testRunId:
+          type: string
+          format: uuid
+    TestCaseWidgetReportRequest:
+      title: TestCaseWidgetReportRequest
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/WidgetConfigTemplate.Filters'
+    WidgetConfigTemplate.Filters:
+      title: WidgetConfigTemplate.Filters
+      type: object
+      properties:
+        testingStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestingStatus'
+        firstStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestingStatus'
+        finalStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestingStatus'
+        failureReasons:
+          type: array
+          items:
+            type: string
+            format: uuid

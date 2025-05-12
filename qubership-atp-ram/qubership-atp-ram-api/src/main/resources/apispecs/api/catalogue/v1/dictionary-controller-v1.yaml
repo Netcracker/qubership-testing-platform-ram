@@ -1,0 +1,91 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: dictionary-controller
+    description: Dictionary Controller
+paths:
+  '/catalog/api/v1/dictionaries/integrations/{name}':
+    get:
+      tags:
+        - dictionary-controller
+      summary: getIntegrationDictionary
+      operationId: getIntegrationDictionary
+      parameters:
+        - name: name
+          in: path
+          description: name
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DictionaryItemResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/dictionaries/{name}':
+    get:
+      tags:
+        - dictionary-controller
+      summary: getAllDictionaries
+      operationId: getAllDictionaries
+      parameters:
+        - name: name
+          in: path
+          description: name
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dictionary'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    Dictionary:
+      title: Dictionary
+      type: object
+      properties:
+        description:
+          type: string
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    DictionaryItemResponse:
+      title: DictionaryItemResponse
+      type: object
+      properties:
+        caption:
+          type: string
+        id:
+          type: string

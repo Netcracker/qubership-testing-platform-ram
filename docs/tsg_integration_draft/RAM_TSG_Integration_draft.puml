@@ -1,0 +1,48 @@
+@startuml
+hide footbox
+Actor User
+Participant Executor
+Participant RAM
+Participant TSG_RECEIVER
+
+User -> Executor: execute Scope
+activate Executor
+Executor -> RAM: new ExecutionRequest
+activate RAM
+RAM -> RAM: create ExecutionRequest
+RAM -->Executor: executionRequestId
+
+loop For each TestCase
+    Executor -> RAM: openLog (executionRequestId)
+    RAM -> RAM: create TestRun
+    RAM --> Executor: testRunId
+
+    loop for each TestAction
+        Executor -> RAM: LogRecord(testRunId)
+        RAM -> RAM: create LogRecord
+    end
+
+    Executor -> RAM: stop TestRun(testRunId)
+    RAM -> RAM: stop TestRun
+end
+deactivate Executor
+
+RAM -> RAM: stop ExecutionRequest
+RAM --> User: return email
+loop
+    note right of RAM
+    For each TestRun with status:
+        FAILED,
+        STOPPED (executionStatus: TERMINATED_BY_TIMEOUT)
+    end note
+    RAM -> RAM: build FDR
+    RAM -> TSG_RECEIVER: send FDR
+    activate TSG_RECEIVER
+    TSG_RECEIVER --> RAM: response
+    deactivate TSG_RECEIVER
+    RAM -> RAM: Set fdrWasSent = true
+    RAM -> RAM: Set fdrLink
+end
+deactivate RAM
+
+@enduml

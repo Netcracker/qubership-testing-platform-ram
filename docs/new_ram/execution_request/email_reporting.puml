@@ -1,0 +1,11 @@
+@startuml
+
+class Reporting {
+    status: TestingStatuses
+    subject: String
+    recipients: String / List<String>
+    _id: UUID
+    executionRequestId: UUID
+}
+
+@enduml

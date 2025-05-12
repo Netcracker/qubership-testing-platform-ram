@@ -1,0 +1,303 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: history-changes-controller
+    description: ram history changes controller
+paths:
+  '/api/history/{projectId}/{itemType}/{id}':
+    get:
+      tags:
+        - history-changes-controller
+      summary: finds all changes history for defined object
+      operationId: getAllHistory
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: project id for current entity
+          required: true
+        - name: itemType
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: id
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/HistoryItemResponse'
+        '400':
+          description: History for Entity type = '" + itemType + "' is not supported
+        '404':
+          description: Entity Id not found
+  '/api/entityversioning/{projectId}/{itemType}/{uuid}':
+    get:
+      tags:
+        - history-changes-controller
+      summary: getEntitiesByVersion
+      operationId: getEntitiesByVersion
+      parameters:
+        - name: projectId
+          in: path
+          description: projectId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: itemType
+          in: path
+          description: itemType
+          required: true
+          style: simple
+          schema:
+            type: string
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: versions
+          in: query
+          description: versions
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompareEntityResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/history/restore/{projectId}/{itemType}/{id}/revision/{revisionId}':
+    post:
+      tags:
+        - history-changes-controller
+      summary: Restore the state of the provided entity to defined revision
+      operationId: restoreToRevision
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: project id for current entity
+          required: true
+        - name: itemType
+          in: path
+          schema:
+            type: string
+            description: values from models-v1.yaml#/definitions/HistoryItemType must be used
+          required: true
+        - name: id
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: uuid of restored entity
+          required: true
+          example: '83b22327-2f68-4f8b-96ab-1d3670248b9f'
+        - name: revisionId
+          in: path
+          schema:
+            type: integer
+            description: target revision number for restored entity
+          required: true
+          example: 3
+      responses:
+        '200':
+          description: 'OK'
+        '403':
+          description: 'Forbidden'
+        '404':
+          description: 'Entity Id not found'
+        '500':
+          description: 'Revision was not restored'
+components:
+  schemas:
+    CompareEntityResponse:
+      title: CompareEntityResponse
+      type: object
+      properties:
+        compareEntity:
+          $ref: '#/components/schemas/AbstractCompareEntity'
+        revision:
+          type: string
+    HistoryItemResponse:
+      type: object
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/PageInfo'
+        historyItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryItem'
+
+    AbstractCompareEntity:
+      type: object
+      properties:
+        createdWhen:
+          type: string
+          format: long
+        modifiedWhen:
+          type: string
+          format: long
+        createdBy:
+          type: string
+        modifiedBy:
+          type: string
+        entityType:
+          $ref: '#/components/schemas/HistoryItemType'
+      discriminator:
+        propertyName: entityType
+        mapping:
+          'rootcause': '#/components/schemas/RootCauseHistoryChange'
+          'failpattern': '#/components/schemas/FailPatternHistoryChange'
+    RootCauseHistoryChange:
+      allOf:
+        - $ref: "#/components/schemas/AbstractCompareEntity"
+        - type: object
+          properties:
+            name:
+              type: string
+            children:
+              type: array
+              items:
+                type: string
+            parent:
+              type: string
+            status:
+              type: string
+    FailPatternHistoryChange:
+      allOf:
+        - $ref: "#/components/schemas/AbstractCompareEntity"
+        - type: object
+          properties:
+            name:
+              type: string
+            priority:
+              $ref: '#/components/schemas/DefectPriority'
+            message:
+              type: string
+            rule:
+              type: string
+            description:
+              type: string
+            defect:
+              type: array
+              items:
+                type: string
+            failReason:
+              type: string
+    ReportTemplateHistoryChange:
+      allOf:
+        - $ref: "#/components/schemas/AbstractCompareEntity"
+        - type: object
+          properties:
+            name:
+              type: string
+            sections:
+              type: array
+              items:
+                type: string
+            active:
+              type: boolean
+            subject:
+              type: string
+            recipients:
+              type: array
+              items:
+                type: string
+
+    DefectPriority:
+      type: string
+      enum:
+        - LOW
+        - NORMAL
+        - MAJOR
+        - CRITICAL
+        - BLOCKER
+
+    PageInfo:
+      type: object
+      properties:
+        offset:
+          type: integer
+        limit:
+          type: integer
+        itemsTotalCount:
+          type: integer
+    HistoryItem:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/HistoryItemType'
+        version:
+          type: integer
+          minimum: 1
+          description: commit number of current changes
+        modifiedWhen:
+          type: string
+        modifiedBy:
+          type: string
+        added:
+          type: array
+          items:
+            type: string
+        deleted:
+          type: array
+          items:
+            type: string
+        changed:
+          type: array
+          items:
+            type: string
+    HistoryItemType:
+      type: string
+      enum:
+        - rootcause
+        - failpattern
+        - emailtemplate
+

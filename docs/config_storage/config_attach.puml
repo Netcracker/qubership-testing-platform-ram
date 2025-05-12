@@ -1,0 +1,30 @@
+@startuml
+hide footbox
+
+Orchestrator -> Executor: ping status
+activate Orchestrator
+activate Executor
+Orchestrator <- Executor: ping status
+Orchestrator -> Executor: request storing ConfigInfo
+Executor -> Adapter: store ConfigInfo
+activate Adapter
+Adapter -> kafka: write ConfigInfo
+deactivate Adapter
+Orchestrator <- Executor: ids of config info
+Orchestrator -> Adapter: write LogRecord
+activate Adapter
+note right
+    LogRecord includes
+    1) URL on executor
+    2) list of config ids
+end note
+Adapter -> kafka: write LogRecord
+deactivate Adapter
+deactivate Executor
+deactivate Orchestrator
+
+
+
+
+
+@enduml

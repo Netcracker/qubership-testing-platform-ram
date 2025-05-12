@@ -1,0 +1,124 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: issue-controller
+    description: Issue Controller
+paths:
+  /catalog/api/v1/issues:
+    get:
+      tags:
+        - issue-controller
+      summary: getAll
+      operationId: getAll
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issue'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - issue-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Issue'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Issue'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/issues/by_ids:
+    get:
+      tags:
+        - issue-controller
+      summary: getByIds
+      operationId: getByIds
+      parameters:
+        - name: issueIds
+          in: query
+          description: issueIds
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format:
+                uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issue'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    Issue:
+      title: Issue
+      type: object
+      properties:
+        businessMessage:
+          type: string
+        component:
+          type: string
+        description:
+          type: string
+        errorMessage:
+          type: string
+        failPattern:
+          type: string
+        name:
+          type: string
+        priority:
+          type: string
+          enum:
+            - BLOCKER
+            - CRITICAL
+            - LOW
+            - MAJOR
+            - NORMAL
+        projectId:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid

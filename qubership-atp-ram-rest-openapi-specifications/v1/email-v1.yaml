@@ -1,0 +1,126 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: email-controller
+    description: Email Controller
+paths:
+  '/api/email/{executionRequestId}':
+    get:
+      tags:
+        - email-controller
+      summary: emailBody
+      operationId: emailBody
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - email-controller
+      summary: send
+      operationId: send
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailProperties'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/email/jointExecutionRequest/send':
+    post:
+      tags:
+        - email-controller
+      summary: sendJointExecutionRequestReport
+      operationId: sendJointExecutionRequestReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JointExecutionRequestMailSendRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    EmailProperties:
+      title: EmailProperties
+      type: object
+      properties:
+        descriptions:
+          type: object
+          additionalProperties:
+            type: string
+        isExecutionRequestSummary:
+          type: string
+        recipients:
+          type: string
+        subject:
+          type: string
+        templateId:
+          type: string
+          format: uuid
+    JointExecutionRequestMailSendRequest:
+      title: JointExecutionRequestMailSendRequest
+      type: object
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        key:
+          type: string
+        subject:
+          type: string
+        recipients:
+          type: array
+          items:
+            type: string

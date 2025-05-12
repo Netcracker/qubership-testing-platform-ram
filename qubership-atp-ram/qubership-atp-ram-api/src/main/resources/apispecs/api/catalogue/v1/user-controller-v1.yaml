@@ -1,0 +1,122 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: user-controller
+    description: User Controller
+paths:
+  /catalog/api/v1/users:
+    get:
+      tags:
+        - user-controller
+      summary: getAllUsers
+      operationId: getAllUsers
+      parameters:
+        - name: page
+          in: query
+          description: page
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserInfo'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/users/{uuid}/assigned-project':
+    get:
+      tags:
+        - user-controller
+      summary: getAssignedProject
+      operationId: getAssignedProject
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: string
+                format: uuid
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  /catalog/api/v1/users/search:
+    post:
+      tags:
+        - user-controller
+      summary: searchUsers
+      operationId: searchUsers
+      requestBody:
+        description: searchString
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserInfo'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+components:
+  schemas:
+    UserInfo:
+      title: UserInfo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string

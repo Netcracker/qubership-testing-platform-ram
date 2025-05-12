@@ -1,0 +1,904 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: attribute-controller
+    description: Attribute Controller
+paths:
+  '/attribute/dsl/{dataSetListId}':
+    get:
+      tags:
+        - attribute-controller
+      summary: Returns all attributes by dataSetList id.
+      operationId: getAttributes
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attribute'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - attribute-controller
+      summary: Creates new attribute with provided name and order.
+      operationId: create
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: name
+          in: query
+          description: name
+          required: true
+          style: form
+          schema:
+            type: string
+        - name: ordering
+          in: query
+          description: ordering
+          required: true
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: type
+          in: query
+          description: type
+          required: true
+          style: form
+          schema:
+            $ref: '#/components/schemas/AttributeType'
+        - name: typeDataSetListId
+          in: query
+          description: typeDataSetListId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/AttributeCreateResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/attribute/dsl/{dataSetListId}/all':
+    delete:
+      tags:
+        - attribute-controller
+      summary: Deletes attributes from the selected dataSetsList.
+      operationId: deleteAllByDsl
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/attribute/dsl/{dataSetListId}/itf':
+    get:
+      tags:
+        - attribute-controller
+      summary: 'Returns all attributes by dataSetList id in itf format: [attr1.attr2, attr1].'
+      operationId: getAttributesInItfFormat
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /attribute/updateOrdering:
+    put:
+      tags:
+        - attribute-controller
+      summary: updateOrdering
+      operationId: updateOrdering
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PairOfUUidAndInt'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/attribute/{attributeId}':
+    get:
+      tags:
+        - attribute-controller
+      summary: Returns attribute.
+      operationId: get
+      parameters:
+        - name: attributeId
+          in: path
+          description: attributeId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Attribute'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - attribute-controller
+      summary: Renames selected attribute.
+      operationId: rename
+      parameters:
+        - name: attributeId
+          in: path
+          description: attributeId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: name
+          in: query
+          description: name
+          required: true
+          style: form
+          schema:
+            type: string
+        - name: dataSetListId
+          in: query
+          description: dataSetListId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: boolean
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - attribute-controller
+      summary: Deletes selected attribute.
+      operationId: delete
+      parameters:
+        - name: attributeId
+          in: path
+          description: attributeId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: dataSetListId
+          in: query
+          description: dataSetListId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+          content:
+            'application/json':
+              schema:
+                type: boolean
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/attribute/{attributeId}/bulk':
+    delete:
+      tags:
+        - attribute-controller
+      summary: Bulk delete list values by id.
+      operationId: bulkDeleteListValues
+      parameters:
+        - name: attributeId
+          in: path
+          description: attributeId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: listValues
+          in: query
+          description: listValues
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
+        - name: dataSetListId
+          in: query
+          description: dataSetListId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/attribute/{attributeId}/listValues':
+    put:
+      tags:
+        - attribute-controller
+      summary: Creates new list value for provided attribute.
+      operationId: createListValue
+      parameters:
+        - name: attributeId
+          in: path
+          description: attributeId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: value
+          in: query
+          description: value
+          required: true
+          style: form
+          schema:
+            type: string
+        - name: dataSetListId
+          in: query
+          description: dataSetListId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ListValue'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - attribute-controller
+      summary: Creates new list values for provided attribute by text.
+      operationId: createListValues
+      parameters:
+        - name: attributeId
+          in: path
+          description: attributeId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: dataSetListId
+          in: query
+          description: dataSetListId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/attribute/{attributeId}/listValues/{listValueId}':
+    delete:
+      tags:
+        - attribute-controller
+      summary: Delete list value by id.
+      operationId: deleteListValue
+      parameters:
+        - name: attributeId
+          in: path
+          description: attributeId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: listValueId
+          in: path
+          description: listValueId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: dataSetListId
+          in: query
+          description: dataSetListId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/attribute/{attributeId}/options':
+    get:
+      tags:
+        - attribute-controller
+      summary: getOptions
+      operationId: getOptions
+      parameters:
+        - name: attributeId
+          in: path
+          description: attributeId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/attribute/{attributeId}/position':
+    post:
+      tags:
+        - attribute-controller
+      summary: Creates new list values for provided attribute by text.
+      operationId: setPosition
+      parameters:
+        - name: attributeId
+          in: path
+          description: attributeId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int32
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/attribute/{attributeId}/dataSetListReference':
+    post:
+      tags:
+        - attribute-controller
+      summary: Update DSL reference.
+      operationId: updateDslReference
+      parameters:
+        - name: attributeId
+          in: path
+          description: attributeId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: value
+          in: query
+          description: value
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: boolean
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/attribute/{dataSetListId}/existedValues':
+    post:
+      tags:
+        - attribute-controller
+      summary: Sort Attribute values.
+      operationId: getParametersValuesAndDataSetIdsForAttributeValuesSorting
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: targetAttrId
+          in: query
+          description: targetAttrId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+                  format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+                items:
+                  type: string
+                  format: array
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    Attribute:
+      title: Attribute
+      required:
+        - dataSetList
+        - id
+        - name
+        - type
+      type: object
+      properties:
+        dataSetList:
+          description: parent
+          $ref: '#/components/schemas/DataSetList'
+        dataSetListReference:
+          description: for dsl type
+          $ref: '#/components/schemas/DataSetList'
+        id:
+          type: string
+          format: uuid
+        listValues:
+          type: array
+          description: for list type
+          items:
+            $ref: '#/components/schemas/ListValue'
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        type:
+          $ref: '#/components/schemas/AttributeType'
+    AttributeCreateResponse:
+      title: AttributeCreateResponse
+      type: object
+      properties:
+        dataSetListId:
+          type: string
+          format: uuid
+        dataSetListReference:
+          type: string
+          format: uuid
+        id:
+          type: string
+          format: uuid
+        listValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListValueResponse'
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/AttributeType'
+    DataSet:
+      title: DataSet
+      type: object
+    DataSetList:
+      title: DataSetList
+      required:
+        - id
+        - name
+        - visibilityArea
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+        createdBy:
+          type: string
+          format: uuid
+        createdWhen:
+          type: string
+          format: date-time
+        dataSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSet'
+        id:
+          type: string
+          format: uuid
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        modifiedBy:
+          type: string
+          format: uuid
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        testPlan:
+          $ref: '#/components/schemas/TestPlan'
+        visibilityArea:
+          description: parent
+          $ref: '#/components/schemas/VisibilityArea'
+    FileData:
+      title: FileData
+      type: object
+      properties:
+        contentType:
+          type: string
+        fileName:
+          type: string
+        fileType:
+          type: string
+        parameterUuid:
+          type: string
+          format: uuid
+        url:
+          type: string
+    Label:
+      title: Label
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    ListValue:
+      title: ListValue
+      required:
+        - attribute
+        - id
+        - name
+      type: object
+      properties:
+        attribute:
+          description: parent
+          $ref: '#/components/schemas/Attribute'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    ListValueResponse:
+      title: ListValueResponse
+      type: object
+      properties:
+        attribute:
+          type: string
+          format: uuid
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          format: uuid
+    PairOfUUidAndInt:
+      title: PairOfUUidAndInt
+      type: object
+      properties:
+        first:
+          type: string
+          format: uuid
+        second:
+          type: integer
+          format: int32
+    Parameter:
+      title: Parameter
+      required:
+        - attribute
+        - dataSet
+        - id
+      type: object
+      properties:
+        attribute:
+          description: parent
+          $ref: '#/components/schemas/Attribute'
+        dataSet:
+          description: parent
+          $ref: '#/components/schemas/DataSet'
+        dataSetReference:
+          description: for attribute with dsl type
+          $ref: '#/components/schemas/DataSet'
+        fileData:
+          $ref: '#/components/schemas/FileData'
+        id:
+          type: string
+          format: uuid
+        listValue:
+          description: for attribute with list type
+          $ref: '#/components/schemas/ListValue'
+        text:
+          type: string
+          description: for attribute with text type
+    TestPlan:
+      title: TestPlan
+      required:
+        - id
+        - name
+        - visibilityArea
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        visibilityArea:
+          $ref: '#/components/schemas/VisibilityArea'
+    VisibilityArea:
+      title: VisibilityArea
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        dataSetLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSetList'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    AttributeType:
+      title: AttributeType
+      type: string
+      enum:
+        - CHANGE
+        - DSL
+        - ENCRYPTED
+        - FILE
+        - LIST
+        - TEXT

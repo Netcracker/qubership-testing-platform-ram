@@ -1,0 +1,830 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: test-scenario-group-controller
+    description: Test Scenario Group Controller
+paths:
+  /catalog/api/v1/testscenariogroups:
+    get:
+      tags:
+        - test-scenario-group-controller
+      summary: getAll
+      operationId: getAll
+      parameters:
+        - name: projectId
+          in: query
+          description: projectId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: testPlanId
+          in: query
+          description: testPlanId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestScenarioGroup'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - test-scenario-group-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestScenarioGroup'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - test-scenario-group-controller
+      summary: delete
+      operationId: delete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              uniqueItems: true
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /catalog/api/v1/testscenariogroups/copy:
+    post:
+      tags:
+        - test-scenario-group-controller
+      summary: copyTestScenarioGroups
+      operationId: copyTestScenarioGroups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupCopyRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/testscenariogroups/move:
+    post:
+      tags:
+        - test-scenario-group-controller
+      summary: moveTestScenarioGroups
+      operationId: moveTestScenarioGroups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupMoveRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/testscenariogroups/testscenarios:
+    get:
+      tags:
+        - test-scenario-group-controller
+      summary: getAllWithTestScenarios
+      operationId: getAllWithTestScenarios
+      parameters:
+        - name: projectId
+          in: query
+          description: projectId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: testPlanId
+          in: query
+          description: testPlanId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/TestScenarioGroupResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - test-scenario-group-controller
+      summary: deleteTestScenariosAndGroups
+      operationId: deleteTestScenariosAndGroups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupsItemsDeleteRequest'
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /catalog/api/v1/testscenariogroups/testscenarios/copy:
+    post:
+      tags:
+        - test-scenario-group-controller
+      summary: copyTestScenariosAndGroups
+      operationId: copyTestScenariosAndGroups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupsItemsRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/testscenariogroups/testscenarios/count:
+    get:
+      tags:
+        - test-scenario-group-controller
+      summary: getCountTestScenarioGroupsWithTestScenario
+      operationId: getCountTestScenarioGroupsWithTestScenario
+      parameters:
+        - name: projectId
+          in: query
+          description: projectId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: testPlanId
+          in: query
+          description: testPlanId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: integer
+                format: int64
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/testscenariogroups/testscenarios/filtering:
+    post:
+      tags:
+        - test-scenario-group-controller
+      summary: getAllWithTestScenariosFiltering
+      operationId: getAllWithTestScenariosFiltering
+      parameters:
+        - name: offset
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+        - name: pageNumber
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: paged
+          in: query
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: projectId
+          in: query
+          description: projectId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: sort.sorted
+          in: query
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: sort.unsorted
+          in: query
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: unpaged
+          in: query
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: testPlanId
+          in: query
+          description: testPlanId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetTestScenarioFilteringRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/TestScenarioGroupResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/testscenariogroups/testscenarios/filtering/count:
+    post:
+      tags:
+        - test-scenario-group-controller
+      summary: getCountTestScenarioGroupsWithTestScenarios
+      operationId: getCountTestScenarioGroupsWithTestScenarios
+      parameters:
+        - name: projectId
+          in: query
+          description: projectId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: testPlanId
+          in: query
+          description: testPlanId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetTestScenarioFilteringRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: integer
+                format: int64
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/testscenariogroups/testscenarios/move:
+    post:
+      tags:
+        - test-scenario-group-controller
+      summary: moveTestScenariosAndGroups
+      operationId: moveTestScenariosAndGroups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupsItemsRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testscenariogroups/testscenarios/start-index/{startIndex}/end-index/{endIndex}':
+    get:
+      tags:
+        - test-scenario-group-controller
+      summary: getAllWithTestScenariosPaging
+      operationId: getAllWithTestScenariosPaging
+      parameters:
+        - name: projectId
+          in: query
+          description: projectId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: testPlanId
+          in: query
+          description: testPlanId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: startIndex
+          in: path
+          description: startIndex
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: endIndex
+          in: path
+          description: endIndex
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/TestScenarioGroupResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testscenariogroups/{uuid}':
+    get:
+      tags:
+        - test-scenario-group-controller
+      summary: getByUuid
+      operationId: getByUuid
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/TestScenarioGroup'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - test-scenario-group-controller
+      summary: update
+      operationId: update
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestScenarioGroup'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/testscenariogroups/{uuid}/rename':
+    patch:
+      tags:
+        - test-scenario-group-controller
+      summary: rename
+      operationId: rename
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestScenarioGroupPatchRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/TestScenarioGroup'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/catalog/api/v1/testscenariogroups/tree':
+    get:
+      tags:
+        - test-scenario-group-controller
+      summary: getTestScenarioGroupTree
+      operationId: getTestScenarioGroupTree
+      parameters:
+        - name: testPlanId
+          in: query
+          description: testPlanId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/GroupTreeResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    GetTestScenarioFilteringRequest:
+      title: GetTestScenarioFilteringRequest
+      type: object
+      properties:
+        names:
+          type: array
+          items:
+            type: string
+    GroupCopyRequest:
+      title: GroupCopyRequest
+      required:
+        - groups
+        - testPlanId
+      type: object
+      properties:
+        groups:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+        testPlanId:
+          type: string
+          format: uuid
+        toGroup:
+          type: string
+          format: uuid
+    GroupMoveRequest:
+      title: GroupMoveRequest
+      required:
+        - groups
+      type: object
+      properties:
+        groups:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+        toGroup:
+          type: string
+          format: uuid
+    GroupsItemsDeleteRequest:
+      title: GroupsItemsDeleteRequest
+      required:
+        - groups
+        - items
+      type: object
+      properties:
+        groups:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+        items:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+    GroupsItemsRequest:
+      title: GroupsItemsRequest
+      required:
+        - groups
+        - items
+        - testPlanId
+      type: object
+      properties:
+        groups:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+        items:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uuid
+        testPlanId:
+          type: string
+          format: uuid
+        toGroup:
+          type: string
+          format: uuid
+    ObjectOperation:
+      title: ObjectOperation
+      type: object
+      properties:
+        name:
+          type: string
+        operationType:
+          type: string
+          enum:
+            - ADD
+            - REMOVE
+    TestScenarioGroups:
+      title: TestScenarioGroups
+      type: object
+      properties:
+        childGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestScenarioGroups'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        parentGroupId:
+          type: string
+          format: uuid
+        scenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestScenarioResponse'
+        uuid:
+          type: string
+          format: uuid
+    TestScenarioGroup:
+      title: TestScenarioGroup
+      type: object
+      properties:
+        childrenOperations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectOperation'
+        createdBy:
+          $ref: '#/components/schemas/UserInfo'
+        createdWhen:
+          type: string
+          format: date-time
+        description:
+          type: string
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfo'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        parentGroupId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        testPlanId:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+    TestScenarioGroupPatchRequest:
+      title: TestScenarioGroupPatchRequest
+      type: object
+      properties:
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+    TestScenarioGroupResponse:
+      title: TestScenarioGroupResponse
+      type: object
+      properties:
+        emptyGroupScenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestScenarioResponse'
+        scenarioGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestScenarioGroups'
+    TestScenarioResponse:
+      title: TestScenarioResponse
+      type: object
+      properties:
+        alsoCompound:
+          type: boolean
+        description:
+          type: string
+        groupUuid:
+          type: string
+          format: uuid
+        lastEdit:
+          type: integer
+          format: int64
+        lastModifiedBy:
+          $ref: '#/components/schemas/UserInfo'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        projectUuid:
+          type: string
+          format: uuid
+        testPlanUuid:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+    UserInfo:
+      title: UserInfo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+    GroupTreeResponse:
+      title: GroupTreeResponse
+      type: object
+      properties:
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+    Group:
+      title: Group
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'

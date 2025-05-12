@@ -1,0 +1,28 @@
+@startuml
+class TsgFdr{
+    @JsonProperty("Project")
+     String projectName;
+    @JsonProperty("Execution Request ID")
+     String executionRequestId;
+    @JsonProperty("Test Run Id")
+     String testRunId;
+    @JsonProperty("Test Case Name")
+     String testCaseName;
+    @JsonProperty("Test Run Name")
+     String testRunName;
+    @JsonProperty("Start Date")
+     String startDate;
+    @JsonProperty("Finish Date")
+     String finishDate;
+    @JsonProperty("Status")
+     String status;
+    @JsonProperty("Environment")
+     List<String> environment;
+    @JsonProperty("Execution Link")
+     String executionLink;
+    @JsonProperty("Scope")
+     String scope;
+    @JsonProperty("Check Points")
+     List<TsgCheckPoint> checkPoints;
+}
+@enduml

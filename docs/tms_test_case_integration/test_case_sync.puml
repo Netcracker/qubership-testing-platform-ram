@@ -1,0 +1,27 @@
+@startuml
+Executor -> RAM: send LogRecords
+activate RAM
+deactivate RAM
+
+RAM -> RAM: update TestRun (via schedule job)
+activate RAM
+RAM -> Catalog: send notification about finishing of TestRun(s)
+note left
+    ExecutionRequestScheduler.updateRequestAndSendReport
+end note
+
+deactivate RAM
+note right
+    Event includes id of TestCase
+    Possible way is sending TestRuns bulk
+end note
+activate Catalog
+Catalog -> Catalog: get TestCase by id
+Catalog -> Catalog: check sync is enable
+alt successful case
+	Catalog -> Catalog: sync TestCase
+	Catalog -> JIRA: sync TestCase on JIRA side
+end
+
+
+@enduml

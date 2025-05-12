@@ -1,0 +1,468 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: label-controller
+    description: Label Controller
+paths:
+  /catalog/api/v1/labels:
+    get:
+      tags:
+        - label-controller
+      summary: getAll
+      operationId: getAll
+      parameters:
+        - name: projectId
+          in: query
+          description: projectId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: testPlanId
+          in: query
+          description: testPlanId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Label'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - label-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Label'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Label'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/labels/search:
+    get:
+      tags:
+        - label-controller
+      summary: getLabelsByIds
+      operationId: getLabelsByIds
+      parameters:
+        - name: labelIds
+          in: query
+          description: labelIds
+          required: true
+          style: form
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              type: string
+              format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Label'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - label-controller
+      summary: search
+      operationId: search
+      parameters:
+        - name: projectId
+          in: query
+          description: projectId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: refs
+          in: query
+          description: refs
+          required: false
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+        - name: page
+          in: query
+          description: page number
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          description: size number
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelFilteringRequestBody'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LabelWithRefsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/labels/{uuid}/findTestPlanUsages:
+    post:
+      tags:
+        - label-controller
+      summary: findTestPlanUsages
+      operationId: findTestPlanUsages
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestPlanShortResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/labels/{uuid}/findTestCaseUsages:
+    post:
+      tags:
+        - label-controller
+      summary: findTestCaseUsages
+      operationId: findTestCaseUsages
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestPlanIdRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestCaseShortResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/labels/{uuid}/unassign:
+    post:
+      tags:
+        - label-controller
+      summary: unassign
+      operationId: unassign
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestPlanAndCaseIdsRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/labels/{uuid}/findUsageCounts:
+    post:
+      tags:
+        - label-controller
+      summary: findUsageCounts
+      operationId: findUsageCounts
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LabelUsageResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/labels/{uuid}:
+    put:
+      tags:
+        - label-controller
+      summary: update
+      operationId: update
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Label'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Label'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - label-controller
+      summary: delete
+      operationId: delete
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+components:
+  schemas:
+    Label:
+      title: Label
+      type: object
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        testPlanId:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+    AbstractEntityResponse:
+      title: AbstractEntityResponse
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    LabelWithRefsResponse:
+      title: LabelWithRefsResponse
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+          format: uuid
+        labelTemplates:
+          type: array
+          items:
+            $ref: '#/components/schemas/AbstractEntityResponse'
+    TestPlanShortResponse:
+      title: TestPlanShortResponse
+      type: object
+      properties:
+        name:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        testPlanId:
+          type: string
+          format: uuid
+    TestCaseShortResponse:
+      title: TestCaseShortResponse
+      type: object
+      properties:
+        name:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        testCaseId:
+          type: string
+          format: uuid
+        testPlanId:
+          type: string
+          format: uuid
+        testScenarioId:
+          type: string
+          format: uuid
+    TestPlanIdRequest:
+      title: TestPlanIdRequest
+      type: object
+      properties:
+        testPlanId:
+          type: string
+          format: uuid
+    TestPlanAndCaseIdsRequest:
+      title: TestPlanAndCaseIdsRequest
+      type: object
+      properties:
+        testCaseIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        testPlanIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    LabelUsageResponse:
+      title: LabelUsageResponse
+      type: object
+      properties:
+        labelId:
+          type: string
+          format: uuid
+        testPlanUsageCounts:
+          type: integer
+        testCaseUsageCounts:
+          type: integer
+    LabelFilteringRequestBody:
+      title: LabelFilteringRequestBody
+      type: object
+      properties:
+        name:
+          type: string
+        labelTemplateName:
+          type: string

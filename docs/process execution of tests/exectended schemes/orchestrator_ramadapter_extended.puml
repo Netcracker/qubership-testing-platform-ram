@@ -1,0 +1,92 @@
+@startuml
+title Execution of test case(s)/test scope. Orchestrator + RAM adapter
+'start
+':User initiate execute TC(s)/TS;
+':Catalogue prepare ExecuteRequest\n generate ExecutionOrder;
+'
+'end
+User -> Catalogue: initiate execute TC(s)/TS
+Catalogue -> Catalogue: prepare ExecuteRequest, generate ExecutionOrder
+Catalogue -> Orchestrator: send ExecutionOrder
+activate Orchestrator
+Orchestrator -> Orchestrator: fill FlowExecutionRequest
+activate Orchestrator
+Orchestrator -> Orchestrator: fill entities info (Test Plan, Project, TR name)
+Orchestrator -> Orchestrator: generate ER ID
+Orchestrator <-> Environments: provide info about TA tools
+deactivate
+Orchestrator -> Orchestrator: check dealer mode
+Orchestrator -> Orchestrator: Form AtpCompaunds for compilation tools
+activate Orchestrator
+Orchestrator -> Orchestrator: set info for logging to test run context
+Orchestrator -> Report: open log Execution Requests's Logs
+ReportAdapter -> Report: fill fields of RunRequest from context
+ReportAdapter -> RamAdapter: startAtpRun
+RamAdapter -> RamAdapter: send request (receiver) for create\nTR, ER (if not exists), TP (if not exists),\nproject (if not exists)
+Orchestrator -> Orchestrator: add compounds (for Execution Requests's Logs) to variables
+deactivate
+Orchestrator -> Orchestrator: save to variables\nflow request key, env URL, RAM URL,\nadd compounds (for Execution Requests's Logs)
+activate Orchestrator
+Orchestrator <-> Environments: get systems with checked statuses
+Orchestrator -> Orchestrator: set info to run context
+Orchestrator -> ReportWriter: create log ER_RESOURCES_INFO_STEP (passed/failed)
+deactivate
+Orchestrator -> Orchestrator: start ping TA engines
+activate Orchestrator
+Orchestrator -> Orchestrator: start process with ping TA engines
+Orchestrator -> Orchestrator: save tools config info
+Orchestrator -> Orchestrator: set info to run context
+Orchestrator -> ReportWriter: create log ER_ENGINES_INFO_STEP
+deactivate
+
+Orchestrator -> Orchestrator: convert request from catalogue to flow
+activate Orchestrator
+Orchestrator -> Orchestrator: set info to run context
+Orchestrator -> ReportWriter: open log with TR name
+Orchestrator -> Orchestrator: set scope context (if not empty)
+Orchestrator -> Orchestrator: preparing actions, compounds, logging to RAM
+Orchestrator -> Orchestrator: create flow for scope sections
+loop
+activate Orchestrator
+Orchestrator -> Orchestrator: build case
+loop
+Orchestrator -> ReportWriter: open section (fot TC)
+Orchestrator -> Orchestrator: set directives to flow
+Orchestrator -> Orchestrator: create step requests (create strategy for every engine type or WARM UP and set to map)
+Orchestrator -> Orchestrator: recursively compounds opening
+loop
+Orchestrator -> ReportWriter: create sections for compounds
+Orchestrator -> Orchestrator: recursively compounds opening
+Orchestrator -> ReportWriter: close section
+end
+Orchestrator -> Orchestrator: check and create ITF warm up flow item
+Orchestrator -> ReportWriter: close section
+Orchestrator -> ReportWriter: close log
+end
+deactivate
+end
+deactivate
+Orchestrator -> ReportWriter: close log
+Orchestrator -> Orchestrator: create flow
+
+Orchestrator -> Orchestrator: start compilation process
+activate Orchestrator
+Orchestrator -> Orchestrator: set info to run context
+Orchestrator -> ReportWriter: create log ER_COMPILATION_STEP
+Orchestrator -> Orchestrator: create BpmnModel\n(with process with AcquireEngineDelegate, PingExecutorProcessDelegate, log collector,\nprocesses of prerequisites/execution/validation part, add parallel execution for execution part,\nadd release engines part)
+Orchestrator -> Orchestrator: model to xml file
+Orchestrator -> Orchestrator: create deployment with processes
+note left
+    if compilation process failed
+    then Orchestrator -> RAM: send request for terminating ER
+    Orchestrator -> RAM: send request for sending report about fail
+end note
+deactivate
+Orchestrator -> ReportWriter: close log ER_COMPILATION_STEP
+Orchestrator -> Orchestrator: start processes async
+Orchestrator -> TA_tools: execute actions
+TA_tools -> AtpRamWriterAdapter: logging to RAM
+AtpRamWriterAdapter -> ReportWriter: use methods closeLog, openLog, etc for logging
+ReportWriter -> ReportWriter: for logging get RamAdapter (show common scheme)
+deactivate
+@enduml

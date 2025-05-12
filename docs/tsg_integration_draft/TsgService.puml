@@ -1,0 +1,28 @@
+@startuml
+title TsgService
+start
+:Read TestRun;
+if (TestRun.fdrWasSent == true) then (yes)
+    stop
+endif
+if (TestRun.getName() == "Execution Request's Logs) then (yes)
+    stop
+endif
+if (TestRun.testingStatus == "Passed") then (yes)
+    stop
+endif
+if (TestRun.executionStatus == "Terminated") then (yes)
+    stop
+endif
+:Create Fdr;
+:Fill Parameters;
+:Fill Checkpoints;
+:SendFdr;
+if (Response statusCode == 200) then (yes)
+    :TestRun.setFdrWasSent(true);
+    :Log Success Message;
+else (no)
+    :Log Error Message;
+endif
+stop
+@enduml

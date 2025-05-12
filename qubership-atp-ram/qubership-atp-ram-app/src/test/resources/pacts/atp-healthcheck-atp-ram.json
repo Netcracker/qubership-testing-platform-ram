@@ -1,0 +1,48 @@
+{
+  "provider": {
+    "name": "atp-ram"
+  },
+  "consumer": {
+    "name": "atp-healthcheck"
+  },
+  "interactions": [
+    {
+      "description": "POST /api/environmentsInfo/mandatoryChecksReport OK",
+      "request": {
+        "method": "POST",
+        "path": "/api/environmentsInfo/mandatoryChecksReport",
+        "headers": {
+          "Content-Type": "application/octet-stream"
+        },
+        "query": {
+          "fileName": [
+            "file"
+          ],
+          "executionRequestId": [
+            "15558710-b088-4d5a-8abc-a83e46d1cdc4"
+          ]
+        },
+        "body": "www"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "providerStates": [
+        {
+          "name": "all ok"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.1.0"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@startuml
+(Internal GateWay)
+(Public GateWay)
+
+(Config Service)
+(Registry Service)
+
+
+(Internal GateWay) <--> (Registry Service)
+(Internal GateWay) --> (Config Service)
+
+(Public GateWay) <--> (Registry Service)
+(Public GateWay) --> (Config Service)
+
+@enduml

@@ -1,0 +1,1439 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: compound-controller
+    description: Compound Controller
+paths:
+  /catalog/api/v1/compounds:
+    post:
+      tags:
+        - compound-controller
+      summary: createCompound
+      operationId: createCompound
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Compound'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - compound-controller
+      summary: deleteCompoundByIds
+      operationId: deleteCompoundByIds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /catalog/api/v1/compounds/compounds_for_copy:
+    post:
+      tags:
+        - compound-controller
+      summary: getCompoundsByTestCaseUuids
+      operationId: getCompoundsByTestCaseUuids
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CopyCompoundToTestPlanRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CopyCompoundToTestPlanResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/compounds/bulk:
+    post:
+      tags:
+        - compound-controller
+      summary: createCompounds
+      operationId: createCompounds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Compound'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Compound'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/compounds/copy:
+    post:
+      tags:
+        - compound-controller
+      summary: copyCompounds
+      operationId: copyCompounds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompoundBulkCopyRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/compounds/copy/testplan:
+    post:
+      tags:
+        - compound-controller
+      summary: copyCompoundsToTestPlan
+      operationId: copyCompoundsToTestPlan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompoundBulkCopyRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/compounds/deprecate:
+    post:
+      tags:
+        - compound-controller
+      summary: deprecate
+      operationId: deprecate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QaDslDeprecationRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/compounds/testcases:
+    post:
+      tags:
+        - compound-controller
+      summary: getTestCasesByCompoundIds
+      operationId: getTestCasesByCompoundIds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              uniqueItems: true
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestCase'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/compounds/{uuid}':
+    get:
+      tags:
+        - compound-controller
+      summary: getCompoundByUuid
+      operationId: getCompoundByUuid
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Compound'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - compound-controller
+      summary: updateCompound
+      operationId: updateCompound
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Compound'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Compound'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/compounds/{uuid}/calculateUsages':
+    post:
+      tags:
+        - compound-controller
+      summary: getCalculateUsagesTestCasesByCompoundId
+      operationId: getCalculateUsagesTestCasesByCompoundId
+      parameters:
+        - name: offset
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+        - name: pageNumber
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: paged
+          in: query
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: sort.sorted
+          in: query
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: sort.unsorted
+          in: query
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: unpaged
+          in: query
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsagesTestCasesByCompoundResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/compounds/compare/copy':
+    post:
+      tags:
+        - compound-controller
+      summary: copyCompoundsWhileCompare
+      operationId: copyCompoundsWhileCompare
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompareItemCopyRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompareCopyResponse'
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/compounds/compare/copy/bulk':
+    post:
+      tags:
+        - compound-controller
+      summary: bulkCopyCompoundsWhileCompare
+      operationId: bulkCopyCompoundsWhileCompare
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompareCopyRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/compounds/compare/editor/copy':
+    post:
+      tags:
+        - compound-controller
+      summary: copyCompoundsInEditor
+      operationId: copyCompoundsInEditor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompareEditorRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/compounds/compare/editor':
+    post:
+      tags:
+        - compound-controller
+      summary: getMetaInfoForCompoundCompare
+      operationId: getMetaInfoForCompoundCompare
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MetaInfoForCompareRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetaInfoForCompoundCompareResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/compounds/{uuid}/compound/search':
+    post:
+      tags:
+        - compound-controller
+      summary: searchCompounds
+      operationId: searchCompounds
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Compound'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/compounds/{uuid}/copy':
+    post:
+      tags:
+        - compound-controller
+      summary: copyCompound
+      operationId: copyCompound
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompoundCopyRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/compounds/{uuid}/editor':
+    get:
+      tags:
+        - compound-controller
+      summary: getCompoundBodyById
+      operationId: getCompoundBodyById
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestScenarioEditorResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/compounds/{uuid}/rename':
+    post:
+      tags:
+        - compound-controller
+      summary: renameCompound
+      operationId: renameCompound
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/compounds/{uuid}/updateCompound:
+    put:
+      tags:
+        - compound-controller
+      summary: updateCompoundNameAndParameters
+      operationId: updateCompoundNameAndParameters
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompoundNameAndParametersDto'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/compounds/{uuid}/updateMetaInfo':
+    put:
+      tags:
+        - compound-controller
+      summary: updateCompoundBody
+      operationId: updateCompoundBody
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: string
+            format: date-time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/MetaInfo'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/compounds/{uuid}/updateParameters':
+    put:
+      tags:
+        - compound-controller
+      summary: updateCompoundParameters
+      operationId: updateCompoundParameters
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompoundParametersDto'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /catalog/api/v1/compounds/validateDuplicates:
+    post:
+      tags:
+        - compound-controller
+      summary: validateDuplicates
+      operationId: validateDuplicates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateCompoundDuplicatesRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateCompoundDuplicatesResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/catalog/api/v1/compounds/{uuid}/testplan':
+    get:
+      tags:
+        - compound-controller
+      summary: getTestPlanIdByCompoundId
+      operationId: getTestPlanIdByCompoundId
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    ActionParameter:
+      title: ActionParameter
+      type: object
+      properties:
+        complexParam:
+          $ref: '#/components/schemas/ComplexActionParameter'
+        name:
+          type: string
+        prefix:
+          type: string
+        value:
+          type: string
+    ComplexActionParameter:
+      title: ComplexActionParameter
+      type: object
+      properties:
+        arrayParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameter'
+        mapParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/MapActionParameter'
+        type:
+          type: string
+          enum:
+            - ARRAY
+            - MAP
+    CompoundBulkCopyRequest:
+      title: CompoundBulkCopyRequest
+      required:
+        - compoundIds
+        - targetQaDslLibraryId
+      type: object
+      properties:
+        compoundIds:
+          items:
+            type: string
+            format: uuid
+        sourceQaDslLibraryId:
+          type: string
+          format: uuid
+        targetQaDslLibraryId:
+          type: string
+          format: uuid
+        overwrite:
+          type: boolean
+    CompoundCopyRequest:
+      title: CompoundCopyRequest
+      required:
+        - sourceQaDslLibraryId
+        - targetQaDslLibraryId
+      type: object
+      properties:
+        sourceQaDslLibraryId:
+          type: string
+          format: uuid
+        targetQaDslLibraryId:
+          type: string
+          format: uuid
+    CompoundNameAndParametersDto:
+      title: CompoundNameAndParametersDto
+      type: object
+      properties:
+        compoundName:
+          type: string
+        paramMapNames:
+          type: object
+          additionalProperties:
+            type: string
+        params:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameter'
+    CompoundParametersDto:
+      title: CompoundParametersDto
+      type: object
+      properties:
+        mapNames:
+          type: object
+          additionalProperties:
+            type: string
+        params:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameter'
+    Compound:
+      title: Compound
+      type: object
+      properties:
+        comment:
+          type: string
+        createdBy:
+          $ref: '#/components/schemas/UserInfo'
+        createdWhen:
+          type: string
+          format: date-time
+        deprecated:
+          type: boolean
+        description:
+          type: string
+        metainfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetaInfo'
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfo'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameter'
+        projectUuid:
+          type: string
+          format: uuid
+        qaDslLibraryId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - COMPOUND
+            - TESTSCENARIO
+        uuid:
+          type: string
+          format: uuid
+    JiraComponent:
+      title: JiraComponent
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    MapActionParameter:
+      title: MapActionParameter
+      type: object
+      properties:
+        paramKey:
+          $ref: '#/components/schemas/ActionParameter'
+        paramValue:
+          $ref: '#/components/schemas/ActionParameter'
+    MetaInfo:
+      title: MetaInfo
+      type: object
+      properties:
+        otherTextValue:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameter'
+        stepId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - ACTION
+            - COMPOUND
+            - DIRECTIVE
+            - FLAG
+            - OTHER
+    QaDslDeprecationRequest:
+      title: QaDslDeprecationRequest
+      type: object
+      properties:
+        compoundIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        qaDslLibraryIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    TestCase:
+      title: TestCase
+      type: object
+      properties:
+        assignee:
+          $ref: '#/components/schemas/UserInfo'
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/JiraComponent'
+        createdBy:
+          $ref: '#/components/schemas/UserInfo'
+        createdWhen:
+          type: string
+          format: date-time
+        datasetStorageUuid:
+          type: string
+          format: uuid
+        datasetUuid:
+          type: string
+          format: uuid
+        dependsOn:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseDependency'
+        description:
+          type: string
+        flags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseFlags'
+        groupId:
+          type: string
+          format: uuid
+        jiraTicket:
+          type: string
+        labelIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        lastRun:
+          type: string
+          format: uuid
+        lastRunStatus:
+          type: string
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfo'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        order:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseOrder'
+        priority:
+          type: string
+          enum:
+            - BLOCKER
+            - CRITICAL
+            - LOW
+            - MAJOR
+            - NORMAL
+        projectUuid:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+            - BLOCKED
+            - CANCELLED
+            - FAILED
+            - IN_PROGRESS
+            - NOT_DELIVERED
+            - OPEN
+            - PASSED
+            - PASSED_WITH_MINOR_DEFECTS
+        testCaseRepeatCounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseRepeatCount'
+        testPlanUuid:
+          type: string
+          format: uuid
+        testScenarioUuid:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid
+    TestCase0:
+      title: TestCase0
+      type: object
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        scenarioId:
+          type: string
+          format: uuid
+        testCaseId:
+          type: string
+          format: uuid
+        testCaseName:
+          type: string
+        testPlanId:
+          type: string
+          format: uuid
+    TestCaseDependency:
+      title: TestCaseDependency
+      type: object
+      properties:
+        testCaseId:
+          type: string
+          format: uuid
+        testScopeId:
+          type: string
+          format: uuid
+    TestCaseFlags:
+      title: TestCaseFlags
+      type: object
+      properties:
+        flags:
+          type: array
+          items:
+            type: string
+            enum:
+              - COLLECT_LOGS
+              - COLLECT_LOGS_ON_FAIL
+              - COLLECT_LOGS_ON_SKIPPED
+              - COLLECT_LOGS_ON_WARNING
+              - DO_NOT_PASS_INITIAL_CONTEXT
+              - EXECUTE_ANYWAY
+              - FAIL_IMMEDIATELY
+              - IGNORE_PREREQUISITE_IN_PASS_RATE
+              - IGNORE_VALIDATION_IN_PASS_RATE
+              - INVERT_RESULT
+              - SKIP
+              - SKIP_IF_DEPENDENCIES_FAIL
+              - STOP_ON_FAIL
+              - SKIP_ON_PASS
+              - TERMINATE_IF_FAIL
+              - TERMINATE_IF_PREREQUISITE_FAIL
+              - COLLECT_SSM_METRICS_ON_FAIL
+        testScopeId:
+          type: string
+          format: uuid
+    TestCaseOrder:
+      title: TestCaseOrder
+      type: object
+      properties:
+        sequenceNumber:
+          type: integer
+          format: int32
+        testScopeId:
+          type: string
+          format: uuid
+    TestCaseRepeatCount:
+      title: TestCaseRepeatCount
+      type: object
+      properties:
+        repeatCount:
+          type: integer
+          format: int32
+        testScopeId:
+          type: string
+          format: uuid
+    TestScenarioEditorResponse:
+      title: TestScenarioEditorResponse
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        metainfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetaInfo'
+        modifiedBy:
+          $ref: '#/components/schemas/UserInfo'
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        projectUuid:
+          type: string
+          format: uuid
+        testPlanUuid:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - COMPOUND
+            - TESTSCENARIO
+    UsagesTestCasesByCompoundResponse:
+      title: UsagesTestCasesByCompoundResponse
+      type: object
+      properties:
+        testCases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase0'
+        total:
+          type: integer
+          format: int32
+    CompareCopyRequest:
+      title: CompareCopyRequest
+      type: object
+      properties:
+        sourceParentId:
+          type: string
+          format: uuid
+        targetParentId:
+          type: string
+          format: uuid
+    CompareCopyResponse:
+      title: CompareCopyResponse
+      type: object
+      properties:
+        targetItemId:
+          type: string
+          format: uuid
+    CompareItemCopyRequest:
+      title: CompareItemCopyRequest
+      type: object
+      properties:
+        sourceParentId:
+          type: string
+          format: uuid
+        targetParentId:
+          type: string
+          format: uuid
+        itemId:
+          type: string
+          format: uuid
+    CompareEditorRequest:
+      title: CompareEditorRequest
+      type: object
+      properties:
+        sourceQaDslId:
+          type: string
+          format: uuid
+        sourceCompoundId:
+          type: string
+          format: uuid
+        targetQaDslId:
+          type: string
+          format: uuid
+        targetCompoundId:
+          type: string
+          format: uuid
+        newSteps:
+          type: array
+          items:
+            type: string
+    MetaInfoForCompareRequest:
+      title: MetaInfoForCompoundCompareRequest
+      type: object
+      properties:
+        leftItemId:
+          type: string
+          format: uuid
+        rightItemId:
+          type: string
+          format: uuid
+    MetaInfoForCompoundCompareResponse:
+      title: MetaInfoForCompoundCompareResponse
+      type: object
+      properties:
+        leftTestPlanId:
+          type: string
+          format: uuid
+        leftTestPlanName:
+          type: string
+        leftQaDslId:
+          type: string
+          format: uuid
+        leftQaDslName:
+          type: string
+        leftCompoundId:
+          type: string
+          format: uuid
+        leftCompoundName:
+          type: string
+        leftCompoundMetaInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetaInfo'
+        leftCompoundActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+        leftCompoundCompounds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Compound'
+        rightTestPlanId:
+          type: string
+          format: uuid
+        rightTestPlanName:
+          type: string
+        rightQaDslId:
+          type: string
+          format: uuid
+        rightQaDslName:
+          type: string
+        rightCompoundId:
+          type: string
+          format: uuid
+        rightCompoundName:
+          type: string
+        rightCompoundMetaInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetaInfo'
+        rightCompoundActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+        rightCompoundCompounds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Compound'
+        directives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dictionary'
+    Dictionary:
+      title: Dictionary
+      type: object
+      properties:
+        description:
+          type: string
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    CopyCompoundToTestPlanRequest:
+      title: CopyCompoundToTestPlanRequest
+      type: object
+      properties:
+        testCaseIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        targetLibraryId:
+          type: string
+          format: uuid
+    CopyCompoundToTestPlanResponse:
+      title: CopyCompoundToTestPlanResponse
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        duplicate:
+          type: boolean
+    UserInfo:
+      title: UserInfo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+    Action:
+      title: Action
+      type: object
+      properties:
+        annotations:
+          type: array
+          items:
+            type: string
+        comment:
+          type: string
+        commentedOut:
+          type: boolean
+        deprecated:
+          type: boolean
+        description:
+          type: string
+        engineType:
+          type: string
+          enum:
+            - BV
+            - EXECUTOR
+            - ITFACTION
+            - ITFCALLCHAIN
+            - ITFWARMUP
+            - NEWMAN_RUNNER
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameter'
+        projectUuid:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - BV
+            - COMPOUND
+            - ITF
+            - MIA
+            - NEWMAN
+            - R_B_M
+            - REST
+            - SQL
+            - SSH
+            - TECHNICAL
+            - UI
+        typeAction:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    ValidateCompoundDuplicatesRequest:
+      title: ValidateCompoundDuplicatesRequest
+      required:
+        - sourceTestPlanId
+        - targetTestPlanId
+        - testCaseFolderIds
+        - testCaseIds
+      type: object
+      properties:
+        sourceTestPlanId:
+          type: string
+          format: uuid
+        targetTestPlanId:
+          type: string
+          format: uuid
+        testCaseFolderIds:
+          items:
+            type: string
+            format: uuid
+        testCaseIds:
+          items:
+            type: string
+            format: uuid
+        testScopeIds:
+          items:
+            type: string
+            format: uuid
+    ValidateCompoundDuplicatesResponse:
+      title: ValidateCompoundDuplicatesResponse
+      required:
+        - sourceQaDslId
+        - sourceQaDslName
+        - targetQaDslId
+        - targetQaDslName
+        - compounds
+      type: object
+      properties:
+        sourceQaDslId:
+          type: string
+          format: uuid
+        sourceQaDslName:
+          type: string
+        targetQaDslId:
+          type: string
+          format: uuid
+        targetQaDslName:
+          type: string
+        compounds:
+          items:
+            type: string
+            format: object

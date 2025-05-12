@@ -1,0 +1,234 @@
+PAAS_PLATFORM: "KUBERNETES"
+ATP_NET: ""
+# on/off integration with APT1
+ATP1_INTEGRATION_ENABLE: "true"
+ATP_HTTP_LOGGING: "true"
+ATP_HTTP_LOGGING_HEADERS: "true"
+ATP_HTTP_LOGGING_HEADERS_IGNORE: "Authorization"
+ATP_HTTP_LOGGING_URI_IGNORE: "/deployment/readiness /deployment/liveness"
+ATP_INTERNAL_GATEWAY_ENABLED: "false"
+ATP_RAM_URL: "https://atp-ram-service-address"
+ATP_LOGRECORD_STEP_FOR_RECALCULATING_TOPISSUES: "500"
+CATALOGUE_URL: "http://atp-catalogue-service-address"
+# the maximum size of the connection pool per host
+CONNECTIONS_PER_HOST: "100"
+# CPU core limit
+CPU_LIMIT: "0.5"
+# CPU core request
+CPU_REQUEST: "0.05"
+# Which docker image should be used to deploy
+DOCKER_TAG: "artifactory-service-address/path-to-image"
+EI_GRIDFS_DB: ""
+EI_GRIDFS_PASSWORD: ""
+EI_GRIDFS_USER: ""
+ENABLE_M2M: "true"
+# Disable/enable eureka client
+EUREKA_CLIENT_ENABLED: "true"
+FEIGN_ATP_CATALOGUE_NAME: "ATP-CATALOGUE"
+FEIGN_ATP_CATALOGUE_ROUTE: "api/atp-catalogue/v1"
+FEIGN_ATP_CATALOGUE_URL: "" # TO_BE_REPLACED
+FEIGN_ATP_DATASETS_NAME: "ATP-DATASETS"
+FEIGN_ATP_DATASETS_ROUTE: "api/atp-datasets/v1"
+FEIGN_ATP_DATASETS_URL: "" # TO_BE_REPLACED
+FEIGN_ATP_EI_NAME: "ATP-EXPORT-IMPORT"
+FEIGN_ATP_EI_ROUTE: "api/atp-export-import/v1"
+FEIGN_ATP_EI_URL: ""
+FEIGN_ATP_ENVIRONMENTS_NAME: "ATP-ENVIRONMENTS"
+FEIGN_ATP_ENVIRONMENTS_ROUTE: "api/atp-environments/v1"
+FEIGN_ATP_ENVIRONMENTS_URL: "" # TO_BE_REPLACED
+FEIGN_ATP_INTERNAL_GATEWAY_NAME: "atp-internal-gateway"
+FEIGN_ATP_MAILSENDER_NAME: "ATP-MAIL-SENDER"
+FEIGN_ATP_MAILSENDER_ROUTE: "api/atp-mail-sender/v1"
+FEIGN_ATP_MAILSENDER_URL: "" # TO_BE_REPLACED
+FEIGN_ATP_ORCHESTRATOR_NAME: "ATP-ORCHESTRATOR"
+FEIGN_ATP_ORCHESTRATOR_ROUTE: "api/atp-orchestrator/v1"
+FEIGN_ATP_ORCHESTRATOR_URL: "" # TO_BE_REPLACED
+FEIGN_ATP_USERS_NAME: "ATP-USERS-BACKEND"
+FEIGN_ATP_USERS_ROUTE: "api/atp-users-backend/v1"
+FEIGN_ATP_USERS_URL: "" # TO_BE_REPLACED
+FEIGN_ATP_NOTIFICATION_NAME: "ATP-NOTIFICATION"
+FEIGN_ATP_NOTIFICATION_ROUTE: "api/atp-notification/v1"
+FEIGN_ATP_NOTIFICATION_URL: "" # TO_BE_REPLACED
+# Host of graylog
+GRAYLOG_HOST: "tcp:graylog01cn.some-domain.com"
+# This option turns on or off logging in graylog
+GRAYLOG_ON: "true"
+# Port of graylog
+GRAYLOG_PORT: "12201"
+# atp-ram gridfs host
+GRIDFS_DB_ADDR: "mongo"
+# atp-ram gridfs port
+GRIDFS_DB_PORT: "27017"
+# atp-ram gridfs db name
+GRIDFS_DB: ""
+# atp-ram grid pass
+GRIDFS_DB_PASSWORD: ""
+# atp-ram grid user
+GRIDFS_DB_USER: ""
+# Variable "GRID_CHUNK_SIZE" was never used
+JAVA_OPTIONS: "-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=3000 -Dcom.sun.management.jmxremote.rmi.port=3001 -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
+ATP_NOTIFICATION_MODE: "rest"
+KAFKA_NOTIFICATION_TOPIC: ""
+KAFKA_NOTIFICATION_TOPIC_REPLICATION_FACTOR: ""
+KAFKA_NOTIFICATION_TOPIC_PARTITIONS: "1"
+KAFKA_FDR_CONSUMER_TOPIC_NAME: ""
+KAFKA_FDR_ENABLE: "false"
+KAFKA_FDR_PRODUCER_TOPIC_NAME: ""
+KAFKA_GROUP_ID: "ram"
+KAFKA_KEY_DESERIALIZER: "org.springframework.kafka.support.serializer.JsonDeserializer"
+KAFKA_MAILS_ENABLE: "true"
+KAFKA_MAILS_TOPIC: ""
+KAFKA_MAILS_RESPONSES_ENABLE: "true"
+KAFKA_MAILS_RESPONSE_TOPIC_NAME: ""
+KAFKA_MAILS_MESSAGE_SIZE: "15728640"
+KAFKA_PROJECT_EVENT_CONSUMER_TOPIC_NAME: ""
+KAFKA_TEST_PLAN_TOPIC_NAME: ""
+KAFKA_PROJECT_EVENT_ENABLE: "true"
+KAFKA_TEST_PLAN_EVENT_ENABLE: "true"
+KAFKA_RCA_CONSUMER_TOPIC_NAME: ""
+KAFKA_RCA_ENABLE: "false"
+KAFKA_SERVERS: "kafka:9092"
+KAFKA_TRUSTED_PACKAGES: "*"
+KAFKA_TYPE_MAPPING: "org.qubership.automation.receiver.entities.pojo.RamLink:org.qubership.atp.ram.tsg.model.FdrResponse"
+KAFKA_VALUE_DESERIALIZER: "org.springframework.kafka.support.serializer.JsonDeserializer"
+KAFKA_ENABLE: "true"
+KAFKA_SERVICE_ENTITIES_TOPIC: ""
+KAFKA_SERVICE_ENTITIES_TOPIC_PARTITIONS: "1"
+KAFKA_SERVICE_ENTITIES_TOPIC_REPLICATION_FACTOR: ""
+# Url atp-keycloak with auth
+KEYCLOAK_AUTH_URL: "https://atp-keycloak-service-address/auth"
+# Keycloak client name
+KEYCLOAK_CLIENT_NAME: ""
+# Keycloak enabled
+KEYCLOAK_ENABLED: "false"
+# Keycloak realm
+KEYCLOAK_REALM: "atp2"
+# Keycloak secret
+KEYCLOAK_SECRET: ""
+LIMIT_TESTRESULTS_CATALOG_DASHBOARD: "70"
+# level of logs
+LOG_LEVEL: "INFO"
+# Email host server
+MAIL_HOST: "iplanet.some-domain.com"
+MAIL_SENDER_URL: "" # TO_BE_REPLACED
+# Enable ssl for mail server if true
+MAIL_SSL: "false"
+# the maximum idle time for a pooled connection im ms
+MAX_CONNECTION_IDLE_TIME: "0"
+# multipart files size
+MAX_FILE_SIZE: "200MB"
+# Limits memory usage of service.
+MAX_RAM: "1024m"
+# Memory limit
+MEMORY_LIMIT: "1.5Gi"
+# Memory request
+MEMORY_REQUEST: "512Mi"
+# the minimum size of the connection pool per host
+MIN_CONNECTIONS_PER_HOST: "40"
+# atp-ram host
+MONGO_DB_ADDR: "mongo"
+# atp-ram port
+MONGO_DB_PORT: "27017"
+NODES_COUNT: "1"
+# enabling profiler option
+PROFILER_ENABLED: "false"
+PROJECT_INFO_ENDPOINT: "/api/v1/users/projects"
+# atp-ram db name
+RAM_DB: ""
+# atp-ram db pass
+RAM_DB_PASSWORD: ""
+# atp-ram db user
+RAM_DB_USER: ""
+# host of profiler collector
+REMOTE_DUMP_HOST: "esc-collector-service.profiler.svc"
+# port of profiler collector
+REMOTE_DUMP_PORT: "1710"
+# Security Context properties
+# enabled is a flag to enable Security Context
+SECURITY_CONTEXT_ENABLED: false
+# runAsUser is the user ID used to run the container
+SECURITY_RUN_AS_USER: 1000
+# fsGroup is the group ID associated with the container
+SECURITY_FS_GROUP: 1000
+# Deployment Config/Service name.
+SERVICE_NAME: "atp-ram"
+# Deployment Config/Service type.
+SERVICE_PORT_TYPE: "NodePort"
+SERVICE_REGISTRY_URL: "http://atp-registry-service:8761/eureka"
+# Set to ATP2 to enable Prometheus scrapping
+SERVICE_TYPE: "ATP2"
+# Spring profile for security
+SPRING_PROFILES: "disable-security"
+SSL_CERTIFICATE_CONFIG_MAP: "ssl-certificates"
+SSL_CERTIFICATE_PATH: "/etc/ssl/certs/java"
+SSL_VERIFY: "false"
+TERMINATE_TIMEOUT_IN_MINUTES: "60"
+# Difference between finish date of the last Test Run and current time. Milliseconds
+# Variable "TIMEOUT_AFTER_FINISH_DATE_OF_LAST_TR" was never used
+# Difference between start date of the Execution Request and current time. Hours.
+# Variable "TIMEOUT_AFTER_START_DATE_OF_ER" was never used
+# Number of I/O threads to create for the worker. Two IO threads per CPU core (ideal).
+UNDERTOW_THREADS_IO: "9"
+# Number of worker threads. The default is 8 times the number of I/O threads.
+UNDERTOW_THREADS_WORKER: "72"
+ZIPKIN_ENABLE: "false"
+ZIPKIN_PROBABILITY: "1.0"
+ZIPKIN_URL: "http://zipkin.zipkin.svc:9411"
+HAZELCAST_ENABLE: "false"
+HAZELCAST_ADDRESS: "atp-hazelcast:5701"
+HAZELCAST_CLUSTER_NAME: "atp-hc"
+# locale resolver
+LOCALE_RESOLVER: "en"
+# Consul
+CONSUL_PREFIX: "devci"
+CONSUL_ENABLED: "false"
+CONSUL_HEALTH_CHECK_ENABLED: "false"
+CONSUL_URL: ""
+CONSUL_PORT: 8500
+CONSUL_TOKEN: ""
+FILES_CLEANUP_JOB_ENABLE: "true"
+FILES_EXPIRATION_DAYS_INTERVAL: "14"
+FILES_EXPIRATION_SCHEDULE_INTERVAL: "0 0 0 */1 * ?"
+BROWSER_MONITORING_LINK: "https://dashboard-service-address/d/Zg25fjQ7z/browser-stats?orgId=3&var-cloud=atp-cloud&var-namespace=selenoid&var-pod=%{browser_pod}&from=%{from_timestamp}&to=%{to_timestamp}"
+# Swagger
+SWAGGER_ENABLED: "false"
+# Audit Logging topic
+AUDIT_LOGGING_ENABLE: "false"
+AUDIT_LOGGING_TOPIC_NAME: ""
+AUDIT_LOGGING_TOPIC_PARTITIONS: "1"
+AUDIT_LOGGING_TOPIC_REPLICAS: ""
+KAFKA_REPORTING_SERVERS: "kafka:9092"
+#Enabling installation of external link for service
+EXTERNAL_LINK_ENABLED: false
+REGEXP_TIMEOUT: 300
+#  kubernetes.io/hostname: worker1-atpkub
+#Example:  "nodeSelector": {"kubernetes.io/hostname": "worker16-atp2k8"}
+nodeSelector: {}
+ADDITIONAL_JAVA_OPTIONS: "-XX:MaxRAMPercentage=70.0"
+HEAPDUMP_ENABLED: false
+# Javers
+JAVERS_ENABLED: "true"
+ATP_LAST_REVISION_COUNT: "200"
+ATP_ARCHIVE_CRON_EXPRESSION: "0 0 0 */7 * ?"
+ATP_ARCHIVE_JOB_NAME: "atp-ram-archive-job"
+ATP_ARCHIVE_LIMIT_OF_DATA: "5000"
+ATP_ARCHIVE_BULK_DELETE: "500"
+LOG_RECORDS_DATE_EXPIRE_SECONDS: "1209600"
+LOG_RECORDS_CONTEXT_VARIABLES_DATE_EXPIRE_SECONDS: "259200"
+#Clean old execution requests
+EXECUTION_REQUEST_CLEANUP_JOB_CRON: "10 10 5 * * *"
+EXPIRED_EXECUTION_REQUESTS_BATCH_SIZE: "500"
+#Example: "extraEnvs": [
+#    {
+#      "name": "DISABLE_INSTALL_DEMO_CONFIG",
+#      "value": "true"
+#    },
+#    {
+#      "name": "DISABLE_SECURITY_PLUGIN",
+#      "value": "true"
+#    }
+#  ]
+extraEnvs: []
+keepHookLogs: false
+HELPER_IMAGE: "artifactory-service-address/path-to-image"
+

@@ -1,0 +1,2272 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: log-record-controller
+    description: Log Record Controller
+paths:
+  /api/logrecords/create:
+    post:
+      tags:
+        - log-record-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogRecord'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecord'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  '/api/logrecords/delete/{id}':
+    delete:
+      tags:
+        - log-record-controller
+      summary: delete
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/api/logrecords/file/{logRecordId}':
+    get:
+      tags:
+        - log-record-controller
+      summary: downloadFileByLogRecordId
+      operationId: downloadFileByLogRecordId
+      parameters:
+        - name: logRecordId
+          in: path
+          description: logRecordId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: filename
+          in: query
+          description: filename
+          required: false
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/file/{logRecordId}/downloadAsString':
+    get:
+      tags:
+        - log-record-controller
+      summary: downloadFileAsStringByLogRecordIdAndFilename
+      operationId: downloadFileAsStringByLogRecordIdAndFilename
+      parameters:
+        - name: logRecordId
+          in: path
+          description: logRecordId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: filename
+          in: query
+          description: filename
+          required: false
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecordFileContentResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/logrecords/getQuantity/matchPattern:
+    post:
+      tags:
+        - log-record-controller
+      summary: getQuantityLogRecordsWhichMatchToPatterns
+      operationId: getQuantityLogRecordsWhichMatchToPatterns
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogRecordQuantityMatchPatternRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecordQuantityResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/pot/{logRecordId}':
+    get:
+      tags:
+        - log-record-controller
+      summary: downloadPotFileByLogRecordId
+      operationId: downloadPotFileByLogRecordId
+      parameters:
+        - name: logRecordId
+          in: path
+          description: logRecordId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  '/api/logrecords/screenshot/{logRecordUuid}':
+    get:
+      tags:
+        - log-record-controller
+      summary: getScreenShot
+      operationId: getScreenShot
+      parameters:
+        - name: logRecordUuid
+          in: path
+          description: logRecordUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceShot'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/contextVariables':
+    get:
+      tags:
+        - log-record-controller
+      summary: getContextVariables
+      operationId: getContextVariables
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: page
+          in: query
+          description: page
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          description: size
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: activeTabs
+          in: query
+          description: activeTabs
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: '#/components/schemas/ActiveTabs'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/contextVariables/all':
+    get:
+      tags:
+        - log-record-controller
+      summary: getAllContextVariables
+      operationId: getAllContextVariables
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContextVariable'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/contextVariables/parameters':
+    get:
+      tags:
+        - log-record-controller
+      summary: searchContextVariableParameters
+      operationId: searchContextVariableParameters
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: name
+          in: query
+          description: name
+          required: true
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/contextVariables/search':
+    post:
+      tags:
+        - log-record-controller
+      summary: searchContextVariables
+      operationId: searchContextVariables
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchContextVariablesRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContextVariablesResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/issues':
+    get:
+      tags:
+        - log-record-controller
+      summary: getAllIssuesByLogRecordId
+      operationId: getAllIssuesByLogRecordId
+      parameters:
+        - name: executionRequestId
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: failPattern
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: failReason
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: failedTestRun
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: jiraTicket
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: logRecordIds
+          in: query
+          required: false
+          style: pipeDelimited
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+        - name: message
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: priority
+          in: query
+          required: false
+          style: form
+          schema:
+            $ref: '#/components/schemas/Priority'
+        - name: startIndex
+          in: query
+          description: startIndex
+          required: true
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: endIndex
+          in: query
+          description: endIndex
+          required: true
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: columnType
+          in: query
+          description: columnType
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: sortType
+          in: query
+          description: sortType
+          required: false
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueResponsesModel'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/location-in-editor':
+    get:
+      tags:
+        - log-record-controller
+      summary: getLocationInEditor
+      operationId: getLocationInEditor
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationInEditorResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/messageParameters':
+    get:
+      tags:
+        - log-record-controller
+      summary: getLogRecordMessageParameters
+      operationId: getLogRecordMessageParameters
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MessageParameter'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/revertTestingStatus':
+    put:
+      tags:
+        - log-record-controller
+      summary: revertTestingStatusForLogRecord
+      operationId: revertTestingStatusForLogRecord
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecord'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/screenshot/previews':
+    get:
+      tags:
+        - log-record-controller
+      summary: getAllLogRecordScreenshotPreviews
+      operationId: getAllLogRecordScreenshotPreviews
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecordScreenshotResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/stepContextVariables':
+    get:
+      tags:
+        - log-record-controller
+      summary: getStepContextVariables
+      operationId: getStepContextVariables
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: page
+          in: query
+          description: page
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          description: size
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: activeTabs
+          in: query
+          description: activeTabs
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: '#/components/schemas/ActiveTabs'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/stepContextVariables/parameters':
+    get:
+      tags:
+        - log-record-controller
+      summary: searchStepContextVariableParameters
+      operationId: searchStepContextVariableParameters
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: name
+          in: query
+          description: name
+          required: true
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/stepContextVariables/search':
+    post:
+      tags:
+        - log-record-controller
+      summary: searchStepContextVariables
+      operationId: searchStepContextVariables
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchContextVariablesRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContextVariablesResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/updateContextVariables':
+    post:
+      tags:
+        - log-record-controller
+      summary: updateContextVariables
+      operationId: updateContextVariables
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLogRecordContextVariablesRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/updateExecutionStatus':
+    put:
+      tags:
+        - log-record-controller
+      summary: updateExecutionStatus
+      operationId: updateExecutionStatus
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLogRecordExecutionStatusRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/updateStepContextVariables':
+    post:
+      tags:
+        - log-record-controller
+      summary: updateStepContextVariables
+      operationId: updateStepContextVariables
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLogRecordContextVariablesRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/updateMessageParameters':
+    post:
+      tags:
+        - log-record-controller
+      summary: updateMessageParameters
+      operationId: updateMessageParameters
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLogRecordMessageParametersRequest'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{logRecordUuid}/addAkb/{akbRecordUuid}':
+    put:
+      tags:
+        - log-record-controller
+      summary: addLogRecordAkb
+      operationId: addLogRecordAkb
+      parameters:
+        - name: logRecordUuid
+          in: path
+          description: logRecordUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: akbRecordUuid
+          in: path
+          description: akbRecordUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/logrecords/{logRecordUuid}/browserConsoleLog:
+    get:
+      tags:
+        - log-record-controller
+      summary: getBrowserConsoleLogWithPagination
+      operationId: getBrowserConsoleLogWithPagination
+      parameters:
+        - name: logRecordUuid
+          in: path
+          description: logRecordUuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: paged
+          in: query
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: sort.sorted
+          in: query
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: sort.unsorted
+          in: query
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: unpaged
+          in: query
+          required: false
+          style: form
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginationResponseBrowserConsoleLogsTable'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/logrecords/{logRecordUuid}/createBrowserConsoleLog:
+    post:
+      tags:
+        - log-record-controller
+      summary: createBrowserConsoleLog
+      operationId: createBrowserConsoleLog
+      parameters:
+        - name: logRecordUuid
+          in: path
+          description: logRecordUuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BrowserConsoleLogsTable'
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{lr}/akb':
+    put:
+      tags:
+        - log-record-controller
+      summary: addLogRecordAkbRecords
+      operationId: addLogRecordAkbRecords
+      parameters:
+        - name: lr
+          in: path
+          description: lr
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecord'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{uuid}':
+    get:
+      tags:
+        - log-record-controller
+      summary: getByUuid
+      operationId: getByUuid
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecord'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{uuid}/content':
+    get:
+      tags:
+        - log-record-controller
+      summary: getLogRecordContent
+      operationId: getLogRecordContent
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecordContentResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{uuid}/error/mapping':
+    get:
+      tags:
+        - log-record-controller
+      summary: getErrorMapping
+      operationId: getErrorMapping
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: source
+          in: query
+          description: source
+          required: true
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorMappingItem'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{uuid}/logRecordWithChildren':
+    get:
+      tags:
+        - log-record-controller
+      summary: getLogRecordByIdWithChildren
+      operationId: getLogRecordByIdWithChildren
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecordResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{uuid}/logrecords':
+    get:
+      tags:
+        - log-record-controller
+      summary: getAllLogRecordsForLr
+      operationId: getAllLogRecordsForLr
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogRecord'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{uuid}/logrecordsAndParent':
+    get:
+      tags:
+        - log-record-controller
+      summary: getChildLogRecordsAndParent
+      operationId: getChildLogRecordsAndParent
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogRecord'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  '/api/logrecords/{uuid}/logrecordsOrParent':
+    get:
+      tags:
+        - log-record-controller
+      summary: geChildLogRecordsOrParent
+      operationId: geChildLogRecordsOrParent
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogRecord'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{uuid}/tree/path':
+    get:
+      tags:
+        - log-record-controller
+      summary: getLogRecordPath
+      operationId: getLogRecordPath
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StepPath'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{uuid}/updTestingStatus/{testingStatus}':
+    put:
+      tags:
+        - log-record-controller
+      summary: updTestingStatus
+      operationId: updTestingStatus
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: testingStatus
+          in: path
+          description: testingStatus
+          required: true
+          style: simple
+          schema:
+            $ref: '#/components/schemas/TestingStatus'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecord'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{uuid}/updTestingStatus/{testingStatus}/hard':
+    put:
+      tags:
+        - log-record-controller
+      summary: updTestingStatusHard
+      operationId: updTestingStatusHard
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: testingStatus
+          in: path
+          description: testingStatus
+          required: true
+          style: simple
+          schema:
+            $ref: '#/components/schemas/TestingStatus'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogRecord'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/ssmMetricsReport':
+    post:
+      tags:
+        - log-record-controller
+      summary: uploadSsmMetricsReport
+      operationId: uploadSsmMetricsReport
+      parameters:
+        - name: id
+          in: path
+          description: log record identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: fileName
+          in: query
+          description: file name
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: file name
+          required: false
+          schema:
+            type: string
+        - name: contentType
+          in: query
+          description: file content name
+          required: false
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{id}/ssmMetricsReports':
+    patch:
+      tags:
+        - log-record-controller
+      summary: updateSsmMetricReportsData
+      operationId: updateSsmMetricReportsData
+      parameters:
+        - name: id
+          in: path
+          description: log record identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SsmMetricReports'
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{logRecordId}/script/preScript':
+    get:
+      tags:
+        - log-record-controller
+      summary: getPreScriptByLogRecordUuid
+      operationId: getPreScriptByLogRecordUuid
+      parameters:
+        - name: logRecordId
+          in: path
+          description: log record identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScriptResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{logRecordId}/script/postScript':
+    get:
+      tags:
+        - log-record-controller
+      summary: getPostScriptByLogRecordUuid
+      operationId: getPostScriptByLogRecordUuid
+      parameters:
+        - name: logRecordId
+          in: path
+          description: log record identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScriptResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/logrecords/{logRecordId}/script/consoleLogs':
+    get:
+      tags:
+        - log-record-controller
+      summary: getScriptConsoleLogsByLogRecordUuid
+      operationId: getScriptConsoleLogsByLogRecordUuid
+      parameters:
+        - name: logRecordId
+          in: path
+          description: log record identifier
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScriptConsoleLog'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    ActiveTabs:
+      type: string
+      enum:
+        - MODIFIED
+        - NOT_MODIFIED
+    ScriptResponse:
+      title: ScriptResponse
+      type: object
+      properties:
+        script:
+          type: string
+    ScriptConsoleLog:
+      title: ScriptConsoleLog
+      type: object
+      properties:
+        level:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+    BrowserConsoleLogsTable:
+      title: BrowserConsoleLogsTable
+      type: object
+      properties:
+        fileName:
+          type: string
+        level:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+    ExecutionStatus:
+      type: string
+      enum:
+        - NOT_STARTED
+        - IN_PROGRESS
+        - FINISHED
+        - TERMINATED
+        - TERMINATED_BY_TIMEOUT
+        - SUSPENDED
+        - RESUMING
+        - SKIPPED
+    TestingStatus:
+      type: string
+      enum:
+        - STOPPED
+        - FAILED
+        - WARNING
+        - PASSED
+        - SKIPPED
+        - BLOCKED
+        - NOT_STARTED
+        - UNKNOWN
+    TypeAction:
+      type: string
+      enum:
+        - UI
+        - ITF
+        - BV
+        - NEWMAN
+        - R_B_M
+        - MIA
+        - REST
+        - SQL
+        - SSH
+        - COMPOUND
+        - TECHNICAL
+        - TRANSPORT
+    Child:
+      title: Child
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/TypeAction'
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        customLinks:
+          $ref: '#/components/schemas/CustomLink'
+    Content:
+      title: Content
+      type: object
+      properties:
+        attempts:
+          type: integer
+          format: int32
+        duration:
+          type: integer
+          format: int64
+        endDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        message:
+          type: string
+        name:
+          type: string
+        server:
+          type: string
+        serverUrl:
+          type: string
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        type:
+          $ref: '#/components/schemas/TypeAction'
+        uuid:
+          type: string
+          format: uuid
+    ContextVariable:
+      title: ContextVariable
+      type: object
+      properties:
+        name:
+          type: string
+        beforeValue:
+          type: string
+        afterValue:
+          type: string
+    ContextVariablesResponse:
+      title: ContextVariablesResponse
+      type: object
+      properties:
+        modified:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContextVariable'
+        notModified:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContextVariable'
+        totalCount:
+          type: integer
+          format: int32
+    ErrorMappingItem:
+      title: ErrorMappingItem
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        level:
+          type: string
+        parent:
+          type: string
+          format: uuid
+    FailPatternResponse:
+      title: FailPatternResponse
+      type: object
+      properties:
+        failReason:
+          $ref: '#/components/schemas/RamObjectResponse'
+        jiraTickets:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+        name:
+          type: string
+        patternDescription:
+          type: string
+        priority:
+          $ref: '#/components/schemas/Priority'
+        project:
+          $ref: '#/components/schemas/RamObjectResponse'
+        rule:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    Priority:
+      type: string
+      enum:
+        - BLOCKER
+        - CRITICAL
+        - LOW
+        - MAJOR
+        - NORMAL
+    InputStream:
+      title: InputStream
+      type: object
+    IssueResponse:
+      title: IssueResponse
+      type: object
+      properties:
+        executionRequestId:
+          type: string
+          format: uuid
+        failPattern:
+          $ref: '#/components/schemas/FailPatternResponse'
+        failReason:
+          $ref: '#/components/schemas/RamObjectResponse'
+        jiraTickets:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+        name:
+          type: string
+        priority:
+          $ref: '#/components/schemas/Priority'
+        testRuns:
+          type: array
+          items:
+            $ref: '#/components/schemas/IssueTestRunResponse'
+        uuid:
+          type: string
+          format: uuid
+    IssueResponsesModel:
+      title: IssueResponsesModel
+      type: object
+      properties:
+        params:
+          type: array
+          items:
+            $ref: '#/components/schemas/IssueResponse'
+        totalCount:
+          type: integer
+          format: int32
+    IssueTestRunResponse:
+      title: IssueTestRunResponse
+      type: object
+      properties:
+        name:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    LocationInEditorResponse:
+      title: LocationInEditorResponse
+      type: object
+      properties:
+        isOutOfDate:
+          type: boolean
+        line:
+          type: string
+        scenarioId:
+          type: string
+          format: uuid
+    LogRecordContentResponse:
+      title: LogRecordContentResponse
+      type: object
+      properties:
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Content'
+    LogRecordPreviewResponse:
+      title: LogRecordPreviewResponse
+      type: object
+      properties:
+        logRecordId:
+          type: string
+          format: uuid
+        preview:
+          type: string
+        testRunId:
+          type: string
+          format: uuid
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+    LogRecordQuantityMatchPatternRequest:
+      title: LogRecordQuantityMatchPatternRequest
+      required:
+        - executionRequestId
+        - newPattern
+      type: object
+      properties:
+        executionRequestId:
+          type: string
+          format: uuid
+        failPatternId:
+          type: string
+          format: uuid
+        newPattern:
+          type: string
+    LogRecordQuantityResponse:
+      title: LogRecordQuantityResponse
+      type: object
+      properties:
+        currentQuantity:
+          type: integer
+          format: int64
+        newQuantity:
+          type: integer
+          format: int64
+    LogRecord:
+      title: LogRecord
+      type: object
+      properties:
+        protocolType:
+          type: string
+        lastUpdated:
+          type: string
+          format: date-time
+        createdDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        createdDateStamp:
+          type: integer
+          format: int64
+        message:
+          type: string
+        parentRecordId:
+          type: string
+          format: uuid
+        testRunId:
+          type: string
+          format: uuid
+        isSection:
+          type: boolean
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        server:
+          type: string
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        endDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        duration:
+          type: integer
+          format: int64
+        rootCause:
+          $ref: '#/components/schemas/RootCause'
+        stackTrace:
+          type: string
+        isCompaund:
+          type: boolean
+        snapshotId:
+          type: string
+        configInfoId:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        urlToLogCollectorData:
+          type: string
+        linkToSvp:
+          type: string
+        type:
+          $ref: '#/components/schemas/TypeAction'
+        duplicateId:
+          type: array
+          items:
+            type: string
+            format: uuid
+        taToolsLogs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaToolLog'
+        validationTable:
+          $ref: '#/components/schemas/ValidationTable'
+        validationLabels:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        fileMetadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileMetadata'
+#        @JsonIgnore
+#        messageParameters:
+#          type: array
+#          items:
+#            $ref: '#/components/schemas/MessageParameter'
+#        contextVariables:
+#          type: array
+#          items:
+#            $ref: '#/components/schemas/ContextVariable'
+#        stepContextVariables:
+#          type: array
+#          items:
+#            $ref: '#/components/schemas/ContextVariable'
+        isBrowserConsoleLogsPresent:
+          type: boolean
+        isMessageParametersPresent:
+          type: boolean
+        table:
+          $ref: '#/components/schemas/Table'
+        preview:
+          type: string
+        metaInfo:
+          $ref: '#/components/schemas/MetaInfo'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Child'
+        isContextVariablesPresent:
+          type: boolean
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        customLinks:
+          $ref: '#/components/schemas/CustomLink'
+    Table:
+      title: Table
+      type: object
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Row'
+    Row:
+      title: Row
+      type: object
+      properties:
+        cells:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cell'
+    Cell:
+      title: Cell
+      type: object
+      properties:
+        value:
+          type: string
+    FileMetadata:
+      title: FileMetadata
+      type: object
+      properties:
+        fileName:
+          type: string
+        type:
+          type: string
+          enum:
+            - COMMON
+            - POT
+    LogRecordResponse:
+      title: LogRecordResponse
+      type: object
+      properties:
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/LogRecordShort'
+        parent:
+          $ref: '#/components/schemas/LogRecordShort'
+    LogRecordScreenshotResponse:
+      title: LogRecordScreenshotResponse
+      type: object
+      properties:
+        childrenPreviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/LogRecordPreviewResponse'
+        screenshot:
+          type: string
+        screenshotSource:
+          type: string
+    LogRecordShort:
+      title: LogRecordShort
+      type: object
+      properties:
+        context:
+          type: object
+        duration:
+          type: integer
+          format: int64
+        endDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        message:
+          type: string
+        name:
+          type: string
+        rootCause:
+          $ref: '#/components/schemas/RootCause'
+        server:
+          type: string
+        stackTrace:
+          type: string
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        type:
+          $ref: '#/components/schemas/TypeAction'
+        urlToLogCollectorData:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    MessageParameter:
+      title: MessageParameter
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    CustomLink:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        openMode:
+          enum:
+            - NEW_TAB
+            - CURRENT_TAB
+    MetaInfo:
+      title: MetaInfo
+      type: object
+      properties:
+        scenarioId:
+          type: string
+          format: uuid
+        line:
+          type: integer
+          format: int32
+        scenarioHashSum:
+          type: string
+        definitionId:
+          type: string
+          format: uuid
+        hidden:
+          type: boolean
+    PaginationResponseBrowserConsoleLogsTable:
+      title: PaginationResponseBrowserConsoleLogsTable
+      type: object
+      properties:
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/BrowserConsoleLogsTable'
+        totalCount:
+          type: integer
+          format: int64
+    RamObjectResponse:
+      title: RamObjectResponse
+      type: object
+      properties:
+        name:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    Resource:
+      title: Resource
+      type: object
+      properties:
+        description:
+          type: string
+        file:
+          type: string
+          format: binary
+        filename:
+          type: string
+        inputStream:
+          $ref: '#/components/schemas/InputStream'
+        open:
+          type: boolean
+        readable:
+          type: boolean
+        uri:
+          type: string
+          format: uri
+        url:
+          type: string
+          format: url
+    LogRecordFileContentResponse:
+      title: LogRecordFileContentResponse
+      type: object
+      properties:
+        content:
+          type: string
+    RootCause:
+      title: RootCause
+      required:
+        - type
+      type: object
+      properties:
+        parentId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - CUSTOM
+            - GLOBAL
+        disabled:
+          type: boolean
+        isDefault:
+          type: boolean
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+    SearchContextVariablesRequest:
+      title: SearchContextVariablesRequest
+      type: object
+      properties:
+        afterValue:
+          type: string
+        beforeValue:
+          type: string
+        parameters:
+          type: array
+          items:
+            type: string
+    SourceShot:
+      title: SourceShot
+      type: object
+      properties:
+        content:
+          type: string
+        message:
+          type: string
+        snapshotSource:
+          type: string
+        status:
+          type: string
+        stepName:
+          type: string
+        type:
+          type: string
+    StepPath:
+      title: StepPath
+      type: object
+      properties:
+        uuidSteps:
+          type: array
+          items:
+            type: string
+            format: uuid
+    TaToolLog:
+      title: TaToolLog
+      type: object
+      properties:
+        message:
+          type: string
+        screenShotId:
+          type: string
+    UpdateLogRecordContextVariablesRequest:
+      title: UpdateLogRecordContextVariablesRequest
+      type: object
+      properties:
+        contextVariables:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContextVariable'
+    UpdateLogRecordExecutionStatusRequest:
+      title: UpdateLogRecordExecutionStatusRequest
+      type: object
+      properties:
+        duration:
+          type: integer
+          format: int64
+        endDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        name:
+          type: string
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+    ValidationTable:
+      title: ValidationTable
+      type: object
+      properties:
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationTableLine'
+    BvStatus:
+      type: string
+      enum:
+        - UNDEFINED
+        - MODIFIED
+        - SIMILAR
+        - CHANGED
+        - IDENTICAL
+        - MISSED
+        - EXTRA
+        - ERROR
+        - BROKEN_STEP_INDEX
+        - HIDDEN
+        - SUCCESS
+        - SKIPPED
+        - IGNORED
+        - PASSED
+        - AR_MISSED
+        - ER_MISSED
+        - FAILED
+    ValidationTableLine:
+      title: ValidationTableLine
+      type: object
+      properties:
+        name:
+          type: string
+        expectedResult:
+          type: string
+        actualResult:
+          type: string
+        status:
+          $ref: '#/components/schemas/TestingStatus'
+        bvStatus:
+          $ref: '#/components/schemas/BvStatus'
+        isImportant:
+          type: boolean
+        validationLabels:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    RamObject:
+      title: RamObject
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+    UpdateLogRecordMessageParametersRequest:
+      title: UpdateLogRecordMessageParametersRequest
+      type: object
+      properties:
+        messageParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageParameter'
+        createdDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+    SsmMetricReports:
+      title: SsmMetricReports
+      type: object
+      properties:
+        problemContextReportId:
+          type: string
+          format: uuid
+        microservicesReportId:
+          type: string
+          format: uuid

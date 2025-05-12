@@ -1,0 +1,92 @@
+@startuml
+hide footbox
+
+Actor User
+Participant TC_Management
+Participant Orchestrator
+Participant TC_Compilation
+Participant Executor_1
+Participant Executor_2
+Participant Helper
+Participant RAM_TSG_Exchanger
+Participant TSG_Receiver
+
+activate TC_Management
+    User -> TC_Management: Configure Labels on TestCases
+    User -> TC_Management: Configure CheckPoints for FDR
+    User -> TC_Management: Configure Helpers for Label
+    User -> TC_Management: Execute
+    TC_Management -> Orchestrator: execute
+deactivate TC_Management
+activate Orchestrator
+    Orchestrator -> TC_Compilation: Compile ExecutionRequest
+
+    activate TC_Compilation
+        note right of TC_Compilation
+            Compile ER
+            Include info about Helpers
+            Include info about Checkpoints
+        end note
+        TC_Compilation -> TC_Compilation: Compile ExecutionRequest
+        TC_Compilation -> Orchestrator: compiled ExecutionRequest
+    deactivate TC_Compilation
+
+    Orchestrator -> RAM_TSG_Exchanger: Start Execution Request
+
+    activate RAM_TSG_Exchanger
+        RAM_TSG_Exchanger -> RAM_TSG_Exchanger: Create ExecutionRequest
+        RAM_TSG_Exchanger --> Orchestrator: ExecutionRequestID
+    deactivate RAM_TSG_Exchanger
+
+    Orchestrator -> Executor_1: execute
+
+    activate Executor_1
+        loop
+            Executor_1 -> RAM_TSG_Exchanger: LogRecords
+            activate RAM_TSG_Exchanger
+            RAM_TSG_Exchanger -> RAM_TSG_Exchanger: Store LogRecords in ER
+            deactivate RAM_TSG_Exchanger
+        end
+        Executor_1 --> Orchestrator: Execution Finished
+    deactivate Executor_1
+    alt if Testing Status - FAILED
+        Orchestrator -> Helper: get additional info
+        activate Helper
+        Helper -> RAM_TSG_Exchanger: LogRecords
+        Helper --> Orchestrator: results
+        deactivate Helper
+    end
+    Orchestrator -> Executor_2: execute
+
+    activate Executor_2
+        loop
+            Executor_2 -> RAM_TSG_Exchanger: LogRecords
+            activate RAM_TSG_Exchanger
+            RAM_TSG_Exchanger -> RAM_TSG_Exchanger: Store LogRecords in ER
+            deactivate RAM_TSG_Exchanger
+        end
+        Executor_2 -->Orchestrator: Execution Finished
+    deactivate Executor_2
+    alt if Testing Status - FAILED
+        Orchestrator -> Helper: get additional info
+        activate Helper
+        Helper -> RAM_TSG_Exchanger: LogRecords
+        Helper --> Orchestrator: results
+        deactivate Helper
+    end
+
+    Orchestrator -> RAM_TSG_Exchanger: Stop Execution Request
+deactivate Orchestrator
+
+activate RAM_TSG_Exchanger
+    note right of RAM_TSG_Exchanger
+        Prepare FDR by provided CheckPoints info
+    end note
+    RAM_TSG_Exchanger -> RAM_TSG_Exchanger: Prepare FDR
+    RAM_TSG_Exchanger -> TSG_Receiver: Send FDR
+    activate TSG_Receiver
+        TSG_Receiver --> RAM_TSG_Exchanger: Link to FDR
+    deactivate TSG_Receiver
+    RAM_TSG_Exchanger --> User: Send report
+deactivate RAM_TSG_Exchanger
+@enduml

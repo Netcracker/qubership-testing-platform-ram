@@ -1,0 +1,4493 @@
+{
+  "provider": {
+    "name": "atp-ram"
+  },
+  "consumer": {
+    "name": "atp-ram-results-importer"
+  },
+  "interactions": [
+    {
+      "description": "POST /api/executionrequests/create Created",
+      "request": {
+        "method": "POST",
+        "path": "/api/executionrequests/create",
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "body": {
+          "analyzedByQa": true,
+          "autoSyncCasesWithJira": true,
+          "autoSyncRunsWithJira": true,
+          "ciJobUrl": "string",
+          "countLogRecords": 100,
+          "countOfTestRuns": 100,
+          "duration": 100,
+          "emailSubject": "string",
+          "emailTemplateId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "environmentId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "executionStatus": "FINISHED",
+          "executorId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "executorName": "string",
+          "failedLogrecordsCounter": 100,
+          "failedRate": 100,
+          "filteredByLabels": [
+            "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          ],
+          "finishDate": "1970-01-01T00:00:00.001Z",
+          "flagIds": [
+            "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          ],
+          "initialExecutionRequestId": "3d171692-fa11-4288-90ee-1864117b57ab",
+          "jointExecutionCount": 100,
+          "jointExecutionKey": "string",
+          "jointExecutionTimeout": 100,
+          "labelTemplateId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "labels": [
+            "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          ],
+          "legacyMailRecipients": "string",
+          "logCollectorConditionId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "name": "string",
+          "numberOfStarts": 100,
+          "passedRate": 100,
+          "previousExecutionRequestId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "projectId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "solutionBuild": "string",
+          "startDate": "1970-01-01T00:00:00.001Z",
+          "taToolsGroupId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "testPlanId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "testScopeId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "threads": 100,
+          "uuid": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "virtual": true,
+          "warningRate": 100,
+          "widgetConfigTemplateId": "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+        },
+        "matchingRules": {
+          "body": {
+            "$.previousExecutionRequestId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.projectId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testPlanId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executionStatus": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.analyzedByQa": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.passedRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.warningRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.failedRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.countOfTestRuns": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.solutionBuild": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.finishDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$.startDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$.duration": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.legacyMailRecipients": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.ciJobUrl": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testScopeId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.environmentId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.taToolsGroupId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executorId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executorName": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.labelTemplateId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.widgetConfigTemplateId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.threads": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.numberOfStarts": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.autoSyncCasesWithJira": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.autoSyncRunsWithJira": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.virtual": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.emailTemplateId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.emailSubject": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.logCollectorConditionId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.countLogRecords": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.failedLogrecordsCounter": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.jointExecutionKey": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.jointExecutionCount": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.jointExecutionTimeout": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.uuid": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.initialExecutionRequestId": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.filteredByLabels[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.labels[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.flagIds[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        },
+        "generators": {
+          "body": {
+            "$.previousExecutionRequestId": {
+              "type": "Uuid"
+            },
+            "$.projectId": {
+              "type": "Uuid"
+            },
+            "$.testPlanId": {
+              "type": "Uuid"
+            },
+            "$.passedRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.warningRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.failedRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.countOfTestRuns": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.solutionBuild": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.duration": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.legacyMailRecipients": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.ciJobUrl": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.testScopeId": {
+              "type": "Uuid"
+            },
+            "$.environmentId": {
+              "type": "Uuid"
+            },
+            "$.taToolsGroupId": {
+              "type": "Uuid"
+            },
+            "$.executorId": {
+              "type": "Uuid"
+            },
+            "$.executorName": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.labelTemplateId": {
+              "type": "Uuid"
+            },
+            "$.widgetConfigTemplateId": {
+              "type": "Uuid"
+            },
+            "$.threads": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.numberOfStarts": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.emailTemplateId": {
+              "type": "Uuid"
+            },
+            "$.emailSubject": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.logCollectorConditionId": {
+              "type": "Uuid"
+            },
+            "$.countLogRecords": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.failedLogrecordsCounter": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.jointExecutionKey": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.jointExecutionCount": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.jointExecutionTimeout": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.name": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.uuid": {
+              "type": "Uuid"
+            },
+            "$.filteredByLabels[0]": {
+              "type": "Uuid"
+            },
+            "$.labels[0]": {
+              "type": "Uuid"
+            },
+            "$.flagIds[0]": {
+              "type": "Uuid"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "body": {
+          "analyzedByQa": true,
+          "autoSyncCasesWithJira": true,
+          "autoSyncRunsWithJira": true,
+          "ciJobUrl": "string",
+          "countLogRecords": 100,
+          "countOfTestRuns": 100,
+          "duration": 100,
+          "emailSubject": "string",
+          "emailTemplateId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "environmentId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "executionStatus": "FINISHED",
+          "executorId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "executorName": "string",
+          "failedLogrecordsCounter": 100,
+          "failedRate": 100,
+          "filteredByLabels": [
+            "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          ],
+          "finishDate": "1970-01-01T00:00:00.001Z",
+          "flagIds": [
+            "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          ],
+          "initialExecutionRequestId": "3d171692-fa11-4288-90ee-1864117b57ab",
+          "jointExecutionCount": 100,
+          "jointExecutionKey": "string",
+          "jointExecutionTimeout": 100,
+          "labelTemplateId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "labels": [
+            "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          ],
+          "legacyMailRecipients": "string",
+          "logCollectorConditionId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "name": "string",
+          "numberOfStarts": 100,
+          "passedRate": 100,
+          "previousExecutionRequestId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "projectId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "solutionBuild": "string",
+          "startDate": "1970-01-01T00:00:00.001Z",
+          "taToolsGroupId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "testPlanId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "testScopeId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "threads": 100,
+          "uuid": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "virtual": true,
+          "warningRate": 100,
+          "widgetConfigTemplateId": "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+        },
+        "matchingRules": {
+          "body": {
+            "$.previousExecutionRequestId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.projectId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testPlanId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executionStatus": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.analyzedByQa": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.passedRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.warningRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.failedRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.countOfTestRuns": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.solutionBuild": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.finishDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$.startDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$.duration": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.legacyMailRecipients": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.ciJobUrl": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testScopeId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.environmentId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.taToolsGroupId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executorId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executorName": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.labelTemplateId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.widgetConfigTemplateId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.threads": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.numberOfStarts": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.autoSyncCasesWithJira": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.autoSyncRunsWithJira": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.virtual": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.emailTemplateId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.emailSubject": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.logCollectorConditionId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.countLogRecords": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.failedLogrecordsCounter": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.jointExecutionKey": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.jointExecutionCount": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.jointExecutionTimeout": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.uuid": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.initialExecutionRequestId": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.filteredByLabels[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.labels[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.flagIds[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        },
+        "generators": {
+          "body": {
+            "$.previousExecutionRequestId": {
+              "type": "Uuid"
+            },
+            "$.projectId": {
+              "type": "Uuid"
+            },
+            "$.testPlanId": {
+              "type": "Uuid"
+            },
+            "$.passedRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.warningRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.failedRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.countOfTestRuns": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.solutionBuild": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.duration": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.legacyMailRecipients": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.ciJobUrl": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.testScopeId": {
+              "type": "Uuid"
+            },
+            "$.environmentId": {
+              "type": "Uuid"
+            },
+            "$.taToolsGroupId": {
+              "type": "Uuid"
+            },
+            "$.executorId": {
+              "type": "Uuid"
+            },
+            "$.executorName": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.labelTemplateId": {
+              "type": "Uuid"
+            },
+            "$.widgetConfigTemplateId": {
+              "type": "Uuid"
+            },
+            "$.threads": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.numberOfStarts": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.emailTemplateId": {
+              "type": "Uuid"
+            },
+            "$.emailSubject": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.logCollectorConditionId": {
+              "type": "Uuid"
+            },
+            "$.countLogRecords": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.failedLogrecordsCounter": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.jointExecutionKey": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.jointExecutionCount": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.jointExecutionTimeout": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.name": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.uuid": {
+              "type": "Uuid"
+            },
+            "$.filteredByLabels[0]": {
+              "type": "Uuid"
+            },
+            "$.labels[0]": {
+              "type": "Uuid"
+            },
+            "$.flagIds[0]": {
+              "type": "Uuid"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "all ok"
+        }
+      ]
+    },
+    {
+      "description": "POST /api/executionrequests/{uuid}/details OK",
+      "request": {
+        "method": "POST",
+        "path": "/api/executionrequests/bf1bbd5a-f1a7-47cc-86c0-5a2e50957f20/details",
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "body": {
+          "date": "1970-01-01T00:00:00.001Z",
+          "executionRequestId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "message": "string",
+          "name": "string",
+          "projectId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "status": "PASSED",
+          "uuid": "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+        },
+        "matchingRules": {
+          "body": {
+            "$.message": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.status": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executionRequestId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.projectId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.uuid": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.date": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            }
+          }
+        },
+        "generators": {
+          "body": {
+            "$.message": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.name": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.executionRequestId": {
+              "type": "Uuid"
+            },
+            "$.projectId": {
+              "type": "Uuid"
+            },
+            "$.uuid": {
+              "type": "Uuid"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "date": "1970-01-01T00:00:00.001Z",
+          "executionRequestId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "message": "string",
+          "name": "string",
+          "projectId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "status": "PASSED",
+          "uuid": "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+        },
+        "matchingRules": {
+          "body": {
+            "$.message": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.status": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executionRequestId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.projectId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.uuid": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.date": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            }
+          }
+        },
+        "generators": {
+          "body": {
+            "$.message": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.name": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.executionRequestId": {
+              "type": "Uuid"
+            },
+            "$.projectId": {
+              "type": "Uuid"
+            },
+            "$.uuid": {
+              "type": "Uuid"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "all ok"
+        }
+      ]
+    },
+    {
+      "description": "POST /api/executor/testruns/bulk/finish/delayed OK",
+      "request": {
+        "method": "POST",
+        "path": "/api/executor/testruns/bulk/finish/delayed",
+        "body": [
+          "bf1bbd5a-f1a7-47cc-86c0-5a2e50957f20"
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": [
+          "bf1bbd5a-f1a7-47cc-86c0-5a2e50957f20"
+        ]
+      },
+      "providerStates": [
+        {
+          "name": "all ok"
+        }
+      ]
+    },
+    {
+      "description": "POST /api/executor/testruns/create OK",
+      "request": {
+        "method": "POST",
+        "path": "/api/executor/testruns/create",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "atpExecutionRequestId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "autoSyncCasesWithJira": true,
+          "autoSyncRunsWithJira": true,
+          "dataSetId": "string",
+          "dataSetListId": "string",
+          "environmentId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "executionRequestName": "string",
+          "executor": "string",
+          "executorId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "flagIds": [
+            "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          ],
+          "initialTestRunId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "isFinalTestRun": true,
+          "labelIds": [
+            "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          ],
+          "labelTemplateId": "bf1bbd5a-f1a7-47cc-86c0-5a2e50957f20",
+          "mailList": "string",
+          "metaInfo": {
+            "definitionId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+            "hidden": true,
+            "line": 100,
+            "scenarioHashSum": "string",
+            "scenarioId": "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          },
+          "order": 100,
+          "projectId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "projectName": "string",
+          "qaHost": "string",
+          "solutionBuild": "string",
+          "startDate": "1970-01-01T00:00:00.001Z",
+          "taHost": "string",
+          "testCaseId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "testCaseName": "string",
+          "testPlanId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "testPlanName": "string",
+          "testRunId": "bf1bbd5a-f1a7-47cc-86c0-5a2e50957f20",
+          "testRunName": "string",
+          "testScopeId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "testScopeSection": "EXECUTION",
+          "testSuiteName": "string",
+          "threads": 100,
+          "widgetConfigTemplateId": "bf1bbd5a-f1a7-47cc-86c0-5a2e50957f20"
+        },
+        "matchingRules": {
+          "body": {
+            "$.projectName": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.projectId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testPlanName": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testPlanId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testSuiteName": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testCaseName": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testCaseId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.initialTestRunId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executionRequestName": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.atpExecutionRequestId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.isFinalTestRun": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testRunName": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testRunId": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.startDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$.taHost": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.qaHost": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executor": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executorId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.solutionBuild": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.mailList": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testScopeId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.environmentId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.labelTemplateId": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.widgetConfigTemplateId": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.dataSetListId": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.dataSetId": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.threads": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.autoSyncCasesWithJira": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.autoSyncRunsWithJira": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testScopeSection": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.order": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.scenarioId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.line": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.scenarioHashSum": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.definitionId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.hidden": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.flagIds[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.labelIds[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        },
+        "generators": {
+          "body": {
+            "$.projectName": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.projectId": {
+              "type": "Uuid"
+            },
+            "$.testPlanName": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.testPlanId": {
+              "type": "Uuid"
+            },
+            "$.testSuiteName": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.testCaseName": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.testCaseId": {
+              "type": "Uuid"
+            },
+            "$.initialTestRunId": {
+              "type": "Uuid"
+            },
+            "$.executionRequestName": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.atpExecutionRequestId": {
+              "type": "Uuid"
+            },
+            "$.testRunName": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.taHost": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.qaHost": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.executor": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.executorId": {
+              "type": "Uuid"
+            },
+            "$.solutionBuild": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.mailList": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.testScopeId": {
+              "type": "Uuid"
+            },
+            "$.environmentId": {
+              "type": "Uuid"
+            },
+            "$.dataSetListId": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.dataSetId": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.threads": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.order": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.metaInfo.scenarioId": {
+              "type": "Uuid"
+            },
+            "$.metaInfo.line": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.metaInfo.scenarioHashSum": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.metaInfo.definitionId": {
+              "type": "Uuid"
+            },
+            "$.flagIds[0]": {
+              "type": "Uuid"
+            },
+            "$.labelIds[0]": {
+              "type": "Uuid"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "executionRequestId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "testRunId": "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+        },
+        "matchingRules": {
+          "body": {
+            "$.executionRequestId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testRunId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        },
+        "generators": {
+          "body": {
+            "$.executionRequestId": {
+              "type": "Uuid"
+            },
+            "$.testRunId": {
+              "type": "Uuid"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "all ok"
+        }
+      ]
+    },
+    {
+      "description": "PUT /api/executionrequests/{uuid}/updExecutionStatus/{executionStatus} Created",
+      "request": {
+        "method": "PUT",
+        "path": "/api/executionrequests/bf1bbd5a-f1a7-47cc-86c0-5a2e50957f20/updExecutionStatus/FINISHED"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "analyzedByQa": true,
+          "autoSyncCasesWithJira": true,
+          "autoSyncRunsWithJira": true,
+          "ciJobUrl": "string",
+          "countLogRecords": 100,
+          "countOfTestRuns": 100,
+          "duration": 100,
+          "emailSubject": "string",
+          "emailTemplateId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "environmentId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "executionStatus": "FINISHED",
+          "executorId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "executorName": "string",
+          "failedLogrecordsCounter": 100,
+          "failedRate": 100,
+          "filteredByLabels": [
+            "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          ],
+          "finishDate": "1970-01-01T00:00:00.001Z",
+          "flagIds": [
+            "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          ],
+          "initialExecutionRequestId": "3d171692-fa11-4288-90ee-1864117b57ab",
+          "jointExecutionCount": 100,
+          "jointExecutionKey": "string",
+          "jointExecutionTimeout": 100,
+          "labelTemplateId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "labels": [
+            "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          ],
+          "legacyMailRecipients": "string",
+          "logCollectorConditionId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "name": "string",
+          "numberOfStarts": 100,
+          "passedRate": 100,
+          "previousExecutionRequestId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "projectId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "solutionBuild": "string",
+          "startDate": "1970-01-01T00:00:00.001Z",
+          "taToolsGroupId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "testPlanId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "testScopeId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "threads": 100,
+          "uuid": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "virtual": true,
+          "warningRate": 100,
+          "widgetConfigTemplateId": "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+        },
+        "matchingRules": {
+          "body": {
+            "$.previousExecutionRequestId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.projectId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testPlanId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executionStatus": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.analyzedByQa": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.passedRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.warningRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.failedRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.countOfTestRuns": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.solutionBuild": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.finishDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$.startDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$.duration": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.legacyMailRecipients": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.ciJobUrl": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testScopeId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.environmentId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.taToolsGroupId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executorId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executorName": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.labelTemplateId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.widgetConfigTemplateId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.threads": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.numberOfStarts": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.autoSyncCasesWithJira": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.autoSyncRunsWithJira": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.virtual": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.emailTemplateId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.emailSubject": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.logCollectorConditionId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.countLogRecords": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.failedLogrecordsCounter": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.jointExecutionKey": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.jointExecutionCount": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.jointExecutionTimeout": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.uuid": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.initialExecutionRequestId": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.filteredByLabels[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.labels[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.flagIds[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        },
+        "generators": {
+          "body": {
+            "$.previousExecutionRequestId": {
+              "type": "Uuid"
+            },
+            "$.projectId": {
+              "type": "Uuid"
+            },
+            "$.testPlanId": {
+              "type": "Uuid"
+            },
+            "$.passedRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.warningRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.failedRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.countOfTestRuns": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.solutionBuild": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.duration": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.legacyMailRecipients": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.ciJobUrl": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.testScopeId": {
+              "type": "Uuid"
+            },
+            "$.environmentId": {
+              "type": "Uuid"
+            },
+            "$.taToolsGroupId": {
+              "type": "Uuid"
+            },
+            "$.executorId": {
+              "type": "Uuid"
+            },
+            "$.executorName": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.labelTemplateId": {
+              "type": "Uuid"
+            },
+            "$.widgetConfigTemplateId": {
+              "type": "Uuid"
+            },
+            "$.threads": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.numberOfStarts": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.emailTemplateId": {
+              "type": "Uuid"
+            },
+            "$.emailSubject": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.logCollectorConditionId": {
+              "type": "Uuid"
+            },
+            "$.countLogRecords": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.failedLogrecordsCounter": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.jointExecutionKey": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.jointExecutionCount": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.jointExecutionTimeout": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.name": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.uuid": {
+              "type": "Uuid"
+            },
+            "$.filteredByLabels[0]": {
+              "type": "Uuid"
+            },
+            "$.labels[0]": {
+              "type": "Uuid"
+            },
+            "$.flagIds[0]": {
+              "type": "Uuid"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "all ok"
+        }
+      ]
+    },
+    {
+      "description": "PUT /api/executor/testruns/patch OK",
+      "request": {
+        "method": "PUT",
+        "path": "/api/executor/testruns/patch",
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "body": {
+          "browserNames": [
+            "string"
+          ],
+          "comment": {
+            "html": "string",
+            "text": "string"
+          },
+          "dataSetListUrl": "string",
+          "dataSetUrl": "string",
+          "duration": 100,
+          "executionRequestId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "executionStatus": "FINISHED",
+          "executor": "string",
+          "failedRate": 100,
+          "fdrLink": "string",
+          "fdrWasSent": true,
+          "finishDate": "1970-01-01T00:00:00.001Z",
+          "flags": [
+            "SKIP_IF_DEPENDENCY_FAILED"
+          ],
+          "initialTestRunId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "isFinalTestRun": true,
+          "isGroupedTestRun": true,
+          "jiraTicket": "string",
+          "labelIds": [
+            "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          ],
+          "logCollectorData": "string",
+          "metaInfo": {
+            "definitionId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+            "hidden": true,
+            "line": 100,
+            "scenarioHashSum": "string",
+            "scenarioId": "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          },
+          "name": "string",
+          "numberOfScreens": 100,
+          "order": 100,
+          "parentTestRunId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "passedRate": 100,
+          "qaHost": [
+            "string"
+          ],
+          "rootCauseId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "solutionBuild": [
+            "string"
+          ],
+          "startDate": "1970-01-01T00:00:00.001Z",
+          "statistic": null,
+          "taHost": [
+            "string"
+          ],
+          "testCaseId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "testCaseName": "string",
+          "testScopeSection": "EXECUTION",
+          "testingStatus": "PASSED",
+          "urlToBrowserOrLogs": [
+            "string"
+          ],
+          "urlToBrowserSession": "string",
+          "uuid": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "warningRate": 100
+        },
+        "matchingRules": {
+          "body": {
+            "$.parentTestRunId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.isGroupedTestRun": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executionRequestId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testCaseId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.initialTestRunId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testCaseName": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executionStatus": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testingStatus": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.finishDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$.startDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$.duration": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executor": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.jiraTicket": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.rootCauseId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.dataSetUrl": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.dataSetListUrl": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.logCollectorData": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.fdrWasSent": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.fdrLink": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.numberOfScreens": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.urlToBrowserSession": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.passedRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.warningRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.failedRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.isFinalTestRun": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.comment.text": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.comment.html": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.scenarioId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.line": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.scenarioHashSum": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.definitionId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.hidden": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testScopeSection": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.order": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.uuid": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.flags[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.labelIds[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.browserNames[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.qaHost[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.solutionBuild[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.taHost[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.urlToBrowserOrLogs[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        },
+        "generators": {
+          "body": {
+            "$.parentTestRunId": {
+              "type": "Uuid"
+            },
+            "$.executionRequestId": {
+              "type": "Uuid"
+            },
+            "$.testCaseId": {
+              "type": "Uuid"
+            },
+            "$.initialTestRunId": {
+              "type": "Uuid"
+            },
+            "$.testCaseName": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.duration": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.executor": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.jiraTicket": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.rootCauseId": {
+              "type": "Uuid"
+            },
+            "$.dataSetUrl": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.dataSetListUrl": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.logCollectorData": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.fdrLink": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.numberOfScreens": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.urlToBrowserSession": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.passedRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.warningRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.failedRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.comment.text": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.comment.html": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.metaInfo.scenarioId": {
+              "type": "Uuid"
+            },
+            "$.metaInfo.line": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.metaInfo.scenarioHashSum": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.metaInfo.definitionId": {
+              "type": "Uuid"
+            },
+            "$.order": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.name": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.uuid": {
+              "type": "Uuid"
+            },
+            "$.labelIds[0]": {
+              "type": "Uuid"
+            },
+            "$.browserNames[0]": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.qaHost[0]": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.solutionBuild[0]": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.taHost[0]": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.urlToBrowserOrLogs[0]": {
+              "type": "RandomString",
+              "size": 20
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "browserNames": [
+            "string"
+          ],
+          "comment": {
+            "html": "string",
+            "text": "string"
+          },
+          "dataSetListUrl": "string",
+          "dataSetUrl": "string",
+          "duration": 100,
+          "executionRequestId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "executionStatus": "FINISHED",
+          "executor": "string",
+          "failedRate": 100,
+          "fdrLink": "string",
+          "fdrWasSent": true,
+          "finishDate": "1970-01-01T00:00:00.001Z",
+          "flags": [
+            "SKIP_IF_DEPENDENCY_FAILED"
+          ],
+          "initialTestRunId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "isFinalTestRun": true,
+          "isGroupedTestRun": true,
+          "jiraTicket": "string",
+          "labelIds": [
+            "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          ],
+          "logCollectorData": "string",
+          "metaInfo": {
+            "definitionId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+            "hidden": true,
+            "line": 100,
+            "scenarioHashSum": "string",
+            "scenarioId": "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+          },
+          "name": "string",
+          "numberOfScreens": 100,
+          "order": 100,
+          "parentTestRunId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "passedRate": 100,
+          "qaHost": [
+            "string"
+          ],
+          "rootCauseId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "solutionBuild": [
+            "string"
+          ],
+          "startDate": "1970-01-01T00:00:00.001Z",
+          "statistic": null,
+          "taHost": [
+            "string"
+          ],
+          "testCaseId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "testCaseName": "string",
+          "testScopeSection": "EXECUTION",
+          "testingStatus": "PASSED",
+          "urlToBrowserOrLogs": [
+            "string"
+          ],
+          "urlToBrowserSession": "string",
+          "uuid": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "warningRate": 100
+        },
+        "matchingRules": {
+          "body": {
+            "$.parentTestRunId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.isGroupedTestRun": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executionRequestId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testCaseId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.initialTestRunId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testCaseName": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executionStatus": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testingStatus": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.finishDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$.startDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$.duration": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executor": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.jiraTicket": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.rootCauseId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.dataSetUrl": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.dataSetListUrl": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.logCollectorData": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.fdrWasSent": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.fdrLink": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.numberOfScreens": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.urlToBrowserSession": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.passedRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.warningRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.failedRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.isFinalTestRun": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.comment.text": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.comment.html": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.scenarioId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.line": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.scenarioHashSum": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.definitionId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.metaInfo.hidden": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testScopeSection": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.order": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.uuid": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.flags[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.labelIds[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.browserNames[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.qaHost[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.solutionBuild[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.taHost[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.urlToBrowserOrLogs[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        },
+        "generators": {
+          "body": {
+            "$.parentTestRunId": {
+              "type": "Uuid"
+            },
+            "$.executionRequestId": {
+              "type": "Uuid"
+            },
+            "$.testCaseId": {
+              "type": "Uuid"
+            },
+            "$.initialTestRunId": {
+              "type": "Uuid"
+            },
+            "$.testCaseName": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.duration": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.executor": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.jiraTicket": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.rootCauseId": {
+              "type": "Uuid"
+            },
+            "$.dataSetUrl": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.dataSetListUrl": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.logCollectorData": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.fdrLink": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.numberOfScreens": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.urlToBrowserSession": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.passedRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.warningRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.failedRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.comment.text": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.comment.html": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.metaInfo.scenarioId": {
+              "type": "Uuid"
+            },
+            "$.metaInfo.line": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.metaInfo.scenarioHashSum": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.metaInfo.definitionId": {
+              "type": "Uuid"
+            },
+            "$.order": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.name": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.uuid": {
+              "type": "Uuid"
+            },
+            "$.labelIds[0]": {
+              "type": "Uuid"
+            },
+            "$.browserNames[0]": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.qaHost[0]": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.solutionBuild[0]": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.taHost[0]": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.urlToBrowserOrLogs[0]": {
+              "type": "RandomString",
+              "size": 20
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "all ok"
+        }
+      ]
+    },
+    {
+      "description": "PUT /api/testruns/{uuid}/finish OK",
+      "request": {
+        "method": "PUT",
+        "path": "/api/testruns/bf1bbd5a-f1a7-47cc-86c0-5a2e50957f20/finish"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "testingStatus": "PASSED",
+          "fdrLink": "string",
+          "flags": [
+            "SKIP_IF_DEPENDENCY_FAILED"
+          ],
+          "fdrWasSent": true,
+          "uuid": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "warningRate": 100,
+          "jiraTicket": "string",
+          "urlToBrowserSession": "string",
+          "duration": 100,
+          "failedRate": 100,
+          "passedRate": 100,
+          "qaHost": [
+            "string"
+          ],
+          "executor": "string",
+          "numberOfScreens": 100,
+          "urlToBrowserOrLogs": [
+            "string"
+          ],
+          "logCollectorData": "string",
+          "testCaseName": "string",
+          "solutionBuild": [
+            "string"
+          ],
+          "taHost": [
+            "string"
+          ],
+          "statistic": null,
+          "executionRequestId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "executionStatus": "FINISHED",
+          "parentTestRunId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "dataSetListUrl": "string",
+          "rootCauseId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+          "metaInfo": {
+
+          },
+          "name": "string",
+          "finishDate": "1970-01-01T00:00:00.001Z",
+          "groupedTestRun": true,
+          "dataSetUrl": "string",
+          "startDate": "1970-01-01T00:00:00.001Z",
+          "testCaseId": "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+        },
+        "matchingRules": {
+          "body": {
+            "$.finishDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$.startDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$.executionStatus": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testingStatus": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.dataSetListUrl": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.dataSetUrl": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executor": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.fdrLink": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.jiraTicket": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.logCollectorData": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testCaseName": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.urlToBrowserSession": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.uuid": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.testCaseId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.rootCauseId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.parentTestRunId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.executionRequestId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.fdrWasSent": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.groupedTestRun": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.duration": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.failedRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.numberOfScreens": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.passedRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.warningRate": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.qaHost[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.solutionBuild[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.taHost[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.urlToBrowserOrLogs[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.flags[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        },
+        "generators": {
+          "body": {
+            "$.dataSetListUrl": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.dataSetUrl": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.executor": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.fdrLink": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.jiraTicket": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.logCollectorData": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.name": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.testCaseName": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.urlToBrowserSession": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.uuid": {
+              "type": "Uuid"
+            },
+            "$.testCaseId": {
+              "type": "Uuid"
+            },
+            "$.rootCauseId": {
+              "type": "Uuid"
+            },
+            "$.parentTestRunId": {
+              "type": "Uuid"
+            },
+            "$.executionRequestId": {
+              "type": "Uuid"
+            },
+            "$.duration": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.failedRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.numberOfScreens": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.passedRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.warningRate": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$.qaHost[0]": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.solutionBuild[0]": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.taHost[0]": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$.urlToBrowserOrLogs[0]": {
+              "type": "RandomString",
+              "size": 20
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "all ok"
+        }
+      ]
+    },
+    {
+      "description": "PUT /api/testruns/{uuid}/logrecords/updTestingStatus/{testingStatus} OK",
+      "request": {
+        "method": "PUT",
+        "path": "/api/testruns/bf1bbd5a-f1a7-47cc-86c0-5a2e50957f20/logrecords/updTestingStatus/PASSED"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": [
+          {
+            "preview": "string",
+            "validationLabels": [
+              "string"
+            ],
+            "server": "string",
+            "endDate": "1970-01-01T00:00:00.001Z",
+            "duplicateId": [
+              "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+            ],
+            "section": true,
+            "createdDateStamp": 100,
+            "uuid": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+            "urlToLogCollectorData": "string",
+            "duration": 100,
+            "lastUpdated": "1970-01-01T00:00:00.001Z",
+            "children": [
+              {
+                "name": "string",
+                "uuid": "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+              }
+            ],
+            "stackTrace": "string",
+            "parentRecordId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+            "taToolsLogs": [
+              {
+                "screenShotId": "string",
+                "message": "string"
+              }
+            ],
+            "snapshotId": "string",
+            "contextVariablesPresent": true,
+            "testRunId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+            "message": "string",
+            "metaInfo": {
+              "hidden": true,
+              "scenarioHashSum": "string",
+              "line": 100,
+              "scenarioId": "e2490de5-5bd3-43d5-b7c4-526e33f71304",
+              "definitionId": "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+            },
+            "createdDate": "1970-01-01T00:00:00.001Z",
+            "configInfoId": [
+              "string"
+            ],
+            "name": "string",
+            "validationTable": {
+
+            },
+            "compaund": true,
+            "startDate": "1970-01-01T00:00:00.001Z",
+            "isMessageParametersPresent": true
+          }
+        ],
+        "matchingRules": {
+          "body": {
+            "$[0].message": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].preview": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].server": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].snapshotId": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].stackTrace": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].urlToLogCollectorData": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].uuid": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].testRunId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].parentRecordId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].createdDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$[0].endDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$[0].lastUpdated": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$[0].startDate": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+                },
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSSXX"
+                }
+              ],
+              "combine": "OR"
+            },
+            "$[0].compaund": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].contextVariablesPresent": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].isMessageParametersPresent": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].section": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].createdDateStamp": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].duration": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].validationLabels[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].configInfoId[0]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].duplicateId[0]": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].children": {
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 0
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].children[*].name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].children[*].uuid": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].metaInfo.definitionId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].metaInfo.scenarioId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].metaInfo.scenarioHashSum": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].metaInfo.line": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].metaInfo.hidden": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].taToolsLogs[0].message": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[0].taToolsLogs[0].screenShotId": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        },
+        "generators": {
+          "body": {
+            "$[0].message": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$[0].name": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$[0].preview": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$[0].server": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$[0].snapshotId": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$[0].stackTrace": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$[0].urlToLogCollectorData": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$[0].uuid": {
+              "type": "Uuid"
+            },
+            "$[0].testRunId": {
+              "type": "Uuid"
+            },
+            "$[0].parentRecordId": {
+              "type": "Uuid"
+            },
+            "$[0].createdDateStamp": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$[0].duration": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$[0].validationLabels[0]": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$[0].configInfoId[0]": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$[0].duplicateId[0]": {
+              "type": "Uuid"
+            },
+            "$[0].children[*].name": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$[0].children[*].uuid": {
+              "type": "Uuid"
+            },
+            "$[0].metaInfo.definitionId": {
+              "type": "Uuid"
+            },
+            "$[0].metaInfo.scenarioId": {
+              "type": "Uuid"
+            },
+            "$[0].metaInfo.scenarioHashSum": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$[0].metaInfo.line": {
+              "type": "RandomInt",
+              "min": 0,
+              "max": 2147483647
+            },
+            "$[0].taToolsLogs[0].message": {
+              "type": "RandomString",
+              "size": 20
+            },
+            "$[0].taToolsLogs[0].screenShotId": {
+              "type": "RandomString",
+              "size": 20
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "all ok"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.1.23"
+    }
+  }
+}

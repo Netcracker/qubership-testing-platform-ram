@@ -1,0 +1,756 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: parameter-controller
+    description: Parameter Controller
+paths:
+  /parameter:
+    delete:
+      tags:
+        - parameter-controller
+      summary: Deletes value of the selected parameter.
+      operationId: delete
+      parameters:
+        - name: dataSetId
+          in: query
+          description: dataSetId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: attributeId
+          in: query
+          description: attributeId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: dataSetListId
+          in: query
+          description: dataSetListId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /parameter/affected/by/:
+    get:
+      tags:
+        - parameter-controller
+      summary: Get all parameters which uses provided ListValue
+      operationId: getAffectedParametersByListValue
+      parameters:
+        - name: listValueId
+          in: query
+          description: listValueId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: full
+          in: query
+          description: full
+          required: false
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /parameter/affected/by/listValues:
+    post:
+      tags:
+        - parameter-controller
+      summary: Get all parameters which use provided ListValue
+      operationId: getAffectedParametersByListValues
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TableResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/parameter/ds/{dataSetId}':
+    get:
+      tags:
+        - parameter-controller
+      summary: Returns the parameters of selected DS.
+      operationId: getDataSetParameters
+      parameters:
+        - name: dataSetId
+          in: path
+          description: dataSetId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Parameter'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/parameter/ds/{dataSetId}/attribute/{attributeId}':
+    put:
+      tags:
+        - parameter-controller
+      summary: Creates new parameter with provided text.
+      operationId: create
+      parameters:
+        - name: dataSetId
+          in: path
+          description: dataSetId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: attributeId
+          in: path
+          description: attributeId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: value
+          in: query
+          description: value
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: dataSetReference
+          in: query
+          description: dataSetReference
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: listValueReference
+          in: query
+          description: listValueReference
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: dataSetListId
+          in: query
+          description: dataSetListId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - parameter-controller
+      summary: Updates value of the selected parameter.
+      operationId: update
+      parameters:
+        - name: dataSetId
+          in: path
+          description: dataSetId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: attributeId
+          in: path
+          description: attributeId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: value
+          in: query
+          description: value
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: dataSetReference
+          in: query
+          description: dataSetReference
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: listValueReference
+          in: query
+          description: listValueReference
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: dataSetListId
+          in: query
+          description: dataSetListId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Parameter'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /parameter/get/original:
+    post:
+      tags:
+        - parameter-controller
+      summary: getOriginalParameter
+      operationId: getOriginalParameter
+      parameters:
+        - name: dataSetId
+          in: query
+          description: dataSetId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: targetAttrId
+          in: query
+          description: targetAttrId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: dataSetListId
+          in: query
+          description: dataSetListId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Parameter'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /parameter/update/bulk:
+    post:
+      tags:
+        - parameter-controller
+      summary: Updates value of the selected parameters. Please do not use for files or overlaps!
+      operationId: updateParameters
+      parameters:
+        - name: value
+          in: query
+          description: value
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: dataSetReference
+          in: query
+          description: dataSetReference
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: listValueReference
+          in: query
+          description: listValueReference
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: dataSetListId
+          in: query
+          description: dataSetListId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+        - name: dataSetId
+          in: query
+          description: dataSetId
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /parameter/bulk/attribute/{attributeId}:
+    post:
+      tags:
+        - parameter-controller
+      summary: Bulk update value of parameters.
+      operationId: bulkUpdateAttribute
+      parameters:
+        - name: attributeId
+          in: path
+          description: attributeId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: dataSetListId
+          in: query
+          description: dataSetListId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: value
+          in: query
+          description: value
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: file
+          in: query
+          description: file
+          required: false
+          style: form
+          schema:
+            type: string
+            format: binary
+        - name: dataSetsIds
+          in: query
+          description: dataSetsIds
+          required: false
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+        - name: attrPathIds
+          in: query
+          description: attrPathIds
+          required: false
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  type: object
+        '201':
+          description: Created
+        '226':
+          description: IM Used
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    Attribute:
+      title: Attribute
+      required:
+        - dataSetList
+        - id
+        - name
+        - type
+      type: object
+      properties:
+        dataSetList:
+          description: parent
+          $ref: '#/components/schemas/DataSetList'
+        dataSetListReference:
+          description: for dsl type
+          $ref: '#/components/schemas/DataSetList'
+        id:
+          type: string
+          format: uuid
+        listValues:
+          type: array
+          description: for list type
+          items:
+            $ref: '#/components/schemas/ListValue'
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        type:
+          $ref: '#/components/schemas/AttributeType'
+    DataSet:
+      title: DataSet
+      type: object
+    DataSetList:
+      title: DataSetList
+      required:
+        - id
+        - name
+        - visibilityArea
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+        createdBy:
+          type: string
+          format: uuid
+        createdWhen:
+          type: string
+          format: date-time
+        dataSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSet'
+        id:
+          type: string
+          format: uuid
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        modifiedBy:
+          type: string
+          format: uuid
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        testPlan:
+          $ref: '#/components/schemas/TestPlan'
+        visibilityArea:
+          description: parent
+          $ref: '#/components/schemas/VisibilityArea'
+    FileData:
+      title: FileData
+      type: object
+      properties:
+        contentType:
+          type: string
+        fileName:
+          type: string
+        fileType:
+          type: string
+        parameterUuid:
+          type: string
+          format: uuid
+        url:
+          type: string
+    Label:
+      title: Label
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    ListValue:
+      title: ListValue
+      required:
+        - attribute
+        - id
+        - name
+      type: object
+      properties:
+        attribute:
+          description: parent
+          $ref: '#/components/schemas/Attribute'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    Parameter:
+      title: Parameter
+      required:
+        - attribute
+        - dataSet
+        - id
+      type: object
+      properties:
+        attribute:
+          description: parent
+          $ref: '#/components/schemas/Attribute'
+        dataSet:
+          description: parent
+          $ref: '#/components/schemas/DataSet'
+        dataSetReference:
+          description: for attribute with dsl type
+          $ref: '#/components/schemas/DataSet'
+        fileData:
+          $ref: '#/components/schemas/FileData'
+        id:
+          type: string
+          format: uuid
+        listValue:
+          description: for attribute with list type
+          $ref: '#/components/schemas/ListValue'
+        text:
+          type: string
+          description: for attribute with text type
+    TableResponse:
+      title: TableResponse
+      type: object
+      properties:
+        attributeId:
+          type: string
+          format: uuid
+        attributeName:
+          type: string
+        ds:
+          type: string
+          format: uuid
+        dsId:
+          type: string
+          format: uuid
+        dsName:
+          type: string
+        dslId:
+          type: string
+          format: uuid
+        dslName:
+          type: string
+        id:
+          type: string
+          format: uuid
+        listValueId:
+          type: string
+          format: uuid
+    TestPlan:
+      title: TestPlan
+      required:
+        - id
+        - name
+        - visibilityArea
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        visibilityArea:
+          $ref: '#/components/schemas/VisibilityArea'
+    VisibilityArea:
+      title: VisibilityArea
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        dataSetLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSetList'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    AttributeType:
+      type: string
+      enum:
+        - CHANGE
+        - DSL
+        - ENCRYPTED
+        - FILE
+        - LIST

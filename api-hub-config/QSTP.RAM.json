@@ -1,0 +1,142 @@
+{
+ "projectId": "QSTP.RAM",
+ "files": [
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/akb-records-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/atp-link-provider-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/charts-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/defects-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/email-subject-macros-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/email-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/environments-info-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/execution-request-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/execution-history-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/fail-pattern-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/fdr-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/global-akb-records-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/jira-integration-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/labels-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/log-record-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/log-records-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/mail-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/manual-root-cause-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/open-shift-deployment-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/projects-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/properties-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/report-templates-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/report-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/rerun-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/root-cause-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/test-plans-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/test-run-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/timestamp-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/tool-config-info-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/tree-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/tsg-projects-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/user-setting-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/validation-label-config-template-v1.yaml",
+   "publish": true
+  },
+  {
+   "fileId": "qubership-atp-ram-rest-openapi-specifications/v1/widget-config-template-v1.yaml",
+   "publish": true
+  }
+ ],
+ "refs": []
+}

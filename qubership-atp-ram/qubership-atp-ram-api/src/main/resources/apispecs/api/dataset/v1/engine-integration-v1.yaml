@@ -1,0 +1,151 @@
+openapi: 3.0.0
+
+info:
+  title: 'TA Tools integration'
+  description: 'TA Tools integration API'
+  version: 1.0.0
+
+tags:
+  - name: ta-tool-integration-controller
+    description: Model History API
+
+paths:
+  /ds/{dataSetId}/atp:
+    post:
+      tags:
+        - ta-tool-integration-controller
+      summary: Returns full (table) DS structure. Empty DS reference means all variables are empty.
+      operationId: dataSetFull
+      parameters:
+        - name: dataSetId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: project id for current entity
+          required: true
+        - name: evaluate
+          in: query
+          schema:
+            type: boolean
+            description: evaluate macros or not.
+            default: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSet'
+
+  /ds/{dataSetId}/object:
+    post:
+      tags:
+        - ta-tool-integration-controller
+      summary: Returns shortened (object) DS structure. Empty DS reference means all variables are absent.
+      operationId: dataSetObject
+      parameters:
+        - name: dataSetId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: project id for current entity
+          required: true
+        - name: evaluate
+          in: query
+          schema:
+            type: boolean
+            description: evaluate macros or not.
+            default: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSet'
+
+  /ds/{dataSetId}/optimized:
+    post:
+      tags:
+        - ta-tool-integration-controller
+      summary: Returns optimized DS structure. Empty DS reference means all variables are absent except overlaps.
+      operationId: dataSetOptimized
+      parameters:
+        - name: dataSetId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: project id for current entity
+          required: true
+        - name: evaluate
+          in: query
+          schema:
+            type: boolean
+            description: evaluate macros or not.
+            default: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSet'
+
+components:
+  schemas:
+    DataSet:
+      type: object
+      properties:
+        parameters:
+          $ref: '#/components/schemas/ParametersMap'
+        groups:
+          $ref: '#/components/schemas/GroupsMap'
+
+    ParametersMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/Parameter'
+
+    Parameter:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/AttributeType'
+        value:
+          type: string
+          example:
+            'Some value'
+
+    GroupsMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/Group'
+
+    Group:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DslAttributeType'
+        value:
+          type: string
+        parameters:
+          $ref: '#/components/schemas/ParametersMap'
+        groups:
+          $ref: '#/components/schemas/GroupsMap'
+
+    AttributeType:
+      type: string
+      enum:
+        - TEXT
+        - LIST
+        - FILE
+        - MERGE
+      example: 'TEXT'
+
+    DslAttributeType:
+      type: string
+      enum:
+        - DSL

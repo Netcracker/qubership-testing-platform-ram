@@ -1,0 +1,39 @@
+@startuml
+hide footbox
+Participant ATP1
+Participant RAM2
+Participant Executor
+
+activate ATP1
+ATP1 -> Executor: warmUp
+activate Executor
+ATP1 -> Executor: executeStepRequest
+deactivate ATP1
+
+Executor -> RAM2: OpenLog
+activate RAM2
+RAM2 -> RAM2: Find TR1
+RAM2 -> RAM2: Create TR1
+RAM2 --> Executor: return TR1_ID
+loop
+Executor -> RAM2: create LogRecord
+end
+
+RAM2 -> ATP1: sync ER
+activate ATP1
+ATP1 --> RAM2: ER data with not started TR
+deactivate ATP1
+
+RAM2 -> RAM2: Create non existing TR2
+
+Executor -> RAM2: OpenLog2
+RAM2 -> RAM2: Find TR2
+RAM2 --> Executor: return TR2_ID
+loop
+Executor -> RAM2: create LogRecord
+end
+
+deactivate Executor
+deactivate RAM2
+
+@enduml

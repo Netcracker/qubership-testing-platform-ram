@@ -1,0 +1,61 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: tool-config-info-controller
+    description: Tool Config Info Controller
+paths:
+  '/api/configinfo/{uuid}':
+    get:
+      tags:
+        - tool-config-info-controller
+      summary: getByUuid
+      operationId: getByUuid
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolConfigInfo'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    ToolConfigInfo:
+      title: ToolConfigInfo
+      type: object
+      properties:
+        category:
+          $ref: '#/components/schemas/Category'
+        data:
+          type: string
+        name:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+    Category:
+      type: string
+      enum:
+        - BV
+        - EXE
+        - ITF

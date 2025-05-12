@@ -1,0 +1,39 @@
+@startuml
+class TestRun {
+    _id: UUID
+    executionRequestId: UUID // rename field in DB
+    name: String
+    testCaseId: UUID
+    testCaseName: String // rename field
+    executionStatuses: ExecutionStatuses
+    testingStatus: TestingStatuses
+    startDate: Timestamp
+    finishDate: Timestamp
+    duration: long
+    executor: String
+    taHost: List<String>
+    qaHost: List<String>
+    solutionBuild: List<String>
+    failureReason: DefaultRootCauseType
+    rootCauseId: UUID
+    manualRootCauseUuid: UUID
+    dataSetUrl: String
+    dataSetListUrl: String
+    flags: List<Flags>
+    logCollectorData: String
+    fdrWasSent: boolean
+    fdrLink: String
+    numberOfScreens: int
+    urlToBrowserOrLogs: HashSet<String>
+
+    parentTestRunUuid: UUID
+}
+
+note left
+    Fields for remove:
+    1) uuid
+    2) testSuite
+    3) atpSource
+end note
+
+@enduml

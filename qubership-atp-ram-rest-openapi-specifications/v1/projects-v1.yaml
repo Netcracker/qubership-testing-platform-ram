@@ -1,0 +1,165 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: projects-controller
+    description: Projects Controller
+paths:
+  /api/projects:
+    get:
+      tags:
+        - projects-controller
+      summary: getAll
+      operationId: getAll
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/projects/create:
+    post:
+      tags:
+        - projects-controller
+      summary: createProject
+      operationId: createProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  /api/projects/save:
+    put:
+      tags:
+        - projects-controller
+      summary: saveProject
+      operationId: saveProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+  '/api/projects/{projectUuid}':
+    get:
+      tags:
+        - projects-controller
+      summary: getProjectByUuid
+      operationId: getProjectByUuid
+      parameters:
+        - name: projectUuid
+          in: path
+          description: projectUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/projects/{projectUuid}/name':
+    get:
+      tags:
+        - projects-controller
+      summary: getProjectName
+      operationId: getProjectName
+      parameters:
+        - name: projectUuid
+          in: path
+          description: projectUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    Project:
+      title: Project
+      type: object
+      properties:
+        missionControlToolUrl:
+          type: string
+        monitoringToolUrl:
+          type: string
+        name:
+          type: string
+        troubleShooterUrl:
+          type: string
+        tsgIntegration:
+          type: boolean
+        tsgProjectName:
+          type: string
+        uuid:
+          type: string
+          format: uuid

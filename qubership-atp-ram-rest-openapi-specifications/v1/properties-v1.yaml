@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: properties-controller
+    description: Properties Controller
+paths:
+  /api/properties:
+    get:
+      tags:
+        - properties-controller
+      summary: getProperties
+      operationId: getProperties
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SingleProperties'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    SingleProperties:
+      title: SingleProperties
+      type: object
+      properties:
+        baseUrl:
+          type: string
+        isSingleUiEnabled:
+          type: string

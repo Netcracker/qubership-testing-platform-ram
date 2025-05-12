@@ -1,0 +1,128 @@
+openapi: 3.0.0
+
+info:
+  title: 'history-controller'
+  description: 'Model History API'
+  version: 1.0.0
+
+tags:
+  - name: history-controller
+    description: Model History API
+
+paths:
+  /catalog/api/v1/history/{projectId}/{itemType}/{id}:
+    get:
+      tags:
+        - history-controller
+      summary: finds all changes history for defined object
+      operationId: getAllHistory
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: project id for current entity
+          required: true
+        - name: itemType
+          in: path
+          schema:
+            type: string
+            description: values from history-entities-v1.yaml#/components/schemas/HistoryItemType must be used
+          required: true
+        - name: id
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryItemResponse'
+        '400':
+          description: History for Entity type = '" + itemType + "' is not supported
+        '404':
+          description: Entity Id not found
+
+  /catalog/api/v1/history/restore/{projectId}/{itemType}/{id}/revision/{revisionId}:
+    post:
+      tags:
+        - history-controller
+      summary: Restore the state of the provided entity to defined revision
+      operationId: restoreToRevision
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: project id for current entity
+          required: true
+        - name: itemType
+          in: path
+          schema:
+            type: string
+            description: values from history-entities-v1.yaml#/components/schemas/HistoryItemType must be used
+          required: true
+          example: 'testscenario'
+        - name: id
+          in: path
+          schema:
+            type: string
+            format: uuid
+            description: uuid of restored entity
+          required: true
+          example: '83b22327-2f68-4f8b-96ab-1d3670248b9f'
+        - name: revisionId
+          in: path
+          schema:
+            type: integer
+            description: target revision number for restored entity
+          required: true
+          example: 3
+      responses:
+        '200':
+          description: 'Revision was restored successfully'
+        '403':
+          description: 'Forbidden'
+        '404':
+          description: 'Entity Id not found'
+        '500':
+          description: 'Revision was not restored'
+
+
+components:
+  schemas:
+    PageInfo:
+      type: object
+      properties:
+        offset:
+          type: integer
+        limit:
+          type: integer
+        itemsTotalCount:
+          type: integer
+
+    HistoryItemResponse:
+      type: object
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/PageInfo'
+        historyItems:
+          type: array
+          items:
+            $ref: 'history-entities-v1.yaml#/components/schemas/HistoryItem'

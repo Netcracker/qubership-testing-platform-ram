@@ -1,0 +1,28 @@
+@startuml
+title Execution of test case(s)/test scope
+start
+:User initiate start of execution\n(in Catalogue service);
+:Catalogue service send\nExecutionOrder to Orchestrator;
+':Orchestrator set info to TestRunContext;
+':Orchestrator check status of systems by environment ID;
+':Orchestrator ping TA Engines;
+:Orchestrator check status of systems\n&& ping TA engines;
+:Orchestrator send\n"Execution Request's Logs" to RAM adapter;
+:RAM adapter get\n'ram.adapter.type'\nfrom system properties;
+
+if (ram.adapter.type == 'standalone') then (yes)
+    :using RAM service for logging\n(AtpStandaloneRamAdapter);
+elseif (ram.adapter.type == 'receiver') then (yes)
+    :using Receiver service for logging\n(AtpReceiverRamAdapter);
+elseif (ram.adapter.type == 'kafka') then (yes)
+    :using kafka for logging\n(AtpKafkaRamAdapter);
+endif
+
+:Orchestrator compilation test cases;
+:Orchestrator execution test steps via TA tools;
+:TA tools execute steps via RAM adapter;
+
+:RAM sending report about finished execution;
+
+end
+@enduml

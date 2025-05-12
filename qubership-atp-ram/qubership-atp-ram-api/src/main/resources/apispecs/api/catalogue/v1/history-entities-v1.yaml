@@ -1,0 +1,65 @@
+openapi: 3.0.0
+
+info:
+  title: 'History Controller entities'
+  description: 'History Controller Model Specification for Model History API'
+  version: 1.0.0
+
+paths: {}
+
+components:
+  schemas:
+    HistoryItemType:
+      type: string
+      enum:
+        - project
+        - testplan
+        - testscenario
+        - testcase
+        - testscope
+        - compound
+        - qadsllibrary
+        - testcasegroup
+        - testscenariogroup
+        - testscopegroup
+      example: 'project'
+
+    HistoryItem:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/HistoryItemType'
+        version:
+          type: integer
+          minimum: 1
+          description: commit nubmer of current schanges
+        modifiedWhen:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        modifiedBy:
+          type: string
+          example: 'Administrator'
+        added:
+          type: array
+          items:
+            type: string
+            example: 'Test Plan'
+        deleted:
+          type: array
+          items:
+            type: string
+            example: 'Test Plan'
+        changed:
+          type: array
+          items:
+            type: string
+            example: 'Project Name'
+
+
+
+
+
+
+
+

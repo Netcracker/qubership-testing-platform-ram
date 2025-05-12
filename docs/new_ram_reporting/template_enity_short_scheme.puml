@@ -1,0 +1,28 @@
+@startuml
+
+class TemplateReport {
+    _id: UUID
+    name: String
+    projectUuid: UUID
+    testPlanUuid: UUID
+    entities: List<TemplateEntity>
+}
+
+interface TemplateEntity {
+    required: boolean
+    params: Map<String, Object>,
+    type: ?
+    order: int
+}
+
+
+TemplateEntity <|.. MailEntity
+TemplateEntity <|.. TestCasesSummaryEntity
+TemplateEntity <|.. BuildEntity
+TemplateEntity <|.. TopIssuesEntity
+TemplateEntity <|.. TestCasesEntity
+TemplateEntity <|.. RootCauseStatisticsEntity
+TemplateEntity --* TemplateReport
+TemplateEntity <|.. CommentEntity
+
+@enduml

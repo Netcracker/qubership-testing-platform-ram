@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: test-plan-logging-controller
+    description: Test Plan Logging Controller
+paths:
+  /api/logging/testPlans/findOrCreate:
+    post:
+      tags:
+        - test-plan-logging-controller
+      summary: findOrCreate
+      operationId: findOrCreate
+      requestBody:
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/CreatedTestPlanRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedTestPlanResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    CreatedTestPlanRequest:
+      title: CreatedTestPlanRequest
+      type: object
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        testPlanId:
+          type: string
+          format: uuid
+        testPlanName:
+          type: string
+    CreatedTestPlanResponse:
+      title: CreatedTestPlanResponse
+      type: object
+      properties:
+        testPlanId:
+          type: string
+          format: uuid

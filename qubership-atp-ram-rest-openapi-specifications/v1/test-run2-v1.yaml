@@ -1,0 +1,396 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: test-run-controller-second
+    description: Test Run Controller Second
+paths:
+  /api/executor/testruns/bulk/finish/delayed:
+    post:
+      tags:
+        - test-run-controller-second
+      summary: finishTestRunsDelayed
+      operationId: finishTestRunsDelayed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/executor/testruns/patch:
+    put:
+      tags:
+        - test-run-controller-second
+      summary: testRunPatch
+      operationId: testRunPatch
+      requestBody:
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/TestRun'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /api/executor/testruns/create:
+    post:
+      tags:
+        - test-run-controller-second
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/StartRunRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartRunResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: true
+components:
+  schemas:
+    StartRunResponse:
+      title: StartRunResponse
+      type: object
+      properties:
+        executionRequestId:
+          type: string
+          format: uuid
+        testRunId:
+          type: string
+          format: uuid
+    StartRunRequest:
+      title: StartRunRequest
+      type: object
+      properties:
+        projectName:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        testPlanName:
+          type: string
+        testPlanId:
+          type: string
+          format: uuid
+        testSuiteName:
+          type: string
+        testCaseName:
+          type: string
+        testCaseId:
+          type: string
+          format: uuid
+        executionRequestName:
+          type: string
+        atpExecutionRequestId:
+          type: string
+          format: uuid
+        isFinalTestRun:
+          type: boolean
+        initialTestRunId:
+          type: string
+          format: uuid
+        testRunName:
+          type: string
+        testRunId:
+          type: string
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        taHost:
+          type: string
+        qaHost:
+          type: string
+        executor:
+          type: string
+        executorId:
+          type: string
+          format: uuid
+        solutionBuild:
+          type: string
+        mailList:
+          type: string
+        testScopeId:
+          type: string
+          format: uuid
+        environmentId:
+          type: string
+          format: uuid
+        metaInfo:
+          $ref: '#/components/schemas/MetaInfo'
+        labelTemplateId:
+          type: string
+        widgetConfigTemplateId:
+          type: string
+        dataSetListId:
+          type: string
+        dataSetId:
+          type: string
+        threads:
+          type: integer
+          format: int32
+        autoSyncCasesWithJira:
+          type: boolean
+        autoSyncRunsWithJira:
+          type: boolean
+        flagIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        testScopeSection:
+          $ref: '#/components/schemas/TestScopeSections'
+        order:
+          type: integer
+          format: int32
+        labelIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    TestRun:
+      title: TestRun
+      type: object
+      properties:
+        parentTestRunId:
+          type: string
+          format: uuid
+        isGroupedTestRun:
+          type: boolean
+        executionRequestId:
+          type: string
+          format: uuid
+        testCaseId:
+          type: string
+          format: uuid
+        testCaseName:
+          type: string
+        executionStatus:
+          $ref: '#/components/schemas/ExecutionStatus'
+        testingStatus:
+          $ref: '#/components/schemas/TestingStatus'
+        startDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        finishDate:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        duration:
+          type: integer
+          format: int64
+        executor:
+          type: string
+        jiraTicket:
+          type: string
+        taHost:
+          type: array
+          items:
+            type: string
+        qaHost:
+          type: array
+          items:
+            type: string
+        solutionBuild:
+          type: array
+          items:
+            type: string
+        rootCauseId:
+          type: string
+          format: uuid
+        dataSetUrl:
+          type: string
+        flags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Flags'
+        dataSetListUrl:
+          type: string
+        logCollectorData:
+          type: string
+        fdrWasSent:
+          type: boolean
+        fdrLink:
+          type: string
+        numberOfScreens:
+          type: integer
+          format: int32
+        urlToBrowserOrLogs:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        urlToBrowserSession:
+          type: string
+        passedRate:
+          type: integer
+          format: int32
+        warningRate:
+          type: integer
+          format: int32
+        failedRate:
+          type: integer
+          format: int32
+        comment:
+          $ref: '#/components/schemas/Comment'
+        metaInfo:
+          $ref: '#/components/schemas/MetaInfo'
+        statistic:
+          $ref: '#/components/schemas/TestRunStatistic'
+        testScopeSection:
+          $ref: '#/components/schemas/TestScopeSections'
+        order:
+          type: integer
+          format: int32
+        labelIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        browserNames:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        isFinalTestRun:
+          type: boolean
+        initialTestRunId:
+          type: string
+          format: uuid
+    TestScopeSections:
+      type: string
+      enum:
+        - PREREQUISITES
+        - EXECUTION
+        - VALIDATION
+    ExecutionStatus:
+      type: string
+      enum:
+        - FINISHED
+        - IN_PROGRESS
+        - NOT_STARTED
+        - RESUMING
+        - SUSPENDED
+        - TERMINATED
+        - TERMINATED_BY_TIMEOUT
+    Flag:
+      type: string
+      enum:
+        - SKIP_IF_DEPENDENCY_FAILED
+        - STOP_ON_FAIL
+        - TERMINATE_IF_FAIL
+    MetaInfo:
+      title: MetaInfo
+      type: object
+      properties:
+        definitionId:
+          type: string
+          format: uuid
+        hidden:
+          type: boolean
+        line:
+          type: integer
+          format: int32
+        scenarioHashSum:
+          type: string
+        scenarioId:
+          type: string
+          format: uuid
+    Flags:
+      type: string
+      enum:
+        - SKIP_IF_DEPENDENCY_FAILED
+        - STOP_ON_FAIL
+        - TERMINATE_IF_FAIL
+        - IGNORE_PREREQUISITE_IN_PASS_RATE
+        - IGNORE_VALIDATION_IN_PASS_RATE
+    Comment:
+      title: Comment
+      type: object
+      properties:
+        text:
+          type: string
+        html:
+          type: string
+    TestRunStatistic:
+      title: TestRunStatistic
+      type: object
+      properties:
+        reportLabelParams:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ReportLabelParameterData'
+    ReportLabelParameterData:
+      title: ReportLabelParameterData
+      type: object
+      properties:
+        failedCount:
+          type: integer
+          format: int32
+        passed:
+          type: boolean
+        passedCount:
+          type: integer
+          format: int32
+    TestingStatus:
+      type: string
+      enum:
+        - BLOCKED
+        - FAILED
+        - NOT_STARTED
+        - PASSED
+        - SKIPPED
+        - STOPPED
+        - UNKNOWN
+        - WARNING

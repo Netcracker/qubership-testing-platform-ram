@@ -1,0 +1,207 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: manual-root-cause-controller
+    description: Manual Root Cause Controller
+paths:
+  /api/manualRootCause:
+    get:
+      tags:
+        - manual-root-cause-controller
+      summary: getAll
+      operationId: getAll
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ManualRootCause'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/manualRootCause/create:
+    post:
+      tags:
+        - manual-root-cause-controller
+      summary: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManualRootCause'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManualRootCause'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/manualRootCause/delete/{uuid}':
+    delete:
+      tags:
+        - manual-root-cause-controller
+      summary: delete
+      operationId: delete
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/api/manualRootCause/project/{projectUuid}':
+    get:
+      tags:
+        - manual-root-cause-controller
+      summary: getManualRootCauseByProjectUuid
+      operationId: getManualRootCauseByProjectUuid
+      parameters:
+        - name: projectUuid
+          in: path
+          description: projectUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: withRootCauseName
+          in: query
+          description: withRootCauseName
+          required: false
+          style: form
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ManualRootCause'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/manualRootCause/save:
+    put:
+      tags:
+        - manual-root-cause-controller
+      summary: save
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManualRootCause'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManualRootCause'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/manualRootCause/{uuid}':
+    get:
+      tags:
+        - manual-root-cause-controller
+      summary: getByUuid
+      operationId: getByUuid
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManualRootCause'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    RootCauseType:
+      type: string
+      enum:
+        - ATP_MAINTENCE
+        - AT_ISSUE
+        - DESIGN_CHANGE
+        - ENVIROMENT_ISSUE
+        - ERROR_IN_CONFIGURATION
+        - INVESTIGATION_NEEDED
+        - NETWORK_ISSUE
+        - NOT_ANALYZED
+        - PERFOMANCE_ISSUE
+        - SOLUTION_ISSUE
+        - TEST_DATA_ISSUE
+    ManualRootCause:
+      title: ManualRootCause
+      type: object
+      properties:
+        defaultRootCauseType:
+          $ref: '#/components/schemas/RootCauseType'
+        name:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        rootCauseId:
+          type: string
+          format: uuid
+        uuid:
+          type: string
+          format: uuid

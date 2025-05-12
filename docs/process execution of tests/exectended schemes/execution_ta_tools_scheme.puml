@@ -1,0 +1,16 @@
+@startuml
+title Execution of test case(s)/test scope. TA tools (example executor) + RAM adapter
+start
+:Orchestrator create ExecutorStepRequest
+(when create execution process)
+(show orchestrator_ramadapter.extended.puml);
+:Orchestrator prepare model (with execution info) to xml file;
+:processes start async;
+:Orchestrator use ExecutorStepRequest for execute executors steps;
+:...;
+:Executor start execute step (NttHttpController#executeScopeStep);
+:Executor use AtpRamWriterAdapter for logging to RAM;
+
+end
+
+@enduml

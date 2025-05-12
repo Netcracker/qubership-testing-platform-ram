@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.qubership.atp.ram</groupId>
+    <artifactId>qubership-atp-ram-aggregator</artifactId>
+    <version>${atp.service.version}</version>
+    <packaging>pom</packaging>
+
+    <name>ram-aggregator</name>
+    <modules>
+        <module>qubership-atp-ram-rest-openapi-specifications</module>
+        <module>qubership-atp-ram</module>
+        <module>qubership-atp-ram-distribution</module>
+        <module>qubership-atp-ram-contract-test-pacts</module>
+    </modules>
+
+    <properties>
+        <atp.service.version>0.0.1.LOCAL</atp.service.version>
+        <spring.boot.version>2.7.18</spring.boot.version>
+        <spring.cloud.version>2021.0.8</spring.cloud.version>
+
+        <tool.config.keys.prefix>${project.name}</tool.config.keys.prefix>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <console.encoding>UTF-8</console.encoding>
+        <java.version>21</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <scm.revision>local_build</scm.revision>
+        <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
+        <slf4j.version>1.7.36</slf4j.version>
+        <javers.version>6.6.4</javers.version>
+        <netty-handler.version>4.1.118.Final</netty-handler.version>
+
+        <lombok.version>1.18.30</lombok.version>
+        <spotbugs.maven.plugin.version>4.7.3.0</spotbugs.maven.plugin.version>
+        <pmd.maven.plugin.version>3.8</pmd.maven.plugin.version>
+
+        <atp.codechecks.version>1.1</atp.codechecks.version>
+        <atp.auth.version>1.2.59-ATPII-48163</atp.auth.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+<!--                <exclusions>-->
+<!--                    <exclusion>-->
+<!--                        <groupId>org.springframework.security</groupId>-->
+<!--                        <artifactId>spring-security-web</artifactId>-->
+<!--                    </exclusion>-->
+<!--                </exclusions>-->
+            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.security</groupId>-->
+<!--                <artifactId>spring-security-web</artifactId>-->
+<!--                <version>5.7.13</version>-->
+<!--            </dependency>-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.javers</groupId>
+                <artifactId>javers-spring-boot-starter-mongo</artifactId>
+                <version>${javers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-api-mockito2</artifactId>
+                <version>2.0.2</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>objenesis</artifactId>
+                        <groupId>org.objenesis</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>mockito-core</artifactId>
+                        <groupId>org.mockito</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-core</artifactId>
+                <version>2.0.2</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>objenesis</artifactId>
+                        <groupId>org.objenesis</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>3.12.4</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.qubership.atp.auth</groupId>
+                <artifactId>atp-auth-spring-boot-starter</artifactId>
+                <version>${atp.auth.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-handler</artifactId>
+                <version>${netty-handler.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-handler-proxy</artifactId>
+                <version>${netty-handler.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.9.5</version>
+                <configuration>
+                    <tag>atp-ram-${project.version}</tag>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Maven Central</name>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>central</id>
+            <name>Maven Central</name>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <name>Maven Central</name>
+            <url>https://repo1.maven.org/maven2/</url>
+        </pluginRepository>
+    </pluginRepositories>
+</project>

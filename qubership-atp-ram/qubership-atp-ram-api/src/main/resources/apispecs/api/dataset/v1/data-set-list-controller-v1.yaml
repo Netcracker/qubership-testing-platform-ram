@@ -1,0 +1,1610 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: data-set-list-controller
+    description: Data Set List Controller
+  - name: data-set-list-lazy-loading-controller
+    description: Data Set List Lazy Loading Controller
+paths:
+  /dsl:
+    get:
+      tags:
+        - data-set-list-controller
+      summary: Returns all dataSetLists.
+      operationId: getDataSetLists
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataSetListCreatedModifiedView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /dsl/copy:
+    post:
+      tags:
+        - data-set-list-controller
+      summary: Copy DSL with name provided.
+      operationId: copy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CopyDataSetListsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CopyDataSetListsResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /dsl/cyclesCheck:
+    get:
+      tags:
+        - data-set-list-controller
+      summary: Get affected attribute by deleting dsl( data set storage).
+      operationId: getCyclesCheck
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/CyclesCheckResult'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /dsl/dependencies:
+    post:
+      tags:
+        - data-set-list-controller
+      summary: Get dataset lists dependencies trees
+      operationId: getDependencies
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataSetListDependencyNode'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /dsl/dependenciesRecursive:
+    post:
+      tags:
+        - data-set-list-controller
+      summary: Get dataset lists dependencies trees
+      operationId: getDependenciesRecursive
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataSetListDependencyNode'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /dsl/ds/all:
+    post:
+      tags:
+        - data-set-list-controller
+      summary: getDataSetsWithNameAndDataSetList
+      operationId: getDataSetsWithNameAndDataSetList
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DatasetResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /dsl/ds/clone/bulk:
+    post:
+      tags:
+        - data-set-list-controller
+      summary: Copy DSLs and DSs. Uses for cloning of test plan on Catalog
+      operationId: copyBulk
+      parameters:
+        - name: name
+          in: query
+          description: name
+          required: true
+          style: form
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+                  format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/Pair'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/va/{vaId}':
+    get:
+      tags:
+        - data-set-list-controller
+      summary: Returns all dataSetLists for selected visibility area.
+      operationId: getDataSetListsByVaId
+      parameters:
+        - name: vaId
+          in: path
+          description: vaId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: label
+          in: query
+          description: label
+          required: false
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataSetListCreatedModifiedView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - data-set-list-controller
+      summary: Creates new DSL with name provided.
+      operationId: create
+      parameters:
+        - name: vaId
+          in: path
+          description: vaId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: name
+          in: query
+          description: name
+          required: true
+          style: form
+          schema:
+            type: string
+        - name: testPlan
+          in: query
+          description: testPlan
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/va/{vaId}/dsl/{dataSetListId}/copy':
+    put:
+      tags:
+        - data-set-list-controller
+      summary: Copy DSL with name provided.
+      operationId: copyByVaIdDataSetListId
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: vaId
+          in: path
+          description: vaId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: name
+          in: query
+          description: name
+          required: true
+          style: form
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: type
+          required: false
+          style: form
+          schema:
+            type: boolean
+        - name: testPlan
+          in: query
+          description: testPlan
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: string
+                format: uuid
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/{dataSetListId}':
+    get:
+      tags:
+        - data-set-list-controller
+      summary: Returns information about the selected DSL.
+      operationId: getDataSetListInfo
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: filterDs
+          in: query
+          description: filterDs
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: filterAttr
+          in: query
+          description: filterAttr
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: flat
+          in: query
+          description: flat
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: new
+          in: query
+          description: new
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: evaluate
+          in: query
+          description: evaluate
+          required: false
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - data-set-list-controller
+      summary: Renames selected DSL.
+      operationId: rename
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: name
+          in: query
+          description: name
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: testPlan
+          in: query
+          description: testPlan
+          required: false
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: clearTestPlan
+          in: query
+          description: clearTestPlan
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: boolean
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - data-set-list-controller
+      summary: Deletes selected DSL.
+      operationId: delete
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/dsl/{dataSetListId}/ds':
+    get:
+      tags:
+        - data-set-list-controller
+      summary: Returns datasets id/name information of the selected DSL.
+      operationId: getDataSets
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: skipEvaluate
+          in: query
+          description: skipEvaluate
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: label
+          in: query
+          description: label
+          required: false
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataSet'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/{dataSetListId}/ds/{ds}':
+    get:
+      tags:
+        - data-set-list-controller
+      summary: Returns information about the selected DS under DSL.
+      operationId: getDataSetInfoByDataSetListIdAndId
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: ds
+          in: path
+          description: ds
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/{dataSetListId}/exists':
+    get:
+      tags:
+        - data-set-list-controller
+      summary: Check if dsl exists.
+      operationId: existsById
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/{dataSetListId}/export/excel':
+    post:
+      tags:
+        - data-set-list-controller
+      summary: Export dsl to file.
+      operationId: exportDataSetList
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/{dataSetListId}/filters':
+    post:
+      tags:
+        - data-set-list-controller
+      summary: Returns information about the selected DSL.
+      operationId: getDataSetListInfoById
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: evaluate
+          in: query
+          description: evaluate
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: startIndex
+          in: query
+          description: startIndex
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: endIndex
+          in: query
+          description: endIndex
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          description: sort
+          required: false
+          style: form
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataSetsAndAttributesFilterPair'
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/{dataSetListId}/full':
+    get:
+      tags:
+        - data-set-list-controller
+      summary: Returns datasets full information of the selected DSL.
+      operationId: getDataSetListFullInfo
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataSet'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/{dataSetListId}/getAffected':
+    get:
+      tags:
+        - data-set-list-controller
+      summary: Get affected attribute by deleting dsl( data set storage).
+      operationId: getAffectedAttributes
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TableResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/{dataSetListId}/getAffectedDSL':
+    get:
+      tags:
+        - data-set-list-controller
+      summary: Get affected dsl by deleting dsl( data set storage).
+      operationId: getAffectedDataSetLists
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: limit
+          in: query
+          description: limit
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          description: offset
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+        '206':
+          description: Partial Content
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AffectedDataSetList'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/{dataSetListId}/label':
+    get:
+      tags:
+        - data-set-list-controller
+      summary: getLabels
+      operationId: getLabels
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Label'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - data-set-list-controller
+      summary: addLabel
+      operationId: addLabel
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: name
+          in: query
+          description: name
+          required: true
+          style: form
+          schema:
+            type: string
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Label'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/{dataSetListId}/label/{labelId}':
+    delete:
+      tags:
+        - data-set-list-controller
+      summary: deleteLabel
+      operationId: deleteLabel
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: labelId
+          in: path
+          description: labelId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: modifiedWhen
+          in: query
+          description: modifiedWhen
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: boolean
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/dsl/{dataSetListId}/modifiedWhen':
+    get:
+      tags:
+        - data-set-list-controller
+      summary: Get dsl modifiedWhen.
+      operationId: getModifiedWhen
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: string
+                format: date-time
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/lazy/{dataSetListId}':
+    get:
+      tags:
+        - data-set-list-lazy-loading-controller
+      summary: Returns information about the selected DSL.
+      operationId: getDataSetListFlat
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/DataSetListFlat'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/lazy/{dataSetListId}/ReferenceByPath/{attributePath}':
+    get:
+      tags:
+        - data-set-list-lazy-loading-controller
+      summary: Returns information about the selected DSL.
+      operationId: getReferencedDataSetList
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: attributePath
+          in: path
+          description: attributePath
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/RefDataSetListFlat'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/{dataSetListId}/getAffectedCount':
+    get:
+      tags:
+        - data-set-list-controller
+      summary: Get affected attribute count by dsl.
+      operationId: getAffectedAttributesCount
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: number
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/dsl/{dataSetListId}/import/excel':
+    post:
+      tags:
+        - data-set-list-controller
+      summary: Import dsl from excel file.
+      operationId: importDataSetList
+      parameters:
+        - name: dataSetListId
+          in: path
+          description: dataSetListId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: projectId
+          in: query
+          description: projectId
+          required: true
+          style: form
+          schema:
+            type: string
+            format: uuid
+        - name: versioning
+          in: query
+          description: versioning
+          required: false
+          style: form
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/DatasetListImportResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    AffectedDataSetList:
+      title: AffectedDataSetList
+      type: object
+      properties:
+        dslId:
+          type: string
+          format: uuid
+        dslName:
+          type: string
+    Attribute:
+      title: Attribute
+      required:
+        - dataSetList
+        - id
+        - name
+        - type
+      type: object
+      properties:
+        dataSetList:
+          description: parent
+          $ref: '#/components/schemas/DataSetList'
+        dataSetListReference:
+          description: for dsl type
+          $ref: '#/components/schemas/DataSetList'
+        id:
+          type: string
+          format: uuid
+        listValues:
+          type: array
+          description: for list type
+          items:
+            $ref: '#/components/schemas/ListValue'
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        type:
+          $ref: '#/components/schemas/AttributeType'
+    AttributeFlat:
+      title: AttributeFlat
+      type: object
+      properties:
+        containsAttributes:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParameterFlat'
+        type:
+          $ref: '#/components/schemas/AttributeType'
+    CopyDataSetListsRequest:
+      title: CopyDataSetListsRequest
+      type: object
+      properties:
+        dataSetListIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        updateReferences:
+          type: boolean
+        postfix:
+          type: string
+    CopyDataSetListsResponse:
+      title: CopyDataSetListsResponse
+      type: object
+      properties:
+        copyId:
+          type: string
+          format: uuid
+        datasets:
+          type: string
+          format: uuid
+          additionalProperties:
+            type: string
+            format: uuid
+        originalId:
+          type: string
+          format: uuid
+    CyclesCheckResult:
+      title: CyclesCheckResult
+      type: object
+      properties:
+        results:
+          type: object
+          additionalProperties:
+            type: string
+    DataSet:
+      title: DataSet
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        locked:
+          type: string
+          format: boolean
+    DataSetCreatedModifiedView:
+      title: DataSetCreatedModifiedView
+      type: object
+    DataSetFlat:
+      title: DataSetFlat
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelFlat'
+        name:
+          type: string
+    DataSetList:
+      title: DataSetList
+      required:
+        - id
+        - name
+        - visibilityArea
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+        createdBy:
+          type: string
+          format: uuid
+        createdWhen:
+          type: string
+          format: date-time
+        dataSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSet'
+        id:
+          type: string
+          format: uuid
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        modifiedBy:
+          type: string
+          format: uuid
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        testPlan:
+          $ref: '#/components/schemas/TestPlan'
+        visibilityArea:
+          description: parent
+          $ref: '#/components/schemas/VisibilityArea'
+    DataSetListCreatedModifiedView:
+      title: DataSetListCreatedModifiedView
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        createdBy:
+          type: string
+          format: uuid
+        createdWhen:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelCreatedModifiedView'
+        modifiedBy:
+          type: string
+          format: uuid
+        modifiedWhen:
+          type: string
+          format: date-time
+        name:
+          type: string
+        testPlan:
+          $ref: '#/components/schemas/TestPlanCreatedModifiedView'
+    DataSetListDependencyNode:
+      title: DataSetListDependencyNode
+      type: object
+      properties:
+        dependencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSetListDependencyNode'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    DataSetListFlat:
+      title: DataSetListFlat
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeFlat'
+        dataSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSetFlat'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    DatasetResponse:
+      title: DatasetResponse
+      type: object
+      properties:
+        dataSetId:
+          type: string
+          format: uuid
+        dataSetListId:
+          type: string
+          format: uuid
+        dataSetListName:
+          type: string
+        dataSetName:
+          type: string
+    FileData:
+      title: FileData
+      type: object
+      properties:
+        contentType:
+          type: string
+        fileName:
+          type: string
+        fileType:
+          type: string
+        parameterUuid:
+          type: string
+          format: uuid
+        url:
+          type: string
+    DataSetsAndAttributesFilterPair:
+      title: DataSetsAndAttributesFilterPair
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            type: string
+            format: uuid
+        datasets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSet'
+    Label:
+      title: Label
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    LabelCreatedModifiedView:
+      title: LabelCreatedModifiedView
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    LabelFlat:
+      title: LabelFlat
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    ListValue:
+      title: ListValue
+      required:
+        - attribute
+        - id
+        - name
+      type: object
+      properties:
+        attribute:
+          description: parent
+          $ref: '#/components/schemas/Attribute'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    Pair:
+      title: Pair
+      type: object
+      properties:
+        left:
+          type: string
+          format: uuid
+        right:
+          type: string
+          format: uuid
+    Parameter:
+      title: Parameter
+      required:
+        - attribute
+        - dataSet
+        - id
+      type: object
+      properties:
+        attribute:
+          description: parent
+          $ref: '#/components/schemas/Attribute'
+        dataSet:
+          description: parent
+          $ref: '#/components/schemas/DataSet'
+        dataSetReference:
+          description: for attribute with dsl type
+          $ref: '#/components/schemas/DataSet'
+        fileData:
+          $ref: '#/components/schemas/FileData'
+        id:
+          type: string
+          format: uuid
+        listValue:
+          description: for attribute with list type
+          $ref: '#/components/schemas/ListValue'
+        text:
+          type: string
+          description: for attribute with text type
+    ParameterFlat:
+      title: ParameterFlat
+      type: object
+      properties:
+        dataSet:
+          type: string
+          format: uuid
+        overlap:
+          type: boolean
+        value:
+          type: string
+        valueRef:
+          type: string
+    RefDataSetListAttribute:
+      title: RefDataSetListAttribute
+      type: object
+      properties:
+        containsAttributes:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefParameter'
+        type:
+          $ref: '#/components/schemas/AttributeType'
+    RefDataSetListFlat:
+      title: RefDataSetListFlat
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefDataSetListAttribute'
+    RefParameter:
+      title: RefParameter
+      type: object
+      properties:
+        dataSet:
+          type: string
+          format: uuid
+        overlap:
+          type: boolean
+        value:
+          type: string
+        valueRef:
+          type: string
+    TableResponse:
+      title: TableResponse
+      type: object
+      properties:
+        attributeId:
+          type: string
+          format: uuid
+        attributeName:
+          type: string
+        ds:
+          type: string
+          format: uuid
+        dsId:
+          type: string
+          format: uuid
+        dsName:
+          type: string
+        dslId:
+          type: string
+          format: uuid
+        dslName:
+          type: string
+        id:
+          type: string
+          format: uuid
+        listValueId:
+          type: string
+          format: uuid
+    TestPlan:
+      title: TestPlan
+      required:
+        - id
+        - name
+        - visibilityArea
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        visibilityArea:
+          $ref: '#/components/schemas/VisibilityArea'
+    TestPlanCreatedModifiedView:
+      title: TestPlanCreatedModifiedView
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    VisibilityArea:
+      title: VisibilityArea
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        dataSetLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSetList'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    AttributeType:
+      type: string
+      enum:
+        - CHANGE
+        - DSL
+        - ENCRYPTED
+        - FILE
+        - LIST
+        - TEXT
+    DatasetListImportResponse:
+      title: DatasetListImportResponse
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeImportResponse'
+    AttributeImportResponse:
+      title: AttributeImportResponse
+      type: object
+      properties:
+        attributeId:
+          type: string
+          format: uuid
+        attributeName:
+          type: string
+        success:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParameterImportResponse'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParameterImportResponse'
+    ParameterImportResponse:
+      title: ParameterImportResponse
+      type: object
+      properties:
+        dataSetId:
+          type: string
+          format: uuid
+        errorMessage:
+          type: string

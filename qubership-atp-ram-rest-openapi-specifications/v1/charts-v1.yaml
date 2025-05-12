@@ -1,0 +1,369 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Inferred Url
+tags:
+  - name: charts-controller
+    description: Charts Controller
+paths:
+  '/api/charts/lastruns/{testPlanUuid}':
+    get:
+      tags:
+        - charts-controller
+      summary: getLast20LanchesStatistic
+      operationId: getLast20LanchesStatistic
+      parameters:
+        - name: testPlanUuid
+          in: path
+          description: testPlanUuid
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/charts/options:
+    get:
+      tags:
+        - charts-controller
+      summary: getGraphOptions
+      operationId: getGraphOptions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/charts/pie/trByRootCauses:
+    post:
+      tags:
+        - charts-controller
+      summary: getTestRunsByRootCauses
+      operationId: getTestRunsByRootCauses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionInfoOptions'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sector'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/charts/pie/trByStatuses:
+    post:
+      tags:
+        - charts-controller
+      summary: getTestRunsByStatusForPieChart
+      operationId: getTestRunsByStatusForPieChart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionInfoOptions'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sector'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/charts/ping:
+    get:
+      tags:
+        - charts-controller
+      summary: ping
+      operationId: ping
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/charts/statistics:
+    post:
+      tags:
+        - charts-controller
+      summary: getLastStatistic
+      operationId: getLastStatistic
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/charts/trByRootCauses:
+    post:
+      tags:
+        - charts-controller
+      summary: getTestRunsByRootCausesPerDay
+      operationId: getTestRunsByRootCausesPerDay
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionInfoOptions'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatisticTrByRc'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/charts/trByStatuses:
+    post:
+      tags:
+        - charts-controller
+      summary: getTestRunsByRootCausesPerEr
+      operationId: getTestRunsByRootCausesPerEr
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionInfoOptions'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatisticTrByStatuses'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/charts/trDurations:
+    post:
+      tags:
+        - charts-controller
+      summary: getTestRunsDurationsByStatuses
+      operationId: getTestRunsDurationsByStatuses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionInfoOptions'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DurationsByStatuses'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/charts/{executionRequestId}':
+    get:
+      tags:
+        - charts-controller
+      summary: getChartsData
+      operationId: getChartsData
+      parameters:
+        - name: executionRequestId
+          in: path
+          description: executionRequestId
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    DataPoint:
+      title: DataPoint
+      type: object
+      properties:
+        x:
+          type: integer
+          format: int64
+        'y':
+          type: integer
+          format: int32
+    DurationsByStatuses:
+      title: DurationsByStatuses
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataPoint'
+        name:
+          type: string
+    ExecutionInfoOptions:
+      title: ExecutionInfoOptions
+      type: object
+      properties:
+        executionRequestIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        filterOptions:
+          $ref: '#/components/schemas/FilterOptions'
+        testPlanId:
+          type: string
+          format: uuid
+    FilterOptions:
+      title: FilterOptions
+      type: object
+      properties:
+        analyzedByQa:
+          type: boolean
+        erFinishDateFrom:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        erFinishDateTo:
+          type: string
+          format: 'date-time'
+          example: '2019-11-17T10:10:05.698Z'
+        numberOfEr:
+          type: integer
+          format: int32
+    Sector:
+      title: Sector
+      type: object
+      properties:
+        name:
+          type: string
+        'y':
+          type: integer
+          format: int32
+    StatisticTrByRc:
+      title: StatisticTrByRc
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: array
+            items:
+              type: integer
+              format: int64
+        name:
+          type: string
+    StatisticTrByStatuses:
+      title: StatisticTrByStatuses
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: array
+            items:
+              type: object
+        name:
+          type: string
