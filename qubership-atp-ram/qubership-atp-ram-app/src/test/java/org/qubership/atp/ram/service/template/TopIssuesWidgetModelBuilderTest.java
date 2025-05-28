@@ -109,7 +109,7 @@ public class TopIssuesWidgetModelBuilderTest {
             issueTestRunResponse.setName("Test Run #" + index);
             add(issueTestRunResponse);
         }});
-        issueResponse.setJiraTickets(Collections.singletonList("https://service-address/path-to-tickets/PRJ-98765"));
+        issueResponse.setJiraTickets(Collections.singletonList("https://service-address/browse/PRJ-98765"));
         FailPatternResponse failPattern = new FailPatternResponse();
         failPattern.setName("FailPatternName");
         failPattern.setUuid(UUID.randomUUID());

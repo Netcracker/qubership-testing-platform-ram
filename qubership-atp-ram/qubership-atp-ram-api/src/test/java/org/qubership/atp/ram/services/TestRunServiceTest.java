@@ -20,7 +20,6 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.UUID.randomUUID;
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -233,7 +232,7 @@ public class TestRunServiceTest {
         logRecord3.setValidationLabels(Collections.singleton("label"));
 
         Stream<LogRecord> logRecords = Stream.of(logRecord1, logRecord2, logRecord3);
-        Assertions.assertEquals(testRunService.filterLogRecordsWithValidationParams(logRecords).size(), 2);
+        Assertions.assertEquals(2, testRunService.filterLogRecordsWithValidationParams(logRecords).size());
     }
 
     @Test
@@ -247,7 +246,7 @@ public class TestRunServiceTest {
 
         testRunService.stopServiceTestRun(UUID.randomUUID());
 
-        assertEquals("Status should be finished", FINISHED, testRun.getExecutionStatus());
+        Assertions.assertEquals(FINISHED, testRun.getExecutionStatus(), "Status should be finished");
         assertTrue(Objects.nonNull(testRun.getFinishDate()), "Finish date should not be NULL");
     }
 
@@ -311,7 +310,7 @@ public class TestRunServiceTest {
         UUID trId = UUID.randomUUID();
         TestRun tr = new TestRun();
         tr.setUuid(trId);
-        tr.setBrowserNames(Arrays.asList("browserName1"));
+        tr.setBrowserNames(singletonList("browserName1"));
         tr.setStartDate(Timestamp.valueOf("2022-01-01 01:01:01.001"));
         tr.setFinishDate(Timestamp.valueOf("2022-01-01 01:02:00.003"));
         String template = "https://dashboard-service-address/d/kzqCPg_Wk/atp-cloud-pods?orgId=3&var-gr_prefix=teams"
@@ -337,7 +336,7 @@ public class TestRunServiceTest {
         UUID trId = UUID.randomUUID();
         TestRun tr = new TestRun();
         tr.setUuid(trId);
-        tr.setBrowserNames(Arrays.asList("browserName1"));
+        tr.setBrowserNames(singletonList("browserName1"));
         tr.setStartDate(Timestamp.valueOf("2022-01-01 01:01:01.001"));
         tr.setFinishDate(Timestamp.valueOf("2022-01-01 01:02:00.003"));
         when(testRunRepository.findById(trId)).thenReturn(Optional.of(tr));
@@ -356,7 +355,7 @@ public class TestRunServiceTest {
         UUID trId = UUID.randomUUID();
         TestRun tr = new TestRun();
         tr.setUuid(trId);
-        tr.setBrowserNames(Arrays.asList("browserName1"));
+        tr.setBrowserNames(singletonList("browserName1"));
         tr.setStartDate(Timestamp.valueOf("2022-01-01 01:01:01.001"));
         String template = "https://dashboard-service-address/d/kzqCPg_Wk/atp-cloud-pods?orgId=3&var-gr_prefix=teams"
                 + ".oshobj&var-cluster=atp-cloud&var-ns=prod&var-app_type=atp-ram&var-pod=%{browser_pod}"
@@ -657,8 +656,8 @@ public class TestRunServiceTest {
         List<TestingStatusUpdateRequest> testingStatusUpdateRequests =
                 asList(testingStatusUpdReqFailed, testingStatusUpdReqStopped);
         testRunService.updateTestRunsTestingStatus(testingStatusUpdateRequests);
-        assertEquals("Test run does not have correct status", FAILED, testRunFailed.getTestingStatus());
-        assertEquals("Test run does not have correct status", STOPPED, testRunStopped.getTestingStatus());
+        Assertions.assertEquals(FAILED, testRunFailed.getTestingStatus(), "Test run does not have correct status");
+        Assertions.assertEquals(STOPPED, testRunStopped.getTestingStatus(), "Test run does not have correct status");
         verify(testRunRepository, times(1)).saveAll(testRuns);
     }
 
@@ -674,7 +673,7 @@ public class TestRunServiceTest {
         testRunService.updTestingStatusHard(testRun.getUuid(), FAILED);
 
         verify(testCaseService, times(1)).updateCaseStatuses(Collections.singletonList(testRun));
-        assertEquals(FAILED, testRun.getTestingStatus());
+        Assertions.assertEquals(FAILED, testRun.getTestingStatus());
     }
 
     @Test
@@ -690,7 +689,7 @@ public class TestRunServiceTest {
         testRunService.updTestingStatusHard(testRun.getUuid(), FAILED);
 
         verifyZeroInteractions(testCaseService);
-        assertEquals(FAILED, testRun.getTestingStatus());
+        Assertions.assertEquals(FAILED, testRun.getTestingStatus());
     }
 
     @Test
@@ -753,7 +752,7 @@ public class TestRunServiceTest {
         TestRun testRun = TestRunsMock.generateSimpleTestRun(UUID.randomUUID());
         testRun.setExecutionStatus(IN_PROGRESS);
         testRunService.finishTestRun(testRun, true);
-        assertEquals("ExecutionStatus should be set to FINISHED", FINISHED, testRun.getExecutionStatus());
+        Assertions.assertEquals(FINISHED, testRun.getExecutionStatus(), "ExecutionStatus should be set to FINISHED");
     }
 
     @Test
@@ -761,7 +760,7 @@ public class TestRunServiceTest {
         TestRun testRun = TestRunsMock.generateSimpleTestRun(UUID.randomUUID());
         testRun.setExecutionStatus(TERMINATED);
         testRunService.finishTestRun(testRun, true);
-        assertEquals("ExecutionStatus should not be updated", TERMINATED, testRun.getExecutionStatus());
+        Assertions.assertEquals(TERMINATED, testRun.getExecutionStatus(), "ExecutionStatus should not be updated");
     }
 
     @Test
@@ -841,7 +840,7 @@ public class TestRunServiceTest {
                 testRunService.findTestRunsByNamesLabelsValidationLabels(executionRequestId, filter);
 
         // then
-        assertEquals(expectedTestRunsResponses, actualTestRunsResponses);
+        Assertions.assertEquals(expectedTestRunsResponses, actualTestRunsResponses);
     }
 
     @Test
@@ -873,7 +872,7 @@ public class TestRunServiceTest {
                 testRunService.findTestRunsByNamesLabelsValidationLabels(executionRequestId, filter);
 
         // then
-        assertEquals(expectedTestRunsResponses, actualTestRunsResponses);
+        Assertions.assertEquals(expectedTestRunsResponses, actualTestRunsResponses);
     }
 
     @Test
@@ -910,7 +909,7 @@ public class TestRunServiceTest {
                 testRunService.findTestRunsByNamesLabelsValidationLabels(executionRequestId, filter);
 
         // then
-        assertEquals(expectedTestRunsResponses, actualTestRunsResponses);
+        Assertions.assertEquals(expectedTestRunsResponses, actualTestRunsResponses);
     }
 
     @Test
@@ -939,8 +938,8 @@ public class TestRunServiceTest {
         // then
         assertTrue(filter.getLabelIds().contains(label1.getUuid()));
         assertTrue(filter.getLabelIds().contains(label2.getUuid()));
-        assertEquals(new Integer(1), actualResponse.getTotalNumberOfEntities());
-        assertEquals(2, actualResponse.getTestRuns().get(0).getLabels().size());
+        Assertions.assertEquals(Integer.valueOf(1), actualResponse.getTotalNumberOfEntities());
+        Assertions.assertEquals(2, actualResponse.getTestRuns().get(0).getLabels().size());
         assertTrue(actualResponse.getTestRuns().get(0).getLabels().stream().anyMatch(label -> label.equals(label1)));
         assertTrue(actualResponse.getTestRuns().get(0).getLabels().stream().anyMatch(label -> label.equals(label2)));
     }
@@ -967,7 +966,7 @@ public class TestRunServiceTest {
                 testRunService.getAnalyzedTestRuns(0, 0, null, null, filter);
         // then
         assertTrue(CollectionUtils.isEmpty(filter.getLabelIds()));
-        assertEquals(new Integer(0), actualResponse.getTotalNumberOfEntities());
+        Assertions.assertEquals(Integer.valueOf(0), actualResponse.getTotalNumberOfEntities());
         assertTrue(CollectionUtils.isEmpty(actualResponse.getTestRuns()));
     }
 
@@ -993,7 +992,7 @@ public class TestRunServiceTest {
                 testRunService.getAnalyzedTestRuns(0, 0, null, null, filter);
         // then
         assertTrue(CollectionUtils.isEmpty(filter.getLabelIds()));
-        assertEquals(new Integer(0), actualResponse.getTotalNumberOfEntities());
+        Assertions.assertEquals(Integer.valueOf(0), actualResponse.getTotalNumberOfEntities());
         assertTrue(CollectionUtils.isEmpty(actualResponse.getTestRuns()));
     }
 
@@ -1008,10 +1007,10 @@ public class TestRunServiceTest {
         final Set<UUID> testRunIds = Sets.newHashSet(testRun1Id, testRun2Id);
 
         final Issue issue1 = IssueMock.generateIssue("Issue 1", testRun1Id,
-                new JiraTicket("https://service-address/path-to-tickets/SOMEPROJECT-98765"));
+                new JiraTicket("https://service-address/browse/SOMEPROJECT-98765"));
         final Issue issue2 = IssueMock.generateIssue("Issue 2", testRun1Id);
         final Issue issue3 = IssueMock.generateIssue("Issue 3", testRun2Id,
-                new JiraTicket("https://service-address/path-to-tickets/SOMEPROJECT-12345"));
+                new JiraTicket("https://service-address/browse/SOMEPROJECT-12345"));
 
         final ExecutionRequest executionRequest = ExecutionRequestsMock.generateRequest();
         final UUID executionRequestId = executionRequest.getUuid();
@@ -1075,7 +1074,7 @@ public class TestRunServiceTest {
         final String firstSavedTestRunCommentHtml = firstSavedTestRunComment.getHtml();
         Assertions.assertNotNull("First saved test run comment should contain html", firstSavedTestRunCommentHtml);
         Assertions.assertTrue(
-                firstSavedTestRunCommentHtml.contains("https://service-address/path-to-tickets/SOMEPROJECT-98765"),
+                firstSavedTestRunCommentHtml.contains("https://service-address/browse/SOMEPROJECT-98765"),
                 "First saved test run comment html should contain issue reference");
     }
 

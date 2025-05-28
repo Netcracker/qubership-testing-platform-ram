@@ -117,8 +117,8 @@ public class CustomFailPatternRepositoryImpl implements CustomFailPatternReposit
      *                {
      *                  "jiraTickets": {
      *                      "$in": [
-     *                          "https://service-address/path-to-tickets/PRJ-98765",
-     *                          "https://service-address/path-to-tickets/PRJ-98764"
+     *                          "https://service-address/browse/PRJ-98765",
+     *                          "https://service-address/browse/PRJ-98764"
      *                      ]
      *                  }
      *                },

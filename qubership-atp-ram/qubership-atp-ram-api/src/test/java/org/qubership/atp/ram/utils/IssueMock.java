@@ -100,7 +100,7 @@ public class IssueMock {
     public static final String PATTERN_MESSAGE =
             "(org.qubership.automation.wd.shell.errors.exception.WDIllegalArgumentException)";
 
-    public static final String JIRA_TICKET = "https://service-address/path-to-tickets/SOMEPROJECT-98765";
+    public static final String JIRA_TICKET = "https://service-address/browse/SOMEPROJECT-98765";
 
     public static LogRecord logRecord(String message, UUID testRunId) {
         LogRecord logRecord = new LogRecord();
