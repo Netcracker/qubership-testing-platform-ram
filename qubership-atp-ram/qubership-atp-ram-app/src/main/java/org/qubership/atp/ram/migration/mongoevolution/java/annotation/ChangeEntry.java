@@ -1,3 +1,19 @@
+/*
+ * # Copyright 2024-2025 NetCracker Technology Corporation
+ * #
+ * # Licensed under the Apache License, Version 2.0 (the "License");
+ * # you may not use this file except in compliance with the License.
+ * # You may obtain a copy of the License at
+ * #
+ * #      http://www.apache.org/licenses/LICENSE-2.0
+ * #
+ * # Unless required by applicable law or agreed to in writing, software
+ * # distributed under the License is distributed on an "AS IS" BASIS,
+ * # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * # See the License for the specific language governing permissions and
+ * # limitations under the License.
+ */
+
 package org.qubership.atp.ram.migration.mongoevolution.java.annotation;
 
 import java.lang.reflect.Method;
@@ -45,7 +61,7 @@ public class ChangeEntry {
 
     /**
      * Constructs a new {@link ChangeEntry} representing a single change set to be applied to the database schema.
-     * <p/>
+     * <p>
      * Each {@code ChangeEntry} encapsulates metadata about the change, including its version,
      * execution order, associated method, and the instance of the change log class.
      * The timestamp of creation is automatically recorded.
@@ -80,7 +96,7 @@ public class ChangeEntry {
     /**
      * Builds a MongoDB {@link Document} representing this change entry, including metadata such as
      * version, execution order, timestamps, and method identifiers.
-     * <p/>
+     * <p>
      * The document can be used for persistence in a MongoDB collection to track applied schema changes.
      *
      * @param updateTimeInMillis The time taken (in milliseconds) to apply the change set, calculated as the difference
@@ -100,10 +116,10 @@ public class ChangeEntry {
 
     /**
      * Saves this {@link ChangeEntry} to the MongoDB change log collection.
-     * <p/>
+     * <p>
      * The method inserts a document representing the change entry into the {@code _schema_change_log} collection.
      * After insertion, it updates the {@code timestamp} field to reflect the current MongoDB server time.
-     * <p/>
+     * <p>
      * This ensures that each applied change set is properly recorded for future reference
      * and prevents re-execution of the same change set.
      *

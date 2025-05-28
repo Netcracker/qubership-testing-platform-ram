@@ -66,7 +66,6 @@ public class ReportController /*implements ReportControllerApi*/ {
      *  },
      *  ...
      * ]
-     * Or throw {@link AtpEntityNotFoundException} when envInfo doesn't found for ER
      *
      * @param erId for getting server summary
      * @return list of {@link ServerSummaryResponse}
@@ -97,7 +96,6 @@ public class ReportController /*implements ReportControllerApi*/ {
      *  },
      *  ...
      * ]
-     * Or throw {@link AtpEntityNotFoundException} if ER is null.
      *
      * @param erId for getting root causes statistic
      * @return {@link RootCausesStatisticResponse}

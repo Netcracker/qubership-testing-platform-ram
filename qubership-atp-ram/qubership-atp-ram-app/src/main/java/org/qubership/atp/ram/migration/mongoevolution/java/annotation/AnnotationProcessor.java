@@ -1,3 +1,19 @@
+/*
+ * # Copyright 2024-2025 NetCracker Technology Corporation
+ * #
+ * # Licensed under the Apache License, Version 2.0 (the "License");
+ * # you may not use this file except in compliance with the License.
+ * # You may obtain a copy of the License at
+ * #
+ * #      http://www.apache.org/licenses/LICENSE-2.0
+ * #
+ * # Unless required by applicable law or agreed to in writing, software
+ * # distributed under the License is distributed on an "AS IS" BASIS,
+ * # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * # See the License for the specific language governing permissions and
+ * # limitations under the License.
+ */
+
 package org.qubership.atp.ram.migration.mongoevolution.java.annotation;
 
 import java.lang.reflect.Method;
@@ -53,7 +69,7 @@ public class AnnotationProcessor {
     /**
      * Constructs an AnnotationProcessor with specified MongoDB client, database name,
      * connection search key, list of packages to scan for change logs, and a database manager entity.
-     * <p/>
+     * <p>
      * If the provided {@code dbManagerEntity} is {@code null},
      * a new instance of {@link DBManagerEntity} will be created.
      *
@@ -220,11 +236,11 @@ public class AnnotationProcessor {
 
     /**
      * Applies database schema changes based on detected change sets.
-     * <p/>
+     * <p>
      * This method iterates through all collected {@link ChangeEntry} objects whose version
      * is greater than the specified {@code currentVersion} and applies them if they have not
      * been previously executed (i.e., not present in the change log collection).
-     * <p/>
+     * <p>
      * Each successfully applied change set is recorded in the MongoDB change log collection.
      * If any change set execution fails, an exception is thrown, halting the process.
      *
