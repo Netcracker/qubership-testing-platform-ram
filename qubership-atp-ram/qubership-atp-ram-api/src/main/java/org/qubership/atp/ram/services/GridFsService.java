@@ -105,7 +105,7 @@ public class GridFsService {
                 result.append(new String(image.getContent()));
             }
         });
-        log.trace("Get SourceShot for Log Record: {}:\n{}", logRecordId, result.toString());
+        log.trace("Get SourceShot for Log Record: {}:\n{}", logRecordId, result);
         sourceShot.setContent(result.toString());
         return sourceShot;
     }
@@ -220,7 +220,7 @@ public class GridFsService {
      * @param testRunId    TestRun id
      * @param content      Stored content
      * @param fileName     File name
-     * @return {@link ObjectId} of created file
+     * @return String object id of created file.
      */
     public String save(String type, String creationTime, String contentType,
                        UUID logRecordId, UUID testRunId,
