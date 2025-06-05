@@ -1,46 +1,22 @@
-# ATP RAM
+# Qubership Testing Platform RAM Service
 
-# How to start via DP deployer
+## Purpose
 
-1. Open job [DP.Pub.Deployer_v2]
-2. Fill parameters as example:
-    1. CLOUD_URL = **some-dev-cloud.some-domain.com:8443**
-    2. OPENSHIFT_WORKSPACE = **development**
-    3. OPENSHIFT_TOKEN = **your token** (or fill parameters OPENSHIFT_USER and OPENSHIFT_PASSWORD)
-    4. ARTIFACT_DESCRIPTOR_GROUP_ID = **com.some-domain.deploy.product**
-    5. ARTIFACT_DESCRIPTOR_ARTIFACT_ID = **prod.ta_atp-ram**
-    6. ARTIFACT_DESCRIPTOR_VERSION = **atpii-4266_20190530-043648**
-    7. CUSTOM_PARAMS =
-        * **MONGO_DB_ADDR=atp-ram-db.development.svc**
-        * **MONGO_DB_PORT=27017**
-        * **RAM_DB=testramdb**
-        * **RAM_DB_USER=testuserdb**
-        * **RAM_DB_PASSWORD=testpassdb**
-        * **GRIDFS_DB_ADDR=atp-ram-db.development.svc**
-        * **GRIDFS_DB_PORT=27017**
-        * **GRIDFS_DB=testramgrid**
-        * **GRIDFS_DB_USER=testusergr**
-        * **GRIDFS_DB_PASSWORD=testpassgr**
-        * **MAIL_HOST=iplanet.some-domain.com**
-        * **MAIL_SSL=false**
-        * **GRAYLOG_HOST=tcp:ta-graylog.some-domain.com**
-        * **GRAYLOG_PORT=12201**
-        * **GRAYLOG_ON=true**
-        * **MAIL_SENDER_URL=http://qaapp486.some-domain.com:8080**
-        * **KAFKA_ENABLE=false**
-        * **KAFKA_SERVERS=kafka.kafka.svc:9092**
-        * **ORCHESTRATOR_URL=http://atp-orchestrator:8080**
-        * **ENABLE_M2M=false**
-        * **EUREKA_CLIENT_ENABLED=false**
-        * **SERVICE_REGISTRY_URL=http://atp-registry-service:8761/eureka**
-        * **SPRING_PROFILES_ACTIVE=default**
-        * **KEYCLOAK_ENABLED=true**
-        * **ATP1_INTEGRATION_ENABLE=true**
-3. Click **[Build]** button
+This service is used to receive and send reports about tests execution results from so called 'TA Tools' (Qubership Testing Platform services performing test scenarios execution) into Qubership Testing Platform RAM service.
+It performs this sending via adapters of various types (see below) by means of composing 'log messages' of special format, which contain all related information.
 
-# How to start Backend
+## Local build
 
-## Mongo params for configuring connections (optional step)
+In IntelliJ IDEA, one can select 'github' Profile in Maven Settings menu on the right, then expand Lifecycle dropdown of qubership-atp-ram-aggregator module, then select 'clean' and 'install' options and click 'Run Maven Build' green arrow button on the top.
+
+Or, one can execute the command:
+```bash
+mvn -P github clean install
+```
+
+## How to start Backend
+
+### Mongo params for configuring connections (optional step)
 
 Set default value in application.properties for:
 * **max.connection.idle.time** - the maximum idle time for a pooled connection im ms (_default: 0ms_)
@@ -68,11 +44,9 @@ as a result, the **qubership-atp-ram\web** folder will be filled
 *   Working directory: path to your atp-ram project on local machine, `C:\atp-ram` for example
 4. Add the following parameters in VM options - click Modify Options and select "Add VM Options":
 
-
-
-dev04(kuber):
+dev04 (kuber):
 -DSPRING_PROFILES=default  with security
-```
+```text
 -Dspring.config.location=qubership-atp-ram/qubership-atp-ram-app/src/main/config/application.properties
 -DSERVICE_NAME=atp-ram-local
 -Dbase.url=localhost
@@ -114,32 +88,32 @@ dev04(kuber):
 -Deureka.client.serviceUrl.defaultZone=http://atp-registry-service-service-address:8761
 -Deureka.client.enabled=true
 -Deureka.client.fetchRegistry=true
-
 ```
 
-For local work with feign clients(for every need services):
+For local work with feign clients (for every needed services):
 In lens create new resource (Network->Ingress)
-copy basic and change this arguments:
+copy basic and change these arguments:
 
-name: atp-environments22
+name: atp-ram22
 .....
+```yaml
 spec:
     ingressClassName: nginx
     rules:
-       - host: test-atp-environments-service-address
+       - host: test-atp-ram-service-address
          http:
             paths:
               - path: /
                 pathType: Prefix
                 backend:
                     service:
-                        name: atp-environments
+                        name: atp-ram
                         port:
                             number: 8080
-
+```
 
 -DSPRING_PROFILES=disable-security  without security
-```
+```text
 -Dspring.config.location=qubership-atp-ram-app/src/main/config/application.properties
 -Dbase.url=localhost
 -Dspring.resources.static-locations=file:./qubership-atp-ram/web/
@@ -182,7 +156,7 @@ spec:
 ```
 
 dev222:
-```
+```text
 -Dspring.config.location=qubership-atp-ram/qubership-atp-ram-app/src/main/config/application.properties
 -Dbase.url=localhost
 -Dspring.resources.static-locations=file:./qubership-atp-ram/web/
@@ -217,9 +191,9 @@ dev222:
 -DKEYCLOAK_ENABLED=true
 -DSPRING_PROFILES=default
 -Dspring.cloud.consul.config.enabled=false
-
 ```
-Use `atp1.integration.enable=false`, when need disable integration with ATP1 (optional)
+
+Use `atp1.integration.enable=false`, when need to disable integration with ATP1 (optional)
 
 ## Create mongo and gridfs users (optional step - when creation mongo and users is needed)
 1. Connect to mongo (Search knowledge base for: Short. Connect to Mongo cluster in Openshift from local environment)
@@ -242,24 +216,24 @@ Use `atp1.integration.enable=false`, when need disable integration with ATP1 (op
 - mail-sender: used rest request to atp-mail-sender
 - kafka: used kafka 
 ### You can select the kafka sender type via property
-```
+```properties
 kafka.enable=true
 ```
 Used by default the mail-sender
 ### If you used kafka sender then you need to set the spring.kafka.bootstrap-servers and kafka.mails.topic properties
-```
+```properties
 kafka.mails.topic=mails
 spring.kafka.bootstrap-servers=kafka:9092
 ```
 ### Full example
-```
+```properties
 kafka.enable=${KAFKA_ENABLE:false}
 kafka.mails.topic=${KAFKA_MAILS_TOPIC:mails}
 spring.kafka.bootstrap-servers=${KAFKA_SERVERS:kafka:9092}
 ```
 ## Turn off connection to Catalog (optional step)
 To turn off connection to Catalog comments next lines in class **CatalogRestClient**
-```
+```java
         try {
             m2mRestTemplate.exchange(catalogueUrl + CATALOGUE_ENDPOINT, HttpMethod.POST, entity, List.class);
         } catch (Exception e) {
@@ -271,8 +245,7 @@ To turn off connection to Catalog comments next lines in class **CatalogRestClie
 
 Just run Main#main with args from step "Create new Configuration"
 
-##Set authorization token
-
+## Set authorization token
 
 1. Open cloud catalogue
 2. Open DevTools by click F12
@@ -286,7 +259,5 @@ Just run Main#main with args from step "Create new Configuration"
 ## How to create dump on production and restore it to local DB (optional step)
 [Create and restore dump]
 
-# Integration with TSG (optional step)
-To turn on the integration RAM with TSG see [ATP RAM. Integration with TSG]
 
 
