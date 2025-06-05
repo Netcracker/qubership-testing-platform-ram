@@ -1,9 +1,102 @@
 # Qubership Testing Platform RAM Service
 
-## Purpose
+## System Requirements
+The system consists of two services: ATP RAM and ATP RAM Report Receiver.
 
-This service is used to receive and send reports about tests execution results from so called 'TA Tools' (Qubership Testing Platform services performing test scenarios execution) into Qubership Testing Platform RAM service.
-It performs this sending via adapters of various types (see below) by means of composing 'log messages' of special format, which contain all related information.
+| 	            |         ATP RAM	          | ATP RAM Report Receiver  	 |
+|--------------|:-------------------------:|:--------------------------:|
+| 	            | **Requests** / **Limits** | **Requests** / **Limits**  |
+| **CPU**      |        100m / 200m        |        500m / 500m         |
+| **RAM**      |         1Gi / 1Gi         |         1Gi / 1Gi          |
+| **replicas** |             1             |             2              |
+
+## Database System Requirements
+
+| 	            |         MongoDB	          |         GridFS  	         |
+|--------------|:-------------------------:|:-------------------------:|
+| 	            | **Requests** / **Limits** | **Requests** / **Limits** |
+| **CPU**      |        100m / 100m        |       100m / 100m        |
+| **RAM**      |         1Gi / 1Gi         |         512Mi / 512Mi         |
+
+## Description
+
+Qubership Testing Platform (QSTP) is a system intended to analyze the results of the execution of test scenarios and to publish the results for the project team.
+
+Run and Analysis Management (RAM) is a tool that allows collecting information on AT runs on different projects in a single database, helps in analyzing the results and allows obtaining graphs of statistical data.
+
+## Tasks Covered
+
+Users running a large number of tests need to collect information about the runs and to analyze it.
+
+To solve this problem, RAM Service was implemented, which covers the following tasks:
+
+- data storage;
+- analysis of the results;
+- viewing information about steps (status, message with logged information, screenshots, etc.);
+- viewing statistics;
+- results reporting via e-mail (both automatic upon completion of tests and manual);
+- comparing two or more runs, etc.
+
+## Entities
+
+**Project**
+
+It is an entity in the QSTP system intended for managing testing of a project. In QSTP, the projects are independent of each other and can be developed in parallel.
+
+**Test Plan**
+
+This entity stores Test Case(s), settings necessary for its execution and Test Run(s) execution results.
+
+Test Plan is intended for preparing and organizing functional tests within single/multiple project versions.
+
+**Execution Request**
+
+This entity allows the user to execute a set of automated and semi-automated Test Cases (TCs). Possible values for execution statuses are described below.
+
+**Test Case**
+
+The Test Case entity stores the testing script.
+
+**Test Suite**
+
+This entity is intended to group Test Case(s) by an attribute.
+
+**Test Run**
+
+The Test Run entity is created when a Test Case is added to Execution Request. Test Run (TR) displays the Test Case execution status in the Execution Request. The possible values for testing and execution statuses are described below.
+
+**Log Record**
+
+The Log Record entity is a child object of Test Run that stores information on the execution of a Test Case step. The possible values for testing statuses are described below.
+
+**AKB Record**
+
+Analysis Knowledge Base Record (AKB Record) is a tool for detecting errors in Log Records based on regular expressions.
+
+By means of AKB Records, a user can create a list of regular expressions for the subsequent search of errors in Test Runs logs. AKB Records are valid within a current project.
+
+**Global AKB Record**
+
+Analysis Knowledge Base Record (AKB Record) is a tool for detecting errors in Log Records (LRs) based on regular expressions.
+
+By means of AKB Records, a user can create a list of regular expressions for the subsequent search of errors in Test Runs logs. Global AKB Records are valid within a system, thus the same Global AKB Record can be used within several projects.
+
+**Defect**
+
+It is an entity designed to register issues detected at the Test Runs/Log Records analysis.
+
+**Labels**
+
+It is an entity in the QSTP system that allows grouping/selecting Execution Requests based on criteria, which are not available in QSTP.
+
+**Manual Root Cause**
+
+This entity is used to manually specify the Failure Reason for Test Run on the Test Run Tree View, Execution Request Tree View pages.
+
+**Notifications**
+
+After Execution Request is completed, the user(s) can receive a notification reporting about ER execution results.
+
 
 ## Local build
 
