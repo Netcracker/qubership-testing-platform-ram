@@ -37,7 +37,7 @@
         <spotbugs.maven.plugin.version>4.7.3.0</spotbugs.maven.plugin.version>
         <pmd.maven.plugin.version>3.8</pmd.maven.plugin.version>
 
-        <atp.auth.version>1.2.59-SNAPSHOT</atp.auth.version>
+        <atp.auth.version>1.2.60</atp.auth.version>
     </properties>
 
     <name>${project.groupId}:${project.artifactId}</name>
