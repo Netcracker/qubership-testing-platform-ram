@@ -3,20 +3,20 @@
 ## System Requirements
 The system consists of two services: ATP RAM and ATP RAM Report Receiver.
 
-| 	            |         ATP RAM          |  ATP RAM Report Receiver   |
-|--------------|:------------------------:|:--------------------------:|
-| 	            | **Requests** / **Limits** | **Requests** / **Limits** |
-| **CPU**      |        100m / 200m        |        500m / 500m        |
-| **RAM**      |         1Gi / 1Gi         |         1Gi / 1Gi         |
-| **replicas** |             1             |             2             |
+|              |          ATP RAM           |  ATP RAM Report Receiver   |
+|--------------|:--------------------------:|:--------------------------:|
+|              | **Requests** / **Limits** | **Requests** / **Limits** |
+| **CPU**      |        100m / 200m         |        500m / 500m         |
+| **RAM**      |         1Gi / 1Gi          |         1Gi / 1Gi          |
+| **replicas** |             1              |             2              |
 
 ## Database System Requirements
 
-| 	       |          MongoDB           |          GridFS           |
-|---------|:--------------------------:|:-------------------------:|
-|         | **Requests** / **Limits**  | **Requests** / **Limits** |
-| **CPU** |        100m / 100m         |        100m / 100m        |
-| **RAM** |         1Gi / 1Gi          |       512Mi / 512Mi       |
+|         |         MongoDB           |         GridFS            |
+|---------|:-------------------------:|:-------------------------:|
+|         | **Requests** / **Limits** | **Requests** / **Limits** |
+| **CPU** |        100m / 100m        |        100m / 100m        |
+| **RAM** |         1Gi / 1Gi         |       512Mi / 512Mi       |
 
 ## Description
 
@@ -309,7 +309,7 @@ Use `atp1.integration.enable=false`, when need to disable integration with ATP1 
 ## MailSender selection (optional step)
 ### The current version implements two mail senders
 - mail-sender: used rest request to atp-mail-sender
-- kafka: used kafka 
+- kafka: used kafka
 ### You can select the kafka sender type via property
 ```properties
 kafka.enable=true
