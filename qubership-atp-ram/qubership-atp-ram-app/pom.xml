@@ -1077,7 +1077,7 @@
         <dependency>
             <artifactId>qubership-atp-common-monitoring-undertow</artifactId>
             <groupId>org.qubership.atp.common</groupId>
-            <version>0.0.42-SNAPSHOT</version>
+            <version>${atp.common.version}</version>
         </dependency>
 
         <dependency>
