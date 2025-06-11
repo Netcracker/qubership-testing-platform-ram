@@ -1,10 +1,10 @@
 # How to start local RAM via real data
 
-# Example for dev2 database:
+## Example for dev2 database:
 
-1. Make oc port-forward for mongo and gridfs
+1. Make oc port-forward for Mongo and GridFs
 
-2. Enable atp-auth and keycloak but disable corses
+2. Enable atp-auth and keycloak but disable CORS
 
 keycloak.cors=false
 
@@ -88,7 +88,7 @@ eureka.client.enabled=${EUREKA_CLIENT_ENABLED:false}
 eureka.instance.preferIpAddress=true
 atp1.integration.enable=false
 ```
-# FRONTEND
+## FRONTEND
 
 5. Make sure proxy.conf.json contains
 
