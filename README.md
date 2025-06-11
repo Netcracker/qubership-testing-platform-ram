@@ -325,8 +325,8 @@ kafka.mails.topic=${KAFKA_MAILS_TOPIC:mails}
 spring.kafka.bootstrap-servers=${KAFKA_SERVERS:kafka:9092}
 ```
 ## Turn off connection to Catalog (optional step)
-To turn off connection to Catalog comments next lines in class **CatalogRestClient**
-```java
+To turn off connection to Catalog, please comment the following lines in class **CatalogRestClient**
+```text
         try {
             m2mRestTemplate.exchange(catalogueUrl + CATALOGUE_ENDPOINT, HttpMethod.POST, entity, List.class);
         } catch (Exception e) {

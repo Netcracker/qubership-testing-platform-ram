@@ -32,16 +32,13 @@
         <slf4j.version>1.7.36</slf4j.version>
         <javers.version>6.6.4</javers.version>
         <netty-handler.version>4.1.118.Final</netty-handler.version>
-
         <lombok.version>1.18.30</lombok.version>
-        <spotbugs.maven.plugin.version>4.7.3.0</spotbugs.maven.plugin.version>
-        <pmd.maven.plugin.version>3.8</pmd.maven.plugin.version>
 
         <atp.auth.version>1.2.60</atp.auth.version>
     </properties>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>RAM Service</description>
+    <description>Qubership Testing Platform RAM Service</description>
     <url>https://github.com/Netcracker/qubership-testing-platform-ram</url>
     <licenses>
         <license>
