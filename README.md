@@ -3,20 +3,20 @@
 ## System Requirements
 The system consists of two services: ATP RAM and ATP RAM Report Receiver.
 
-| 	            |         ATP RAM	          | ATP RAM Report Receiver  	 |
-|--------------|:-------------------------:|:--------------------------:|
-| 	            | **Requests** / **Limits** | **Requests** / **Limits**  |
-| **CPU**      |        100m / 200m        |        500m / 500m         |
-| **RAM**      |         1Gi / 1Gi         |         1Gi / 1Gi          |
-| **replicas** |             1             |             2              |
+| 	            |         ATP RAM          |  ATP RAM Report Receiver   |
+|--------------|:------------------------:|:--------------------------:|
+| 	            | **Requests** / **Limits** | **Requests** / **Limits** |
+| **CPU**      |        100m / 200m        |        500m / 500m        |
+| **RAM**      |         1Gi / 1Gi         |         1Gi / 1Gi         |
+| **replicas** |             1             |             2             |
 
 ## Database System Requirements
 
-| 	            |         MongoDB	          |         GridFS  	         |
-|--------------|:-------------------------:|:-------------------------:|
-| 	            | **Requests** / **Limits** | **Requests** / **Limits** |
-| **CPU**      |        100m / 100m        |       100m / 100m        |
-| **RAM**      |         1Gi / 1Gi         |         512Mi / 512Mi         |
+| 	       |          MongoDB           |          GridFS           |
+|---------|:--------------------------:|:-------------------------:|
+|         | **Requests** / **Limits**  | **Requests** / **Limits** |
+| **CPU** |        100m / 100m         |        100m / 100m        |
+| **RAM** |         1Gi / 1Gi          |       512Mi / 512Mi       |
 
 ## Description
 
@@ -34,7 +34,7 @@ To solve this problem, RAM Service was implemented, which covers the following t
 - analysis of the results;
 - viewing information about steps (status, message with logged information, screenshots, etc.);
 - viewing statistics;
-- results reporting via e-mail (both automatic upon completion of tests and manual);
+- results reporting via email (both automatic upon completion of tests and manual);
 - comparing two or more runs, etc.
 
 ## Entities
@@ -128,13 +128,13 @@ as a result, the **qubership-atp-ram\web** folder will be filled
 1. Go to Run menu and click Edit Configuration
 2. Add new Application configuration
 3. Set parameters:
-*   Name = `Local RAM dev01`, for example
-*   Run on: `Local machine`
-*   JDK/JRE: java 8 SDK of `qubership-atp-ram-app' module`
-*   Module for class path: `qubership-atp-ram-app`
-*   Main class: `org.qubership.atp.ram.Main`
-*   Program arguments: left empty
-*   Working directory: path to your atp-ram project on local machine, `C:\atp-ram` for example
+   - Name = `Local RAM dev01`, for example
+   - Run on: `Local machine`
+   - JDK/JRE: java 8 SDK of `qubership-atp-ram-app' module`
+   - Module for class path: `qubership-atp-ram-app`
+   - Main class: `org.qubership.atp.ram.Main`
+   - Program arguments: left empty
+   - Working directory: path to your atp-ram project on local machine, `C:\atp-ram` for example
 4. Add the following parameters in VM options - click Modify Options and select "Add VM Options":
 
 dev04 (kuber):
@@ -295,14 +295,16 @@ Use `atp1.integration.enable=false`, when need to disable integration with ATP1 
 4. Run command: `use gridfs`
 5. Run command: `db.createUser({user: "ramuser",pwd: "rampass",roles: ["readWrite"]})`
 
-## Connect and Port Forward to mongo and gridfs 
+## Connect and Port Forward to Mongo and GridFs
 1. Connect to mongo:
-*   for openshift use [instructions]
-*   for kubernetis use [instructions]
-*   Note! Use the same ports for port forward as specified in VM options configuration, for example:
-*   `-Dmongodb.port=27017`
-*   `-Dgridfs.port=27017`
-*   `oc port-forward <pod> 27017:27017`
+   - for OpenShift use separate instructions
+   - for Kubernetes use separate instructions
+   - Note! Use the same ports for port forward as specified in VM options configuration, for example:
+```text
+   -Dmongodb.port=27017
+   -Dgridfs.port=27017
+   oc port-forward <pod> 27017:27017
+```
 
 ## MailSender selection (optional step)
 ### The current version implements two mail senders

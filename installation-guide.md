@@ -36,6 +36,6 @@ The system consists of two services: *ATP RAM* and *ATP RAM Report Receiver*.
 
 
 ### Repositories
-* ATP RAM	https://url-to-git/atp-ram
-* ATP RAM Report receiver	https://url-to-git/atp-ram-report-receiver
+* ATP RAM	https://github.com/Netcracker/qubership-testing-platform-ram
+* ATP RAM Report receiver	[Service repository isn't public yet]
 
