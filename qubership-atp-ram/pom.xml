@@ -43,10 +43,10 @@
         <netty-handler.version>4.1.118.Final</netty-handler.version>
         <io.undertow.undertow-core.version>2.2.36.Final</io.undertow.undertow-core.version>
 
-        <atp.common.version>0.0.42-SNAPSHOT</atp.common.version>
-        <atp-integration.version>0.2.38-SNAPSHOT</atp-integration.version>
-        <atp.ei.lib.node>0.2.38-SNAPSHOT</atp.ei.lib.node>
-        <atp.common.auditing.mongo>0.0.7-SNAPSHOT</atp.common.auditing.mongo>
+        <atp.common.version>0.0.43</atp.common.version>
+        <atp-integration.version>0.2.38</atp-integration.version>
+        <atp.ei.lib.node>0.2.40</atp.ei.lib.node>
+        <atp.common.auditing.mongo>0.0.7</atp.common.auditing.mongo>
 
         <atp.orchestrator.contract.test.pact.version>0.3.67</atp.orchestrator.contract.test.pact.version>
         <atp.ram.result.importer.contract.test.pact.version>1.1.33</atp.ram.result.importer.contract.test.pact.version>
