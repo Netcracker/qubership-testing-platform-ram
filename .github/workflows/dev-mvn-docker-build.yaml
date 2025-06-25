@@ -63,7 +63,7 @@ jobs:
           tags: ${{steps.metadata.outputs.result}}
           download-artifact: true
           custom-image-name: qubership-testing-platform-ram
-          download-artifact-path: build-context/qubership-testing-platform-ram
+          download-artifact-path: build-context/qubership-testing-platform-ram/qubership-testing-platform-ram
           component: '[{"name": "qubership-testing-platform-ram", "file": "./Dockerfile", "context": "."}]'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
