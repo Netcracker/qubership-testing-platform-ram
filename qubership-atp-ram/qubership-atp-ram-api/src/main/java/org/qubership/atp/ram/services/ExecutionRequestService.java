@@ -1170,6 +1170,10 @@ public class ExecutionRequestService extends CrudService<ExecutionRequest> {
                                              ExecutionRequestConfigUpdateRequest request) {
         log.debug("Update execution request '{}' config: {}", executionRequest.getUuid(), request);
         ExecutionRequestConfig existedConfig = configRepository.findByExecutionRequestId(executionRequest.getUuid());
+        if (null != executionRequest.getWidgetConfigTemplateId()) {
+            executionRequest.setWidgetConfigTemplateId(request.getWidgetConfigTemplateId());
+            save(executionRequest);
+        }
         existedConfig.setWidgetConfigTemplateId(request.getWidgetConfigTemplateId());
         checkDefaultLabelTemplateConfigOverride(existedConfig);
         configRepository.save(existedConfig);

@@ -96,19 +96,25 @@ public class TestCasesWidgetModelBuilder extends AbstractWidgetModelBuilder {
     protected Map<String, Object> buildModel(ReportParams reportParams) {
         UUID executionRequestId = reportParams.getExecutionRequestUuid();
         boolean isExecutionRequestsSummary = reportParams.isExecutionRequestsSummary();
+
+        // Log start of model building
+        log.info("Start building model for executionRequestId: {}, isExecutionRequestsSummary: {}",
+                executionRequestId, isExecutionRequestsSummary);
         LabelNodeReportResponse testCases = reportService.getTestCasesForExecutionRequest(executionRequestId, null,
                 null, isExecutionRequestsSummary, new TestCaseWidgetReportRequest());
 
         UUID widgetId = ExecutionRequestWidgets.TEST_CASES.getWidgetId();
+        // Log widget ID for clarity
+        log.info("Widget ID for the widget type {} : {}", WidgetType.TEST_CASES.name(), widgetId);
         Map<String, Boolean> columnVisibilityMap =
                 widgetConfigTemplateService.getWidgetColumnVisibilityMap(executionRequestId, widgetId);
 
         final Table table = new Table();
-
         final Header header = table.getHeader();
         // set default columns
         setHeaderColumnHeaders(header, DEFAULT_COLUMN_NAMES, columnVisibilityMap);
 
+        // Process validation labels for header
         final List<String> validationLabels = testCases.getValidationLabelsOrder();
         if (!isEmpty(validationLabels)) {
             List<String> upperCasedValidationLabelNames = validationLabels
@@ -119,20 +125,19 @@ public class TestCasesWidgetModelBuilder extends AbstractWidgetModelBuilder {
         }
 
         Body body = table.getBody();
-
         final ExecutionRequest executionRequest = executionRequestService.get(executionRequestId);
-
         LabelNodeReportAdapter model = updateModel(executionRequest, testCases);
-
         List<Row> labelNodeRows = mapLabelNodes(model.getChildren(), validationLabels, columnVisibilityMap);
         body.setRows(labelNodeRows);
-
         List<Row> testRunRows = mapTestRuns(model.getTestRuns(), validationLabels, columnVisibilityMap);
+
+        // Combine rows and mark even/odd rows
         List<Row> rows = body.getRows();
         rows.addAll(testRunRows);
-
         markEvenAndOddRows(rows);
+        log.info("Final rows for table body: {}", rows);
 
+        // Populate variables for FTL rendering
         final HashMap<String, Object> variables = new HashMap<>();
         variables.put("tableModel", table);
         variables.put("title", "Test Cases");
@@ -146,7 +151,7 @@ public class TestCasesWidgetModelBuilder extends AbstractWidgetModelBuilder {
         WidgetConfigTemplate.Filters filters =
                 reportService.resolveWidgetConfigFilters(new TestCaseWidgetReportRequest(), executionRequest);
         variables.put("filtered", nonNull(filters));
-
+        log.info("Final model built for widget {}: {}", WidgetType.TEST_CASES.name(), variables);
         return variables;
     }
 

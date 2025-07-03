@@ -273,7 +273,7 @@ public class MailService {
             log.debug("Getting active report template for project with id: {}", projectId);
             template = reportTemplatesService.getActiveTemplateByProjectId(projectId);
         }
-        log.debug("Report template: {}", template);
+        log.info("Report template : {}", template.getName());
 
         final List<WidgetType> widgets = template.getWidgets();
         log.debug("Report template widgets: {}", template);
@@ -282,12 +282,12 @@ public class MailService {
         log.debug("Report template model: {}", model);
 
         final String htmlBody = templateRenderService.render(template, model);
-        log.debug("Rendered report html body: {}", model);
+        log.info("Rendered report html body: {}", model);
 
         final MailRequest mailRequest = buildRequest(htmlBody, reportParams, executionRequest);
         log.debug("Mail request: {}", mailRequest);
 
-        MailResponse mailResponse = mailSender.send(buildRequest(htmlBody, reportParams, executionRequest));
+        MailResponse mailResponse = mailSender.send(mailRequest);
         if (needToSaveMessageResponse(mailResponse)) {
             erDetailsService.saveMessageResponseDetails(mailResponse, executionRequest.getUuid());
         }

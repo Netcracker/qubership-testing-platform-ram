@@ -73,30 +73,25 @@ public class FreemarkerTemplateRenderService implements TemplateRenderService {
     @Override
     public String render(ReportTemplate reportTemplate, Map<WidgetType, Map<String, Object>> model) {
 
-        log.debug(String.format("Start generating html email report for reportTemplate=%s and model=%s",
-                reportTemplate,
-                model));
+        log.info(String.format("Start generating html report for the report template = %s and model = %s",
+                reportTemplate.getName(), model));
 
         Preconditions.checkNotNull(reportTemplate, "Report Template can not be null.");
         Preconditions.checkNotNull(model, "Template Model can not be null.");
 
         StringJoiner joiner = new StringJoiner(HTML_WIDGET_DELIMETER, HTML_ROOT_PREFIX, HTML_ROOT_SUFFIX);
-
         reportTemplate.getWidgets().forEach(widget -> {
                     try {
                         joiner.add(render(widget, model.get(widget)));
                     } catch (Exception e) {
                         log.error(String.format("Error occurred while rendering report templateId = %s, widget = %s",
-                                reportTemplate.getUuid(),
-                                widget.toString()),
-                                e);
+                                reportTemplate.getUuid(), widget.toString()), e);
                     }
                 }
         );
 
-        log.debug(String.format("Html report generated for reportTemplate=%s ,html=%s",
-                reportTemplate,
-                joiner.toString()));
+        log.info(String.format("Html report generated for the report template = %s ,html = %s",
+                reportTemplate.getName(), joiner.toString()));
 
         return joiner.toString();
     }

@@ -45,6 +45,7 @@ import org.qubership.atp.common.lock.LockManager;
 import org.qubership.atp.ram.ExecutionRequestsMock;
 import org.qubership.atp.ram.LogRecordMock;
 import org.qubership.atp.ram.TestRunsMock;
+import org.qubership.atp.ram.dto.request.ExecutionRequestConfigUpdateRequest;
 import org.qubership.atp.ram.dto.request.ExecutionRequestSearchRequest;
 import org.qubership.atp.ram.dto.request.SortingParams;
 import org.qubership.atp.ram.dto.response.ExecutionRequestMainInfoResponse;
@@ -53,6 +54,7 @@ import org.qubership.atp.ram.entities.ComparisonStep;
 import org.qubership.atp.ram.entities.ComparisonTestRun;
 import org.qubership.atp.ram.enums.ExecutionStatuses;
 import org.qubership.atp.ram.models.ExecutionRequest;
+import org.qubership.atp.ram.models.ExecutionRequestConfig;
 import org.qubership.atp.ram.models.Label;
 import org.qubership.atp.ram.models.Project;
 import org.qubership.atp.ram.models.TestRun;
@@ -349,5 +351,19 @@ public class ExecutionRequestServiceTest {
         // then
         Assertions.assertNotNull(actualExecutionRequestMainInfoResponse);
         Assertions.assertTrue(actualExecutionRequestMainInfoResponse.isVirtual());
+    }
+
+    @Test
+    public void updateExecutionRequestConfigTest(){
+        ExecutionRequestConfigUpdateRequest request = new ExecutionRequestConfigUpdateRequest();
+        request.setWidgetConfigTemplateId(UUID.fromString("18e3a6d-317a-44f5-ae67-faa32c6b101"));
+
+        ExecutionRequest executionRequest = ExecutionRequestsMock.generateRequest();
+        executionRequest.setWidgetConfigTemplateId(UUID.fromString("282a6d-317a-44f5-ae67-faa32c6b70102"));
+        when(repository.findById(any())).thenReturn(Optional.of(executionRequest));
+        when(configRepository.findByExecutionRequestId(any())).thenReturn(new ExecutionRequestConfig());
+
+        service.updateExecutionRequestConfig(executionRequest,request);
+        Assertions.assertEquals(UUID.fromString("18e3a6d-317a-44f5-ae67-faa32c6b101"),executionRequest.getWidgetConfigTemplateId());
     }
 }
