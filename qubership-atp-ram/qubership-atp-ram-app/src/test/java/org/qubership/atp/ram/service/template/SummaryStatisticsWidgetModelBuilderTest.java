@@ -17,7 +17,7 @@
 package org.qubership.atp.ram.service.template;
 
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -34,7 +34,6 @@ import org.qubership.atp.ram.entities.treenodes.ExecutionRequestTreeNode;
 import org.qubership.atp.ram.entities.treenodes.LabelTemplateTreeNode;
 import org.qubership.atp.ram.entities.treenodes.TreeNode;
 import org.qubership.atp.ram.entities.treenodes.TreeNodeType;
-import org.qubership.atp.ram.models.ExecutionRequest;
 import org.qubership.atp.ram.models.WidgetType;
 import org.qubership.atp.ram.service.mail.ReportParams;
 import org.qubership.atp.ram.service.template.impl.AbstractWidgetModelBuilder;
@@ -44,10 +43,9 @@ import org.qubership.atp.ram.services.TreeNodeService;
 public class SummaryStatisticsWidgetModelBuilderTest {
 
     private ReportParams reportParams;
-    private TreeNodeService treeNodeService = mock(TreeNodeService.class);
+    private final TreeNodeService treeNodeService = mock(TreeNodeService.class);
 
-    private AbstractWidgetModelBuilder builder = new SummaryStatisticsWidgetModelBuilder(treeNodeService);
-
+    private final AbstractWidgetModelBuilder builder = new SummaryStatisticsWidgetModelBuilder(treeNodeService);
 
     @BeforeEach
     public void setUp(){
@@ -59,13 +57,13 @@ public class SummaryStatisticsWidgetModelBuilderTest {
         ExecutionRequestTreeNode exTreeNode = new ExecutionRequestTreeNode();
         exTreeNode.setPassedRate(45);
         exTreeNode.setName("Root ER Tree Node");
-        exTreeNode.setChildren(getLableTemplateNodes());
+        exTreeNode.setChildren(getLabelTemplateNodes());
         exTreeNode.setNodeType(TreeNodeType.EXECUTION_REQUEST_NODE);
         exTreeNode.setValidationLabelsOrder(Collections.emptyList());
         return exTreeNode;
     }
 
-    private List<TreeNode> getLableTemplateNodes() {
+    private List<TreeNode> getLabelTemplateNodes() {
         LabelTemplateTreeNode labelTemplateTreeNode = new LabelTemplateTreeNode();
         labelTemplateTreeNode.setName("Label Tree Node 1");
         labelTemplateTreeNode.setTestRunCount(100);
@@ -73,16 +71,10 @@ public class SummaryStatisticsWidgetModelBuilderTest {
         return Collections.singletonList(labelTemplateTreeNode);
     }
 
-    private ExecutionRequest createExecutionRequest() {
-        ExecutionRequest executionRequest = new ExecutionRequest();
-        executionRequest.setProjectId(UUID.randomUUID());
-        return executionRequest;
-    }
-
     private ReportParams createReportParams() {
         ReportParams reportParams = new ReportParams();
         reportParams.setExecutionRequestUuid(UUID.randomUUID());
-        reportParams.setRecipients("jhon@gmail.com");
+        reportParams.setRecipients("example@example.com");
         reportParams.setSubject("Test Subject");
         reportParams.setDescriptions(new HashMap<String, String>(){{
             put(WidgetType.SERVER_SUMMARY.toString(), "Test description");

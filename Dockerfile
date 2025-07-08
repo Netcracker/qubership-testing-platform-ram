@@ -1,6 +1,6 @@
 FROM bellsoft/liberica-openjdk-alpine-musl:21.0.6
 
-LABEL maintainer="our-team@qubership.org" \
+LABEL maintainer="opensourcegroup@netcracker.com" \
       qubership.atp.service="atp-ram"
 
 ENV HOME_EX=/atp-ram

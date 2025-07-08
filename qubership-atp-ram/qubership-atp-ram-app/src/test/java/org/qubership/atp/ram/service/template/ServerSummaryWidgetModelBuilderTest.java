@@ -16,7 +16,7 @@
 
 package org.qubership.atp.ram.service.template;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
@@ -50,7 +50,7 @@ public class ServerSummaryWidgetModelBuilderTest {
     private List<ServerSummaryResponse> serverSummary;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         reportParams = createReportParams();
         serverSummary = createServerSummary();
         when(reportService.getServerSummaryForExecutionRequest(any())).thenReturn(serverSummary);
@@ -66,7 +66,7 @@ public class ServerSummaryWidgetModelBuilderTest {
     private ReportParams createReportParams() {
         ReportParams reportParams = new ReportParams();
         reportParams.setExecutionRequestUuid(UUID.randomUUID());
-        reportParams.setRecipients("jhon@gmail.com");
+        reportParams.setRecipients("example@example.com");
         reportParams.setSubject("Test Subject");
         reportParams.setDescriptions(new HashMap<String, String>(){{
             put(WidgetType.SERVER_SUMMARY.toString(), "Test description");

@@ -16,9 +16,9 @@
 
 package org.qubership.atp.ram.service.template;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -124,7 +124,7 @@ public class TopIssuesWidgetModelBuilderTest {
     private ReportParams createReportParams() {
         ReportParams reportParams = new ReportParams();
         reportParams.setExecutionRequestUuid(UUID.randomUUID());
-        reportParams.setRecipients("test@test.com");
+        reportParams.setRecipients("example@example.com");
         reportParams.setSubject("[E2E017] Top Issues widget");
         reportParams.setDescriptions(new HashMap<String, String>(){{
             put(WidgetType.TOP_ISSUES.toString(), "Test description for top issues");

@@ -32,10 +32,10 @@ public class MailRecipients {
      * Convert {@link java.util.List} of recipients to string and recipients delimited with comma separator.
      * For example:
      * List[
-     * "sz@nc.com",
-     * "saza@nc.com"
+     * "example@example.com",
+     * "example@example.com"
      * ]
-     * will be converted to: "sz@nc.com,saza@nc.com"
+     * will be converted to: "example@example.com,example@example.com"
      *
      * @return string delimited by comma separator.
      */

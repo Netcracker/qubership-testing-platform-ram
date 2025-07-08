@@ -45,16 +45,16 @@ public class ModelMocks {
 
     public CreatedTestRunWithParentsRequest generateCreatedTestRunWithParentsRequest() {
         CreatedTestRunWithParentsRequest request = new CreatedTestRunWithParentsRequest();
-        request.setProjectName("[VFHU]");
+        request.setProjectName("[EXAMPLE_PROJECT_ABBREV]");
         request.setTestPlanName("Trunk AT (new)");
         request.setTestCaseId(UUID.fromString("dfe5aeb9-476d-4751-b558-fa816cb8a922"));
         request.setTestCaseName("testcase");
-        request.setExecutionRequestName("[Create SO with Vodafone Internet 300");
-        request.setTestRunName("[Create SO with Vodafone Internet 300");
+        request.setExecutionRequestName("[Create SO with EXAMPLE_PROJECT Internet 300");
+        request.setTestRunName("[Create SO with EXAMPLE_PROJECT Internet 300");
         request.setTaHost(Collections.singletonList("debug-fd30c895-a87f-4b4b-8bf7-85d1e6da089c"));
         request.setQaHost(Collections.singletonList("http://127.0.0.1:9876"));
         request.setExecutor("?");
-        request.setSolutionBuild(Collections.singletonList("325_VFHU.Pseudo_Localization_rev14270"));
+        request.setSolutionBuild(Collections.singletonList("325_EXAMPLE_PROJECT_ABBREV.Pseudo_Localization_rev14270"));
         request.setAtpExecutionRequestId(ATP_EXECUTION_REQUEST_ID);
         request.setProjectId(PROJECT_ID);
         request.setTestPlanId(TEST_PLAN_ID);
@@ -73,7 +73,7 @@ public class ModelMocks {
     public ExecutionRequest generateExecutionRequest(UUID id) {
         ExecutionRequest executionRequest = new ExecutionRequest();
         executionRequest.setUuid(id);
-        executionRequest.setName("[Create SO with Vodafone Internet 300");
+        executionRequest.setName("[Create SO with EXAMPLE_PROJECT Internet 300");
         executionRequest.setExecutionStatus(ExecutionStatuses.IN_PROGRESS);
         executionRequest.setStartDate(new Timestamp(System.currentTimeMillis()));
         return executionRequest;
@@ -82,7 +82,7 @@ public class ModelMocks {
     public ExecutionRequest generateExecutionRequest() {
         ExecutionRequest executionRequest = new ExecutionRequest();
         executionRequest.setUuid(ATP_EXECUTION_REQUEST_ID);
-        executionRequest.setName("[Create SO with Vodafone Internet 300");
+        executionRequest.setName("[Create SO with EXAMPLE_PROJECT Internet 300");
         executionRequest.setExecutionStatus(ExecutionStatuses.IN_PROGRESS);
         executionRequest.setStartDate(new Timestamp(System.currentTimeMillis()));
         return executionRequest;
@@ -102,7 +102,7 @@ public class ModelMocks {
         testRun.setExecutionRequestId(ATP_EXECUTION_REQUEST_ID);
         testRun.setTestCaseId(UUID.fromString("dfe5aeb9-476d-4751-b558-fa816cb8a922"));
         testRun.setTestCaseName("testcase");
-        testRun.setName("[Create SO with Vodafone Internet 300");
+        testRun.setName("[Create SO with EXAMPLE_PROJECT Internet 300");
         testRun.setExecutor("?");
         testRun.setUuid(testRunUuid);
         return testRun;

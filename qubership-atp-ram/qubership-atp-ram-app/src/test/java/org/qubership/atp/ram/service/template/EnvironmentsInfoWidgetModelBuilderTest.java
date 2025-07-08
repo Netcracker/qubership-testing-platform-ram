@@ -18,7 +18,7 @@ package org.qubership.atp.ram.service.template;
 
 
 import static java.util.Arrays.asList;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -58,7 +58,7 @@ public class EnvironmentsInfoWidgetModelBuilderTest {
     private static final String DESCRIPTION = "description";
     private final String expectedDescription = "Test Expected Description";
     private EnvironmentsInfoWidgetModelBuilder widgetModelBuilder;
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
     private EnvironmentsInfoService environmentsInfoService;
     private ExecutionRequestService executionRequestService;
     private EnvironmentsService environmentsService;
@@ -88,7 +88,7 @@ public class EnvironmentsInfoWidgetModelBuilderTest {
         when(environmentsService.searchEnvironments(any())).thenReturn(asList(environment, taToolGroup));
         reportParams = new ReportParams();
         reportParams.setExecutionRequestUuid(UUID.randomUUID());
-        reportParams.setRecipients("jhon@gmail.com");
+        reportParams.setRecipients("example@example.com");
         reportParams.setSubject("Test Subject");
         reportParams.setDescriptions(new HashMap<String, String>(){{
             put(WidgetType.ENVIRONMENTS_INFO.toString(), expectedDescription);

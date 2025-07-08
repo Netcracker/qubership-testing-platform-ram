@@ -17,12 +17,11 @@
 package org.qubership.atp.ram.service.template;
 
 import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -55,13 +54,13 @@ import org.qubership.atp.ram.services.WidgetConfigTemplateService;
 public class TestCasesWidgetModelBuilderTest {
 
     private ReportParams reportParams;
-    private ReportService reportService = mock(ReportService.class);
-    private ExecutionRequestService executionRequestService = mock(ExecutionRequestService.class);
-    private DataSetService dataSetService = mock(DataSetService.class);
-    private WidgetConfigTemplateService widgetConfigTemplateService = mock(WidgetConfigTemplateService.class);
-    private CatalogueService catalogueService = mock(CatalogueService.class);
+    private final ReportService reportService = mock(ReportService.class);
+    private final ExecutionRequestService executionRequestService = mock(ExecutionRequestService.class);
+    private final DataSetService dataSetService = mock(DataSetService.class);
+    private final WidgetConfigTemplateService widgetConfigTemplateService = mock(WidgetConfigTemplateService.class);
+    private final CatalogueService catalogueService = mock(CatalogueService.class);
 
-    private AbstractWidgetModelBuilder builder = new TestCasesWidgetModelBuilder(
+    private final AbstractWidgetModelBuilder builder = new TestCasesWidgetModelBuilder(
             catalogueService, executionRequestService, dataSetService, reportService, widgetConfigTemplateService);
 
     @BeforeEach
@@ -75,7 +74,7 @@ public class TestCasesWidgetModelBuilderTest {
     }
 
     private List<DataSet> createDataSetResponse() {
-        return Arrays.asList(new DataSet(UUID.randomUUID(), "Data Set #1"));
+        return Collections.singletonList(new DataSet(UUID.randomUUID(), "Data Set #1"));
     }
 
     private LabelNodeReportResponse createTestCases(boolean setChildren) {
@@ -126,7 +125,7 @@ public class TestCasesWidgetModelBuilderTest {
     private ReportParams createReportParams() {
         ReportParams reportParams = new ReportParams();
         reportParams.setExecutionRequestUuid(UUID.randomUUID());
-        reportParams.setRecipients("jhon@gmail.com");
+        reportParams.setRecipients("example@example.com");
         reportParams.setSubject("Test Subject");
         reportParams.setDescriptions(new HashMap<String, String>() {{
             put(WidgetType.SERVER_SUMMARY.toString(), "Test description");
@@ -158,7 +157,7 @@ public class TestCasesWidgetModelBuilderTest {
         when(dataSetService.getDataSetsByIds(any())).thenThrow(FeignClientException.class);
 
         Map<String, Object> model = builder.getModel(reportParams);
-        Assertions.assertEquals(model.get("title"), "Test Cases");
+        Assertions.assertEquals("Test Cases", model.get("title"));
     }
 
 }
