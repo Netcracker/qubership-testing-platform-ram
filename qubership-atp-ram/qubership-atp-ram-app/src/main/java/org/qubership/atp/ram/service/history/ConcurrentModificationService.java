@@ -46,7 +46,7 @@ public class ConcurrentModificationService {
     }
 
     /**
-     * Provide http status for dirty reading.
+     * Provide http status for low-level reading.
      *
      * @param requestEntityId       entity uuid from request
      * @param modifyDateFromRequest modify date from request
