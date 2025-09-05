@@ -816,6 +816,7 @@ components:
           type: string
           enum:
             - JIRA
+            - INTERNAL_JIRA
         systemUrl:
           type: string
     BugTrackingSystemSynchronizationDto:
@@ -846,6 +847,7 @@ components:
           type: string
           enum:
             - JIRA
+            - INTERNAL_JIRA
         systemUrl:
           type: string
     CloneTestPlanRequest:

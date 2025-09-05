@@ -1153,6 +1153,7 @@ components:
           type: string
           enum:
             - JIRA
+            - INTERNAL_JIRA
         systemUrl:
           type: string
     ComplexActionParameter:
