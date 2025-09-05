@@ -97,10 +97,9 @@ This entity is used to manually specify the Failure Reason for Test Run on the T
 
 After Execution Request is completed, the user(s) can receive a notification reporting about ER execution results.
 
-
 ## Local build
 
-In IntelliJ IDEA, one can select 'github' Profile in Maven Settings menu on the right, then expand Lifecycle dropdown of qubership-atp-ram-aggregator module, then select 'clean' and 'install' options and click 'Run Maven Build' green arrow button on the top.
+In IntelliJ IDEA, one can select 'GitHub' Profile in Maven Settings menu on the right, then expand Lifecycle dropdown of qubership-atp-ram-aggregator module, then select 'clean' and 'install' options and click 'Run Maven Build' green arrow button on the top.
 
 Or, one can execute the command:
 ```bash
@@ -130,7 +129,7 @@ as a result, the **qubership-atp-ram\web** folder will be filled
 3. Set parameters:
    - Name = `Local RAM dev01`, for example
    - Run on: `Local machine`
-   - JDK/JRE: java 8 SDK of `qubership-atp-ram-app' module`
+   - JDK/JRE: Java 8 SDK of `qubership-atp-ram-app' module`
    - Module for class path: `qubership-atp-ram-app`
    - Main class: `org.qubership.atp.ram.Main`
    - Program arguments: left empty

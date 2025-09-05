@@ -36,6 +36,5 @@ The system consists of two services: *RAM* and *RAM Report Receiver*.
 
 
 ### Repositories
-*  RAM	[GitHub Repository](https://github.com/Netcracker/qubership-testing-platform-ram)
-*  RAM Report receiver	[Service repository isn't public yet]
-
+* RAM [GitHub Repository](https://github.com/Netcracker/qubership-testing-platform-ram)
+* RAM Report receiver [Service repository isn't public yet]

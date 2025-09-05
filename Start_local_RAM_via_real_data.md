@@ -1,19 +1,17 @@
 # How to start local RAM via real data
 
-## Example for dev2 database:
+## Example for dev2 database
 
 1. Make oc port-forward for Mongo and GridFs
 
 2. Enable atp-auth and keycloak but disable CORS
+   - keycloak.cors=false
 
-keycloak.cors=false
-
-3. Go to keycloak http://atp-keycloak-dev2.dev-atp-cloud.some-domain.com/auth and add http://localhost:4200/* to Valid Redirect URIs
-
-Administration Console > Clients > ram (your client in realm)
+3. Go to [keycloak Service](http://atp-keycloak-dev2.dev-atp-cloud.some-domain.com/auth) and add [URL](http://localhost:4200/*) to Valid Redirect URIs List
+   - Administration Console > Clients > ram (your client in realm)
 
 4. You must get application.properties smth like:
-```
+```properties
 base.url=localhost
 server.port=8001
 spring.resources.static-locations=file:./web/
@@ -91,15 +89,18 @@ atp1.integration.enable=false
 ## FRONTEND
 
 5. Make sure proxy.conf.json contains
-
- "/api/**": {
-        "target": "http://localhost:8001",
-        "secure": false,
-        "changeOrigin": true
+```json
+  {
+    "/api/**": {
+      "target": "http://localhost:8001",
+      "secure": false,
+      "changeOrigin": true
     }
-	
-6. routes.json
+  }
+```
 
+6. routes.json
+```json
 {
     "loginRequired": "false",
     "idp": {
@@ -115,3 +116,4 @@ atp1.integration.enable=false
         }
     ]
 }
+```
