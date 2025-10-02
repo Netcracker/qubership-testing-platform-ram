@@ -13,5 +13,5 @@ keepHookLogs: true
 HELPER_IMAGE: "ghcr.io/netcracker/qubership-testing-platform-helm-hook-helper:main-20250714085543"
 CONTENT_SECURITY_POLICY: "*"
 JAVERS_ENABLED: "false"
-RAM_GRIDFS_DB_ENABLE: "false"
+RAM_GRIDFS_DB_ENABLE: "true"
 RAM_EI_DB_ENABLE: "false"
