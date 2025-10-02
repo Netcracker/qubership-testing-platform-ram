@@ -129,26 +129,24 @@ runs:
       # language=bash
       run: echo "ERROR_FLAG=false" >> $GITHUB_ENV
 
-    - name: Install Postgres
+    - name: Install MongoDB via bitnami
       shell: bash
       run: |
         helm repo add bitnami https://charts.bitnami.com/bitnami
-        
-        helm install my-postgres bitnami/postgresql -n ${{inputs.namespace}} \
-          --set image.registry=docker.io \
-          --set image.repository=bitnamilegacy/postgresql \
-          --set image.tag=14.2.0 \
-          --set auth.username=postgres \
-          --set auth.password=postgrestest \
-          --set auth.database=postgres
 
-        pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | head -n 1 | cut -d/ -f2)
+        helm install my-mongodb bitnami/mongodb -n ${{inputs.namespace}} \
+          --set image.registry=docker.io \
+          --set image.repository=bitnamilegacy/mongodb \
+          --set image.tag=8.0.13 \
+          --set auth.rootUser=root \
+          --set auth.rootPassword=root
+
+        pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | grep -vE 'postgres' | head -n 1 | cut -d/ -f2)
         kubectl wait pod "$pod" -n ${{inputs.namespace}} \
-          --for=condition=Ready \
-          --timeout=120s || {
-          echo "❌ Pod $pod did not become ready in time"
-          ERROR_FLAG=true
-          exit 1
+           --for=condition=Ready \
+           --timeout=120s || {
+           echo "❌ Pod $pod did not become ready in time"
+           exit 1
         }
 
     - name: Install/update service with helm
