@@ -942,7 +942,7 @@
         </dependency>
         <dependency>
             <groupId>org.qubership.atp.auth</groupId>
-            <artifactId>atp-auth-spring-boot-starter</artifactId>
+            <artifactId>atp-auth-models</artifactId>
             <version>${atp.auth.version}</version>
             <exclusions>
                 <exclusion>
@@ -950,6 +950,11 @@
                     <groupId>org.qubership.atp.common</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.qubership.atp.auth</groupId>
+            <artifactId>atp-auth-impl</artifactId>
+            <version>${atp.auth.version}</version>
         </dependency>
 
         <dependency>

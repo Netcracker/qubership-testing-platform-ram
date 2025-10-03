@@ -93,16 +93,12 @@
         </dependency>
         <dependency>
             <groupId>org.qubership.atp.auth</groupId>
-            <artifactId>atp-auth-spring-boot-starter</artifactId>
+            <artifactId>atp-auth-models</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.qubership.atp.common</groupId>
                     <artifactId>qubership-atp-common-logging</artifactId>
                 </exclusion>
-<!--                <exclusion>-->
-<!--                    <groupId>org.apache.logging.log4j</groupId>-->
-<!--                    <artifactId>log4j-to-slf4j</artifactId>-->
-<!--                </exclusion>-->
                 <exclusion>
                     <groupId>io.undertow</groupId>
                     <artifactId>undertow-core</artifactId>
@@ -118,21 +114,18 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.qubership.atp.auth</groupId>
+            <artifactId>atp-auth-impl</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.qubership.atp.common</groupId>
             <artifactId>qubership-atp-common-logging</artifactId>
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>ch.qos.logback</groupId>-->
-<!--                    <artifactId>logback-classic</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
         </dependency>
         <dependency>
             <groupId>org.qubership.atp.common</groupId>
             <artifactId>qubership-atp-common-utils</artifactId>
             <version>${atp.common.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.qubership.atp.ram</groupId>
             <artifactId>qubership-atp-ram-model</artifactId>
