@@ -44,7 +44,7 @@
 
         <atp.common.version>0.0.43</atp.common.version>
         <atp-integration.version>0.2.38</atp-integration.version>
-        <atp.ei.lib.node>0.2.40</atp.ei.lib.node>
+        <atp.ei.lib.node>0.2.43</atp.ei.lib.node>
         <atp.common.auditing.mongo>0.0.7</atp.common.auditing.mongo>
 
         <atp.orchestrator.contract.test.pact.version>0.3.67</atp.orchestrator.contract.test.pact.version>

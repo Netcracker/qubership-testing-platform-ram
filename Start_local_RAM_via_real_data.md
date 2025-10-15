@@ -46,7 +46,7 @@ mail.smtp.ssl.enable=false
 # spring
 spring.profiles.active=${SPRING_PROFILES_ACTIVE:disable-security}
 spring.main.allow-bean-definition-overriding=true
-spring.cache.cache-names=projects
+spring.cache.cache-names=auth_projects
 spring.cache.caffeine.spec=maximumSize=100, expireAfterAccess=120s
 # keycloak
 keycloak.enabled=true
