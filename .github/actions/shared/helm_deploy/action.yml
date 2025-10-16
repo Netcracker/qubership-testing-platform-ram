@@ -210,8 +210,10 @@ runs:
         pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | grep 'mongodb' | head -n 1 | cut -d/ -f2)
         kubectl get pod "$pod" -n ${{inputs.namespace}}
         
-        kubectl exec -n "${{ inputs.namespace }}" "$pod" -- mongosh --quiet --eval "db.adminCommand('listDatabases')"
-        
+        kubectl exec -n ${{inputs.namespace}} $pod -- \
+        mongosh -u root -p root --authenticationDatabase admin --quiet --eval "db.adminCommand('listDatabases')"
+  
+  
         echo "Logs from predeploy pod"
         pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | grep 'predeploy' | head -n 1 | cut -d/ -f2)
         kubectl get pod "$pod" -n ${{inputs.namespace}}
