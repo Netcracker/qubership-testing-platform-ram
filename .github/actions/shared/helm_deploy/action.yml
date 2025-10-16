@@ -207,11 +207,11 @@ runs:
         done
         
         echo "Logs from predeploy pod"
-        pod=$(kubectl get pods -n namespace -o name | grep 'predeploy' | head -n 1 | cut
+        pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | grep 'predeploy' | head -n 1 | cut
         kubectl get pod "$pod" -n ${{inputs.namespace}}
         
         echo "Logs from mongodb pod"
-        pod=$(kubectl get pods -n namespace -o name | grep 'mongodb' | head -n 1 | cut
+        pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | grep 'mongodb' | head -n 1 | cut
         kubectl get pod "$pod" -n ${{inputs.namespace}}
         
         kubectl exec -n "${{ inputs.namespace }}" "$pod" -- mongosh --quiet --eval "db.adminCommand('listDatabases')"
