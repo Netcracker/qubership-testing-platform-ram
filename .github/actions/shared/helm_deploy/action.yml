@@ -148,7 +148,9 @@ runs:
           --set extraEnv[0].name=MONGO_INITDB_ROOT_USERNAME \
           --set extraEnv[0].value=root \
           --set extraEnv[1].name=MONGO_INITDB_ROOT_PASSWORD \
-          --set extraEnv[1].value=root
+          --set extraEnv[1].value=root \
+          --set livenessProbe.enabled=false \
+          --set readinessProbe.enabled=false
 
         pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | head -n 1 | cut -d/ -f2)
         kubectl wait pod "$pod" -n ${{inputs.namespace}} \
