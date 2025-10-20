@@ -48,7 +48,7 @@ jobs:
       - name: Clean Install Ram
         uses: ./qubership-testing-platform-ram/.github/actions/shared/helm_deploy
         with:
-          path_to_template: './qubership-testing-platform-ram/.github/deploy_templates/values-dev.yaml'
+          path_to_template: './qubership-testing-platform-ram/.github/deploy_templates/'
           service_branch: ${{ inputs.pipeline_branch }}
           service_name: 'atp-ram'
           repository_name: 'qubership-testing-platform-ram'

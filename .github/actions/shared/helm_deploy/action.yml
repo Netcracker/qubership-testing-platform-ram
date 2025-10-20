@@ -133,24 +133,11 @@ runs:
       shell: bash
       run: |
         helm repo add bitnami https://charts.bitnami.com/bitnami
-
-        helm install my-mongodb bitnami/mongodb -n ${{inputs.namespace}} \
-          --set image.registry=docker.io \
-          --set image.repository=bitnamilegacy/mongodb \
-          --set image.tag=4.2.14 \
-          --set image.debug=false \
-          --set architecture=standalone \
-          --set useStatefulSet=false \
-          --set initdbScripts="" \
-          --set persistence.enabled=false \
-          --set metrics.enabled=false \
-          --set auth.enabled=false \
-          --set extraEnv[0].name=MONGO_INITDB_ROOT_USERNAME \
-          --set extraEnv[0].value=root \
-          --set extraEnv[1].name=MONGO_INITDB_ROOT_PASSWORD \
-          --set extraEnv[1].value=root \
-          --set livenessProbe.enabled=false \
-          --set readinessProbe.enabled=false
+        template_name=$(basename "${{inputs.path_to_template}}")
+        echo $template_name
+        cd ${{inputs.repository_name}}/${{inputs.path_to_chart}}
+        
+        kubectl apply -f mongo-template.yaml
 
         pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | head -n 1 | cut -d/ -f2)
         kubectl wait pod "$pod" -n ${{inputs.namespace}} \
@@ -170,10 +157,10 @@ runs:
         
         if [ -n "${{ inputs.docker_tag }}" ]; then
           echo "Using docker_tag: ${{ inputs.docker_tag }}"
-          helm ${{inputs.deploy_mode}} ${{inputs.service_name}} . -f $template_name -n ${{inputs.namespace}} --set-string DOCKER_TAG=${{ inputs.docker_tag }}
+          helm ${{inputs.deploy_mode}} ${{inputs.service_name}} . -f values-dev.yaml -n ${{inputs.namespace}} --set-string DOCKER_TAG=${{ inputs.docker_tag }}
         else
          echo "No docker_tag provided. Using value from values-dev.yaml"
-         helm ${{inputs.deploy_mode}} ${{inputs.service_name}} . -f $template_name -n ${{inputs.namespace}}
+         helm ${{inputs.deploy_mode}} ${{inputs.service_name}} . -f values-dev.yaml -n ${{inputs.namespace}}
         fi
         
         pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | grep -vE 'mongodb' | head -n 1 | cut -d/ -f2)
