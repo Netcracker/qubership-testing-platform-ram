@@ -191,6 +191,29 @@ runs:
         echo "Get pods"
         kubectl get pods -n ${{inputs.namespace}}
         
+        echo "Describe mongodb pod"
+        kubectl describe pod $(kubectl get pods -n ${{inputs.namespace}} -o name | grep 'mongodb' | head -n 1 | cut -d/ -f2) -n ${{inputs.namespace}}        
+        echo "End describe"
+        
+        echo "Logs from mongodb pod"
+        for pod in $(kubectl get pods -n ${{inputs.namespace}} -o name | grep 'mongodb' | head -n 1 | cut -d/ -f2); do 
+          echo "📦 Logs from pod: $pod"
+        
+          if ! kubectl logs "$pod" -n ${{inputs.namespace}}; then
+            echo "⚠️ Could not fetch current logs for $pod"
+          fi
+        
+          restart_count=$(kubectl get pod "$pod" -n ${{inputs.namespace}} -o jsonpath="{.status.containerStatuses[0].restartCount}")
+        
+          if [[ "$restart_count" -gt 0 ]]; then
+            echo "🔁 Previous logs (before restart) for pod: $pod"
+            if ! kubectl logs "$pod" -n ${{inputs.namespace}} --previous; then
+              echo "⚠️ Could not fetch previous logs for $pod"
+            fi
+          fi
+        
+        done
+        
         echo "Describe pod"
         kubectl describe pod $(kubectl get pods -n ${{inputs.namespace}} --no-headers | awk 'NR==1 {print $1}') -n ${{inputs.namespace}}        
         echo "End describe"
