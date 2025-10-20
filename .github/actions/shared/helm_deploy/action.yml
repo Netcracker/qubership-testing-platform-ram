@@ -138,8 +138,17 @@ runs:
           --set image.registry=docker.io \
           --set image.repository=bitnamilegacy/mongodb \
           --set image.tag=4.2.14 \
-          --set auth.rootUser=root \
-          --set auth.rootPassword=root
+          --set image.debug=false \
+          --set architecture=standalone \
+          --set useStatefulSet=false \
+          --set initdbScripts="" \
+          --set persistence.enabled=false \
+          --set metrics.enabled=false \
+          --set auth.enabled=false \
+          --set extraEnv[0].name=MONGO_INITDB_ROOT_USERNAME \
+          --set extraEnv[0].value=root \
+          --set extraEnv[1].name=MONGO_INITDB_ROOT_PASSWORD \
+          --set extraEnv[1].value=root
 
         pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | head -n 1 | cut -d/ -f2)
         kubectl wait pod "$pod" -n ${{inputs.namespace}} \
