@@ -133,9 +133,9 @@ runs:
       shell: bash
       run: |
         helm repo add bitnami https://charts.bitnami.com/bitnami
-        template_name=$(basename "${{inputs.path_to_template}}")
-        echo $template_name
         cd ${{inputs.repository_name}}/${{inputs.path_to_chart}}
+        ls -la
+        pwd
         
         kubectl apply -f mongo-template.yaml
 
