@@ -184,7 +184,8 @@ runs:
         kubectl logs $pod -n ${{inputs.namespace}}
         
         echo "View changelock table"
-        kubectl exec $pod -n ${{inputs.namespace}} -- mongosh --eval "show db; use atp-ram; show collections"        
+        kubectl exec $pod -n ${{inputs.namespace}} -- sh -c 'mongo --eval "show dbs; use atp-ram; show collections"'
+        kubectl exec $pod -n ${{inputs.namespace}} -- sh -c 'mongosh --eval "show dbs; use atp-ram; show collections"'
         
         
         
