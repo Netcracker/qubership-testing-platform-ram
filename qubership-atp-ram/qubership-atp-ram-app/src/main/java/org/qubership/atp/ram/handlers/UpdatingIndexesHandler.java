@@ -16,6 +16,7 @@
 
 package org.qubership.atp.ram.handlers;
 
+import org.bson.Document;
 import org.qubership.atp.ram.migration.MigrationConstants;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.DefaultIndexOperations;
@@ -85,8 +86,8 @@ public class UpdatingIndexesHandler {
         mongoTemplate.getCollection(collectionName)
                 .listIndexes().forEach(indexDocument -> {
                     if (indexName.equals(indexDocument.getString(MigrationConstants.NAME_INDEX_FIELD))) {
-                        long expiredDateFromDb = indexDocument.containsKey(MigrationConstants.EXPIRE_DATE_INDEX_FIELD)
-                                ? indexDocument.getLong(MigrationConstants.EXPIRE_DATE_INDEX_FIELD) : 0;
+                        long expiredDateFromDb = getLongSafely(indexDocument,
+                                MigrationConstants.EXPIRE_DATE_INDEX_FIELD, 0);
                         if (newExpiredDate > 0 && newExpiredDate != expiredDateFromDb) {
                             log.info("ExpireDate will be update for collection {}. new value = {}, oldValue = {}",
                                     collectionName, newExpiredDate, expiredDateFromDb);
@@ -98,6 +99,34 @@ public class UpdatingIndexesHandler {
                 });
         log.info("Finish checking and updating indexes for collectionName = {}, indexName = {}, newExpiredDate = {}",
                 collectionName, indexName, newExpiredDate);
+    }
+
+    /**
+     * Safely gets long value from document.
+     *
+     * @param doc collection document
+     * @param field document field
+     * @param defaultValue def value
+     *
+     * @return log value of document. If the type is unexpected, it will return defaultValue and log a WARN.
+     */
+    private long getLongSafely(Document doc, String field, long defaultValue) {
+        if (doc == null || !doc.containsKey(field)) {
+            return defaultValue;
+        }
+        Object value = doc.get(field);
+        try {
+            if (value instanceof Number) {
+                return ((Number) value).longValue();
+            }
+            log.warn("Field '{}' has unexpected type: {}. Using defaultValue={}", field,
+                    value != null ? value.getClass().getName() : "null", defaultValue);
+            return defaultValue;
+        } catch (Exception ex) {
+            log.warn("Failed to parse '{}' as long (value='{}'). Using defaultValue={}. Cause={}",
+                    field, value, defaultValue, ex.toString());
+            return defaultValue;
+        }
     }
 
     /**
