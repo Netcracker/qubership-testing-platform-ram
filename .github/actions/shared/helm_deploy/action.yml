@@ -143,7 +143,7 @@ runs:
         pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | head -n 1 | cut -d/ -f2)
         kubectl wait pod "$pod" -n ${{inputs.namespace}} \
            --for=condition=Ready \
-           --timeout=120s || {
+           --timeout=600s || {
            echo "❌ Pod $pod did not become ready in time"
            exit 1
         }
@@ -182,6 +182,10 @@ runs:
         echo "Describe pod"
         kubectl describe pod $(kubectl get pods -n ${{inputs.namespace}} --no-headers | awk 'NR==1 {print $1}') -n ${{inputs.namespace}}        
         echo "End describe"
+        
+        echo "Get events"
+        kubectl get events -n ${{inputs.namespace}}
+        echo "End events"
         
         for pod in $(kubectl get pods -n ${{inputs.namespace}} -o name | grep -vE 'mongodb' | head -n 1 | cut -d/ -f2); do 
           echo "📦 Logs from pod: $pod"
