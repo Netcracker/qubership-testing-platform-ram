@@ -185,7 +185,6 @@ runs:
         echo "Check secret"
         kubectl get secret --namespace ${{inputs.namespace}} my-mongodb -o jsonpath="{.data.mongodb-root-password}" | base64 --decode        
         
-        
         for pod in $(kubectl get pods -n ${{inputs.namespace}} -o name | grep -vE 'mongodb' | head -n 1 | cut -d/ -f2); do 
           echo "📦 Logs from pod: $pod"
         
@@ -203,19 +202,6 @@ runs:
           fi
         
         done
-        
-        echo "Logs from mongodb pod"
-        pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | grep 'mongodb' | head -n 1 | cut -d/ -f2)
-        kubectl get pod "$pod" -n ${{inputs.namespace}}
-        
-        kubectl exec -n ${{inputs.namespace}} $pod -- \
-        mongosh -u root -p root --authenticationDatabase admin --quiet --eval "db.adminCommand('listDatabases')"
-        
-        kubectl exec -n ${{inputs.namespace}} $pod -- mongod --version
-  
-        echo "Logs from predeploy pod"
-        pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | grep 'predeploy' | head -n 1 | cut -d/ -f2)
-        kubectl get pod "$pod" -n ${{inputs.namespace}}
         
         echo " Get pods $pod"
         kubectl get pods -n ${{inputs.namespace}}
