@@ -177,18 +177,7 @@ runs:
       run: |
         echo "Get pods"
         kubectl get pods -n ${{inputs.namespace}}
-        
-        pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | grep mongodb | head -n1)
-        
-        echo "Mongo log pod"
-        kubectl logs $pod -n ${{inputs.namespace}}
-        
-        echo "View changelock table"
-        kubectl exec $pod -n ${{inputs.namespace}} -- sh -c 'mongo --eval "show dbs; use atp-ram; show collections"'
-        kubectl exec $pod -n ${{inputs.namespace}} -- sh -c 'mongosh --eval "show dbs; use atp-ram; show collections"'
-        
-        
-        
+      
         echo "Describe pod"
         kubectl describe pod $(kubectl get pods -n ${{inputs.namespace}} --no-headers | awk 'NR==1 {print $1}') -n ${{inputs.namespace}}        
         echo "End describe"
