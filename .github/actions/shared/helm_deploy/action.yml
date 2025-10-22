@@ -133,11 +133,12 @@ runs:
       shell: bash
       run: |
         helm repo add bitnami https://charts.bitnami.com/bitnami
-        cd ${{inputs.repository_name}}/${{inputs.path_to_chart}}
-        ls -la
-        pwd
-        
-        kubectl apply -f mongo-template.yaml
+        helm install my-mongodb bitnami/mongodb -n ${{inputs.namespace}} \
+          --set image.registry=docker.io \
+          --set image.repository=bitnamilegacy/mongodb \
+          --set image.tag=4.2.14 \
+          --set auth.rootUser=root \
+          --set auth.rootPassword=root
 
         pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | head -n 1 | cut -d/ -f2)
         kubectl wait pod "$pod" -n ${{inputs.namespace}} \
