@@ -182,9 +182,6 @@ runs:
         kubectl describe pod $(kubectl get pods -n ${{inputs.namespace}} --no-headers | awk 'NR==1 {print $1}') -n ${{inputs.namespace}}        
         echo "End describe"
         
-        echo "Check secret"
-        kubectl get secret --namespace ${{inputs.namespace}} my-mongodb -o jsonpath="{.data.mongodb-root-password}" | base64 --decode        
-        
         for pod in $(kubectl get pods -n ${{inputs.namespace}} -o name | grep -vE 'mongodb' | head -n 1 | cut -d/ -f2); do 
           echo "📦 Logs from pod: $pod"
         
