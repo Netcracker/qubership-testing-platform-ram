@@ -136,7 +136,7 @@ runs:
         helm install my-mongodb bitnami/mongodb -n ${{inputs.namespace}} \
           --set image.registry=docker.io \
           --set image.repository=bitnamilegacy/mongodb \
-          --set image.tag=4.2.14 \
+          --set image.tag=8.0.13 \
           --set auth.rootUser=root \
           --set auth.rootPassword=root
 
