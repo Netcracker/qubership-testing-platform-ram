@@ -5,60 +5,7 @@
   },
   "item": [
     {
-      "name": "PUT /va",
-      "request": {
-        "method": "PUT",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "auth": {
-          "type": "basic",
-          "basic": [
-            { "key": "username", "value": "user", "type": "string" },
-            { "key": "password", "value": "user", "type": "string" }
-          ]
-        },
-        "body": {
-          "mode": "raw",
-          "raw": "{\"name\": \"{{name}}\"}"
-        },
-        "url": {
-          "raw": "{{base_url}}/va?name={{name}}",
-          "host": ["{{base_url}}"],
-          "path": ["va"],
-          "query": [
-            {
-              "key": "name",
-              "value": "{{name}}"
-            }
-          ]
-        }
-      },
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "console.log('Status:', pm.response.code);",
-              "console.log('Response body:', pm.response.text());",
-              "pm.test(\"Status is 200 or 201\", function () {",
-              "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-              "});"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "GET /va",
+      "name": "GET /api/charts/ping",
       "request": {
         "method": "GET",
         "header": [],
@@ -70,9 +17,9 @@
           ]
         },
         "url": {
-          "raw": "{{base_url}}/va",
+          "raw": "{{base_url}}/api/charts/ping",
           "host": ["{{base_url}}"],
-          "path": ["va"]
+          "path": ["api", "charts", "ping"]
         }
       },
       "event": [
@@ -95,56 +42,7 @@
       ]
     },
     {
-      "name": "PUT /dsl/va/{{vaId}}",
-      "request": {
-        "method": "PUT",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "auth": {
-          "type": "basic",
-          "basic": [
-            { "key": "username", "value": "user", "type": "string" },
-            { "key": "password", "value": "user", "type": "string" }
-          ]
-        },
-        "url": {
-          "raw": "{{base_url}}/dsl/va/{{vaId}}?name={{name}}",
-          "host": ["{{base_url}}"],
-          "path": ["dsl", "va", "{{vaId}}"],
-          "query": [
-            {
-              "key": "name",
-              "value": "{{name}}"
-            }
-          ]
-        }
-      },
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "console.log('Status:', pm.response.code);",
-              "console.log('Response body:', pm.response.text());",
-              "pm.test(\"Status is 200 or 201\", function () {",
-              "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-              "});"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "GET /dsl/va/{{vaId}}",
+      "name": "GET /api/akbRecords",
       "request": {
         "method": "GET",
         "header": [],
@@ -156,9 +54,9 @@
           ]
         },
         "url": {
-          "raw": "{{base_url}}/dsl/va/{{vaId}}",
+          "raw": "{{base_url}}/api/akbRecords",
           "host": ["{{base_url}}"],
-          "path": ["dsl", "va", "{{vaId}}"]
+          "path": ["api", "akbRecords"]
         }
       },
       "event": [
