@@ -5,10 +5,6 @@ GRAYLOG_ON: "false"
 # This option turns on or off kafka enable
 KAFKA_ENABLE: "false"
 KAFKA_REPORTING_SERVERS: ""
-# Keycloak enabled
-KEYCLOAK_ENABLED: "false"
-# Spring profile for security
-SPRING_PROFILES: "disable-security"
 keepHookLogs: true
 HELPER_IMAGE: "ghcr.io/netcracker/qubership-testing-platform-helm-hook-helper:main-20250714085543"
 CONTENT_SECURITY_POLICY: "*"
@@ -17,7 +13,10 @@ RAM_GRIDFS_DB_ENABLE: "true"
 RAM_EI_DB_ENABLE: "false"
 GRIDFS_DB_ADDR: "my-mongodb"
 MONGO_DB_ADDR: "my-mongodb"
-EUREKA_CLIENT_ENABLED: "false"
 RAM_DB: "atp-ram"
 RAM_DB_USER: "atp-ram"
 RAM_DB_PASSWORD: "atp-ram"
+ATP1_INTEGRATION_ENABLE: "false"
+ATP_INTERNAL_GATEWAY_ENABLED: "true"
+ATP_RAM_URL: "atp-ram"
+EUREKA_CLIENT_ENABLED: "true"
