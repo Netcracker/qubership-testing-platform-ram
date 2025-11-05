@@ -232,6 +232,10 @@ runs:
         
         echo "Get svc"
         kubectl get svc -n ${{inputs.namespace}}
+        
+        echo "Get logs for kafka kafka-broker-0"
+        pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | grep 'kafka-broker-0' | head -n 1 | cut -d/ -f2)
+        kubectl logs -n ${{inputs.namespace}} $pod
 
     - name: Get docker images
       shell: bash
