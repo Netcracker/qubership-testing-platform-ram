@@ -148,6 +148,27 @@ runs:
            exit 1
         }
 
+    - name: Install Kafka via bitnami
+      shell: bash
+      run: |
+        cd ${{inputs.repository_name}}/.github/deploy_templates/
+        ls -la
+        
+        helm install kafka bitnami/kafka \
+          --version 25.0.0 \
+          --namespace ${{inputs.namespace}} \
+          --create-namespace \
+          -f no-auth-values.yaml
+        
+        pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | grep -vE 'mongodb' | head -n 1 | cut -d/ -f2)
+        kubectl wait pod "$pod" -n ${{inputs.namespace}} \
+           --for=condition=Ready \
+           --timeout=300s || {
+           echo "❌ Pod $pod did not become ready in time"
+           ERROR_FLAG=true
+           exit 1
+        }
+
     - name: Install/update service with helm
       shell: bash
       run: |
@@ -164,7 +185,7 @@ runs:
          helm ${{inputs.deploy_mode}} ${{inputs.service_name}} . -f values-dev.yaml -n ${{inputs.namespace}}
         fi
         
-        pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | grep -vE 'mongodb' | head -n 1 | cut -d/ -f2)
+        pod=$(kubectl get pods -n ${{inputs.namespace}} -o name | grep -vE 'mongodb|kafka' | head -n 1 | cut -d/ -f2)
         kubectl wait pod "$pod" -n ${{inputs.namespace}} \
            --for=condition=Ready \
            --timeout=600s || {
