@@ -7,13 +7,23 @@
       "enabled": true
     },
     {
-      "key": "vaId",
+      "key": "projectId",
       "value": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
       "enabled": true
     },
     {
       "key": "name",
-      "value": "DSL_Test",
+      "value": "Test_project",
+      "enabled": true
+    },
+    {
+      "key": "active",
+      "value": "true",
+      "enabled": true
+    },
+    {
+      "key": "subject",
+      "value": "Project fot testing",
       "enabled": true
     }
   ],

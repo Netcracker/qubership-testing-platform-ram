@@ -30,12 +30,49 @@
             "exec": [
               "console.log('=== Response Body ===');",
               "console.log(pm.response.text());",
-              "const json = pm.response.json();",
-              "pm.environment.set('vaId', json[0].id);",
-              "console.log('Saved ID:', json[0].id);",
               "pm.test(\"Status is 200 or 201\", function () {",
               "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
               "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST /api/templates/project/{{projectId}}",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "user", "type": "string" },
+            { "key": "password", "value": "user", "type": "string" }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"active\": \"{{active}}\",\n  \"name\": \"{{name}}\",\n  \"projectId\": \"{{projectId}}\",\n \"subject\": \"{{subject}}\",\n \"uuid\": \"{{projectId}}\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/templates/project/{{projectId}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "templates", "project", "{{projectId}}"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Status:', pm.response.code);",
+              "console.log('Response body:', pm.response.text());"
             ]
           }
         }
