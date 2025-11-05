@@ -93,7 +93,7 @@
         "url": {
           "raw": "{{base_url}}/api/templates/project/{{projectId}}",
           "host": ["{{base_url}}"],
-          "path": ["api", "templates", "project", "projectId"]
+          "path": ["api", "templates", "project", "{{projectId}}"]
         }
       },
       "event": [
