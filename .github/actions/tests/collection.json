@@ -79,7 +79,7 @@
       ]
     },
     {
-      "name": "GET /api/akbRecords",
+      "name": "GET /api/templates/project/{{projectId}}",
       "request": {
         "method": "GET",
         "header": [],
@@ -91,9 +91,9 @@
           ]
         },
         "url": {
-          "raw": "{{base_url}}/api/akbRecords",
+          "raw": "{{base_url}}/api/templates/project/{{projectId}}",
           "host": ["{{base_url}}"],
-          "path": ["api", "akbRecords"]
+          "path": ["api", "templates", "project", "projectId"]
         }
       },
       "event": [
