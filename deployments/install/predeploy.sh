@@ -27,12 +27,12 @@ RAM_DB_USER="$(env_default "${RAM_DB_USER}" "${SERVICE_NAME}" "${_ns}")"
 RAM_DB_PASSWORD="$(env_default "${RAM_DB_PASSWORD}" "${SERVICE_NAME}" "${_ns}")"
 
 init_mongo "${MONGO_DB_ADDR}" "${RAM_DB}" "${RAM_DB_USER}" "${RAM_DB_PASSWORD}" "${MONGO_DB_PORT}" "${mongo_user}" "${mongo_pass}"
-if [ "${RAM_GRIDFS_DB_ENABLE:-true}" = "true" ]; then
-  GRIDFS_DB="$(env_default "${GRIDFS_DB}" "atp_gridfs" "${_ns}")"
-  GRIDFS_DB_USER="$(env_default "${GRIDFS_DB_USER}" "atp_gridfs" "${_ns}")"
-  GRIDFS_DB_PASSWORD="$(env_default "${GRIDFS_DB_PASSWORD}" "atp_gridfs" "${_ns}")"
-  init_mongo "${GRIDFS_DB_ADDR}" "${GRIDFS_DB}" "${GRIDFS_DB_USER}" "${GRIDFS_DB_PASSWORD}" "${GRIDFS_DB_PORT}" "${gridfs_user}" "${gridfs_pass}"
-fi
+
+GRIDFS_DB="$(env_default "${GRIDFS_DB}" "atp_gridfs" "${_ns}")"
+GRIDFS_DB_USER="$(env_default "${GRIDFS_DB_USER}" "atp_gridfs" "${_ns}")"
+GRIDFS_DB_PASSWORD="$(env_default "${GRIDFS_DB_PASSWORD}" "atp_gridfs" "${_ns}")"
+
+init_mongo "${GRIDFS_DB_ADDR}" "${GRIDFS_DB}" "${GRIDFS_DB_USER}" "${GRIDFS_DB_PASSWORD}" "${GRIDFS_DB_PORT}" "${gridfs_user}" "${gridfs_pass}"
 
 if [ "${RAM_EI_DB_ENABLE:-true}" = "true" ]; then
   EI_GRIDFS_DB="$(env_default "${EI_GRIDFS_DB}" "atp-ei-gridfs" "${_ns}")"

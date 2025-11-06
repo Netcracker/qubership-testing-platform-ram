@@ -233,5 +233,4 @@ EXPIRED_EXECUTION_REQUESTS_BATCH_SIZE: "500"
 extraEnvs: []
 keepHookLogs: false
 HELPER_IMAGE: "artifactory-service-address/path-to-image"
-RAM_GRIDFS_DB_ENABLE: "true"
 RAM_EI_DB_ENABLE: "true"

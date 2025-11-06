@@ -102,7 +102,6 @@ FILES_EXPIRATION_SCHEDULE_INTERVAL: "{{ .Values.FILES_EXPIRATION_SCHEDULE_INTERV
 GRAYLOG_HOST: "{{ .Values.GRAYLOG_HOST }}"
 GRAYLOG_ON: "{{ .Values.GRAYLOG_ON }}"
 GRAYLOG_PORT: "{{ .Values.GRAYLOG_PORT }}"
-RAM_GRIDFS_DB_ENABLE: "{{ .Values.RAM_GRIDFS_DB_ENABLE }}"
 GRIDFS_DB: "{{ include "env.default" (dict "ctx" . "val" .Values.GRIDFS_DB "def" "atp-gridfs") }}"
 GRIDFS_DB_PORT: "{{ .Values.GRIDFS_DB_PORT }}"
 GRIDFS_DB_ADDR: "{{ .Values.GRIDFS_DB_ADDR }}"
