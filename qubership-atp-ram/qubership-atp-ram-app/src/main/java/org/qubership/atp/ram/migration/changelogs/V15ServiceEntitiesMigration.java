@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.auth.springbootstarter.entities.ServiceEntities;
 import org.qubership.atp.auth.springbootstarter.services.UsersService;
 import org.qubership.atp.ram.enums.UserManagementEntities;
@@ -50,6 +51,12 @@ public class V15ServiceEntitiesMigration {
     public void sendEntities(MongoDatabase database, Map<String, Object> beans)
             throws JsonProcessingException {
         Environment env = (Environment) beans.get("environments");
+        String activeProfiles = env.getProperty("spring.profiles.active");
+        if (StringUtils.isEmpty(activeProfiles) || activeProfiles.contains("disable-security")) {
+            // Without security, it's the most probable that there is no users-backend service,
+            // or it can't serve requests without authorization.
+            return;
+        }
         String serviceName = env.getProperty("spring.application.name");
 
         ServiceEntities entities = new ServiceEntities();

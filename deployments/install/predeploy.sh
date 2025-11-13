@@ -34,8 +34,10 @@ GRIDFS_DB_PASSWORD="$(env_default "${GRIDFS_DB_PASSWORD}" "atp_gridfs" "${_ns}")
 
 init_mongo "${GRIDFS_DB_ADDR}" "${GRIDFS_DB}" "${GRIDFS_DB_USER}" "${GRIDFS_DB_PASSWORD}" "${GRIDFS_DB_PORT}" "${gridfs_user}" "${gridfs_pass}"
 
-EI_GRIDFS_DB="$(env_default "${EI_GRIDFS_DB}" "atp-ei-gridfs" "${_ns}")"
-EI_GRIDFS_USER="$(env_default "${EI_GRIDFS_USER}" "atp-ei-gridfs" "${_ns}")"
-EI_GRIDFS_PASSWORD="$(env_default "${EI_GRIDFS_PASSWORD}" "atp-ei-gridfs" "${_ns}")"
+if [ "${RAM_EI_DB_ENABLE:-true}" = "true" ]; then
+  EI_GRIDFS_DB="$(env_default "${EI_GRIDFS_DB}" "atp-ei-gridfs" "${_ns}")"
+  EI_GRIDFS_USER="$(env_default "${EI_GRIDFS_USER}" "atp-ei-gridfs" "${_ns}")"
+  EI_GRIDFS_PASSWORD="$(env_default "${EI_GRIDFS_PASSWORD}" "atp-ei-gridfs" "${_ns}")"
 
-init_mongo "${EI_GRIDFS_DB_ADDR:-$GRIDFS_DB_ADDR}" "${EI_GRIDFS_DB}" "${EI_GRIDFS_USER}" "${EI_GRIDFS_PASSWORD}" "${EI_GRIDFS_DB_PORT:-$GRIDFS_DB_PORT}" "${ei_gridfs_user:-$gridfs_user}" "${ei_gridfs_pass:-$gridfs_pass}"
+  init_mongo "${EI_GRIDFS_DB_ADDR:-$GRIDFS_DB_ADDR}" "${EI_GRIDFS_DB}" "${EI_GRIDFS_USER}" "${EI_GRIDFS_PASSWORD}" "${EI_GRIDFS_DB_PORT:-$GRIDFS_DB_PORT}" "${ei_gridfs_user:-$gridfs_user}" "${ei_gridfs_pass:-$gridfs_pass}"
+fi
