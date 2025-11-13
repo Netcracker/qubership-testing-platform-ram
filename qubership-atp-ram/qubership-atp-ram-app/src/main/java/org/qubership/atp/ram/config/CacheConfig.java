@@ -56,6 +56,9 @@ public class CacheConfig {
         caches.add(new CaffeineCache(CacheConstants.PROJECT_CACHE,
                 Caffeine.newBuilder().recordStats().expireAfterWrite(2, TimeUnit.MINUTES).maximumSize(100).build(),
                 true));
+        caches.add(new CaffeineCache(CacheConstants.AUTH_PROJECTS_CACHE,
+                Caffeine.newBuilder().recordStats().expireAfterWrite(2, TimeUnit.MINUTES).maximumSize(100).build(),
+                true));
         caches.add(new CaffeineCache(CacheConstants.TEST_RUNS_INFO_CACHE,
                 Caffeine.newBuilder().recordStats().expireAfterWrite(2, TimeUnit.MINUTES).maximumSize(100).build(),
                 true));

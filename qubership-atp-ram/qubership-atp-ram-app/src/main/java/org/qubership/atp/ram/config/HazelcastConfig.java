@@ -101,6 +101,9 @@ public class HazelcastConfig {
         caches.add(new ConcurrentMapCache(CacheConstants.PROJECT_CACHE,
                 CacheBuilder.newBuilder().expireAfterWrite(2, TimeUnit.MINUTES).maximumSize(100).build().asMap(),
                 true));
+        caches.add(new ConcurrentMapCache(CacheConstants.AUTH_PROJECTS_CACHE,
+                CacheBuilder.newBuilder().expireAfterWrite(2, TimeUnit.MINUTES).maximumSize(100).build().asMap(),
+                true));
         caches.add(new ConcurrentMapCache(CacheConstants.TEST_RUNS_INFO_CACHE,
                 CacheBuilder.newBuilder().expireAfterWrite(2, TimeUnit.MINUTES).maximumSize(100).build().asMap(),
                 true));
