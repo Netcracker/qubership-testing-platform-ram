@@ -137,9 +137,9 @@ jobs:
     needs: [ build-and-push ]
     uses: netcracker/qubership-testing-platform-helm-hook-helper/.github/workflows/deploy-run-tests.yaml@main
     with:
-      repository_name: 'qubership-testing-platform-tdm'
-      service_name: 'atp-tdm'
-      namespace: 'tdm'
+      repository_name: 'qubership-testing-platform-ram'
+      service_name: 'atp-ram'
+      namespace: 'ram'
       pipeline_branch: 'main'
       kafka: enable
       mongo: enable
