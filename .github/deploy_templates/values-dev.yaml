@@ -1,12 +1,12 @@
 # Which docker image should be used to deploy
-DOCKER_TAG: "ghcr.io/netcracker/qubership-testing-platform-ram:2.2.209"
+DOCKER_TAG: ""
 # This option turns on or off logging in graylog
 GRAYLOG_ON: "false"
 # This option turns on or off kafka enable
 KAFKA_ENABLE: "false"
 KAFKA_REPORTING_SERVERS: ""
 keepHookLogs: true
-HELPER_IMAGE: "ghcr.io/netcracker/qubership-testing-platform-helm-hook-helper:main-20250714085543"
+HELPER_IMAGE: "ghcr.io/netcracker/qubership-testing-platform-helm-hook-helper:v1.0.1
 CONTENT_SECURITY_POLICY: "*"
 JAVERS_ENABLED: "false"
 RAM_EI_DB_ENABLE: "false"
