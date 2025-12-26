@@ -135,7 +135,7 @@ jobs:
 
   run-tests:
     needs: [ build-and-push ]
-    uses: netcracker/qubership-testing-platform-helm-hook-helper/.github/workflows/deploy-run-tests.yaml@e1cd991e40882890c89d400b837b4e40e8467200 # v1.0.1
+    uses: netcracker/qubership-testing-platform-helm-hook-helper/.github/workflows/deploy-run-tests.yaml@main
     with:
       repository_name: 'qubership-testing-platform-tdm'
       service_name: 'atp-tdm'
