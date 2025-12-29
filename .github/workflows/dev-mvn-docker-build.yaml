@@ -106,7 +106,6 @@ jobs:
         id: replace_slash
         run: |
           service_branch="$GITHUB_REF_NAME"
-
           if [[ "$service_branch" == *"/"* ]]; then
             service_branch="${service_branch//\//_}"
           fi
