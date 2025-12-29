@@ -6,7 +6,7 @@ GRAYLOG_ON: "false"
 KAFKA_ENABLE: "false"
 KAFKA_REPORTING_SERVERS: ""
 keepHookLogs: true
-HELPER_IMAGE: "ghcr.io/netcracker/qubership-testing-platform-helm-hook-helper:main_latest
+HELPER_IMAGE: "ghcr.io/netcracker/qubership-testing-platform-helm-hook-helper:main_latest"
 CONTENT_SECURITY_POLICY: "*"
 JAVERS_ENABLED: "false"
 RAM_EI_DB_ENABLE: "false"
