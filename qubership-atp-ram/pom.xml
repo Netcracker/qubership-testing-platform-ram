@@ -28,7 +28,7 @@
         <google.guava.version>33.0.0-jre</google.guava.version>
         <hazelcast-all.version>4.2.8</hazelcast-all.version>
         <hazelcast.version>5.3.5</hazelcast.version>
-        <fasterxml.jackson.version>2.14.0</fasterxml.jackson.version>
+        <fasterxml.jackson.version>2.15.0</fasterxml.jackson.version>
         <junit.jupiter>5.9.3</junit.jupiter>
         <log4j.version>2.17.1</log4j.version>
         <aspectj.version>1.9.6</aspectj.version>
@@ -40,7 +40,7 @@
         <jettison.version>1.5.4</jettison.version>
         <jboss.xnio.version>3.8.14.Final</jboss.xnio.version>
         <netty-handler.version>4.1.118.Final</netty-handler.version>
-        <io.undertow.undertow-core.version>2.2.36.Final</io.undertow.undertow-core.version>
+        <io.undertow.undertow-core.version>2.2.38.Final</io.undertow.undertow-core.version>
 
         <atp.common.version>0.0.43</atp.common.version>
         <atp-integration.version>0.2.38</atp-integration.version>
@@ -90,7 +90,7 @@
             <dependency>
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
-                <version>1.9.4</version>
+                <version>1.11.0</version>
             </dependency>
 <!--            <dependency>-->
 <!--                <groupId>com.squareup.okio</groupId>-->
