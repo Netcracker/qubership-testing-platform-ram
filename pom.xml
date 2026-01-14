@@ -32,7 +32,7 @@
         <netty-handler.version>4.1.118.Final</netty-handler.version>
         <lombok.version>1.18.30</lombok.version>
 
-        <atp.auth.version>1.2.68</atp.auth.version>
+        <atp.auth.version>1.2.75</atp.auth.version>
     </properties>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -239,18 +239,7 @@
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-<!--                <exclusions>-->
-<!--                    <exclusion>-->
-<!--                        <groupId>org.springframework.security</groupId>-->
-<!--                        <artifactId>spring-security-web</artifactId>-->
-<!--                    </exclusion>-->
-<!--                </exclusions>-->
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.security</groupId>-->
-<!--                <artifactId>spring-security-web</artifactId>-->
-<!--                <version>5.7.13</version>-->
-<!--            </dependency>-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -300,7 +289,12 @@
 
             <dependency>
                 <groupId>org.qubership.atp.auth</groupId>
-                <artifactId>atp-auth-spring-boot-starter</artifactId>
+                <artifactId>atp-auth-models</artifactId>
+                <version>${atp.auth.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.qubership.atp.auth</groupId>
+                <artifactId>atp-auth-impl</artifactId>
                 <version>${atp.auth.version}</version>
             </dependency>
             <dependency>
@@ -313,7 +307,6 @@
                 <artifactId>netty-handler-proxy</artifactId>
                 <version>${netty-handler.version}</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 

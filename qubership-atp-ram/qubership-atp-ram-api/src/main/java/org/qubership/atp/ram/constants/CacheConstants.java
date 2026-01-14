@@ -20,7 +20,8 @@ public interface CacheConstants {
 
     String ATP_RAM_REPORTS = "ATP_RAM-REPORTS";
     String ROOTCAUSES_CACHE = "rootcauses";
-    String PROJECT_CACHE = "projects";
+    String PROJECT_CACHE = "ATP_RAM-PROJECTS";
+    String AUTH_PROJECTS_CACHE = "auth_projects";
     String TEST_RUNS_INFO_CACHE = "testRunsInfo";
     String ATP_RAM_DICTIONARIES = "dictionaries";
 }
