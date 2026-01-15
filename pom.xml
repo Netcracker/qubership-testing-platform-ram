@@ -12,7 +12,6 @@
         <module>qubership-atp-ram-distribution</module>
         <module>qubership-atp-ram-contract-test-pacts</module>
     </modules>
-
     <properties>
         <spring.boot.version>2.7.18</spring.boot.version>
         <spring.cloud.version>2021.0.8</spring.cloud.version>
