@@ -28,6 +28,7 @@ import org.qubership.atp.ram.converters.FileTypeConverter;
 import org.qubership.atp.ram.handlers.UpdatingIndexesHandler;
 import org.qubership.atp.ram.migration.mongoevolution.SpringMongoEvolution;
 import org.qubership.atp.ram.migration.mongoevolution.java.dataaccess.ConnectionSearchKey;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -76,9 +77,9 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
 
     private final MeterRegistry meterRegistry;
 
-    public MongoConfiguration(final UsersService usersService,
-                              final Environment environment,
-                              final MeterRegistry meterRegistry) {
+    public MongoConfiguration(@Qualifier("usersService") final UsersService usersService,
+                              @Qualifier("environment") final Environment environment,
+                              @Qualifier("meterRegistry") final MeterRegistry meterRegistry) {
         this.usersService = usersService;
         this.environment = environment;
         this.meterRegistry = meterRegistry;
