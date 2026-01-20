@@ -180,12 +180,6 @@
             <groupId>org.qubership.atp.common</groupId>
             <artifactId>qubership-atp-common-lock-manager</artifactId>
             <version>${atp.common.version}</version>
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>ch.qos.logback</groupId>-->
-<!--                    <artifactId>logback-classic</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
         </dependency>
         <dependency>
             <groupId>org.mongodb</groupId>

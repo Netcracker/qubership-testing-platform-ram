@@ -28,7 +28,6 @@ import org.qubership.atp.ram.converters.FileTypeConverter;
 import org.qubership.atp.ram.handlers.UpdatingIndexesHandler;
 import org.qubership.atp.ram.migration.mongoevolution.SpringMongoEvolution;
 import org.qubership.atp.ram.migration.mongoevolution.java.dataaccess.ConnectionSearchKey;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,7 +47,7 @@ import lombok.SneakyThrows;
 @Configuration
 public class MongoConfiguration extends AbstractMongoClientConfiguration {
 
-    private static String DOT_REPLACEMENT = "-DOT";
+    private static final String DOT_REPLACEMENT = "-DOT";
 
     @Value("${mongodb.host}")
     private String host;
@@ -71,14 +70,18 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
     @Value("${atp.ram.context.variables.index.date-expire-sec}")
     private long logrecordsContextIndexExpireDate;
 
-    @Autowired
-    private UsersService usersService;
-    @Autowired
-    private Environment environment;
-    @Autowired
-    private MeterRegistry meterRegistry;
+    private final UsersService usersService;
 
-    public MongoConfiguration() {
+    private final Environment environment;
+
+    private final MeterRegistry meterRegistry;
+
+    public MongoConfiguration(final UsersService usersService,
+                              final Environment environment,
+                              final MeterRegistry meterRegistry) {
+        this.usersService = usersService;
+        this.environment = environment;
+        this.meterRegistry = meterRegistry;
     }
 
     @Override
@@ -90,16 +93,15 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
     public void configureConverters(MongoCustomConversions.MongoConverterConfigurationAdapter adapter) {
         adapter.registerConverter(new FileTypeConverter());
         adapter.registerConverter(new DateToTimestampConverter());
-
     }
 
     /**
      * Provides {@link MongoTemplate} for getting files from database.
-     * Properties should contains "mongodb.host","mongodb.port", "mongodb.database", "mongodb.user" and mongodb.password
+     * Properties should contain "mongodb.host", "mongodb.port", "mongodb.database", "mongodb.user"
+     * and "mongodb.password".
      *
      * @return GridFSBucket by specified parameters.
      */
-
     @Bean
     @Override
     @SneakyThrows

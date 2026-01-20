@@ -5,16 +5,46 @@
   },
   "item": [
     {
-      "name": "PUT /va",
+      "name": "GET /api/charts/ping",
       "request": {
-        "method": "PUT",
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "user", "type": "string" },
+            { "key": "password", "value": "user", "type": "string" }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/api/charts/ping",
+          "host": ["{{base_url}}"],
+          "path": ["api", "charts", "ping"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('=== Response Body ===');",
+              "console.log(pm.response.text());",
+              "pm.test(\"Status is 200 or 201\", function () {",
+              "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST /api/templates/project/{{projectId}}",
+      "request": {
+        "method": "POST",
         "header": [
           {
             "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Accept",
             "value": "application/json"
           }
         ],
@@ -27,18 +57,12 @@
         },
         "body": {
           "mode": "raw",
-          "raw": "{\"name\": \"{{name}}\"}"
+          "raw": "{\n  \"active\": \"{{active}}\",\n  \"name\": \"{{name}}\",\n  \"projectId\": \"{{projectId}}\",\n \"subject\": \"{{subject}}\",\n \"uuid\": \"{{projectId}}\"\n}"
         },
         "url": {
-          "raw": "{{base_url}}/va?name={{name}}",
+          "raw": "{{base_url}}/api/templates/project/{{projectId}}",
           "host": ["{{base_url}}"],
-          "path": ["va"],
-          "query": [
-            {
-              "key": "name",
-              "value": "{{name}}"
-            }
-          ]
+          "path": ["api", "templates", "project", "{{projectId}}"]
         }
       },
       "event": [
@@ -48,17 +72,14 @@
             "type": "text/javascript",
             "exec": [
               "console.log('Status:', pm.response.code);",
-              "console.log('Response body:', pm.response.text());",
-              "pm.test(\"Status is 200 or 201\", function () {",
-              "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-              "});"
+              "console.log('Response body:', pm.response.text());"
             ]
           }
         }
       ]
     },
     {
-      "name": "GET /va",
+      "name": "GET /api/templates/project/{{projectId}}",
       "request": {
         "method": "GET",
         "header": [],
@@ -70,95 +91,9 @@
           ]
         },
         "url": {
-          "raw": "{{base_url}}/va",
+          "raw": "{{base_url}}/api/templates/project/{{projectId}}",
           "host": ["{{base_url}}"],
-          "path": ["va"]
-        }
-      },
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "console.log('=== Response Body ===');",
-              "console.log(pm.response.text());",
-              "const json = pm.response.json();",
-              "pm.environment.set('vaId', json[0].id);",
-              "console.log('Saved ID:', json[0].id);",
-              "pm.test(\"Status is 200 or 201\", function () {",
-              "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-              "});"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "PUT /dsl/va/{{vaId}}",
-      "request": {
-        "method": "PUT",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "auth": {
-          "type": "basic",
-          "basic": [
-            { "key": "username", "value": "user", "type": "string" },
-            { "key": "password", "value": "user", "type": "string" }
-          ]
-        },
-        "url": {
-          "raw": "{{base_url}}/dsl/va/{{vaId}}?name={{name}}",
-          "host": ["{{base_url}}"],
-          "path": ["dsl", "va", "{{vaId}}"],
-          "query": [
-            {
-              "key": "name",
-              "value": "{{name}}"
-            }
-          ]
-        }
-      },
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "console.log('Status:', pm.response.code);",
-              "console.log('Response body:', pm.response.text());",
-              "pm.test(\"Status is 200 or 201\", function () {",
-              "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-              "});"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "GET /dsl/va/{{vaId}}",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "auth": {
-          "type": "basic",
-          "basic": [
-            { "key": "username", "value": "user", "type": "string" },
-            { "key": "password", "value": "user", "type": "string" }
-          ]
-        },
-        "url": {
-          "raw": "{{base_url}}/dsl/va/{{vaId}}",
-          "host": ["{{base_url}}"],
-          "path": ["dsl", "va", "{{vaId}}"]
+          "path": ["api", "templates", "project", "{{projectId}}"]
         }
       },
       "event": [
