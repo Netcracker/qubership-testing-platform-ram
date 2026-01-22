@@ -32,7 +32,7 @@
         <junit.jupiter>5.9.3</junit.jupiter>
         <log4j.version>2.17.1</log4j.version>
         <aspectj.version>1.9.6</aspectj.version>
-        <tika.core.version>1.24.1</tika.core.version>
+        <tika.core.version>3.2.2</tika.core.version>
 
         <mockito.all.version>3.12.4</mockito.all.version>
         <thoughtworks.xstream.version>1.4.21</thoughtworks.xstream.version>
@@ -124,6 +124,12 @@
                 <groupId>org.qubership.atp.common.auditing</groupId>
                 <artifactId>atp-common-auditing-mongo</artifactId>
                 <version>${atp.common.auditing.mongo}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.openclover</groupId>
+                        <artifactId>clover</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>net.javacrumbs.shedlock</groupId>
@@ -393,7 +399,16 @@
                         <groupId>at.yawk.lz4</groupId>
                         <artifactId>lz4-java</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>org.lz4</groupId>
+                        <artifactId>lz4-java</artifactId>
+                    </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>at.yawk.lz4</groupId>
+                <artifactId>lz4-java</artifactId>
+                <version>1.10.1</version>
             </dependency>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
