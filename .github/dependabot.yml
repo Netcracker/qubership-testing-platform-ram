@@ -10,5 +10,4 @@ updates:
       - "/.github/actions"
       - "/.github/workflows"
     schedule:
-      interval: "cron"
-      cronjob: "0,30 * * * *"
+      interval: "daily"
