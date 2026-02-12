@@ -40,7 +40,7 @@
         <jettison.version>1.5.4</jettison.version>
         <jboss.xnio.version>3.8.14.Final</jboss.xnio.version>
         <netty-handler.version>4.1.118.Final</netty-handler.version>
-        <io.undertow.undertow-core.version>2.2.38.Final</io.undertow.undertow-core.version>
+        <io.undertow.undertow-core.version>2.2.39.Final</io.undertow.undertow-core.version>
         <tomcat.embed.version>9.0.110</tomcat.embed.version>
 
         <atp.common.version>0.0.47</atp.common.version>
