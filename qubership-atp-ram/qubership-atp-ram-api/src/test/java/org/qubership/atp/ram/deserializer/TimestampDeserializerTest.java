@@ -17,6 +17,9 @@
 package org.qubership.atp.ram.deserializer;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import org.junit.jupiter.api.Assertions;
@@ -44,26 +47,49 @@ public class TimestampDeserializerTest {
 
     @Test
     public void deserialize_dateWithoutDot_passedResult() throws IOException {
-        Date date = deserializer.deserialize(prepareParser("{ \"value\":\"1698934523549\" }"), mapper.getDeserializationContext());
-        Assertions.assertEquals("2023-11-02 14:15:23.549", date.toString());
+        long timeStamp = 1698934523549L;
+        Date expectedDate = new Date(timeStamp);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        Date date = deserializer.deserialize(prepareParser("{ \"value\":\"" + timeStamp + "\" }"),
+                mapper.getDeserializationContext());
+        Assertions.assertEquals(expectedDate.toInstant().atZone(ZoneId.systemDefault()).format(formatter),
+                date.toString()); // "2023-11-02 14:15:23.549" - in case we are in GMT+0
     }
 
     @Test
     public void deserialize_dateWithDot_passedResult() throws IOException {
-        Date date = deserializer.deserialize(prepareParser("{ \"value\":\"1698934523.549\" }"), mapper.getDeserializationContext());
-        Assertions.assertEquals("2023-11-02 14:15:23.549", date.toString());
+        long seconds = 1698934523L;
+        int millis = 549;
+        Date expectedDate = new Date(seconds * 1000 + millis);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        Date date = deserializer.deserialize(prepareParser("{ \"value\":\"" + seconds + "." + millis + "\" }"),
+                mapper.getDeserializationContext());
+        Assertions.assertEquals(expectedDate.toInstant().atZone(ZoneId.systemDefault()).format(formatter),
+                date.toString()); // "2023-11-02 14:15:23.549" - in case we are in GMT+0
     }
 
     @Test
     public void deserialize_dateWithDotAndZeros_passedResult() throws IOException {
-        Date date = deserializer.deserialize(prepareParser("{ \"value\":\"1699346917.180000000\" }"), mapper.getDeserializationContext());
-        Assertions.assertEquals("2023-11-07 08:48:37.18", date.toString());
+        long seconds = 1699346917L;
+        int millis = 180;
+        Date expectedDate = new Date(seconds * 1000 + millis);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SS");
+        Date date = deserializer.deserialize(prepareParser("{ \"value\":\"" + seconds + "." + millis + "000000\" }"),
+                mapper.getDeserializationContext());
+        Assertions.assertEquals(expectedDate.toInstant().atZone(ZoneId.systemDefault()).format(formatter),
+                date.toString()); // "2023-11-07 08:48:37.18" - in case we are in GMT+0
     }
 
     @Test
     public void deserialize_dateTimeFormat_passedResult() throws IOException {
-        Date date = deserializer.deserialize(prepareParser("{ \"value\":\"2019-06-13T13:04:48.301+02:00\" }"), mapper.getDeserializationContext());
-        Assertions.assertEquals("2019-06-13 11:04:48.301", date.toString());
+        String dateString = "2019-06-13T13:04:48.301+02:00";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS").withZone(ZoneId.of("GMT+2"));
+        Date expectedDate = Date.from(Instant.from(formatter.parse(dateString.substring(0, 23).replace('T', ' '))));
+        Date date = deserializer.deserialize(prepareParser("{ \"value\":\"" + dateString + "\" }"),
+                mapper.getDeserializationContext());
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        Assertions.assertEquals(expectedDate.toInstant().atZone(ZoneId.systemDefault()).format(formatter1),
+                date.toString()); // "2019-06-13 11:04:48.301" - in case we are in GMT+0
     }
 
     @Test
