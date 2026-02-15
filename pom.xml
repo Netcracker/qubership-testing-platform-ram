@@ -32,7 +32,7 @@
         <netty-handler.version>4.1.118.Final</netty-handler.version>
         <lombok.version>1.18.30</lombok.version>
 
-        <atp.auth.version>1.2.75</atp.auth.version>
+        <atp.auth.version>1.2.80-SNAPSHOT</atp.auth.version>
     </properties>
 
     <name>${project.groupId}:${project.artifactId}</name>
