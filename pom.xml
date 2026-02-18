@@ -29,10 +29,10 @@
         <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
         <slf4j.version>1.7.36</slf4j.version>
         <javers.version>6.6.4</javers.version>
-        <netty-handler.version>4.1.118.Final</netty-handler.version>
+        <netty-handler.version>4.1.125.Final</netty-handler.version>
         <lombok.version>1.18.30</lombok.version>
 
-        <atp.auth.version>1.2.75</atp.auth.version>
+        <atp.auth.version>1.2.80-SNAPSHOT</atp.auth.version>
     </properties>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -340,7 +340,7 @@
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-codec-http2</artifactId>
-                <version>4.1.124.Final</version>
+                <version>4.1.125.Final</version>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
