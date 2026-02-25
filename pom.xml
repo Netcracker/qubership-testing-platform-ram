@@ -55,7 +55,7 @@
     <scm>
         <connection>scm:git:https//github.com/Netcracker/qubership-testing-platform-ram.git</connection>
         <developerConnection>scm:git:https://github.com/Netcracker/qubership-testing-platform-ram.git</developerConnection>
-        <url>scm:git:https://github.com/Netcracker/qubership-testing-platform-ram/tree/main</url>
+        <url>scm:git:https://github.com/Netcracker/qubership-testing-platform-ram.git</url>
         <tag>HEAD</tag>
     </scm>
 
