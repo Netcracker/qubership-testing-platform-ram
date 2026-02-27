@@ -16,6 +16,7 @@
 
 package org.qubership.atp.ram.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -25,13 +26,13 @@ import org.springframework.web.client.RestTemplate;
 public class RestTemplateConfig {
 
     /**
-     * To maintain pools of http an https connections.
+     * To maintain pools of http and https connections.
      *
      * @param sslRequestFactory is bean from atp-auth-spring-boot-starter.
      */
     @Bean
+    @Qualifier("restTemplate")
     public RestTemplate restTemplate(ClientHttpRequestFactory sslRequestFactory) {
-
         return new RestTemplate(sslRequestFactory);
     }
 }

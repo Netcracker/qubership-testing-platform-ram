@@ -57,10 +57,10 @@ public class UserService {
     private String realm;
 
     @Qualifier("m2mRestTemplate")
-    private RestTemplate m2mRestTemplate;
+    private final RestTemplate m2mRestTemplate;
 
     @Autowired
-    public UserService(RestTemplate m2mRestTemplate) {
+    public UserService(@Qualifier("restTemplate") RestTemplate m2mRestTemplate) {
         this.m2mRestTemplate = m2mRestTemplate;
     }
 
@@ -77,7 +77,7 @@ public class UserService {
      */
     public UserInfo getUserInfoById(UUID userId) {
         String url = issuer + "/users/" + userId;
-        UserInfo userInfo = null;
+        UserInfo userInfo;
         try {
             userInfo = m2mRestTemplate.getForObject(url, UserInfo.class);
         } catch (RestClientException e) {
