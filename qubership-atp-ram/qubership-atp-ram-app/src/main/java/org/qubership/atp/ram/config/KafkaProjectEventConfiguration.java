@@ -28,6 +28,8 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.CommonErrorHandler;
+import org.springframework.kafka.listener.DefaultErrorHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,11 +54,22 @@ public class KafkaProjectEventConfiguration {
         ConcurrentKafkaListenerContainerFactory<UUID, ProjectEvent> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(projectEventConsumerFactory());
-        factory.setCommonErrorHandler((e, consumerRecord) -> {
-            log.error("Error during kafka event processing in {}, consumerRecord: {}",
-                    KAFKA_PROJECT_EVENT_CONTAINER_FACTORY_NAME, consumerRecord, e);
-            throw new AtpKafkaListenerContainerFactoryException();
-        });
+
+        // Create error handler with default configuration.
+        //  The 2nd (optional) parameter is to set retry config,
+        //  For example:
+        //      - new FixedBackOff(1000L, 3L) // Timeout 1 second, 3 attempts max.
+        CommonErrorHandler commonErrorHandler =  new DefaultErrorHandler(
+                // recoverer - What to do after all retries are over
+                (record, exception) -> {
+                    log.error("Error during kafka event processing in {}, consumerRecord: {}",
+                            KAFKA_PROJECT_EVENT_CONTAINER_FACTORY_NAME,
+                            record,
+                            exception);
+                    throw new AtpKafkaListenerContainerFactoryException();
+                });
+
+        factory.setCommonErrorHandler(commonErrorHandler);
         return factory;
     }
 
