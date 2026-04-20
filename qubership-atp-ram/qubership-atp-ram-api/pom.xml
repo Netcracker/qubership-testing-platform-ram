@@ -280,6 +280,22 @@
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <version>7.9.0</version>
+                <configuration>
+                    <generatorName>spring</generatorName>
+                    <output>${project.build.directory}/generated-sources</output>
+                    <modelNameSuffix>Dto</modelNameSuffix>
+                    <skipOverwrite>false</skipOverwrite>
+                    <generateModelTests>false</generateModelTests>
+                    <skipValidateSpec>true</skipValidateSpec> <!-- may be, to be deleted -->
+                    <configOptions>
+                        <useSpringBoot3>true</useSpringBoot3>
+                        <useJakartaEe>true</useJakartaEe>
+                        <java8>true</java8>
+                        <interfaceOnly>true</interfaceOnly>
+                        <useTags>true</useTags>
+                        <skipDefaultInterface>true</skipDefaultInterface>
+                    </configOptions>
+                </configuration>
                 <executions>
                     <execution>
                         <id>IntegrationControllerApi</id>
@@ -288,21 +304,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/catalogue/v1/integration-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/catalogue/v1/integration-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.clients.api.dto.catalogue</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -312,21 +316,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/catalogue/v1/project-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/catalogue/v1/project-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.clients.api.dto.catalogue</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -336,21 +328,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/catalogue/v1/test-case-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/catalogue/v1/test-case-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.clients.api.dto.catalogue</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -360,21 +340,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/catalogue/v1/test-plan-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/catalogue/v1/test-plan-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.clients.api.dto.catalogue</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -384,21 +352,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/catalogue/v1/test-scope-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/catalogue/v1/test-scope-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.clients.api.dto.catalogue</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -408,21 +364,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/catalogue/v1/test-scenario-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/catalogue/v1/test-scenario-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.clients.api.dto.catalogue</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -432,21 +376,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/catalogue/v1/label-template-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/catalogue/v1/label-template-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.clients.api.dto.catalogue</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -456,21 +388,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/catalogue/v1/label-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/catalogue/v1/label-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.clients.api.dto.catalogue</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -480,21 +400,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/catalogue/v1/issue-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/catalogue/v1/issue-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.clients.api.dto.catalogue</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -504,21 +412,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/catalogue/v1/execute-request-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/catalogue/v1/execute-request-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.clients.api.dto.catalogue</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -528,21 +424,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/environments/v1/openapi-environments-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/environments/v1/openapi-environments-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.clients.api.dto.environments.environment</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -552,21 +436,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/orchestrator/v1/process-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/orchestrator/v1/process-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.orchestrator.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.orchestrator.clients.dto</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
 
@@ -578,21 +450,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/dataset/v1/data-set-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/dataset/v1/data-set-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.dataset.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.dataset.clients.dto</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -602,21 +462,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${basedir}/src/main/resources/apispecs/api/dataset/v1/data-set-list-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/apispecs/api/dataset/v1/data-set-list-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.dataset.clients.api</apiPackage>
                             <modelPackage>org.qubership.atp.dataset.clients.dto</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>

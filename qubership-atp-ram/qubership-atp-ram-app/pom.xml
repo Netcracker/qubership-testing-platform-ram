@@ -36,6 +36,22 @@
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <version>7.9.0</version>
+                <configuration>
+                    <generatorName>spring</generatorName>
+                    <output>${project.build.directory}/generated-sources</output>
+                    <modelNameSuffix>Dto</modelNameSuffix>
+                    <skipOverwrite>false</skipOverwrite>
+                    <generateModelTests>false</generateModelTests>
+                    <skipValidateSpec>true</skipValidateSpec> <!-- may be, to be deleted -->
+                    <configOptions>
+                        <useSpringBoot3>true</useSpringBoot3>
+                        <useJakartaEe>true</useJakartaEe>
+                        <java8>true</java8>
+                        <interfaceOnly>true</interfaceOnly>
+                        <useTags>true</useTags>
+                        <skipDefaultInterface>true</skipDefaultInterface>
+                    </configOptions>
+                </configuration>
                 <executions>
                     <execution>
                         <id>history-changes-controller-v1.yaml</id>
@@ -44,21 +60,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/history-changes-controller-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/history-changes-controller-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.history</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -68,21 +72,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/jira-integration-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/jira-integration-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.jira</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -92,21 +84,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/akb-records-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/akb-records-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.akb</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
 
@@ -117,21 +97,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/atp-link-provider-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/atp-link-provider-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.link</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
 
@@ -142,21 +110,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/charts-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/charts-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.charts</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -166,21 +122,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/defects-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/defects-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.defects</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -190,21 +134,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/email-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/email-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.email</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -214,21 +146,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/email-subject-macros-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/email-subject-macros-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.email.subjectmacros</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -238,21 +158,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/environments-info-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/environments-info-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.environments</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -262,21 +170,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/execution-request-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/execution-request-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.execution</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -286,21 +182,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/execution-history-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/execution-history-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.execution</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -310,21 +194,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/fail-pattern-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/fail-pattern-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.failpattern</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -334,21 +206,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/fdr-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/fdr-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.fdr</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -358,21 +218,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/global-akb-records-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/global-akb-records-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.akb.global</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -382,21 +230,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/labels-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/labels-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.labels</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -406,21 +242,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/log-record-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/log-record-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.logrecord</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -430,21 +254,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/log-records-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/log-records-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.logrecords</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -454,21 +266,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/mail-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/mail-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.mail</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -478,21 +278,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/manual-root-cause-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/manual-root-cause-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.rootcause</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -502,21 +290,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/projects-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/projects-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.projects</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -526,21 +302,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/properties-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/properties-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.properties</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -550,21 +314,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/report-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/report-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.report</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -574,21 +326,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/report-templates-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/report-templates-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.report.templates</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -598,21 +338,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/rerun-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/rerun-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.rerun</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -622,21 +350,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/root-cause-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/root-cause-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.rootcause</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -646,21 +362,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/test-plans-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/test-plans-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.testplans</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -670,22 +374,12 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/test-run-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/test-run-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.testrun</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
                             <configOptions>
                                 <useOneOfInterfaces>true</useOneOfInterfaces>
                                 <addOneOfInterfaceImports>true</addOneOfInterfaceImports>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
                             </configOptions>
                         </configuration>
                     </execution>
@@ -696,21 +390,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/timestamp-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/timestamp-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.timestamp</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -720,21 +402,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/tool-config-info-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/tool-config-info-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.tool.config.info</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -744,21 +414,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/tree-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/tree-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.tree</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -768,21 +426,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/tsg-projects-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/tsg-projects-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.tsg.projects</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -792,21 +438,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/user-setting-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/user-setting-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.user.setting</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -816,21 +450,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/validation-label-config-template-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/validation-label-config-template-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.label.config.template.validation</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -840,27 +462,16 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpec>
-                                ${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/widget-config-template-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.parent.parent.basedir}/qubership-atp-ram-rest-openapi-specifications/v1/widget-config-template-v1.yaml</inputSpec>
                             <apiPackage>org.qubership.atp.ram.controllers.api</apiPackage>
                             <modelPackage>org.qubership.atp.ram.controllers.api.dto.widget.config.template</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <skipOverwrite>false</skipOverwrite>
-                            <generateModelTests>false</generateModelTests>
-                            <configOptions>
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <useTags>true</useTags>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
+
     <artifactId>qubership-atp-ram-app</artifactId>
 
     <dependencies>
