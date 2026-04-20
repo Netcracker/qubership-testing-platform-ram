@@ -33,6 +33,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.ram.dto.request.DefectCreateRequest;
 import org.qubership.atp.ram.dto.response.DefectPredefineResponse;
 import org.qubership.atp.ram.dto.response.TestCaseLabelResponse;
@@ -74,7 +75,6 @@ import org.qubership.atp.ram.services.TestRunService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import freemarker.template.Template;
 import lombok.RequiredArgsConstructor;
@@ -282,7 +282,7 @@ public class DefectPredefineService {
         return logRecordService
                 .getAllLogRecordsByTestRunIds(Collections.singletonList(testRunId))
                 .stream()
-                .filter(logRecord -> !ObjectUtils.isEmpty(logRecord.getLinkToSvp()))
+                .filter(logRecord -> !StringUtils.isEmpty(logRecord.getLinkToSvp()))
                 .map(logRecord -> new Link("Link to SVP", logRecord.getLinkToSvp()))
                 .collect(Collectors.toList());
     }
@@ -325,7 +325,7 @@ public class DefectPredefineService {
         recalculateJiraTickets(issue, newTicket, testPlanId);
 
         String errorMessage = response.getErrorMessage();
-        if (!ObjectUtils.isEmpty(errorMessage)) {
+        if (!StringUtils.isEmpty(errorMessage)) {
             final String newTicketKey = newTicket.getKey();
             log.error("Jira issue created with key '{}', but the reporter's change failed. Reason: {}",
                     newTicketKey, errorMessage);
@@ -336,7 +336,7 @@ public class DefectPredefineService {
     }
 
     private String validateSummary(String summary) {
-        if (!ObjectUtils.isEmpty(summary) && summary.length() > DEFECT_SUMMARY_MAX_LENGTH) {
+        if (!StringUtils.isEmpty(summary) && summary.length() > DEFECT_SUMMARY_MAX_LENGTH) {
             return summary
                     .replaceAll("\n", " ")
                     .replaceAll("\t", " ")

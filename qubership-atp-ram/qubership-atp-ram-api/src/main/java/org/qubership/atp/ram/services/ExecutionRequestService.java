@@ -40,6 +40,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.qubership.atp.auth.springbootstarter.exceptions.AtpEntityNotFoundException;
@@ -105,7 +106,6 @@ import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
 
 import com.google.common.base.Splitter;
 import jakarta.annotation.PostConstruct;
@@ -1292,7 +1292,7 @@ public class ExecutionRequestService extends CrudService<ExecutionRequest> {
         log.debug("Found failed log records: {}", allFailedLogRecords.size());
         Pattern pattern = Pattern.compile(request.getRegex());
         List<LogRecord> matchedLogRecords = allFailedLogRecords.stream()
-                .filter(logRecord -> !ObjectUtils.isEmpty(logRecord.getMessage()))
+                .filter(logRecord -> !StringUtils.isEmpty(logRecord.getMessage()))
                 .filter(logRecord -> pattern.matcher(logRecord.getMessage()).find())
                 .sorted(Comparator.comparing(LogRecord::getMessage))
                 .collect(Collectors.toList());

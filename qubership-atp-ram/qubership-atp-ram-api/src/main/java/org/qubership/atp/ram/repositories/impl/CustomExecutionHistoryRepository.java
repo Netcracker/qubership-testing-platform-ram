@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.ram.dto.request.TestCaseExecutionHistorySearchRequest;
 import org.qubership.atp.ram.dto.response.PaginationResponse;
 import org.qubership.atp.ram.enums.TestingStatuses;
@@ -35,7 +36,6 @@ import org.springframework.data.mongodb.core.aggregation.GroupOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -247,7 +247,7 @@ public class CustomExecutionHistoryRepository implements FieldConstants {
 
         final String sort = request.getSort();
         final String direction = request.getDirection();
-        if (!ObjectUtils.isEmpty(sort) && !ObjectUtils.isEmpty(direction)) {
+        if (!StringUtils.isEmpty(sort) && !StringUtils.isEmpty(direction)) {
             aggregationOperations.add(
                     Aggregation.sort(Sort.Direction.fromString(direction), sort)
             );

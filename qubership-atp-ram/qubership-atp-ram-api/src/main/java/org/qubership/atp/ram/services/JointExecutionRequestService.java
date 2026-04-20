@@ -33,6 +33,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.qubership.atp.ram.clients.api.dto.environments.environment.SystemFullVer1ViewDto;
@@ -63,7 +64,6 @@ import org.qubership.atp.ram.utils.StreamUtils;
 import org.qubership.atp.ram.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -157,8 +157,8 @@ public class JointExecutionRequestService {
     public boolean isJointExecutionRequest(ExecutionRequest executionRequest) {
         String jointExecutionKey = executionRequest.getJointExecutionKey();
         log.info("Checked joint execution key for ER id: {} with ststus is {}", executionRequest.getUuid(),
-                !ObjectUtils.isEmpty(jointExecutionKey) ? "joint ER" : "not joint");
-        return !ObjectUtils.isEmpty(jointExecutionKey);
+                !StringUtils.isEmpty(jointExecutionKey) ? "joint ER" : "not joint");
+        return !StringUtils.isEmpty(jointExecutionKey);
     }
 
     /**

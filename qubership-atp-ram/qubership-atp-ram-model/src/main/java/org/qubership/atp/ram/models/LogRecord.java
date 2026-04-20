@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.ram.dto.response.MessageParameter;
 import org.qubership.atp.ram.enums.ExecutionStatuses;
 import org.qubership.atp.ram.enums.TestingStatuses;
@@ -44,7 +45,6 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.util.ObjectUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -183,7 +183,7 @@ public class LogRecord extends RamObject {
             this.executionStatus = logRecord.getExecutionStatus();
             this.editorMetaInfo = logRecord.getMetaInfo() == null
                     || logRecord.getMetaInfo().getEditorMetaInfo() == null
-                    || ObjectUtils.isEmpty(logRecord.getMetaInfo().getEditorMetaInfo().getEngineType())
+                    || StringUtils.isEmpty(logRecord.getMetaInfo().getEditorMetaInfo().getEngineType())
                     ? null
                     : logRecord.getMetaInfo().getEditorMetaInfo();
             this.customLinks = logRecord.getCustomLinks();

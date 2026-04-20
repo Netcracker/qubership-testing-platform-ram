@@ -30,6 +30,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.ram.RamConstants;
 import org.qubership.atp.ram.config.ApiPath;
 import org.qubership.atp.ram.dto.response.LabelNodeReportResponse;
@@ -68,7 +69,6 @@ import org.qubership.atp.ram.services.WidgetConfigTemplateService;
 import org.qubership.atp.ram.utils.StreamUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -234,11 +234,11 @@ public class TestCasesWidgetModelBuilder extends AbstractWidgetModelBuilder {
 
         boolean isPassedRateUnknown = isNull(passedRate);
         boolean isIssuesUnknown = isEmpty(issues);
-        boolean isFailureReasonUnknown = ObjectUtils.isEmpty(failureReason);
+        boolean isFailureReasonUnknown = StringUtils.isEmpty(failureReason);
         boolean isFailedStepsPresent = !isEmpty(failedStep);
         boolean isLabelsPresent = !isEmpty(labels);
         boolean isJiraTicketPresent = !isNull(jiraTicket);
-        boolean isCommentPresent = !ObjectUtils.isEmpty(comment);
+        boolean isCommentPresent = !StringUtils.isEmpty(comment);
         boolean isTestingStatusUnknown = TestingStatusColor.UNKNOWN.equals(testRunNode.getTestingStatus());
         boolean isFirstStatusUnknown = TestingStatusColor.UNKNOWN.equals(testRunNode.getFirstStatus());
         boolean isFinalStatusUnknown = TestingStatusColor.UNKNOWN.equals(testRunNode.getFinalStatus());
@@ -443,7 +443,7 @@ public class TestCasesWidgetModelBuilder extends AbstractWidgetModelBuilder {
      * @return name of DS or null
      */
     private String getDatasetNameFromMap(Map<UUID, String> mapDatasetIdName, String dataSetId) {
-        if (!ObjectUtils.isEmpty(dataSetId) && !"null".equals(dataSetId)) {
+        if (!StringUtils.isEmpty(dataSetId) && !"null".equals(dataSetId)) {
             UUID key = UUID.fromString(dataSetId);
             if (mapDatasetIdName.containsKey(key)) {
                 return mapDatasetIdName.get(key);
@@ -483,7 +483,7 @@ public class TestCasesWidgetModelBuilder extends AbstractWidgetModelBuilder {
         List<UUID> dataSetsIds = testRuns.stream()
                 .map(testRunNodeResponse -> {
                     String dataSetId = testRunNodeResponse.getDataSetUrl();
-                    if (!ObjectUtils.isEmpty(dataSetId) && !"null".equals(dataSetId)) {
+                    if (!StringUtils.isEmpty(dataSetId) && !"null".equals(dataSetId)) {
                         return UUID.fromString(dataSetId);
                     }
                     return null;

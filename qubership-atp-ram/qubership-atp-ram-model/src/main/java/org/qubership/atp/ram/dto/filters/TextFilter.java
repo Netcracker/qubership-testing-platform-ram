@@ -18,9 +18,9 @@ package org.qubership.atp.ram.dto.filters;
 
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.ram.exceptions.executionrequests.RamExecutionRequestUnexpectedFilterTypeException;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.util.ObjectUtils;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,7 +38,7 @@ public class TextFilter extends AbstractFilter {
 
     @Override
     public Criteria buildFilterCriteriaForField(String field) {
-        if (ObjectUtils.isEmpty(value)) {
+        if (StringUtils.isEmpty(value)) {
             return null;
         }
         Pattern regex = getPattern();

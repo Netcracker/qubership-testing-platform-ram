@@ -22,13 +22,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.ram.dto.request.ValidationLabelConfigTemplateSearchRequest;
 import org.qubership.atp.ram.models.ValidationLabelConfigTemplate;
 import org.qubership.atp.ram.models.WidgetConfigTemplate;
 import org.qubership.atp.ram.repositories.ValidationLabelConfigTemplateRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,9 +57,9 @@ public class ValidationLabelConfigTemplateService extends CrudService<Validation
         final String name = searchRequest.getName();
         final UUID projectId = searchRequest.getProjectId();
 
-        if (!ObjectUtils.isEmpty(name) && nonNull(projectId)) {
+        if (!StringUtils.isEmpty(name) && nonNull(projectId)) {
             return repository.findAllByProjectIdAndNameContains(projectId, name);
-        } else if (!ObjectUtils.isEmpty(name)) {
+        } else if (!StringUtils.isEmpty(name)) {
             return repository.findAllByNameContains(name);
         } else if (nonNull(projectId)) {
             return repository.findAllByProjectId(projectId);
