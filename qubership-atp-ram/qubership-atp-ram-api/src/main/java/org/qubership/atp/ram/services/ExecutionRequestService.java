@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -39,8 +39,6 @@ import java.util.function.BiConsumer;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.annotation.PostConstruct;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -107,9 +105,10 @@ import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import com.google.common.base.Splitter;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -1122,7 +1121,7 @@ public class ExecutionRequestService extends CrudService<ExecutionRequest> {
 
                 }, () -> null);
         if (resultExecutionRequestConfig == null) {
-            String message = String.format("Error occurred while obtain config lock for execution request %s",
+            String message = "Error occurred while obtain config lock for execution request %s".formatted(
                     executionRequest.getUuid());
             log.error(message);
             throw new RuntimeException(message);
@@ -1293,7 +1292,7 @@ public class ExecutionRequestService extends CrudService<ExecutionRequest> {
         log.debug("Found failed log records: {}", allFailedLogRecords.size());
         Pattern pattern = Pattern.compile(request.getRegex());
         List<LogRecord> matchedLogRecords = allFailedLogRecords.stream()
-                .filter(logRecord -> !StringUtils.isEmpty(logRecord.getMessage()))
+                .filter(logRecord -> !ObjectUtils.isEmpty(logRecord.getMessage()))
                 .filter(logRecord -> pattern.matcher(logRecord.getMessage()).find())
                 .sorted(Comparator.comparing(LogRecord::getMessage))
                 .collect(Collectors.toList());

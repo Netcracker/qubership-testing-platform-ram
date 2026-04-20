@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singleton;
 import static java.util.Collections.singletonList;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -47,6 +47,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.TestRunsMock;
 import org.qubership.atp.ram.TreeConsoleDrawer;
 import org.qubership.atp.ram.dto.response.ExecutionRequestWidgetConfigTemplateResponse;
@@ -79,6 +80,7 @@ import org.qubership.atp.ram.utils.StreamUtils;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class TreeNodeServiceGetErTreeTest {
 
     private static final String
@@ -528,7 +530,7 @@ public class TreeNodeServiceGetErTreeTest {
                         expectedNodeUuids.contains(treeNode.getNodeType() == TreeNodeType.TEST_RUN_NODE
                                 ? ((TestRunTreeNode) treeNode).getTestRunId()
                                 : ((LogRecordTreeNode) treeNode).getLogRecordId()),
-                        String.format("Expected tree node %s wasn't included into result list.", treeNode)));
+                        "Expected tree node %s wasn't included into result list.".formatted(treeNode)));
     }
 
     /*

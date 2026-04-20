@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import org.qubership.atp.ram.models.WidgetConfigTemplate;
 import org.qubership.atp.ram.repositories.ValidationLabelConfigTemplateRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,9 +57,9 @@ public class ValidationLabelConfigTemplateService extends CrudService<Validation
         final String name = searchRequest.getName();
         final UUID projectId = searchRequest.getProjectId();
 
-        if (!StringUtils.isEmpty(name) && nonNull(projectId)) {
+        if (!ObjectUtils.isEmpty(name) && nonNull(projectId)) {
             return repository.findAllByProjectIdAndNameContains(projectId, name);
-        } else if (!StringUtils.isEmpty(name)) {
+        } else if (!ObjectUtils.isEmpty(name)) {
             return repository.findAllByNameContains(name);
         } else if (nonNull(projectId)) {
             return repository.findAllByProjectId(projectId);

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package org.qubership.atp.ram.services;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -70,7 +70,7 @@ public class GridFsServiceTest {
         Mockito.when(lrRepository.findByUuid(Mockito.any())).thenReturn(logRecord);
         String er = "http://127.0.0.1:6800/common/uobject.jsp?object=1000";
         fileData.setContentType("image/png");
-        fileData.setContent(Files.readAllBytes(Paths.get(RESOURCES_DIRECTORY, SNAPSHOT_PNG)));
+        fileData.setContent(Files.readAllBytes(Path.of(RESOURCES_DIRECTORY, SNAPSHOT_PNG)));
         fileData.setSource("http://127.0.0.1:6800/common/uobject.jsp?object=1000");
 
         SourceShot sourceShot = gridFsService.getScreenShot(Mockito.any());
@@ -100,7 +100,7 @@ public class GridFsServiceTest {
         logRecord.setUuid(logRecordId);
         String fileName = "test_name";
         fileData.setContentType("image/png");
-        fileData.setContent(Files.readAllBytes(Paths.get(RESOURCES_DIRECTORY, SNAPSHOT_PNG)));
+        fileData.setContent(Files.readAllBytes(Path.of(RESOURCES_DIRECTORY, SNAPSHOT_PNG)));
         // when
         Mockito.when(lrRepository.findByUuid(Mockito.any())).thenReturn(logRecord);
         RamLogRecordFileAsStringException actualException1 = Assertions.assertThrows(RamLogRecordFileAsStringException.class, () -> {
@@ -110,7 +110,7 @@ public class GridFsServiceTest {
             gridFsService.downloadFileIntoStringByName(logRecord.getUuid(), fileName);
         });
         // then
-        Assertions.assertEquals(String.format(RamLogRecordFileAsStringException.DEFAULT_MESSAGE, "", logRecordId), actualException1.getMessage());
-        Assertions.assertEquals(String.format(RamLogRecordFileAsStringException.DEFAULT_MESSAGE, fileName, logRecordId), actualException2.getMessage());
+        Assertions.assertEquals(RamLogRecordFileAsStringException.DEFAULT_MESSAGE.formatted("", logRecordId), actualException1.getMessage());
+        Assertions.assertEquals(RamLogRecordFileAsStringException.DEFAULT_MESSAGE.formatted(fileName, logRecordId), actualException2.getMessage());
     }
 }

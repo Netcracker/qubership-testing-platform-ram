@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -225,6 +225,6 @@ public class ExecutionRequestDetailsService extends CrudService<ExecutionRequest
     }
 
     private String generateErrorMsg(String message, String stackTrace) {
-        return String.format("%s\n\nRoot Cause of the Error:\n%s", message, stackTrace);
+        return "%s\n\nRoot Cause of the Error:\n%s".formatted(message, stackTrace);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -40,16 +40,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.annotation.Nullable;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-
 import org.qubership.atp.integration.configuration.model.MailRequest;
 import org.qubership.atp.integration.configuration.service.MailSenderService;
 import org.qubership.atp.ram.config.ApiPath;
@@ -66,10 +56,18 @@ import org.qubership.atp.ram.services.ExecutionRequestService;
 import org.qubership.atp.ram.services.RootCauseService;
 import org.qubership.atp.ram.services.TestPlansService;
 import org.qubership.atp.ram.services.TestRunService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import jakarta.annotation.Nullable;
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Multipart;
+import jakarta.mail.Session;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -94,7 +92,6 @@ public class ExecutionRequestReport {
     /**
      * Constructor.
      */
-    @Autowired
     public ExecutionRequestReport(ExecutionRequestService erService,
                                   TestRunService trService,
                                   TestPlansService testPlansService,

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -18,8 +18,6 @@ package org.qubership.atp.ram.service.rest.server.mongo;
 
 import java.util.UUID;
 
-import javax.validation.Valid;
-
 import org.qubership.atp.integration.configuration.configuration.AuditAction;
 import org.qubership.atp.ram.dto.request.DefectCreateRequest;
 import org.qubership.atp.ram.dto.response.DefectPredefineResponse;
@@ -32,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/api/defects")

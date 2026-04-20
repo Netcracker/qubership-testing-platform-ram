@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.dto.request.JointExecutionRequestSearchRequest;
 import org.qubership.atp.ram.dto.response.JointExecutionRequestSearchResponse;
 import org.qubership.atp.ram.enums.ExecutionStatuses;
@@ -58,6 +59,7 @@ import org.qubership.atp.ram.utils.StreamUtils;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 class JointExecutionRequestServiceTest {
 
     @InjectMocks

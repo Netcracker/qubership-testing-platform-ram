@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 import org.qubership.atp.ram.exceptions.executionrequests.RamExecutionRequestUnexpectedFilterTypeException;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,7 +38,7 @@ public class TextFilter extends AbstractFilter {
 
     @Override
     public Criteria buildFilterCriteriaForField(String field) {
-        if (StringUtils.isEmpty(value)) {
+        if (ObjectUtils.isEmpty(value)) {
             return null;
         }
         Pattern regex = getPattern();

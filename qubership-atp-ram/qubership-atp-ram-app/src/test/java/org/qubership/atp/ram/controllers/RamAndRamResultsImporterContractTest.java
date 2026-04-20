@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Isolated;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.client.OrchestratorFeignClient;
 import org.qubership.atp.ram.config.EmailConfigurationProvider;
 import org.qubership.atp.ram.config.MvcConfig;
@@ -75,7 +76,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
@@ -96,8 +97,9 @@ import lombok.extern.slf4j.Slf4j;
                 TestRunController2.class,
                 ExecutionRequestController.class,
         })
-@ContextConfiguration(classes = {RamAndRamResultsImporterContractTest.TestApp.class})
+@SpringJUnitConfig(classes = {RamAndRamResultsImporterContractTest.TestApp.class})
 @EnableAutoConfiguration
+@ExtendWith(MockitoExtension.class)
 @Import({JacksonAutoConfiguration.class,
         HttpMessageConvertersAutoConfiguration.class,
         MvcConfig.class,

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package org.qubership.atp.ram.service.direct;
 
 import org.qubership.atp.ram.repo.TimestampRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,7 +24,6 @@ public class TimestampService {
 
     private final TimestampRepository repository;
 
-    @Autowired
     public TimestampService(TimestampRepository repository) {
         this.repository = repository;
     }

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -25,12 +25,15 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.controllers.api.dto.history.HistoryItemTypeDto;
 import org.qubership.atp.ram.service.history.RestoreHistoryService;
 import org.qubership.atp.ram.service.history.RetrieveHistoryService;
 import org.qubership.atp.ram.service.history.VersioningHistoryService;
 
+@ExtendWith(MockitoExtension.class)
 class HistoryServiceFactoryTest {
 
     @InjectMocks

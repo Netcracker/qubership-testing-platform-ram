@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ import org.qubership.atp.ram.service.rest.dto.ExecutionInfoOptions;
 import org.qubership.atp.ram.service.rest.dto.Sector;
 import org.qubership.atp.ram.service.rest.dto.StatisticTrByRc;
 import org.qubership.atp.ram.service.rest.dto.StatisticTrByStatuses;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,7 +48,6 @@ public class ChartsController /*implements ChartsControllerApi */ {
     public static final Integer MIN_NUMBER_OF_ERS = 1;
     private final ChartsService chartsService;
 
-    @Autowired
     public ChartsController(ChartsService chartsService) {
         this.chartsService = chartsService;
     }

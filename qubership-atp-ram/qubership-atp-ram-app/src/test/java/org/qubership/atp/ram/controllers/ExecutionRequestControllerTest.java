@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Isolated;
 import org.qubership.atp.ram.config.MvcConfig;
 import org.qubership.atp.ram.dto.request.ExecutionRequestsForCompareScreenshotsRequest;
@@ -56,7 +55,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
@@ -64,7 +62,6 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import freemarker.template.Configuration;
 
-@ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = ExecutionRequestController.class,
         properties = {"spring.cloud.consul.config.enabled=false"})
 @ContextConfiguration(classes = {

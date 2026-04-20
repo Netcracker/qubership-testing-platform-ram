@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package org.qubership.atp.ram.services;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -153,7 +153,7 @@ public class PotService {
             archiveName = archive.getName();
 
             archiveContent = FileCopyUtils.copyToByteArray(archive);
-            Files.delete(Paths.get(archive.getAbsolutePath()));
+            Files.delete(Path.of(archive.getAbsolutePath()));
         } catch (IOException exception) {
             log.error("Failed to create POT files archive data", exception);
             throw new RamPotFilesArchiveDataCreationException();

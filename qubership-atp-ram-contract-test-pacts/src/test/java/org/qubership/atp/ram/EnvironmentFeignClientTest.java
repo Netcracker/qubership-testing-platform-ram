@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -23,10 +23,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.junit.Assert;
 import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.migrationsupport.rules.ExternalResourceSupport;
 import org.qubership.atp.auth.springbootstarter.config.FeignConfiguration;
 import org.qubership.atp.ram.client.EnvironmentFeignClient;
 import org.qubership.atp.ram.clients.api.dto.environments.environment.BaseSearchRequestDto;
@@ -40,9 +41,8 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import au.com.dius.pact.consumer.dsl.DslPart;
 import au.com.dius.pact.consumer.dsl.PactDslJsonArray;
@@ -54,10 +54,9 @@ import au.com.dius.pact.consumer.junit.PactVerification;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 
-@RunWith(SpringRunner.class)
-
 @EnableFeignClients(clients = {EnvironmentFeignClient.class})
-@ContextConfiguration(classes = {EnvironmentFeignClientTest.TestApp.class})
+@ExtendWith(ExternalResourceSupport.class)
+@SpringJUnitConfig(classes = {EnvironmentFeignClientTest.TestApp.class})
 @Import({JacksonAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class, FeignConfiguration.class,
         FeignAutoConfiguration.class})
 @TestPropertySource(
@@ -81,16 +80,16 @@ public class EnvironmentFeignClientTest {
 
         ResponseEntity<List<EnvironmentDto>> result1 =
                 environmentFeignClient.findBySearchRequest(searchRequestDto, false);
-        Assert.assertEquals(result1.getStatusCode().value(), 200);
-        Assert.assertTrue(result1.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(result1.getStatusCode().value(), 200);
+        Assertions.assertTrue(result1.getHeaders().get("Content-Type").contains("application/json"));
 
         ResponseEntity<EnvironmentFullVer1ViewDto> result2 = environmentFeignClient.getEnvironment(id, true);
-        Assert.assertEquals(result2.getStatusCode().value(), 200);
-        Assert.assertTrue(result2.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(result2.getStatusCode().value(), 200);
+        Assertions.assertTrue(result2.getHeaders().get("Content-Type").contains("application/json"));
 
         ResponseEntity<String> result3 = environmentFeignClient.getEnvironmentNameById(id);
-        Assert.assertEquals(result3.getStatusCode().value(), 200);
-        Assert.assertTrue(result3.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(result3.getStatusCode().value(), 200);
+        Assertions.assertTrue(result3.getHeaders().get("Content-Type").contains("text/plain"));
     }
 
     @Pact(consumer = "atp-ram")

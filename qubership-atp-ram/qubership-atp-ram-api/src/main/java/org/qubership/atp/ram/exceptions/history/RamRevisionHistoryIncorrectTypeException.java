@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -26,6 +26,6 @@ public class RamRevisionHistoryIncorrectTypeException extends AtpException {
     public static final String DEFAULT_MESSAGE = "History for Entity type = %s is not supported";
 
     public RamRevisionHistoryIncorrectTypeException(String itemType) {
-        super(String.format(DEFAULT_MESSAGE, itemType));
+        super(DEFAULT_MESSAGE.formatted(itemType));
     }
 }

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -20,8 +20,6 @@ import java.sql.Timestamp;
 import java.util.Queue;
 import java.util.UUID;
 
-import javax.annotation.Nullable;
-
 import org.qubership.atp.ram.enums.TestingStatuses;
 import org.qubership.atp.ram.models.ExecutionRequest;
 import org.qubership.atp.ram.models.LogRecord;
@@ -32,6 +30,7 @@ import org.qubership.atp.ram.spring.ServiceProvider;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Queues;
+import jakarta.annotation.Nullable;
 
 public class TestDataBuilder extends ServiceProvider {
 

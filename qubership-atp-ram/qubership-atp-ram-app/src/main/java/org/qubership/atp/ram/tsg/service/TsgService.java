@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -45,7 +45,6 @@ import org.qubership.atp.ram.tsg.model.TsgFdr;
 import org.qubership.atp.ram.tsg.senders.Sender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.ParameterizedTypeReference;
@@ -88,7 +87,6 @@ public class TsgService {
     /**
      * Constructor.
      */
-    @Autowired
     public TsgService(ExecutionRequestService executionRequestService,
                       TestRunService testRunService,
                       LogRecordService logRecordService,
@@ -259,8 +257,10 @@ public class TsgService {
                             new ParameterizedTypeReference<List<FdrResponse>>() {
                             });
             if (responseEntity.getStatusCode() == HttpStatus.OK) {
-                LOG.trace("FDR for TR: {} was sent to {} "
-                                + "\nResponse from TSG Receiver: {}", tr.getUuid(), tsgFdrEndpoint,
+                LOG.trace("""
+                                FDR for TR: {} was sent to {}\s
+                                Response from TSG Receiver: {}\
+                                """, tr.getUuid(), tsgFdrEndpoint,
                         responseEntity.toString());
                 List<FdrResponse> fdrResponseList = responseEntity.getBody();
                 if (fdrResponseList != null) {
@@ -274,8 +274,10 @@ public class TsgService {
                 tr.setFdrWasSent(true);
                 testRunService.save(tr);
             } else {
-                LOG.error("FDR for TR: {} was not sent to {} "
-                                + "\nResponse from TSG Receiver: {}", tr.getUuid(), tsgFdrEndpoint,
+                LOG.error("""
+                                FDR for TR: {} was not sent to {}\s
+                                Response from TSG Receiver: {}\
+                                """, tr.getUuid(), tsgFdrEndpoint,
                         responseEntity.toString());
             }
         }

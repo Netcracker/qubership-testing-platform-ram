@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -36,11 +36,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
-import javax.annotation.PostConstruct;
-import javax.validation.constraints.NotNull;
-
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.qubership.atp.auth.springbootstarter.exceptions.AtpIllegalNullableArgumentException;
 import org.qubership.atp.auth.springbootstarter.utils.ExceptionUtils;
@@ -113,6 +109,9 @@ import org.springframework.stereotype.Service;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.PostConstruct;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -354,8 +353,8 @@ public class LogRecordService extends CrudService<LogRecord> {
         logRecord.setBrowserConsoleLogsPresent(browserConsoleLogService.isBrowserConsoleLogsPresent(logRecordId));
         logRecord.setMessageParametersPresent(isMessageParametersPresent(logRecordId));
 
-        if (logRecord instanceof UiLogRecord) {
-            setBrowserMonitoringLink((UiLogRecord) logRecord);
+        if (logRecord instanceof UiLogRecord record) {
+            setBrowserMonitoringLink(record);
         }
         return logRecord;
     }

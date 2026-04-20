@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package org.qubership.atp.ram.logging.services;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -87,7 +87,7 @@ public class ProjectLoggingServiceTest {
 
         when(projectsRepository.findByName(projectName)).thenReturn(null);
 
-        String errorMessage = String.format(AtpEntityNotFoundException.DEFAULT_REF_ID_MESSAGE, "Project", "name", projectName);
+        String errorMessage = AtpEntityNotFoundException.DEFAULT_REF_ID_MESSAGE.formatted("Project", "name", projectName);
         try {
             projectLoggingService.findByUuidNameOrCreateNew(request);
         } catch (Exception e) {

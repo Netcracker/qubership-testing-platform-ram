@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -183,7 +183,7 @@ public class LogRecord extends RamObject {
             this.executionStatus = logRecord.getExecutionStatus();
             this.editorMetaInfo = logRecord.getMetaInfo() == null
                     || logRecord.getMetaInfo().getEditorMetaInfo() == null
-                    || StringUtils.isEmpty(logRecord.getMetaInfo().getEditorMetaInfo().getEngineType())
+                    || ObjectUtils.isEmpty(logRecord.getMetaInfo().getEditorMetaInfo().getEngineType())
                     ? null
                     : logRecord.getMetaInfo().getEditorMetaInfo();
             this.customLinks = logRecord.getCustomLinks();

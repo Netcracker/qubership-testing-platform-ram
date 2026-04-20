@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.dto.response.ContextVariablesResponse;
 import org.qubership.atp.ram.enums.ContextVariablesActiveTab;
 import org.qubership.atp.ram.models.logrecords.parts.ContextVariable;
@@ -40,6 +41,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class LogRecordContextVariableServiceTest {
 
     private static final String PARAM_NAME     = "name",      PARAM_NAME_BEFORE_VALUE     = "before_name",   PARAM_NAME_AFTER_VALUE     = "after_name",

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.modelmapper.ModelMapper;
 import org.qubership.atp.ram.clients.api.dto.catalogue.JiraIssueCreateRequestDto;
 import org.qubership.atp.ram.config.MvcConfig;
@@ -31,10 +30,8 @@ import org.qubership.atp.ram.models.JiraComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest(classes = {JacksonAutoConfiguration.class, MvcConfig.class})
-@ExtendWith(SpringExtension.class)
 public class DtoConvertServiceTest {
 
     private DtoConvertService dtoConvertService;

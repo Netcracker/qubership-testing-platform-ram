@@ -3,7 +3,7 @@
     <parent>
         <artifactId>qubership-atp-ram-aggregator</artifactId>
         <groupId>org.qubership.atp.ram</groupId>
-        <version>2.2.214-SNAPSHOT</version>
+        <version>3.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>qubership-atp-ram</artifactId>
@@ -24,7 +24,7 @@
             -Djunit.jupiter.execution.parallel.mode.classes.default=concurrent
             -Dfile.encoding=${project.build.sourceEncoding}
         </tests.argLine>
-        <springdoc.version>1.7.0</springdoc.version>
+        <springdoc.version>2.1.0</springdoc.version>
         <google.guava.version>33.0.0-jre</google.guava.version>
         <hazelcast-all.version>4.2.8</hazelcast-all.version>
         <hazelcast.version>5.3.5</hazelcast.version>
@@ -34,7 +34,7 @@
         <aspectj.version>1.9.6</aspectj.version>
         <tika.core.version>3.2.2</tika.core.version>
 
-        <mockito.all.version>3.12.4</mockito.all.version>
+        <mockito.all.version>4.11.0</mockito.all.version>
         <thoughtworks.xstream.version>1.4.21</thoughtworks.xstream.version>
         <commons.version>2.14.0</commons.version>
         <jettison.version>1.5.4</jettison.version>
@@ -43,9 +43,9 @@
         <io.undertow.undertow-core.version>2.2.39.Final</io.undertow.undertow-core.version>
         <tomcat.embed.version>9.0.110</tomcat.embed.version>
 
-        <atp.common.version>0.0.47</atp.common.version>
-        <atp-integration.version>0.2.42</atp-integration.version>
-        <atp.ei.lib.node>0.2.46</atp.ei.lib.node>
+        <atp.common.version>1.0.0-SNAPSHOT</atp.common.version>
+        <atp-integration.version>1.0.0-SNAPSHOT</atp-integration.version>
+        <atp.ei.lib.node>1.0.0-SNAPSHOT</atp.ei.lib.node>
         <atp.common.auditing.mongo>0.0.10</atp.common.auditing.mongo>
 
         <atp.orchestrator.contract.test.pact.version>0.3.67</atp.orchestrator.contract.test.pact.version>
@@ -75,13 +75,8 @@
             </dependency>
             <dependency>
                 <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk15on</artifactId>
-                <version>1.67</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-beanutils</groupId>
-                <artifactId>commons-beanutils</artifactId>
-                <version>1.11.0</version>
+                <artifactId>bcprov-jdk15to18</artifactId>
+                <version>1.84</version>
             </dependency>
             <dependency>
                 <groupId>org.xerial.snappy</groupId>
@@ -91,19 +86,19 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
-                <version>5.3.34</version>
+                <version>6.1.21</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-bom</artifactId>
-                <version>5.8.11</version>
+                <version>6.3.10</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.kafka</groupId>
                 <artifactId>spring-kafka</artifactId>
-                <version>2.9.11</version>
+                <version>3.3.3</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.xnio</groupId>
@@ -153,12 +148,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>${mockito.all.version}</version>
-                <scope>test</scope>
-            </dependency>
 
             <!--
             <dependency>
@@ -204,25 +193,20 @@
             </dependency>
 
             <dependency>
-                <groupId>javax.mail</groupId>
-                <artifactId>javax.mail-api</artifactId>
-                <version>1.6.2</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sun.mail</groupId>
-                <artifactId>javax.mail</artifactId>
-                <version>1.6.2</version>
+                <groupId>jakarta.mail</groupId>
+                <artifactId>jakarta.mail-api</artifactId>
+                <version>2.0.2</version>
             </dependency>
 
             <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>4.0.0</version>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>5.0.0</version>
             </dependency>
             <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>2.0.1.Final</version>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>3.0.2</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -242,7 +226,7 @@
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
-                <version>4.5.5</version>
+                <version>4.5.14</version>
             </dependency>
 
             <dependency>
@@ -251,7 +235,7 @@
                 <version>4.5.5</version>
             </dependency>
             <dependency>
-                <groupId>org.hibernate</groupId>
+                <groupId>org.hibernate.orm</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>6.0.20.Final</version>
             </dependency>
@@ -303,7 +287,7 @@
             </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-ui</artifactId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc.version}</version>
             </dependency>
 
@@ -386,11 +370,6 @@
                 <version>1.2.13</version>
             </dependency>
             <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-core</artifactId>
-                <version>1.2.13</version>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.kafka</groupId>
                 <artifactId>kafka-clients</artifactId>
                 <version>3.9.2</version>
@@ -404,11 +383,6 @@
                         <artifactId>lz4-java</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>at.yawk.lz4</groupId>
-                <artifactId>lz4-java</artifactId>
-                <version>1.10.1</version>
             </dependency>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
@@ -483,10 +457,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
+                <version>3.15.0</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.source}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <annotationProcessorPaths>
                         <path>
@@ -505,6 +477,7 @@
                             <version>0.2.0</version>
                         </path>
                     </annotationProcessorPaths>
+                    <release>${java.version}</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -578,7 +551,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.0</version>
+                <version>3.1.2</version>
                 <configuration>
                     <argLine>${tests.argLine}</argLine>
                     <additionalClasspathElements>

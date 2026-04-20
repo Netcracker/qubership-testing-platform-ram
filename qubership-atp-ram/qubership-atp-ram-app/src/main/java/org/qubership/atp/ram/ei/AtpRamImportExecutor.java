@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -281,7 +281,7 @@ public class AtpRamImportExecutor implements ImportExecutor {
     private void checkDuplicateNameForNewRootCauses(RootCause rootCause, UUID targetProjectId, Set<String> result) {
         if (rootCauseService.isNameUsed(rootCause, targetProjectId)) {
             String message =
-                    String.format("The %s with name '%s' already exists. New one will be rename to '%s Copy'",
+                    "The %s with name '%s' already exists. New one will be rename to '%s Copy'".formatted(
                             rootCause.getClass().getSimpleName(), rootCause.getName(), rootCause.getName());
             log.info(message);
             result.add(message);

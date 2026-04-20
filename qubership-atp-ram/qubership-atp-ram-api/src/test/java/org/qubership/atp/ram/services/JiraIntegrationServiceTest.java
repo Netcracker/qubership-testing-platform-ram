@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 package org.qubership.atp.ram.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,8 +34,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.qubership.atp.ram.EnvironmentsInfoMock;
 import org.qubership.atp.ram.ExecutionRequestsMock;
@@ -53,6 +53,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class JiraIntegrationServiceTest {
 
     @Mock
@@ -77,7 +78,6 @@ public class JiraIntegrationServiceTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(jiraIntegrationService);
         ReflectionTestUtils.setField(jiraIntegrationService, // inject into this object
                 "catalogueUrl", // assign to this field
                 catalogueUrl); // object to be injected
@@ -234,10 +234,12 @@ public class JiraIntegrationServiceTest {
                 + "?node=" + lastTestRun.getUuid());
         expectedTestRunToJiraInfo.setTestCaseId(lastTestRun.getTestCaseId());
         expectedTestRunToJiraInfo.setExecutionRequestId(lastTestRun.getExecutionRequestId());
-        expectedTestRunToJiraInfo.setEnvironmentInfo("||Environment Name|| Urls|| Version||\n" +
-                "|qa1|[qa1.some-domain.com, qa1.dev.some-domain.com]|qa1Build|\n" +
-                "|qa2|[qa2.some-domain.com, qa2.dev.some-domain.com]|qa2Build|\n" +
-                "|qa3|[qa3.some-domain.com, qa3.dev.some-domain.com]|-|\n");
+        expectedTestRunToJiraInfo.setEnvironmentInfo("""
+                ||Environment Name|| Urls|| Version||
+                |qa1|[qa1.some-domain.com, qa1.dev.some-domain.com]|qa1Build|
+                |qa2|[qa2.some-domain.com, qa2.dev.some-domain.com]|qa2Build|
+                |qa3|[qa3.some-domain.com, qa3.dev.some-domain.com]|-|
+                """);
         return expectedTestRunToJiraInfo;
     }
 

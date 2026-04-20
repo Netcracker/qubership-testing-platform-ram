@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -26,8 +26,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.qubership.atp.ram.RamConstants;
 import org.qubership.atp.ram.dto.response.LabelNodeReportResponse;
 import org.qubership.atp.ram.dto.response.LabelNodeReportResponse.TestRunNodeResponse;
@@ -38,6 +36,7 @@ import org.qubership.atp.ram.models.TestCaseWidgetReportRequest;
 import org.springframework.stereotype.Service;
 
 import com.opencsv.CSVWriter;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -73,7 +72,7 @@ public class ReportExportService {
         final String executionRequestName = executionRequest.getName().replaceAll(SPACE, UNDERSCORE);
         final String fileName = TEST_CASES_CSV_FILE_NAME_SUFFIX + executionRequestName + CSV_EXT;
 
-        response.setHeader(CONTENT_DISPOSITION, String.format(ATTACHMENT_HEADER_NAME, fileName));
+        response.setHeader(CONTENT_DISPOSITION, ATTACHMENT_HEADER_NAME.formatted(fileName));
         response.setHeader(ACCESS_CONTROL_EXPOSE_HEADERS, CONTENT_DISPOSITION);
 
         try (CSVWriter writer = new CSVWriter(response.getWriter(), CSV_EXPORT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,

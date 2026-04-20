@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -26,6 +26,6 @@ public class RamLabelTemplateMultipleOneLevelNodeInclusionException extends AtpE
     public static final String DEFAULT_MESSAGE = "Found multiple one-level label node inclusions: %s";
 
     public RamLabelTemplateMultipleOneLevelNodeInclusionException(String inclusionNames) {
-        super(String.format(DEFAULT_MESSAGE, inclusionNames));
+        super(DEFAULT_MESSAGE.formatted(inclusionNames));
     }
 }

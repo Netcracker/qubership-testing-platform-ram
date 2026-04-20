@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@
 
 package org.qubership.atp.ram.converters.history;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.qubership.atp.ram.controllers.api.dto.history.AbstractCompareEntityDto;
 import org.qubership.atp.ram.models.DateAuditorEntity;
+
+import jakarta.annotation.PostConstruct;
 
 public abstract class AbstractVersioningMapper<S extends DateAuditorEntity, D extends AbstractCompareEntityDto>
         extends AbstractMapper<S, D> {

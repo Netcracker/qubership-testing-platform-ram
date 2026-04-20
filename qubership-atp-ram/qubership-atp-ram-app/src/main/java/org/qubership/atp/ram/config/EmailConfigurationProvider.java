@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import org.qubership.atp.ram.services.ExecutionRequestService;
 import org.qubership.atp.ram.services.RootCauseService;
 import org.qubership.atp.ram.services.TestPlansService;
 import org.qubership.atp.ram.services.TestRunService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -57,7 +56,6 @@ public class EmailConfigurationProvider {
      * @param trService        {@link TestRunService}
      * @param testPlansService {@link TestPlansService}
      */
-    @Autowired
     public EmailConfigurationProvider(ExecutionRequestService erService,
                                       TestRunService trService,
                                       TestPlansService testPlansService,

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ public class FilesDownloadHelper {
      */
     public static HttpHeaders addDownloadToFileSystemHeaders(String fileName) {
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add(CONTENT_DISPOSITION, String.format("attachment; filename=\"%s\"", fileName));
+        responseHeaders.add(CONTENT_DISPOSITION, "attachment; filename=\"%s\"".formatted(fileName));
         responseHeaders.add(ACCESS_CONTROL_EXPOSE_HEADERS, CONTENT_DISPOSITION);
         return responseHeaders;
     }

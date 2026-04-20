@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -23,22 +23,22 @@ import static org.mockito.Mockito.when;
 
 import java.util.UUID;
 
-import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.rules.ExpectedException;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.exceptions.reporttemplates.RamReportTemplateAlreadyExistsException;
 import org.qubership.atp.ram.models.ReportTemplate;
 import org.qubership.atp.ram.repositories.ReportTemplatesRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class ReportTemplatesServiceTest {
 
     @InjectMocks
@@ -49,9 +49,6 @@ public class ReportTemplatesServiceTest {
 
     @Captor
     private ArgumentCaptor<ReportTemplate> reportTemplateArgumentCaptor;
-
-    @Rule
-    public ExpectedException exceptionRule = ExpectedException.none();
 
     private UUID projectId;
     private String reportTemplateName;
@@ -97,9 +94,8 @@ public class ReportTemplatesServiceTest {
         when(repository.existsByNameAndProjectId(reportTemplateName, projectId)).thenReturn(true);
 
         // when
-        Throwable e = Assertions.assertThrows(RamReportTemplateAlreadyExistsException.class, () -> {
-            service.save(reportTemplate);
-        });
+        Throwable e = Assertions.assertThrows(RamReportTemplateAlreadyExistsException.class, () ->
+            service.save(reportTemplate));
         Assertions.assertEquals("Report template with provided name 'CPQ report template' already exists in the project", e.getMessage());
     }
 }

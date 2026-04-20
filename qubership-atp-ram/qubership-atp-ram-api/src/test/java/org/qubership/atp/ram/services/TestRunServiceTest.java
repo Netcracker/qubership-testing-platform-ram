@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.qubership.atp.ram.enums.ExecutionStatuses.FINISHED;
 import static org.qubership.atp.ram.enums.ExecutionStatuses.IN_PROGRESS;
@@ -73,6 +73,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.qubership.atp.ram.ExecutionRequestsMock;
 import org.qubership.atp.ram.LogRecordMock;
@@ -128,6 +129,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
 
 @ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class TestRunServiceTest {
 
     private final ModelMapper modelMapper = new ModelMapper();
@@ -688,7 +690,7 @@ public class TestRunServiceTest {
 
         testRunService.updTestingStatusHard(testRun.getUuid(), FAILED);
 
-        verifyZeroInteractions(testCaseService);
+        verifyNoInteractions(testCaseService);
         Assertions.assertEquals(FAILED, testRun.getTestingStatus());
     }
 

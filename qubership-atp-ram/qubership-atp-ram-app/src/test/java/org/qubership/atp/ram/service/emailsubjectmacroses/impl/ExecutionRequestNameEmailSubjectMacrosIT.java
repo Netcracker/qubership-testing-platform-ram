@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -19,15 +19,12 @@ package org.qubership.atp.ram.service.emailsubjectmacroses.impl;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.qubership.atp.ram.dto.response.ExecutionSummaryResponse;
 import org.qubership.atp.ram.models.ExecutionRequest;
 import org.qubership.atp.ram.service.emailsubjectmacros.impl.ExecutionRequestNameEmailSubjectMacros;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = ExecutionRequestNameEmailSubjectMacros.class,
         webEnvironment = SpringBootTest.WebEnvironment.NONE,
         properties = {"spring.cloud.consul.config.enabled=false"})

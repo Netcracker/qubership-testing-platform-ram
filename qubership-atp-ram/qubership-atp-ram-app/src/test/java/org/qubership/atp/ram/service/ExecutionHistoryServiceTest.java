@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -26,11 +26,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.dto.request.TestCaseExecutionHistorySearchRequest;
 import org.qubership.atp.ram.dto.response.Environment;
 import org.qubership.atp.ram.dto.response.PaginationResponse;
@@ -40,6 +40,7 @@ import org.qubership.atp.ram.repositories.impl.CustomExecutionHistoryRepository;
 import org.qubership.atp.ram.services.EnvironmentsService;
 import org.qubership.atp.ram.services.TestCaseService;
 
+@ExtendWith(MockitoExtension.class)
 public class ExecutionHistoryServiceTest {
 
     @InjectMocks
@@ -53,11 +54,6 @@ public class ExecutionHistoryServiceTest {
 
     @Mock
     private CustomExecutionHistoryRepository executionHistoryRepository;
-
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @Test
     public void When_ExecutorNameChanged_Expect_SuccessfulExecution() {

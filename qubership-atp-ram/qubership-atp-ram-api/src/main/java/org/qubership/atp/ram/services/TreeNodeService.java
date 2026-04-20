@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -76,7 +76,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -316,7 +316,7 @@ public class TreeNodeService {
         final List<String> resultParams = new ArrayList<>();
         if (nonNull(template)) {
             final Function<ValidationLabelConfigTemplate.LabelConfig, String> labelNameResolveFunc = labelConfig ->
-                    StringUtils.isEmpty(labelConfig.getColumnName())
+                    ObjectUtils.isEmpty(labelConfig.getColumnName())
                             ? labelConfig.resolveColumnName() : labelConfig.getColumnName();
             TreeSet<ValidationLabelConfigTemplate.LabelConfig> templateLabels = template.getLabels();
             // found not displayed labels
@@ -963,7 +963,7 @@ public class TreeNodeService {
             for (ValidationLabelConfigTemplate.LabelConfig labelConfig : labels) {
                 final Set<String> templateLabels = labelConfig.getLabelNames();
                 String columnName = labelConfig.getColumnName();
-                if (StringUtils.isEmpty(columnName)) {
+                if (ObjectUtils.isEmpty(columnName)) {
                     columnName = String.join(",", templateLabels);
                 }
                 boolean displayErAr = labelConfig.isDisplayErAr();
@@ -991,7 +991,7 @@ public class TreeNodeService {
                 boolean isContains = validationLabels.containsAll(templateLabels);
                 if (isContains) {
                     String columnName = labelConfig.getColumnName();
-                    if (StringUtils.isEmpty(columnName)) {
+                    if (ObjectUtils.isEmpty(columnName)) {
                         columnName = String.join(",", templateLabels);
                     }
                     log.debug("Put validation template label: {} = {}", columnName, status);

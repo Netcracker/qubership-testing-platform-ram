@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -26,13 +26,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.auth.springbootstarter.exceptions.AtpEntityNotFoundException;
 import org.qubership.atp.ram.models.UserInfo;
 import org.qubership.atp.ram.utils.StreamUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.JsonParser;
@@ -43,6 +40,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -59,7 +57,6 @@ public class UserService {
     @Qualifier("m2mRestTemplate")
     private final RestTemplate m2mRestTemplate;
 
-    @Autowired
     public UserService(@Qualifier("restTemplate") RestTemplate m2mRestTemplate) {
         this.m2mRestTemplate = m2mRestTemplate;
     }

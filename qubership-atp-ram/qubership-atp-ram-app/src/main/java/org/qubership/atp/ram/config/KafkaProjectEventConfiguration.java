@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ public class KafkaProjectEventConfiguration {
         ConcurrentKafkaListenerContainerFactory<UUID, ProjectEvent> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(projectEventConsumerFactory());
-        factory.setErrorHandler((e, consumerRecord) -> {
+        factory.setCommonErrorHandler((e, consumerRecord) -> {
             log.error("Error during kafka event processing in {}, consumerRecord: {}",
                     KAFKA_PROJECT_EVENT_CONTAINER_FACTORY_NAME, consumerRecord, e);
             throw new AtpKafkaListenerContainerFactoryException();

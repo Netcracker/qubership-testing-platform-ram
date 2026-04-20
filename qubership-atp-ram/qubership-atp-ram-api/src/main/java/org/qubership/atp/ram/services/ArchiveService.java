@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
 
@@ -91,7 +91,7 @@ public class ArchiveService {
     }
 
     private void createFolderForTempArchivesIfNecessary() throws IOException {
-        if (Files.notExists(Paths.get(STORAGE_PATH)) && !new File(STORAGE_PATH).mkdirs()) {
+        if (Files.notExists(Path.of(STORAGE_PATH)) && !new File(STORAGE_PATH).mkdirs()) {
             log.error("Cannot create folder for temp archives at path: {}", STORAGE_PATH);
             throw new IOException("Cannot create folder structure to path: " + STORAGE_PATH);
         }

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
 package org.qubership.atp.ram.ei;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
@@ -28,7 +28,6 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -39,13 +38,15 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.qubership.atp.ei.node.constants.Constant;
 import org.qubership.atp.ei.node.dto.ExportFormat;
 import org.qubership.atp.ei.node.dto.ExportImportData;
@@ -64,7 +65,8 @@ import org.qubership.atp.ram.testdata.FailPatternMock;
 
 import com.google.common.collect.Sets;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.WARN)
 public class AtpRamImportExecutorTest {
 
     @Mock
@@ -92,7 +94,7 @@ public class AtpRamImportExecutorTest {
     private RootCause customTopLevelRootCause;
     private List<FailPattern> failPatterns;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         importExecutor = new AtpRamImportExecutor(
                 rootCauseRepository, rootCauseService, failPatternRepository, objectLoaderFromDiskService);
@@ -121,7 +123,7 @@ public class AtpRamImportExecutorTest {
         failPatterns = Collections.singletonList(failPattern);
     }
 
-    @After
+    @AfterEach
     public void clear() throws IOException {
         FileUtils.deleteDirectory(getRootPath().toFile());
     }
@@ -171,7 +173,7 @@ public class AtpRamImportExecutorTest {
     }
 
     public Path getRootPath() {
-        return Paths.get(DEFAULT_RESOURCES_PATH, "exportImportData");
+        return Path.of(DEFAULT_RESOURCES_PATH, "exportImportData");
     }
 
     private void createExportDir(ExportImportData data) {

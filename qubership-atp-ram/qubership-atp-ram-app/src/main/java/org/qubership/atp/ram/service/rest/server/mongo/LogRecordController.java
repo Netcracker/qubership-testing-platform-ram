@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -24,9 +24,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.integration.configuration.configuration.AuditAction;
 import org.qubership.atp.ram.config.ApiPath;
 import org.qubership.atp.ram.dto.request.LogRecordQuantityMatchPatternRequest;
@@ -82,13 +80,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -552,8 +550,7 @@ public class LogRecordController /*implements LogRecordControllerApi*/ {
             @ApiResponse(responseCode  = "401", description = "Unauthorized"),
             @ApiResponse(responseCode  = "403", description = "Forbidden")
     })
-    @RequestMapping(value = "/getQuantity/matchPattern",
-            method = RequestMethod.POST)
+    @PostMapping("/getQuantity/matchPattern")
     @PreAuthorize("@entityAccess.checkAccess(@executionRequestService.getProjectIdByExecutionRequestId("
             + "#request.getExecutionRequestId()),'READ')")
     @AuditAction(auditAction = "Get statistics for new REGEXP in scope of execution request "

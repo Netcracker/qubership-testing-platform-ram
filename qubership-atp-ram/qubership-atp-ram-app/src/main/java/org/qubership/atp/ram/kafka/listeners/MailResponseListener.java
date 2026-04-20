@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import java.io.IOException;
 import org.qubership.atp.ram.config.KafkaCommonConfiguration;
 import org.qubership.atp.ram.services.ExecutionRequestDetailsService;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Import;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -45,7 +44,6 @@ public class MailResponseListener {
 
     private final ExecutionRequestDetailsService service;
 
-    @Autowired
     public MailResponseListener(ExecutionRequestDetailsService service) {
         this.service = service;
     }

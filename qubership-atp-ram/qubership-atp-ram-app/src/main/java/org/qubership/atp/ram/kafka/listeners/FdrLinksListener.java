@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import org.qubership.atp.ram.mdc.MdcField;
 import org.qubership.atp.ram.services.TestRunService;
 import org.qubership.atp.ram.tsg.model.FdrResponse;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Import;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -43,7 +42,6 @@ public class FdrLinksListener {
 
     private final TestRunService testRunService;
 
-    @Autowired
     public FdrLinksListener(TestRunService testRunService) {
         this.testRunService = testRunService;
     }

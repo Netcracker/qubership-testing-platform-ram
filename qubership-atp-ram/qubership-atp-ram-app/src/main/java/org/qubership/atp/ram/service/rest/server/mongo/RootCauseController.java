@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -20,8 +20,6 @@ import static java.util.Objects.nonNull;
 
 import java.util.List;
 import java.util.UUID;
-
-import javax.validation.Valid;
 
 import org.qubership.atp.integration.configuration.configuration.AuditAction;
 import org.qubership.atp.ram.model.request.RootCauseUpsertRequest;
@@ -45,6 +43,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/api/rootcauses")

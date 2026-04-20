@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -45,8 +45,7 @@ public class MailsResponsesFilterStrategy implements RecordFilterStrategy<UUID, 
                     ATP_RAM.getValue(), mailResponse.getService());
             return false;
         } else {
-            throw new RuntimeException(String.format(
-                    "filter: Service name AR: {%s} is differ from the expected one ER: {%s}",
+            throw new RuntimeException("filter: Service name AR: {%s} is differ from the expected one ER: {%s}".formatted(
                     ATP_RAM.getValue(), mailResponse.getService()));
         }
     }

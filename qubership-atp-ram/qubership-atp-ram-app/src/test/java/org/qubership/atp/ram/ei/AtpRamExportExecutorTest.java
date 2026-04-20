@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 
 package org.qubership.atp.ram.ei;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -36,11 +35,13 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.qubership.atp.ei.node.constants.Constant;
 import org.qubership.atp.ei.node.dto.ExportFormat;
 import org.qubership.atp.ei.node.dto.ExportImportData;
@@ -57,7 +58,8 @@ import org.qubership.atp.ram.testdata.FailPatternMock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
 
-@RunWith(MockitoJUnitRunner.class)
+@MockitoSettings(strictness = Strictness.WARN)
+@ExtendWith(MockitoExtension.class)
 public class AtpRamExportExecutorTest {
 
     private static final String DEFAULT_RESOURCES_PATH = "src/test/resources";
@@ -71,7 +73,7 @@ public class AtpRamExportExecutorTest {
 
     private UUID projectId;
 
-    @Before
+    @BeforeEach
     public void setUpAtpExport() {
         projectId = UUID.randomUUID();
         rootCauseService = mock(RootCauseService.class);
@@ -81,7 +83,7 @@ public class AtpRamExportExecutorTest {
                 objectSaverToDiskService);
     }
 
-    @After
+    @AfterEach
     public void after() throws IOException {
         FileUtils.deleteDirectory(getPath(RootCause.class.getSimpleName()).toFile());
         FileUtils.deleteDirectory(getPath(FailPattern.class.getSimpleName()).toFile());
@@ -172,7 +174,7 @@ public class AtpRamExportExecutorTest {
     }
 
     private Path getPath(String... path) {
-        return Paths.get(getRootFilePath(), path);
+        return Path.of(getRootFilePath(), path);
     }
 
     private String getRootFilePath() {
@@ -185,10 +187,10 @@ public class AtpRamExportExecutorTest {
 
     public Path getRootPath() {
         String[] allSegments = AtpRamExportExecutorTest.class.getName().split("[.]");
-        return Paths.get(getDefaultPath().toString(), allSegments);
+        return Path.of(getDefaultPath().toString(), allSegments);
     }
 
     public Path getDefaultPath() {
-        return Paths.get(DEFAULT_RESOURCES_PATH);
+        return Path.of(DEFAULT_RESOURCES_PATH);
     }
 }

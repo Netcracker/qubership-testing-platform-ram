@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -641,7 +641,7 @@ public class IssueService extends CrudService<Issue> {
 
     private void processStackOverflowErrorDuringPatternMatch(UUID executionRequestId, StackOverflowError error,
                                                              Pattern pattern, String message) {
-        String errorMessage = String.format("StackOverflowError during matching: pattern = %s, message = %s",
+        String errorMessage = "StackOverflowError during matching: pattern = %s, message = %s".formatted(
                 pattern, message);
         log.error(errorMessage, error);
         executionRequestDetailsService.createDetails(executionRequestId, TestingStatuses.WARNING, errorMessage);

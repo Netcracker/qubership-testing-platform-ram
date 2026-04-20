@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -47,7 +47,6 @@ import org.qubership.atp.ram.service.rest.dto.StatisticTrByRc;
 import org.qubership.atp.ram.service.rest.dto.StatisticTrByStatuses;
 import org.qubership.atp.ram.services.ExecutionRequestService;
 import org.qubership.atp.ram.services.RootCauseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -64,7 +63,6 @@ public class ChartsService {
     private final ExecutionRequestService erService;
     private final RootCauseService rootCauseService;
 
-    @Autowired
     public ChartsService(ExecutionRequestService erService, RootCauseService rootCauseService) {
         this.erService = erService;
         this.rootCauseService = rootCauseService;
@@ -428,7 +426,7 @@ public class ChartsService {
                     statistic.setData(entry.getValue()
                             .entrySet()
                             .stream()
-                            .map(pair -> new Long[]{pair.getKey(), new Long(pair.getValue())})
+                            .map(pair -> new Long[]{pair.getKey(), Long.valueOf(pair.getValue())})
                             .collect(Collectors.toList()));
                     return statistic;
                 })

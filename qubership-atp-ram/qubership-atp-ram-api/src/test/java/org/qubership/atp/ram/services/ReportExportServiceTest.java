@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -34,8 +34,9 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.ExecutionRequestsMock;
 import org.qubership.atp.ram.dto.response.LabelNodeReportResponse;
 import org.qubership.atp.ram.entities.treenodes.labelparams.TestingReportLabelParam;
@@ -44,6 +45,7 @@ import org.qubership.atp.ram.models.ExecutionRequest;
 import org.qubership.atp.ram.models.logrecords.parts.ValidationTableLine;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+@ExtendWith(MockitoExtension.class)
 public class ReportExportServiceTest {
     private ReportExportService reportExportService;
     @Mock
@@ -59,7 +61,6 @@ public class ReportExportServiceTest {
 
     @BeforeEach
     public void init() {
-        MockitoAnnotations.initMocks(this);
         reportExportService = spy(new ReportExportService(reportService, executionRequestService,
                 widgetConfigTemplateService));
     }

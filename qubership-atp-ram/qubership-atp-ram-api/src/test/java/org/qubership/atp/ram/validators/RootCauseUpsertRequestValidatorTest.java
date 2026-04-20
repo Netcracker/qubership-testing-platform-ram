@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.auth.springbootstarter.exceptions.AtpIllegalNullableArgumentException;
 import org.qubership.atp.ram.model.request.RootCauseUpsertRequest;
 import org.qubership.atp.ram.models.RootCause;
@@ -31,6 +32,7 @@ import org.qubership.atp.ram.repositories.RootCauseRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class RootCauseUpsertRequestValidatorTest {
 
     @InjectMocks

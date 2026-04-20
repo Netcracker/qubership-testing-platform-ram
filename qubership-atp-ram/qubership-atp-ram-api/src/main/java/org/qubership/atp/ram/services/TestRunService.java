@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -43,9 +43,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import org.apache.commons.compress.utils.Sets;
 import org.modelmapper.ModelMapper;
@@ -137,6 +134,8 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.base.Strings;
 import com.google.gson.JsonObject;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -2319,6 +2318,6 @@ public class TestRunService extends CrudService<TestRun> {
         final String fullUrl = host + "/browse/" + issue.getKey();
         final String htmlLinkPattern = "<a href=\"%s\" target=\"_blank\">%s</a>";
 
-        return String.format(htmlLinkPattern, fullUrl, issue.getKey());
+        return htmlLinkPattern.formatted(fullUrl, issue.getKey());
     }
 }

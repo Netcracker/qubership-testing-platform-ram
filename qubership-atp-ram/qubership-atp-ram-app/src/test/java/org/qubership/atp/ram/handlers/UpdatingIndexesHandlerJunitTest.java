@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -26,15 +26,15 @@ import java.util.function.Consumer;
 
 import org.bson.BsonValue;
 import org.bson.Document;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.qubership.atp.ram.migration.MigrationConstants;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.mongodb.Function;
 import com.mongodb.client.ListIndexesIterable;
@@ -42,7 +42,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoIterable;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class UpdatingIndexesHandlerJunitTest {
 
     private UpdatingIndexesHandler updatingIndexesHandler;
@@ -50,7 +50,7 @@ public class UpdatingIndexesHandlerJunitTest {
     @MockBean
     private MongoTemplate mongoTemplate;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         updatingIndexesHandler = Mockito.spy(new UpdatingIndexesHandler(mongoTemplate));
         Mockito.when(mongoTemplate.getConverter()).thenReturn(Mockito.mock(MongoConverter.class));

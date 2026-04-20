@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ public class KafkaTestPlanConfiguration {
         ConcurrentKafkaListenerContainerFactory<UUID, TestPlanResponse> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
-        factory.setErrorHandler((e, consumerRecord) -> {
+        factory.setCommonErrorHandler((e, consumerRecord) -> {
             throw new RuntimeException("Error during event processing.", e);
         });
         return factory;

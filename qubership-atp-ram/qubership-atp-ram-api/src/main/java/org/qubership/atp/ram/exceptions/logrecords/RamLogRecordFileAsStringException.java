@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -27,6 +27,6 @@ public class RamLogRecordFileAsStringException extends AtpException {
     public static final String DEFAULT_MESSAGE = "Can't represent file \"%s\" as string, logRecordId = %s";
 
     public RamLogRecordFileAsStringException(String fileName, UUID logRecordId) {
-        super(String.format(DEFAULT_MESSAGE, fileName, logRecordId));
+        super(DEFAULT_MESSAGE.formatted(fileName, logRecordId));
     }
 }

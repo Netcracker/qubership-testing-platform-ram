@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -17,15 +17,14 @@
 package org.qubership.atp.ram.services;
 
 import static com.google.common.collect.Sets.newHashSet;
-import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singleton;
 import static java.util.Collections.singletonList;
 import static java.util.UUID.fromString;
 import static java.util.UUID.randomUUID;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -460,16 +459,16 @@ public class ReportServiceTest {
                                         Function<T, R> actualEntitiesParamsExtractor) {
         final String nodeName = node.getLabelName();
         if (!isEmpty(expectedEntitiesParams)) {
-            Assertions.assertFalse(isEmpty(actualEntitiesParams), format("%s of '%s' node are empty", expectedEntityName, nodeName));
+            Assertions.assertFalse(isEmpty(actualEntitiesParams), "%s of '%s' node are empty".formatted(expectedEntityName, nodeName));
             Assertions.assertEquals(expectedEntitiesParams.size(), actualEntitiesParams.size(),
-                    format("Size of '%s' node %s is invalid", nodeName, expectedEntityName));
+                    "Size of '%s' node %s is invalid".formatted(nodeName, expectedEntityName));
 
             Set<R> actualExtractedEntitiesParams =
                     StreamUtils.extractFields(actualEntitiesParams, actualEntitiesParamsExtractor);
             Assertions.assertEquals(new HashSet<>(expectedEntitiesParams), actualExtractedEntitiesParams,
-                    format("%s of '%s' node are not equal", expectedEntityName, nodeName));
+                    "%s of '%s' node are not equal".formatted(expectedEntityName, nodeName));
         } else {
-            Assertions.assertTrue(isEmpty(actualEntitiesParams), format("%s of '%s' node should be absent", expectedEntityName, nodeName));
+            Assertions.assertTrue(isEmpty(actualEntitiesParams), "%s of '%s' node should be absent".formatted(expectedEntityName, nodeName));
         }
     }
 

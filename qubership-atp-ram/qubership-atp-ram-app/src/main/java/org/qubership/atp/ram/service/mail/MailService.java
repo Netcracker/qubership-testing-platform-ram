@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.integration.configuration.model.MailRequest;
 import org.qubership.atp.integration.configuration.model.MailResponse;
 import org.qubership.atp.integration.configuration.model.notification.Notification;
@@ -453,7 +453,7 @@ public class MailService {
     }
 
     private String getDefaultSubject(ExecutionRequest executionRequest) {
-        return String.format("%s [%s]",
+        return "%s [%s]".formatted(
                 executionRequest.getName(),
                 TimeUtils.formatDateTime(executionRequest.getStartDate(), TimeUtils.DEFAULT_DATE_TIME_PATTERN));
     }

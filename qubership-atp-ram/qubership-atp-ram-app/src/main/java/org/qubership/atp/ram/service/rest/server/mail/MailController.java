@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ import org.qubership.atp.ram.service.mail.ReportMailParams;
 import org.qubership.atp.ram.service.mail.ReportParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,7 +43,6 @@ public class MailController /*implements MailControllerApi*/ {
     /**
      * Constructor.
      */
-    @Autowired
     public MailController(MailService service, MailSenderConfig mailSenderConfig) {
         this.service = service;
         this.mailSenderConfig = mailSenderConfig;

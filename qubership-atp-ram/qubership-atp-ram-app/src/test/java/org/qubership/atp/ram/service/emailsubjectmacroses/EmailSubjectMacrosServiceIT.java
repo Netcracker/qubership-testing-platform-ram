@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -35,7 +35,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.qubership.atp.ram.config.EmailSubjectMacrosTestConfig;
 import org.qubership.atp.ram.dto.response.ExecutionSummaryResponse;
 import org.qubership.atp.ram.dto.response.ProjectDataResponse;
@@ -56,9 +55,7 @@ import org.qubership.atp.ram.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = EmailSubjectMacrosTestConfig.class,
         webEnvironment = SpringBootTest.WebEnvironment.NONE,
         properties = {"spring.cloud.consul.config.enabled=false"})

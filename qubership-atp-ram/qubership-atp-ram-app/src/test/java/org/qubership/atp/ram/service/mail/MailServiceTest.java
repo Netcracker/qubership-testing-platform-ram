@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package org.qubership.atp.ram.service.mail;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.sql.Timestamp;
@@ -32,6 +32,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.integration.configuration.model.MailRequest;
 import org.qubership.atp.integration.configuration.service.MailSenderService;
 import org.qubership.atp.ram.exceptions.testplans.RamTestPlanRecipientsNotFoundException;
@@ -52,6 +53,7 @@ import org.qubership.atp.ram.utils.TimeUtils;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class MailServiceTest {
 
     @Mock
@@ -91,7 +93,7 @@ public class MailServiceTest {
         when(reportTemplatesService.getActiveTemplateByProjectId(any())).thenReturn(new ReportTemplate());
         when(testPlansService.findByTestPlanUuid(any())).thenReturn(new TestPlan());
         when(userService.getUserInfoFromToken(any())).thenReturn(generateUserInfo());
-        defaultEmailSubject = String.format("%s [%s]",
+        defaultEmailSubject = "%s [%s]".formatted(
                 executionRequestName,
                 TimeUtils.formatDateTime(executionRequestStartDate, TimeUtils.DEFAULT_DATE_TIME_PATTERN));
     }

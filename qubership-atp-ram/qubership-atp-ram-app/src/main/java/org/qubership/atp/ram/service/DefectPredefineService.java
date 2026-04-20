@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -74,7 +74,7 @@ import org.qubership.atp.ram.services.TestRunService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import freemarker.template.Template;
 import lombok.RequiredArgsConstructor;
@@ -282,7 +282,7 @@ public class DefectPredefineService {
         return logRecordService
                 .getAllLogRecordsByTestRunIds(Collections.singletonList(testRunId))
                 .stream()
-                .filter(logRecord -> !StringUtils.isEmpty(logRecord.getLinkToSvp()))
+                .filter(logRecord -> !ObjectUtils.isEmpty(logRecord.getLinkToSvp()))
                 .map(logRecord -> new Link("Link to SVP", logRecord.getLinkToSvp()))
                 .collect(Collectors.toList());
     }
@@ -325,7 +325,7 @@ public class DefectPredefineService {
         recalculateJiraTickets(issue, newTicket, testPlanId);
 
         String errorMessage = response.getErrorMessage();
-        if (!StringUtils.isEmpty(errorMessage)) {
+        if (!ObjectUtils.isEmpty(errorMessage)) {
             final String newTicketKey = newTicket.getKey();
             log.error("Jira issue created with key '{}', but the reporter's change failed. Reason: {}",
                     newTicketKey, errorMessage);
@@ -336,7 +336,7 @@ public class DefectPredefineService {
     }
 
     private String validateSummary(String summary) {
-        if (!StringUtils.isEmpty(summary) && summary.length() > DEFECT_SUMMARY_MAX_LENGTH) {
+        if (!ObjectUtils.isEmpty(summary) && summary.length() > DEFECT_SUMMARY_MAX_LENGTH) {
             return summary
                     .replaceAll("\n", " ")
                     .replaceAll("\t", " ")

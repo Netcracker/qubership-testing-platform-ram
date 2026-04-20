@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -63,7 +63,7 @@ import org.qubership.atp.ram.utils.StreamUtils;
 import org.qubership.atp.ram.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -157,8 +157,8 @@ public class JointExecutionRequestService {
     public boolean isJointExecutionRequest(ExecutionRequest executionRequest) {
         String jointExecutionKey = executionRequest.getJointExecutionKey();
         log.info("Checked joint execution key for ER id: {} with ststus is {}", executionRequest.getUuid(),
-                !StringUtils.isEmpty(jointExecutionKey) ? "joint ER" : "not joint");
-        return !StringUtils.isEmpty(jointExecutionKey);
+                !ObjectUtils.isEmpty(jointExecutionKey) ? "joint ER" : "not joint");
+        return !ObjectUtils.isEmpty(jointExecutionKey);
     }
 
     /**
@@ -570,7 +570,7 @@ public class JointExecutionRequestService {
         String timestamp = null;
 
         if (lastVersionCheck != null) {
-            String dateTimeFormat = String.format("%s %s", DEFAULT_PROJECT_DATE_FORMAT, DEFAULT_PROJECT_TIME_FORMAT);
+            String dateTimeFormat = "%s %s".formatted(DEFAULT_PROJECT_DATE_FORMAT, DEFAULT_PROJECT_TIME_FORMAT);
             Timestamp versionTimestamp = new Timestamp(lastVersionCheck);
             timestamp = TimeUtils.formatDateTime(versionTimestamp, dateTimeFormat, DEFAULT_PROJECT_TIME_ZONE);
         }
