@@ -280,7 +280,7 @@ public class DefectPredefineServiceTest {
 
         final List<Link> linkToSvp = model.getSvpLinks();
         assertFalse(linkToSvp.isEmpty());
-        assertEquals(logRecord.getLinkToSvp(), linkToSvp.get(0).getUrl());
+        assertEquals(logRecord.getLinkToSvp(), linkToSvp.getFirst().getUrl());
 
         final List<Link> potLinks = model.getPotLinks();
         assertNotNull(potLinks);

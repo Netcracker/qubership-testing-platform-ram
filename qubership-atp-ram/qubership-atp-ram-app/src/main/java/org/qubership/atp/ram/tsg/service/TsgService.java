@@ -73,7 +73,7 @@ public class TsgService {
     private final TsgConfiguration tsgConfiguration;
     private final Sender<List<UUID>> fdrSender;
 
-    private List<ExecutionRequest> executionRequestQueue;
+    private final List<ExecutionRequest> executionRequestQueue;
 
     @Value("${base.url}")
     private String ramUrl;
@@ -147,7 +147,7 @@ public class TsgService {
         fdr.setFinishDate(testRun.getFinishDate().toLocalDateTime().toString());
         fdr.setEnvironment(testRun.getQaHost());
         fdr.setScope("Execution");
-        String url = catalogueUrl.length() > 0 ? catalogueUrl : ramUrl;
+        String url = !catalogueUrl.isEmpty() ? catalogueUrl : ramUrl;
         fdr.setExecutionLink(url + "/project/" + executionRequest.getProjectId() + "/ram/execution-request/"
                 + testRun.getExecutionRequestId() + "/" + testRunUuid);
         fdr.setCheckPoints(fillCheckPointsWithParents(testRunUuid, null, false));
@@ -254,14 +254,14 @@ public class TsgService {
             RestTemplate template = new RestTemplate();
             ResponseEntity<List<FdrResponse>> responseEntity = template
                     .exchange(tsgFdrEndpoint, HttpMethod.POST, entity,
-                            new ParameterizedTypeReference<List<FdrResponse>>() {
+                            new ParameterizedTypeReference<>() {
                             });
             if (responseEntity.getStatusCode() == HttpStatus.OK) {
                 LOG.trace("""
                                 FDR for TR: {} was sent to {}\s
                                 Response from TSG Receiver: {}\
                                 """, tr.getUuid(), tsgFdrEndpoint,
-                        responseEntity.toString());
+                        responseEntity);
                 List<FdrResponse> fdrResponseList = responseEntity.getBody();
                 if (fdrResponseList != null) {
                     fdrResponseList.forEach(fdrResponse -> {
@@ -278,7 +278,7 @@ public class TsgService {
                                 FDR for TR: {} was not sent to {}\s
                                 Response from TSG Receiver: {}\
                                 """, tr.getUuid(), tsgFdrEndpoint,
-                        responseEntity.toString());
+                        responseEntity);
             }
         }
     }

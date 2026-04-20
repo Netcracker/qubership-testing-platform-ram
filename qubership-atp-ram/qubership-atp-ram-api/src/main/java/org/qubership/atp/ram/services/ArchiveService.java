@@ -123,7 +123,7 @@ public class ArchiveService {
 
             zipStream.closeArchiveEntry();
         } catch (IOException e) {
-            log.error("Error while writing file {} to zip. Exception: {}", entryName, e);
+            log.error("Error while writing file {} to zip. Exception:", entryName, e);
         }
     }
 }

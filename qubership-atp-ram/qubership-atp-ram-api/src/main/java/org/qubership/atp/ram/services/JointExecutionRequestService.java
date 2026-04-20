@@ -225,7 +225,7 @@ public class JointExecutionRequestService {
             throw new RamMultipleActiveJointExecutionRequestsException();
         }
 
-        final JointExecutionRequest jointExecutionRequest = jointExecutionRequests.get(0);
+        final JointExecutionRequest jointExecutionRequest = jointExecutionRequests.getFirst();
         jointExecutionRequest.upsertRun(executionRequest);
 
         return repository.save(jointExecutionRequest);
@@ -293,9 +293,8 @@ public class JointExecutionRequestService {
         final List<JointExecutionRequest> jointExecutionRequests =
                 repository.findAllActiveJointExecutionRequestsByKey(jointExecutionKey);
 
-        jointExecutionRequests.forEach(jointExecutionRequest -> {
-            jointExecutionRequest.upsertRun(executionRequestId, executionStatus);
-        });
+        jointExecutionRequests.forEach(jointExecutionRequest ->
+                jointExecutionRequest.upsertRun(executionRequestId, executionStatus));
         repository.saveAll(jointExecutionRequests);
     }
 

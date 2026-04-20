@@ -1372,7 +1372,7 @@ public class TestRunService extends CrudService<TestRun> {
                             final List<String> validationTableLabels = steps.stream()
                                     .filter(step -> !isEmpty(step.getValidationLabels()))
                                     .flatMap(step -> step.getValidationLabels().stream())
-                                    .collect(Collectors.toList());
+                                    .toList();
 
                             return !isEmpty(validationLabels) || !isEmpty(validationTableLabels);
                         }
@@ -1501,7 +1501,7 @@ public class TestRunService extends CrudService<TestRun> {
 
                     List<LogRecord> failedLogRecords = context.getTestRunFailedLogRecordsMap().get(testRunId);
                     if (nonNull(failedLogRecords) && !failedLogRecords.isEmpty()) {
-                        LogRecord firstFailedStep = getFirstFailedStep(failedLogRecords, failedLogRecords.get(0));
+                        LogRecord firstFailedStep = getFirstFailedStep(failedLogRecords, failedLogRecords.getFirst());
                         treeNode.setFailedStep(
                                 Collections.singletonList(modelMapper.map(firstFailedStep,
                                         LabelNodeReportResponse.FailedLogRecordNodeResponse.class))
@@ -1550,7 +1550,7 @@ public class TestRunService extends CrudService<TestRun> {
                 logRecord -> logRecord.getParentRecordId() == null,
                 Comparator.comparingLong(LogRecord::getCreatedDateStamp));
 
-        return getFirstFailedStep(failedLogRecords, failedRootLogRecords.get(0));
+        return getFirstFailedStep(failedLogRecords, failedRootLogRecords.getFirst());
     }
 
     /**
@@ -1761,9 +1761,8 @@ public class TestRunService extends CrudService<TestRun> {
                 if (!isEmpty(validationSteps)) {
                     validationSteps.stream()
                             .filter(step -> !isEmpty(step.getValidationLabels()))
-                            .forEach(step -> step.getValidationLabels().forEach(label -> {
-                                        validationLabelMap.merge(label, step.getStatus(), statusMergeFunc);
-                                    })
+                            .forEach(step -> step.getValidationLabels().forEach(label ->
+                                    validationLabelMap.merge(label, step.getStatus(), statusMergeFunc))
                             );
                 }
             }
@@ -2070,7 +2069,7 @@ public class TestRunService extends CrudService<TestRun> {
                         testRunRepository.findAllByExecutionRequestId(execRequest.getUuid())
                                 .stream().filter(testRun -> testRun.isFinalTestRun()
                                         && testCasesList.contains(testRun.getTestCaseId()))
-                                .collect(Collectors.toList());
+                                .toList();
                 if (!isEmpty(intermediateTestRunsList)) {
                     intermediateTestRunsList.forEach(testRun -> {
                         testRun.setFinalTestRun(false);
@@ -2129,7 +2128,7 @@ public class TestRunService extends CrudService<TestRun> {
         for (TestRun testRun : testRuns) {
             List<LogRecord> testRunLogRecords = logRecords.stream()
                     .filter(logRecord -> testRun.getUuid().equals(logRecord.getTestRunId()))
-                    .collect(Collectors.toList());
+                    .toList();
             Set<String> validationLabels = new HashSet<>();
             for (LogRecord logRecord : testRunLogRecords) {
                 if (!isEmpty(logRecord.getValidationLabels())) {

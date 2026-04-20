@@ -18,6 +18,7 @@ package org.qubership.atp.ram;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.junit.Rule;
@@ -72,8 +73,9 @@ public class DataSetFeignClientPactUnitTest {
 
         ResponseEntity<Object> expectedResult =
                 dataSetFeignClient.getDataSetById(uuid);
-        Assertions.assertEquals(expectedResult.getStatusCode().value(), 200);
-        Assertions.assertTrue(expectedResult.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, expectedResult.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(expectedResult.getHeaders().get("Content-Type"))
+                .contains("application/json"));
     }
 
     @Pact(consumer = "atp-ram")

@@ -41,15 +41,15 @@ import org.qubership.atp.ram.testdata.TestRunServiceMock;
 @Disabled
 public class ExecutionRequestReportTest {
     private final static UUID erUuid = UUID.randomUUID();
-    private ExecutionRequestService executionRequestService = mock(ExecutionRequestService.class);
-    private TestRunService testRunService = mock(TestRunService.class);
-    private TestPlansService testPlansService = mock(TestPlansService.class);
-    private DefectsService defectsService = mock(DefectsService.class);
-    private RootCauseService rootCauseService = mock(RootCauseService.class);
-    private MailSenderService mailSender = mock(MailSenderService.class);
-    private TestRunServiceMock testRunServiceMock = new TestRunServiceMock();
-    private MailSenderConfig mailSenderConfig = new MailSenderConfig();
-    private ExecutionRequestReport report = new ExecutionRequestReport(executionRequestService, testRunService,
+    private final ExecutionRequestService executionRequestService = mock(ExecutionRequestService.class);
+    private final TestRunService testRunService = mock(TestRunService.class);
+    private final TestPlansService testPlansService = mock(TestPlansService.class);
+    private final DefectsService defectsService = mock(DefectsService.class);
+    private final RootCauseService rootCauseService = mock(RootCauseService.class);
+    private final MailSenderService mailSender = mock(MailSenderService.class);
+    private final TestRunServiceMock testRunServiceMock = new TestRunServiceMock();
+    private final MailSenderConfig mailSenderConfig = new MailSenderConfig();
+    private final ExecutionRequestReport report = new ExecutionRequestReport(executionRequestService, testRunService,
             testPlansService, defectsService, rootCauseService, mailSenderConfig, mailSender);
     private String expectedString = TestMailConstants.HEADER_ER_REPORT
             + TestMailConstants.SUMMARY_TABLE_TEMPLATE

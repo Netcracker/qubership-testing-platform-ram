@@ -170,7 +170,7 @@ public class AtpRamImportExecutor implements ImportExecutor {
                     importData.getProjectId()));
         }
         if (CollectionUtils.isNotEmpty(messages)) {
-            details.addAll(messages.stream().map(UserMessage::new).collect(Collectors.toList()));
+            details.addAll(messages.stream().map(UserMessage::new).toList());
         }
         return new ValidationResult(details, replacementMap);
     }

@@ -68,7 +68,7 @@ public class LogRecordContextVariableService {
         ContextVariablesActiveTab notModifiedTab = ContextVariablesActiveTab.NOT_MODIFIED;
         List<ContextVariablesActiveTab> allTabs = Arrays.asList(modifiedTab, notModifiedTab);
 
-        if (activeTabs.containsAll(allTabs)) {
+        if (new HashSet<>(activeTabs).containsAll(allTabs)) {
             List<ContextVariable> pagedNotModifiedVars = applyPagination(notModifiedVars, page, size, null);
             response.setNotModified(pagedNotModifiedVars);
 

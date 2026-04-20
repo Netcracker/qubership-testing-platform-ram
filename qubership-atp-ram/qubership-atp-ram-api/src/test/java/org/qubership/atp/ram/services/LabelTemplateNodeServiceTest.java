@@ -134,17 +134,15 @@ public class LabelTemplateNodeServiceTest {
 
     @Test
     public void testGetLabelTemplate_shouldThrowException_whenLabelTemplateIdIsNull() {
-        Assertions.assertThrows(AtpIllegalNullableArgumentException.class, () -> {
-            service.getLabelTemplate(null);
-        });
+        Assertions.assertThrows(AtpIllegalNullableArgumentException.class, () ->
+                service.getLabelTemplate(null));
     }
 
     @Test
     public void testGetLabelTemplate_shouldThrowException_whenLabelTemplateHasNoNodes() {
         when(catalogueService.getLabelTemplateById(any())).thenReturn(new LabelTemplate());
-        Assertions.assertThrows(RamLabelTemplateWithoutChildrenNodesException.class, () -> {
-            service.getLabelTemplate(UUID.randomUUID());
-        });
+        Assertions.assertThrows(RamLabelTemplateWithoutChildrenNodesException.class, () ->
+                service.getLabelTemplate(UUID.randomUUID()));
     }
 
     /*

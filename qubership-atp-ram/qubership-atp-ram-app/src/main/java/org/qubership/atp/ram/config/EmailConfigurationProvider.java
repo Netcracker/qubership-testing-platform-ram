@@ -40,13 +40,13 @@ public class EmailConfigurationProvider {
     private String mailSmtpSslEnable;
     @Value("${base.url}")
     private String baseUrl;
-    private ExecutionRequestService erService;
-    private TestRunService trService;
-    private TestPlansService testPlansService;
-    private DefectsService defectsService;
-    private RootCauseService rcService;
-    private MailSenderConfig mailSenderConfig;
-    private MailSenderService mailSender;
+    private final ExecutionRequestService erService;
+    private final TestRunService trService;
+    private final TestPlansService testPlansService;
+    private final DefectsService defectsService;
+    private final RootCauseService rcService;
+    private final MailSenderConfig mailSenderConfig;
+    private final MailSenderService mailSender;
 
     /**
      * Constructor for email configuration which injects {@link ExecutionRequestService}, {@link

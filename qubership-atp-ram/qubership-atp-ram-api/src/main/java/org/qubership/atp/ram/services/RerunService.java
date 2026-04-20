@@ -88,9 +88,9 @@ public class RerunService {
                 newExecutionRequests.add(rerunTestRuns(testRunIds));
             }
         });
-        UUID erId = newExecutionRequests.get(0);
+        UUID erId = newExecutionRequests.getFirst();
         MdcUtils.put(MdcField.EXECUTION_REQUEST_ID.toString(), erId);
-        UUID projectId = executionRequestService.getProjectIdByExecutionRequestId(uuidList.get(0));
+        UUID projectId = executionRequestService.getProjectIdByExecutionRequestId(uuidList.getFirst());
         String msg =
                 "ER has been restarted.\n"
                         + "TestRuns were formed by ram for rerun.\n"
@@ -143,7 +143,7 @@ public class RerunService {
         if (isEmpty(testRuns)) {
             ExceptionUtils.throwWithLog(log, new RamTestRunsRerunNotAppropriateStatusException());
         }
-        UUID finalExecutionRequestId = testRuns.get(0).getExecutionRequestId();
+        UUID finalExecutionRequestId = testRuns.getFirst().getExecutionRequestId();
         if (testRuns
                 .stream()
                 .anyMatch(tr -> !tr.getExecutionRequestId().equals(finalExecutionRequestId))) {

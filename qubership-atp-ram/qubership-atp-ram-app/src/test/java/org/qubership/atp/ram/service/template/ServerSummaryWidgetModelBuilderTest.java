@@ -70,7 +70,7 @@ public class ServerSummaryWidgetModelBuilderTest {
         reportParams.setExecutionRequestUuid(UUID.randomUUID());
         reportParams.setRecipients("example@example.com");
         reportParams.setSubject("Test Subject");
-        reportParams.setDescriptions(new HashMap<String, String>(){{
+        reportParams.setDescriptions(new HashMap<>() {{
             put(WidgetType.SERVER_SUMMARY.toString(), "Test description");
         }});
 

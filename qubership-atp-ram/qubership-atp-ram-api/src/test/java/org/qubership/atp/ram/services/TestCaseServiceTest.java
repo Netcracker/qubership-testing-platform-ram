@@ -107,10 +107,10 @@ public class TestCaseServiceTest {
 
         Mockito.verify(dtoConvertService, times(1)).convertList(listTestCaseLastStatusCaptor.capture(), any());
 
-        Assertions.assertEquals(listTestCaseLastStatusCaptor.getValue().get(0).getStatus(), TestingStatuses.PASSED.getName(),
+        Assertions.assertEquals(listTestCaseLastStatusCaptor.getValue().getFirst().getStatus(), TestingStatuses.PASSED.getName(),
                 "Testing status set correctly");
-        Assertions.assertNotNull(listTestCaseLastStatusCaptor.getValue().get(0).getTestCaseId(),
+        Assertions.assertNotNull(listTestCaseLastStatusCaptor.getValue().getFirst().getTestCaseId(),
                 "TestCaseId is not null");
-        Assertions.assertEquals(listTestCaseLastStatusCaptor.getValue().size(), 1, "TestRun with null testCaseID is not add");
+        Assertions.assertEquals(1, listTestCaseLastStatusCaptor.getValue().size(), "TestRun with null testCaseID is not add");
     }
 }

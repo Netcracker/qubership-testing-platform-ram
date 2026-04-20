@@ -117,9 +117,7 @@ public class RootCauseServiceTest {
         when(repository.findByNameAndProjectId(existedRootCause.getName(), existedRootCause.getProjectId())).thenReturn(existedRootCause);
 
         // when
-        assertThrows(RamRootCauseAlreadyExistsException.class, () -> {
-            service.create(request);
-        });
+        assertThrows(RamRootCauseAlreadyExistsException.class, () -> service.create(request));
     }
 
     @Test
@@ -139,9 +137,7 @@ public class RootCauseServiceTest {
         existedRootCause.setType(RootCauseType.GLOBAL);
 
         // when
-        assertThrows(RamRootCauseIllegalAccessException.class, () -> {
-            service.create(request);
-        });
+        assertThrows(RamRootCauseIllegalAccessException.class, () -> service.create(request));
     }
 
     /*
@@ -171,9 +167,7 @@ public class RootCauseServiceTest {
         final UUID projectId = UUID.randomUUID();
 
         final List<RootCause> customRootCauses = asList(rc2, rc3, rc4, rc5, rc6);
-        customRootCauses.forEach(rootCause -> {
-            rootCause.setProjectId(projectId);
-        });
+        customRootCauses.forEach(rootCause -> rootCause.setProjectId(projectId));
         final List<RootCause> topLevelCustomRootCauses = asList(rc3, rc6);
         final List<RootCause> topLevelGlobalRootCauses = asList(rc1, rc7);
 

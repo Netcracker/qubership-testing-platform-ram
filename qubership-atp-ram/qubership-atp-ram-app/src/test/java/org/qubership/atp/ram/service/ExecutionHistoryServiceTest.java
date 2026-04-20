@@ -84,7 +84,7 @@ public class ExecutionHistoryServiceTest {
         TestCaseExecutionHistorySearchRequest request = new TestCaseExecutionHistorySearchRequest();
         TestCaseExecutionHistory testCaseExecutions = executionHistoryService.getTestCaseExecutions(request, testCaseId);
         List<String> executorNames = testCaseExecutions.getExecutions().stream()
-                .map(TestCaseExecutionHistory.TestCaseExecution::getExecutorName).collect(Collectors.toList());
+                .map(TestCaseExecutionHistory.TestCaseExecution::getExecutorName).toList();
         Assertions.assertTrue(executorNames.contains(oldName));
         Assertions.assertTrue(executorNames.contains(newName));
     }

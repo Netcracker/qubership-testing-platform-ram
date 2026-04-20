@@ -21,6 +21,7 @@ import static java.util.Arrays.asList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.junit.Rule;
@@ -73,53 +74,54 @@ public class OrchestratorFeignClientTest {
     @PactVerification()
     public void allPass() {
         UUID id = UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304");
-        List<UUID> uuids = asList(id);
+        List<UUID> uuids = List.of(id);
         TerminateRequestDto terminateRequestDto = new TerminateRequestDto();
         terminateRequestDto.setExecutionRequestIds(uuids);
         terminateRequestDto.setIsGracefully(false);
 
 
         ResponseEntity<String> result1 = orchestratorFeignClient.terminateProcess(terminateRequestDto);
-        Assertions.assertEquals(result1.getStatusCode().value(), 200);
-        Assertions.assertTrue(result1.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result1.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result1.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result2 = orchestratorFeignClient.stopProcess(uuids);
-        Assertions.assertEquals(result2.getStatusCode().value(), 200);
-        Assertions.assertTrue(result2.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result2.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result2.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result3 = orchestratorFeignClient.resumeProcess(uuids);
-        Assertions.assertEquals(result3.getStatusCode().value(), 200);
-        Assertions.assertTrue(result3.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result3.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result3.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result4 = orchestratorFeignClient.restartProcess(uuids);
-        Assertions.assertEquals(result4.getStatusCode().value(), 200);
-        Assertions.assertTrue(result4.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result4.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result4.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result5 = orchestratorFeignClient.terminateTestRunProcess(uuids);
-        Assertions.assertEquals(result5.getStatusCode().value(), 200);
-        Assertions.assertTrue(result5.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result5.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result5.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result6 = orchestratorFeignClient.stopTestRunProcess(id, uuids);
-        Assertions.assertEquals(result6.getStatusCode().value(), 200);
-        Assertions.assertTrue(result6.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result6.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result6.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result7 = orchestratorFeignClient.resumeTestRunProcess(id, uuids);
-        Assertions.assertEquals(result7.getStatusCode().value(), 200);
-        Assertions.assertTrue(result7.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result7.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result7.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result8 = orchestratorFeignClient.restartTestRunProcess(id, uuids);
-        Assertions.assertEquals(result8.getStatusCode().value(), 200);
-        Assertions.assertTrue(result8.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result8.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result8.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<UUID> result9 = orchestratorFeignClient.rerunTestRunsProcess(id, "authorization", uuids);
-        Assertions.assertEquals(result9.getStatusCode().value(), 200);
-        Assertions.assertTrue(result9.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result9.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result9.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<UUID> result10 = orchestratorFeignClient.getRunnerProcessIdByExecutionRequestId(id);
-        Assertions.assertEquals(result10.getStatusCode().value(), 200);
-        Assertions.assertTrue(result10.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result10.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result10.getHeaders().get("Content-Type"))
+                .contains("application/json"));
     }
-
 
     @Pact(consumer = "atp-ram")
     public RequestResponsePact createPact(PactDslWithProvider builder) {

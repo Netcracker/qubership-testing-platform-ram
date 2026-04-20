@@ -52,7 +52,7 @@ public class FailPatternVersioningMapperTest {
 
     private FailPattern source;
 
-    private List<String> tickets = Collections.singletonList("ticket");
+    private final List<String> tickets = Collections.singletonList("ticket");
 
     UserInfo userInfo;
 

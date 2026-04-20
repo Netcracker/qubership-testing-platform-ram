@@ -432,11 +432,14 @@ public class ReportServiceTest {
 
         Assertions.assertNotNull(result);
 
-        Assertions.assertEquals(result.getChildren().get(0).getStatus(), TestingStatuses.FAILED,
+        Assertions.assertEquals(TestingStatuses.FAILED,
+                result.getChildren().getFirst().getStatus(),
                 "Testing status testruns with common label is failed");
-        Assertions.assertEquals(result.getChildren().get(0).getTestRuns().get(0).getTestingStatus(), TestingStatuses.STOPPED,
+        Assertions.assertEquals(TestingStatuses.STOPPED,
+                result.getChildren().getFirst().getTestRuns().get(0).getTestingStatus(),
                 "First test run have status stopped");
-        Assertions.assertEquals(result.getChildren().get(0).getTestRuns().get(1).getTestingStatus(), TestingStatuses.STOPPED,
+        Assertions.assertEquals(TestingStatuses.STOPPED,
+                result.getChildren().getFirst().getTestRuns().get(1).getTestingStatus(),
                 "Second test run have status stopped");
     }
 
@@ -599,7 +602,7 @@ public class ReportServiceTest {
 
         List<TestRun> parentTestRuns = new ArrayList<>();
         TestRun firstParentTestRun = new TestRun();
-        firstParentTestRun.setUuid(uuidList.get(0));
+        firstParentTestRun.setUuid(uuidList.getFirst());
         firstParentTestRun.setTestingStatus(TestingStatuses.PASSED);
         parentTestRuns.add(firstParentTestRun);
         TestRun secondTestRun = new TestRun();

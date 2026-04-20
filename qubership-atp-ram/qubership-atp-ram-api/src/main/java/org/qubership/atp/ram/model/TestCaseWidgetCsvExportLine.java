@@ -48,7 +48,7 @@ public class TestCaseWidgetCsvExportLine {
 
     public static final String DASH = "-";
 
-    private List<String> cells = new ArrayList<>();
+    private final List<String> cells = new ArrayList<>();
 
     /**
      * TestCaseWidgetCsvExportLine constructor.

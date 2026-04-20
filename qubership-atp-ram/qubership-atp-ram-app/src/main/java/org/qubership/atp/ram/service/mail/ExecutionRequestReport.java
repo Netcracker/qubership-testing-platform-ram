@@ -113,7 +113,7 @@ public class ExecutionRequestReport {
             return Collections.emptyList();
         }
         if (hosts.size() == 1) {
-            return new ArrayList<>(Arrays.asList(hosts.get(0).split(";\\s?")));
+            return new ArrayList<>(Arrays.asList(hosts.getFirst().split(";\\s?")));
         }
         return hosts;
     }

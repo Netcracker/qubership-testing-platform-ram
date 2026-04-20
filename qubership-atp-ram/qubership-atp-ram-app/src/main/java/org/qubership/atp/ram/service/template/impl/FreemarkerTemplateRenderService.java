@@ -53,8 +53,8 @@ public class FreemarkerTemplateRenderService implements TemplateRenderService {
             </head>
              <body>""";
     private static final String HTML_ROOT_SUFFIX = "</body></html>";
-    private Configuration freemarkerConfiguration;
-    private ReportTemplatesService reportTemplatesService;
+    private final Configuration freemarkerConfiguration;
+    private final ReportTemplatesService reportTemplatesService;
 
     public FreemarkerTemplateRenderService(Configuration freemarkerConfiguration,
                                            ReportTemplatesService reportTemplatesService) {

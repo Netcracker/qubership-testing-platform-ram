@@ -43,8 +43,8 @@ public class ChartsServicesTest {
             + "numberOfEr: \"10\""
             + "}]";
 
-    private ExecutionRequestServiceMock erMock = new ExecutionRequestServiceMock();
-    private RootCauseServiceMock rcMock = new RootCauseServiceMock();
+    private final ExecutionRequestServiceMock erMock = new ExecutionRequestServiceMock();
+    private final RootCauseServiceMock rcMock = new RootCauseServiceMock();
     private ChartsService chartsService;
 
     @BeforeEach

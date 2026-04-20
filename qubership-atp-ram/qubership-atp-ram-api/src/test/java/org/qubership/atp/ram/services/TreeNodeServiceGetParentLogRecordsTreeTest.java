@@ -100,7 +100,7 @@ public class TreeNodeServiceGetParentLogRecordsTreeTest {
         Assertions.assertNotNull(logRecordTreeNode.getChildren());
         Assertions.assertEquals(3, logRecordTreeNode.getChildren().size());
 
-        TreeNode resultChild1TreeNode = logRecordTreeNode.getChildren().get(0);
+        TreeNode resultChild1TreeNode = logRecordTreeNode.getChildren().getFirst();
         Assertions.assertEquals(LogRecordTreeNode.class, resultChild1TreeNode.getClass());
         LogRecordTreeNode resultChild1LogRecordTreeNode = (LogRecordTreeNode) resultChild1TreeNode;
 

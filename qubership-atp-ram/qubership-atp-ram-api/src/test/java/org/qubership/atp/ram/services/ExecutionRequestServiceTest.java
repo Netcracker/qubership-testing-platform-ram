@@ -194,7 +194,7 @@ public class ExecutionRequestServiceTest {
 
         List<ExecutionRequestResponse> result = service.buildExecutionRequestResponses(ers);
 
-        Assertions.assertEquals(result.size(), 2);
+        Assertions.assertEquals(2, result.size());
         Mockito.verify(labelService, times(0)).getLabels(any());
     }
 
@@ -205,7 +205,7 @@ public class ExecutionRequestServiceTest {
         label1.setUuid(UUID.randomUUID());
         Set<UUID> labels1 = new HashSet<>();
         labels1.add(label1.getUuid());
-        ers.get(0).setFilteredByLabels(labels1);
+        ers.getFirst().setFilteredByLabels(labels1);
 
         Label label2 = new Label();
         label2.setUuid(UUID.randomUUID());
@@ -216,10 +216,10 @@ public class ExecutionRequestServiceTest {
 
         List<ExecutionRequestResponse> result = service.buildExecutionRequestResponses(ers);
 
-        Assertions.assertEquals(result.size(), 2);
+        Assertions.assertEquals(2, result.size());
         Mockito.verify(labelService, times(1)).getLabels(any());
         List<UUID> labelsId = result.stream()
-                .map(response -> response.getFilteredByLabels().get(0).getUuid()).collect(Collectors.toList());
+                .map(response -> response.getFilteredByLabels().getFirst().getUuid()).toList();
         Assertions.assertTrue(labelsId.contains(label1.getUuid()));
         Assertions.assertTrue(labelsId.contains(label2.getUuid()));
     }
@@ -231,7 +231,7 @@ public class ExecutionRequestServiceTest {
 
         List<ExecutionRequestResponse> result = service.buildExecutionRequestResponses(ers);
 
-        Assertions.assertEquals(result.get(0).getUuid(), ers.get(0).getUuid());
+        Assertions.assertEquals(result.getFirst().getUuid(), ers.getFirst().getUuid());
     }
 
     // todo fix this

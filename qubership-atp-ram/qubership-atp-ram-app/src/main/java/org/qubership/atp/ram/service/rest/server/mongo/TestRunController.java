@@ -441,7 +441,7 @@ public class TestRunController /*implements TestRunControllerApi*/ {
     public void stopResume(@RequestBody List<UUID> uuidList) {
         List<UUID> requestsForStopping = service.getTestRunsForStoppingOrTerminating(uuidList);
         List<UUID> requestsForResuming = service.getTestRunsForResuming(uuidList);
-        TestRun firstTr = service.get(uuidList.get(0));
+        TestRun firstTr = service.get(uuidList.getFirst());
         orchestratorService.stopTestRun(requestsForStopping, firstTr.getExecutionRequestId());
         orchestratorService.resumeTestRun(requestsForResuming, firstTr.getExecutionRequestId());
     }

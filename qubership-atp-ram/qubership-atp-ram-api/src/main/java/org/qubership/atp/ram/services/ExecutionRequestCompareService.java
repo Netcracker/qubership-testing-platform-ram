@@ -119,12 +119,12 @@ public class ExecutionRequestCompareService {
         List<EnvironmentDetailsCompareResponse> environmentDetailsCompareResponses = new ArrayList<>();
         for (ExecutionRequest request : executionRequests) {
             List<Environment> foundEnvironmentList = environments.stream()
-                    .filter(env -> request.getEnvironmentId().equals(env.getId())).collect(Collectors.toList());
+                    .filter(env -> request.getEnvironmentId().equals(env.getId())).toList();
             if (foundEnvironmentList.isEmpty()
                     && !CollectionUtils.isEmpty(environmentsCompareRequest.getEnvironmentIds())) {
                 continue;
             }
-            String environmentName = foundEnvironmentList.isEmpty() ? "-" : foundEnvironmentList.get(0).getName();
+            String environmentName = foundEnvironmentList.isEmpty() ? "-" : foundEnvironmentList.getFirst().getName();
             String environmentLink = foundEnvironmentList.isEmpty() ? null : generateEnvironmentLink(request);
             environmentDetailsCompareResponses.add(new EnvironmentDetailsCompareResponse(
                     request.getUuid(),
@@ -154,7 +154,7 @@ public class ExecutionRequestCompareService {
         for (Map.Entry<UUID, List<TestRun>> entry : testRunMatrix.entrySet()) {
             rootCauseIds.addAll(entry.getValue().stream()
                     .filter(testRun -> testRun.getRootCauseId() != null)
-                    .map(TestRun::getRootCauseId).collect(Collectors.toList()));
+                    .map(TestRun::getRootCauseId).toList());
         }
         Map<UUID, String> rootCauses =
                 rootCauseService.getByIds(rootCauseIds).stream().collect(Collectors.toMap(RamObject::getUuid,
@@ -210,17 +210,17 @@ public class ExecutionRequestCompareService {
                 generateOrderedMapWithExecutionRequestsAndTestRuns(executionRequests, notSortedMap);
 
 
-        List<TestRun> firstSortedTestRuns = sortedCompareMap.get(executionRequestIds.get(0)).stream()
+        List<TestRun> firstSortedTestRuns = sortedCompareMap.get(executionRequestIds.getFirst()).stream()
                 .sorted(Comparator.comparingInt(TestRun::getOrder))
-                .collect(Collectors.toList());
+                .toList();
         TestRunDetailsCompareResponse testRunDetailsCompareResponse = new TestRunDetailsCompareResponse();
         testRunDetailsCompareResponse.setExecutionRequests(executionRequests
                 .stream()
                 .map(er -> new ShortExecutionRequest(er.getUuid(), er.getName()))
                 .collect(Collectors.toList()));
 
-        ExecutionRequest firstExecutionRequest = executionRequests.get(0);
-        executionRequests.remove(0);
+        ExecutionRequest firstExecutionRequest = executionRequests.getFirst();
+        executionRequests.removeFirst();
         for (TestRun testRun : firstSortedTestRuns) {
             CompareTestRunsDetailsRow row = new CompareTestRunsDetailsRow();
             row.setRowType(CompareTestRunsDetailsRow.CompareTestRunsRowType.TEST_RUN);
@@ -474,15 +474,15 @@ public class ExecutionRequestCompareService {
 
         TestRunDetailsCompareResponse testRunDetailsCompareResponse = new TestRunDetailsCompareResponse();
         comparedItemMatrix = comparedItemMatrix.stream().sorted(Comparator
-                .comparingInt(this::getMaximalRowInCompareItems)).collect(Collectors.toList());
+                .comparingInt(this::getMaximalRowInCompareItems)).toList();
         List<UUID> executionRequestIds = request.getLogRecordCompareRequestItems()
                 .stream()
                 .map(LogRecordCompareRequestItem::getExecutionRequestId)
-                .collect(Collectors.toList());
+                .toList();
         comparedItemMatrix.forEach(compareItems -> {
             CompareTestRunsDetailsRow row = new CompareTestRunsDetailsRow();
             CompareItem notEmptyItem = compareItems.stream().filter(compareItem -> compareItem.getItemValue() != null)
-                    .collect(Collectors.toList()).get(0);
+                    .toList().getFirst();
             if (notEmptyItem.getItemValue().isCompaund() || notEmptyItem.getItemValue().isSection()) {
                 row.setRowType("COMPOUND");
             } else {
@@ -495,13 +495,13 @@ public class ExecutionRequestCompareService {
                 List<CompareItem> filterItems = compareItems
                         .stream()
                         .filter(item -> executionRequestId.equals(item.getExecutionRequestId()))
-                        .collect(Collectors.toList());
+                        .toList();
                 if (filterItems.isEmpty()) {
                     cell.setCellStatus(null);
                     cell.setExecutionRequestId(executionRequestId);
                     cell.setEmpty(true);
                 } else {
-                    CompareItem compareItem = filterItems.get(0);
+                    CompareItem compareItem = filterItems.getFirst();
                     cell.setItemId(compareItem.getItemValue().getUuid());
                     cell.setExecutionRequestId(executionRequestId);
                     cell.setCellStatus(compareItem.getItemValue().getTestingStatus().getName().toUpperCase());
@@ -524,13 +524,13 @@ public class ExecutionRequestCompareService {
 
     private List<LinkedList<CompareItem>> compareLogRecords(List<List<CompareItem>> compareItemsMatrix, int erCount) {
         List<LinkedList<CompareItem>> comparedItemMatrix = new LinkedList<>();
-        for (CompareItem compareItem : compareItemsMatrix.get(0)) {
+        for (CompareItem compareItem : compareItemsMatrix.getFirst()) {
             LinkedList<CompareItem> comparedItemList = new LinkedList<>();
             comparedItemList.add(compareItem);
             comparedItemMatrix.add(comparedItemList);
         }
         for (int index = 1; index < erCount; index++) {
-            List<CompareItem> firstErItems = new LinkedList<>(compareItemsMatrix.get(0));
+            List<CompareItem> firstErItems = new LinkedList<>(compareItemsMatrix.getFirst());
             for (CompareItem compareItem : compareItemsMatrix.get(index)) {
                 if (!compareItem.isCompared()) {
                     CompareItem secondItem = getReferenceToRecord(firstErItems, compareItem, true);
@@ -632,7 +632,7 @@ public class ExecutionRequestCompareService {
 
         List<TestRun> firstSortedTestRuns = compareMap.get(executionRequestIds.get(0)).stream()
                 .sorted(Comparator.comparingInt(TestRun::getOrder))
-                .collect(Collectors.toList());
+                .toList();
         LinkedList<ExecutionRequestsCompareScreenshotResponse.TestRunCompareScreenshotResponse> testRuns =
                 new LinkedList<>();
 
@@ -687,11 +687,11 @@ public class ExecutionRequestCompareService {
                                 .sorted(Comparator
                                         .comparingInt(LogRecordWithParentListResponse.LogRecordParent::getDepth)
                                         .reversed())
-                                .collect(Collectors.toList());
+                                .toList();
 
                 StringBuilder path = new StringBuilder();
                 if (logRecordParentList.size() == 1) {
-                    logRecord.setMetaInfo(logRecordParentList.get(0).getMetaInfo());
+                    logRecord.setMetaInfo(logRecordParentList.getFirst().getMetaInfo());
                 } else if (logRecordParentList.size() > 1) {
                     for (LogRecordWithParentListResponse.LogRecordParent parent : logRecordParentList) {
                         if (nonNull(parent.getMetaInfo()) && !parent.getType().equals(TypeAction.COMPOUND)) {
@@ -744,14 +744,14 @@ public class ExecutionRequestCompareService {
                                 .comparingInt(LogRecordWithParentListResponse.LogRecordParent::getDepth)
                                 .reversed()).collect(Collectors.toList());
                 if (!parent.isEmpty()) {
-                    LogRecordWithParentListResponse.LogRecordParent topParent = parent.get(0);
+                    LogRecordWithParentListResponse.LogRecordParent topParent = parent.getFirst();
                     LogRecordCompareScreenshotResponse topLogRecord = createParentLogRecord(
                             topParent.getName(),
                             TypeAction.COMPOUND.equals(topParent.getType())
                                     ? ExecutionRequestsCompareScreenshotResponse.Type.COMPOUND.name()
                                     : ExecutionRequestsCompareScreenshotResponse.Type.ACTION.name());
 
-                    parent.remove(0);
+                    parent.removeFirst();
                     String path = parent.stream().map(RamObject::getName).collect(Collectors.joining(PARENT_DELIMITER));
                     List<LogRecordCompareScreenshotResponse> children = topLogRecord.getChild();
 
@@ -808,7 +808,7 @@ public class ExecutionRequestCompareService {
                     List<SubstepScreenshotResponse> screenshotResponses =
                             logRecordService.getSubstepScreenshots(Collections.singletonList(logRecord.getUuid()));
                     if (!CollectionUtils.isEmpty(screenshotResponses)) {
-                        screenshot = screenshotResponses.get(0).getScreenshot();
+                        screenshot = screenshotResponses.getFirst().getScreenshot();
                     }
                     subStep =
                             new LogRecordCompareScreenshotResponse.SubStepCompareScreenshotResponse(logRecord.getUuid(),

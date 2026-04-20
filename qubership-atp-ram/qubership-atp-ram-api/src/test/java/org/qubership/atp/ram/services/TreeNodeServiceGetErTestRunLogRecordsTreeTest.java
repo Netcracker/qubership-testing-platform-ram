@@ -114,7 +114,7 @@ public class TreeNodeServiceGetErTestRunLogRecordsTreeTest {
         Assertions.assertNotNull(testRunTreeNode.getChildren());
         Assertions.assertEquals(2, testRunTreeNode.getChildren().size());
 
-        TreeNode resultChild1TreeNode = testRunTreeNode.getChildren().get(0);
+        TreeNode resultChild1TreeNode = testRunTreeNode.getChildren().getFirst();
         Assertions.assertEquals(LogRecordTreeNode.class, resultChild1TreeNode.getClass());
         LogRecordTreeNode resultChild1LogRecordTreeNode = (LogRecordTreeNode) resultChild1TreeNode;
 

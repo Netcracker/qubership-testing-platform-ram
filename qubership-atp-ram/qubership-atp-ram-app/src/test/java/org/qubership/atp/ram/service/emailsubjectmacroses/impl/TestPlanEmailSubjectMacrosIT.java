@@ -81,8 +81,7 @@ public class TestPlanEmailSubjectMacrosIT {
         final ExecutionSummaryResponse executionSummaryResponse = new ExecutionSummaryResponse();
 
         // when
-        Assertions.assertThrows(AtpIllegalNullableArgumentException.class, () -> {
-            macros.resolve(executionRequest, executionSummaryResponse);
-        });
+        Assertions.assertThrows(AtpIllegalNullableArgumentException.class, () ->
+                macros.resolve(executionRequest, executionSummaryResponse));
     }
 }

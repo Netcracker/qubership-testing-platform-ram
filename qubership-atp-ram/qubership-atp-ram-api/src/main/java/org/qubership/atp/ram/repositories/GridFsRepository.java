@@ -298,7 +298,7 @@ public class GridFsRepository {
      * @param reportId report identifier
      * @return file data
      */
-    public GridFsFileData getReportById(UUID reportId) throws FileNotFoundException {
+    public GridFsFileData getReportById(UUID reportId) {
         Document filter = new Document().append(METADATA_REPORT_ID, reportId);
         GridFSFile reportFile = gridFsBucket.find(filter).first();
 

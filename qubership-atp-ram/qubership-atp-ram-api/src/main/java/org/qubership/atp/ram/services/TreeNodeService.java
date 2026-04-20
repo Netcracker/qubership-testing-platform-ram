@@ -89,15 +89,15 @@ public class TreeNodeService {
     public static final String ER_SUFFIX = "-[ER]";
     public static final String AR_SUFFIX = "-[AR]";
 
-    private TestRunService testRunService;
-    private ExecutionRequestService executionRequestService;
-    private LogRecordService logRecordService;
-    private LabelTemplateNodeService labelTemplateNodeService;
-    private WidgetConfigTemplateService widgetConfigTemplateService;
-    private ValidationLabelConfigTemplateService validationLabelConfigTemplateService;
-    private ObjectMapper objectMapper;
+    private final TestRunService testRunService;
+    private final ExecutionRequestService executionRequestService;
+    private final LogRecordService logRecordService;
+    private final LabelTemplateNodeService labelTemplateNodeService;
+    private final WidgetConfigTemplateService widgetConfigTemplateService;
+    private final ValidationLabelConfigTemplateService validationLabelConfigTemplateService;
+    private final ObjectMapper objectMapper;
 
-    private BiFunction<TestingReportLabelParam, TestingReportLabelParam, TestingReportLabelParam> statusMergeFunc =
+    private final BiFunction<TestingReportLabelParam, TestingReportLabelParam, TestingReportLabelParam> statusMergeFunc =
             (oldLabel, newLabel) -> {
                 final TestingStatuses oldStatus = oldLabel.getStatus();
                 final TestingStatuses newStatus = newLabel.getStatus();
@@ -363,13 +363,12 @@ public class TreeNodeService {
     }
 
     private Set<String> getReportLabelParams(List<TreeNode> children) {
-        Set<String> labelTemplateNodesLabelNames = children.stream()
+        return children.stream()
                 .filter(node -> node.getClass().equals(LabelTemplateTreeNode.class))
                 .map(node -> (LabelTemplateTreeNode) node)
                 .flatMap(node -> node.getReportLabelParams().stream())
                 .map(ReportLabelParam::getName)
                 .collect(Collectors.toSet());
-        return labelTemplateNodesLabelNames;
     }
 
     /**
@@ -457,7 +456,7 @@ public class TreeNodeService {
      *
      * @param executionRequestId execution request id
      * @param searchValue        part of test run name to search
-     * @return List of tree nodes
+     * @return Set of tree nodes
      */
     public Set<TreeNode> getExecutionRequestTreeNodesByName(UUID executionRequestId,
                                                             String searchValue) {
@@ -604,9 +603,8 @@ public class TreeNodeService {
             final Set<String> logRecordValidationLabels = logRecord.getValidationLabels();
             if (!isEmpty(logRecordValidationLabels)) {
                 final TestingStatuses status = logRecord.getTestingStatus();
-                logRecordValidationLabels.forEach(label -> {
-                    validationLabelMap.merge(label, new TestingReportLabelParam(label, status), statusMergeFunc);
-                });
+                logRecordValidationLabels.forEach(label ->
+                        validationLabelMap.merge(label, new TestingReportLabelParam(label, status), statusMergeFunc));
                 if (nonNull(template)) {
                     processValidationLabelTemplate(validationLabelMap, logRecordValidationLabels, status, template);
                 }
@@ -642,7 +640,7 @@ public class TreeNodeService {
         if (!isEmpty(entities)) {
             List<TreeNode> children = entities.stream()
                     .map(childrenMapFunc)
-                    .collect(Collectors.toList());
+                    .toList();
             labelTreeNode.getChildren().addAll(children);
         }
     }

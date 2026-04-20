@@ -269,7 +269,7 @@ public class CustomExecutionHistoryRepository implements FieldConstants {
         );
 
         final Aggregation aggregation = Aggregation.newAggregation(aggregationOperations);
-        log.debug("Aggregation query '{}'", aggregation.toString());
+        log.debug("Aggregation query '{}'", aggregation);
 
         return mongoTemplate.aggregate(aggregation, TEST_RUN, TestCaseExecutionPaginationResponse.class)
                 .getUniqueMappedResult();

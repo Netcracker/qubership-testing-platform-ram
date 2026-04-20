@@ -49,11 +49,11 @@ public class ExecutionSummaryWidgetModelBuilder extends AbstractWidgetModelBuild
     @Value("${catalogue.url}")
     private String baseUrl;
 
-    private ReportService reportService;
-    private ProjectsService projectsService;
-    private ExecutionRequestService executionRequestService;
-    private ObjectMapper objectMapper;
-    private CatalogueService catalogueService;
+    private final ReportService reportService;
+    private final ProjectsService projectsService;
+    private final ExecutionRequestService executionRequestService;
+    private final ObjectMapper objectMapper;
+    private final CatalogueService catalogueService;
 
     /**
      * Constructor.

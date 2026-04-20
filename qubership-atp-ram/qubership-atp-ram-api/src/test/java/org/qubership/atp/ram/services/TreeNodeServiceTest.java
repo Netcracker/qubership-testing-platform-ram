@@ -166,7 +166,7 @@ public class TreeNodeServiceTest {
         configs.add(new LabelConfig(ImmutableSet.of("TESTVL2"), "TESTVL2", false, false, 0));
         configs.add(new LabelConfig(ImmutableSet.of("TESTVL3"), "TESTVL3", false, false, 1));
         template.setLabels(configs);
-        List<String> expectedResult = Arrays.asList("testVL5");
+        List<String> expectedResult = List.of("testVL5");
         List<String> actualResult = treeNodeService.orderValidationLabels(labels, template);
 
         assertEquals(expectedResult, actualResult);
@@ -188,7 +188,7 @@ public class TreeNodeServiceTest {
         LabelTemplate labelTemplate = new LabelTemplate();
         labelTemplate.setUuid(labelTemplateId);
         labelTemplate.setName("labelTemplate");
-        labelTemplate.setLabelNodes(Arrays.asList(labelNode));
+        labelTemplate.setLabelNodes(List.of(labelNode));
         Set labels = new HashSet();
         labels.add(labelId);
         List<TestRun> testruns = new ArrayList<>();
@@ -217,8 +217,8 @@ public class TreeNodeServiceTest {
                 treeNodeService.getExecutionRequestTree(executionRequest, labelTemplateId, null, true, false);
 
         assertEquals( 1, treeNode.getChildren().size(), "Root node should contain 1 children with label");
-        assertEquals(testruns.size(), treeNode.getChildren().get(0).getChildren().size(), "All testRuns should be inside the label");
-        List<String> actualTestRunNames = treeNode.getChildren().get(0).getChildren()
+        assertEquals(testruns.size(), treeNode.getChildren().getFirst().getChildren().size(), "All testRuns should be inside the label");
+        List<String> actualTestRunNames = treeNode.getChildren().getFirst().getChildren()
                 .stream().map(TreeNode::getName).collect(Collectors.toList());
         assertEquals(sortedTestRunNames, actualTestRunNames, "TestRuns should be ordered by name inside label");
     }
@@ -234,6 +234,6 @@ public class TreeNodeServiceTest {
         TreeNode actualTreeNode = treeNodeService.getExecutionRequestTestRunTree(executionRequest.getUuid());
         // then
         assertNotNull(actualTreeNode);
-        Assertions.assertTrue(((ExecutionRequestTreeNode) actualTreeNode).isExecutionRequestVirtual());
+        Assertions.assertTrue(actualTreeNode.isExecutionRequestVirtual());
     }
 }

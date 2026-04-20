@@ -194,10 +194,10 @@ public class PotServiceTest {
 
 
         PotsStatisticsPerAction potsStatisticsPerAction1 = new PotsStatisticsPerAction(parent1.getName(),
-                parent1.getTestingStatus(), children1.getFileMetadata().get(0).getFileName(),
+                parent1.getTestingStatus(), children1.getFileMetadata().getFirst().getFileName(),
                 children1.getUuid().toString());
         PotsStatisticsPerAction potsStatisticsPerAction2 = new PotsStatisticsPerAction(parent2.getName(),
-                parent2.getTestingStatus(), children2.getFileMetadata().get(0).getFileName(),
+                parent2.getTestingStatus(), children2.getFileMetadata().getFirst().getFileName(),
                 children2.getUuid().toString());
 
         List<PotsStatisticsPerAction> exp = Arrays.asList(potsStatisticsPerAction1, potsStatisticsPerAction2);

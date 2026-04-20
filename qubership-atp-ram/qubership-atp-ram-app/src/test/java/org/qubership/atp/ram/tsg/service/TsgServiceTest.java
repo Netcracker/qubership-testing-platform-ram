@@ -45,14 +45,14 @@ import com.google.gson.JsonObject;
 
 public class TsgServiceTest {
 
-    private ExecutionRequestService executionRequestService = mock(ExecutionRequestService.class);
-    private TestRunService testRunService = mock(TestRunService.class);
-    private LogRecordService logRecordService = mock(LogRecordService.class);
-    private ProjectsService projectsService = mock(ProjectsService.class);
-    private TsgProjectService tsgProjectService = mock(TsgProjectService.class);
-    private TsgErService tsgErService = mock(TsgErService.class);
-    private Sender<List<UUID>> sender = mock(Sender.class);
-    private TsgConfiguration tsgConfiguration = new TsgConfiguration();
+    private final ExecutionRequestService executionRequestService = mock(ExecutionRequestService.class);
+    private final TestRunService testRunService = mock(TestRunService.class);
+    private final LogRecordService logRecordService = mock(LogRecordService.class);
+    private final ProjectsService projectsService = mock(ProjectsService.class);
+    private final TsgProjectService tsgProjectService = mock(TsgProjectService.class);
+    private final TsgErService tsgErService = mock(TsgErService.class);
+    private final Sender<List<UUID>> sender = mock(Sender.class);
+    private final TsgConfiguration tsgConfiguration = new TsgConfiguration();
 
     private Project project;
     private ExecutionRequest er;
@@ -108,9 +108,9 @@ public class TsgServiceTest {
 
     @Test
     public void getDailyInfo_TestRunsWithStatusInProgressShouldBeNotIncludedToReport() {
-        when(tsgProjectService.getAllTsgProjects()).thenReturn(Arrays.asList(project));
+        when(tsgProjectService.getAllTsgProjects()).thenReturn(Collections.singletonList(project));
         when(executionRequestService.findFinishedErByProjectAndSortByFinishDate(any(), any()))
-                .thenReturn(Arrays.asList(er));
+                .thenReturn(Collections.singletonList(er));
         when(testRunService.findAllByExecutionRequestId(any())).thenReturn(Arrays.asList(tr1, tr2, tr3));
         TsgService tsgService = new TsgService(executionRequestService, testRunService, logRecordService,
                 projectsService, tsgProjectService, tsgErService, tsgConfiguration, sender);

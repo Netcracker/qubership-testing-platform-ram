@@ -184,7 +184,7 @@ public class IssueService extends CrudService<Issue> {
             int startIndex, int endIndex,
             String columnType, String sortType) {
         log.debug("Finding issues in a Log Record {} from {} to {}, Execution Request ids [{}]",
-                issueFilteringParams.getLogRecordIds().get(0),
+                issueFilteringParams.getLogRecordIds().getFirst(),
                 startIndex, endIndex, issueFilteringParams.getExecutionRequestId());
         return getAllIssuesByParameters(issueFilteringParams,
                 columnType, sortType,
@@ -340,7 +340,7 @@ public class IssueService extends CrudService<Issue> {
                 sortType, startIndex, endIndex);
         List<IssueResponse> responses = getResponses(issueDto.getData());
         return new IssueResponsesModel(
-                issueDto.getMetadata().isEmpty() ? 0 : (int) issueDto.getMetadata().get(0).getTotalCount(),
+                issueDto.getMetadata().isEmpty() ? 0 : (int) issueDto.getMetadata().getFirst().getTotalCount(),
                 responses
         );
     }
@@ -407,7 +407,7 @@ public class IssueService extends CrudService<Issue> {
                             .collect(Collectors.toList()), executionRequestId));
             List<UUID> updatedLogRecords = createdIssues.stream()
                     .flatMap(issue -> issue.getLogRecordIds().stream())
-                    .collect(Collectors.toList());
+                    .toList();
             List<Issue> newIssues = new ArrayList<>();
             logRecords.stream()
                     .filter(logRecord -> !updatedLogRecords.contains(logRecord.getUuid()))
@@ -444,7 +444,7 @@ public class IssueService extends CrudService<Issue> {
 
         List<UUID> updatedLogRecords = createdIssues.stream()
                 .flatMap(issue -> issue.getLogRecordIds().stream())
-                .collect(Collectors.toList());
+                .toList();
         List<Issue> newIssues = new ArrayList<>();
         values.stream()
                 .filter(logRecordDto -> !updatedLogRecords.contains(logRecordDto.getLogRecord().getUuid()))
@@ -495,7 +495,7 @@ public class IssueService extends CrudService<Issue> {
         List<LogRecord> logRecords = testRunService.findAllByExecutionRequestId(executionRequestId)
                 .stream()
                 .flatMap(testRun -> logRecordService.getAllFailedLogRecordsByTestRunId(testRun.getUuid()).stream())
-                .collect(Collectors.toList());
+                .toList();
         List<Issue> createdIssues = new ArrayList<>();
         Pattern compiledFailPattern = Pattern.compile(failPattern.getRule());
         logRecords.forEach(logRecord -> {
@@ -559,7 +559,7 @@ public class IssueService extends CrudService<Issue> {
         List<LogRecord> logRecords = testRunService.findAllByExecutionRequestId(executionRequestId)
                 .stream()
                 .flatMap(testRun -> logRecordService.getAllFailedLogRecordsByTestRunId(testRun.getUuid()).stream())
-                .collect(Collectors.toList());
+                .toList();
         List<Issue> createdIssues = new ArrayList<>();
         logRecords.forEach(logRecord -> {
             if (!Strings.isNullOrEmpty(logRecord.getMessage())) {

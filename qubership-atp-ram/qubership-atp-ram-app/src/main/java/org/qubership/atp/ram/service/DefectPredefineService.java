@@ -189,7 +189,7 @@ public class DefectPredefineService {
         final List<UUID> logRecordIds = issue.getLogRecordIds();
         LogRecord logRecord = null;
         if (!isEmpty(logRecordIds)) {
-            final UUID firstLogRecordId = logRecordIds.get(0);
+            final UUID firstLogRecordId = logRecordIds.getFirst();
             logRecord = logRecordService.get(firstLogRecordId);
             final String logRecordUrl = getLogRecordUrl(projectId, executionRequestId, logRecord);
             final UUID testRunId = logRecord.getTestRunId();
@@ -291,7 +291,7 @@ public class DefectPredefineService {
      * Create defect.
      */
     public JiraIssueCreateResponse createDefect(UUID testPlanId, UUID issueId,
-                                                DefectCreateRequest request) throws Exception {
+                                                DefectCreateRequest request) {
         TestPlan testPlan = catalogueService.getTestPlan(testPlanId);
         BugTrackingSystemSynchronization synchronization = testPlan.getSynchronization();
 

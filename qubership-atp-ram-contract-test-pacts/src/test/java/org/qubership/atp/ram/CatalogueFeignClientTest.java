@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -172,9 +173,9 @@ public class CatalogueFeignClientTest {
         fieldsDto.setSummary("summary");
         fieldsDto.setProject(projectInFieldsDto);
         fieldsDto.setPriority(priorityDto);
-        fieldsDto.setLabels(asList("label"));
+        fieldsDto.setLabels(List.of("label"));
         fieldsDto.setIssuetype(issueTypeDto);
-        fieldsDto.setComponents(asList(jiraComponentDto));
+        fieldsDto.setComponents(List.of(jiraComponentDto));
         fieldsDto.setCustomfield17400("atpLinkTms");
         fieldsDto.setCustomfield27320("atpLinkPsup");
         fieldsDto.setCustomfield10014(foundInDto);
@@ -198,80 +199,94 @@ public class CatalogueFeignClientTest {
         labelDto.setName("name");
         labelDto.setTestPlanId(id);
 
-        List<TestRunToJiraInfoDto> testRunToJiraInfos = new ArrayList<TestRunToJiraInfoDto>(){{
+        List<TestRunToJiraInfoDto> testRunToJiraInfos = new ArrayList<>() {{
             add(generateTestRunToJiraInfoDto());
         }};
 
         UUID projectId = UUID.fromString("5a3e9627-630c-48cd-a58f-af157f0771c7");
 
         ResponseEntity<Void> result1 = catalogueIntegrationFeignClient.propagateTestCasesToJira(uuids);
-        Assertions.assertEquals(result1.getStatusCode().value(), 204);
+        Assertions.assertEquals(204, result1.getStatusCode().value());
 
         ResponseEntity<Void> result2 = catalogueIntegrationFeignClient.autoSyncTestRunsWithJira(projectId, id,
                 true, true, testRunToJiraInfos);
-        Assertions.assertEquals(result2.getStatusCode().value(), 204);
+        Assertions.assertEquals(204, result2.getStatusCode().value());
 
-        ResponseEntity<Void> result3 = catalogueTestCaseFeignClient.updateCaseStatuses(asList(testCaseLastStatusDto));
-        Assertions.assertEquals(result3.getStatusCode().value(), 200);
+        ResponseEntity<Void> result3 = catalogueTestCaseFeignClient.updateCaseStatuses(List.of(testCaseLastStatusDto));
+        Assertions.assertEquals(200, result3.getStatusCode().value());
 
         ResponseEntity<UUID> result4 = catalogueTestCaseFeignClient.getScenarioIdByTestCaseId(id);
-        Assertions.assertEquals(result4.getStatusCode().value(), 200);
-        Assertions.assertTrue(result4.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result4.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result4.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<CheckSumResponseDto> result5 = catalogueTestScenarioFeignClient.checkHashSum(hashSums);
-        Assertions.assertEquals(result5.getStatusCode().value(), 200);
-        Assertions.assertTrue(result5.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result5.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result5.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<ProjectDto> result6 = catalogueProjectFeignClient.getProjectById(id);
-        Assertions.assertEquals(result6.getStatusCode().value(), 200);
-        Assertions.assertTrue(result6.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result6.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result6.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<List<TestCaseLabelResponseDto>> result7 = catalogueTestCaseFeignClient.getCaseLabels(uuids);
-        Assertions.assertEquals(result7.getStatusCode().value(), 200);
-        Assertions.assertTrue(result7.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result7.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result7.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<LabelTemplateDto> result8 = catalogueLabelTemplateFeignClient.get(id);
-        Assertions.assertEquals(result8.getStatusCode().value(), 200);
-        Assertions.assertTrue(result8.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result8.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result8.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<Void> result9 = catalogueLabelTemplateFeignClient.delete(id);
-        Assertions.assertEquals(result9.getStatusCode().value(), 200);
+        Assertions.assertEquals(200, result9.getStatusCode().value());
 
         ResponseEntity<List<IssueDto>> result10 = catalogueIssueFeignClient.getByIds(new ArrayList<>(uuids));
-        Assertions.assertEquals(result10.getStatusCode().value(), 200);
-        Assertions.assertTrue(result10.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result10.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result10.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<TestPlanDtoDto> result11 = catalogueTestPlanFeignClient.getTestPlanByUuid(id);
-        Assertions.assertEquals(result11.getStatusCode().value(), 200);
-        Assertions.assertTrue(result11.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result11.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result11.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<TestScopeDto> result12 = catalogueTestScopeFeignClient.getTestScopeByUuid(id);
-        Assertions.assertEquals(result12.getStatusCode().value(), 200);
-        Assertions.assertTrue(result12.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result12.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result12.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<List<TestCaseDto>> result13 = catalogueTestCaseFeignClient.getTestCasesByIds(caseSearchRequestDto);
-        Assertions.assertEquals(result13.getStatusCode().value(), 200);
-        Assertions.assertTrue(result13.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result13.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result13.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<TestCaseDto> result14 = catalogueTestCaseFeignClient.getTestCaseWithLabelsByUuid(id);
-        Assertions.assertEquals(result14.getStatusCode().value(), 200);
-        Assertions.assertTrue(result14.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result14.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result14.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<List<LabelDto>> result15 = catalogueLabelFeignClient.getLabelsByIds(uuids);
-        Assertions.assertEquals(result15.getStatusCode().value(), 200);
-        Assertions.assertTrue(result15.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result15.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result15.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<JiraIssueCreateResponseDto> result16 = catalogueIntegrationFeignClient.createJiraTicket(id, jiraIssueCreateRequestDto);
-        Assertions.assertEquals(result16.getStatusCode().value(), 200);
-        Assertions.assertTrue(result16.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result16.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result16.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<JiraIssueDto> result17 = catalogueIntegrationFeignClient.getJiraTicketByKey(id, "key");
-        Assertions.assertEquals(result17.getStatusCode().value(), 200);
-        Assertions.assertTrue(result17.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result17.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result17.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<List<JiraComponentDto>> result18 = catalogueIntegrationFeignClient.getTestPlanJiraComponents(id);
-        Assertions.assertEquals(result18.getStatusCode().value(), 200);
-        Assertions.assertTrue(result18.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result18.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result18.getHeaders().get("Content-Type"))
+                .contains("application/json"));
     }
 
     private TestRunToJiraInfoDto generateTestRunToJiraInfoDto() {

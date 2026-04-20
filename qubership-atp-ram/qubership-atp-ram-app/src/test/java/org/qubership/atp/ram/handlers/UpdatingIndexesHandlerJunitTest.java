@@ -66,7 +66,7 @@ public class UpdatingIndexesHandlerJunitTest {
         document.put(MigrationConstants.NAME_INDEX_FIELD, MigrationConstants.CREATED_DATE_INDEX_NAME);
         document.put(MigrationConstants.EXPIRE_DATE_INDEX_FIELD, 100L);
         documentsList.add(document);
-        ListIndexesIterable<Document> documents = new ListIndexesIterable<Document>() {
+        ListIndexesIterable<Document> documents = new ListIndexesIterable<>() {
             @Override
             public ListIndexesIterable<Document> maxTime(long maxTime, TimeUnit timeUnit) {
                 return null;

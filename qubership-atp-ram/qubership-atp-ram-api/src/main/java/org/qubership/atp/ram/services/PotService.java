@@ -173,10 +173,9 @@ public class PotService {
                 .getTopLogRecordsIdAndChildLogRecordsByFileTypeFilterLookup(testRunId, FileType.POT);
 
         List<PotsStatisticsPerAction> potsStatisticsPerActions = new ArrayList<>();
-        parentChildLogRecords.forEach(logRecordLookupResponse -> {
-            potsStatisticsPerActions.add(buildPotStatisticPerAction(logRecordLookupResponse.getFileLogRecord(),
-                    logRecordLookupResponse.getParent()));
-        });
+        parentChildLogRecords.forEach(logRecordLookupResponse ->
+                potsStatisticsPerActions.add(buildPotStatisticPerAction(logRecordLookupResponse.getFileLogRecord(),
+                logRecordLookupResponse.getParent())));
         return potsStatisticsPerActions;
     }
 }

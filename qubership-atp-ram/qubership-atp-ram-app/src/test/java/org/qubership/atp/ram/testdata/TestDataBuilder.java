@@ -96,7 +96,7 @@ public class TestDataBuilder extends ServiceProvider {
 
     public class LogRecordBuilder {
 
-        private Queue<LogRecord> sectionQueue = Queues.newLinkedBlockingQueue();
+        private final Queue<LogRecord> sectionQueue = Queues.newLinkedBlockingQueue();
         private LogRecord logRecord;
 
         public LogRecordBuilder logRecord(String name, TestingStatuses status) {

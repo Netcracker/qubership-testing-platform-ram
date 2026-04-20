@@ -47,10 +47,10 @@ public class ExecutionSummaryWidgetModelBuilderTest {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    private ReportService reportService = mock(ReportService.class);
-    private ProjectsService projectsService = mock(ProjectsService.class);
-    private CatalogueService catalogueService = mock(CatalogueService.class);
-    private ExecutionRequestService executionRequestService = mock(ExecutionRequestService.class);
+    private final ReportService reportService = mock(ReportService.class);
+    private final ProjectsService projectsService = mock(ProjectsService.class);
+    private final CatalogueService catalogueService = mock(CatalogueService.class);
+    private final ExecutionRequestService executionRequestService = mock(ExecutionRequestService.class);
     private ReportParams reportParams;
 
 
@@ -93,7 +93,7 @@ public class ExecutionSummaryWidgetModelBuilderTest {
         response.setFailedCount(20);
         response.setWarningCount(5);
         response.setEnvironmentLink("http://some-domain.com");
-        response.setBrowserSessionLink(new ArrayList<String>(){{
+        response.setBrowserSessionLink(new ArrayList<>() {{
             add("http://some-domain.com");
         }});
 

@@ -21,6 +21,7 @@ import static java.util.Arrays.asList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.junit.Rule;
@@ -74,22 +75,24 @@ public class EnvironmentFeignClientTest {
     public void allPass() {
         UUID id = UUID.fromString("7c9dafe9-2cd1-4ffc-ae54-45867f2b9701");
         BaseSearchRequestDto searchRequestDto = new BaseSearchRequestDto();
-        searchRequestDto.setIds(asList(id));
-        searchRequestDto.setNames(asList("names"));
+        searchRequestDto.setIds(List.of(id));
+        searchRequestDto.setNames(List.of("names"));
         searchRequestDto.setProjectId(id);
 
         ResponseEntity<List<EnvironmentDto>> result1 =
                 environmentFeignClient.findBySearchRequest(searchRequestDto, false);
-        Assertions.assertEquals(result1.getStatusCode().value(), 200);
-        Assertions.assertTrue(result1.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result1.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result1.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<EnvironmentFullVer1ViewDto> result2 = environmentFeignClient.getEnvironment(id, true);
-        Assertions.assertEquals(result2.getStatusCode().value(), 200);
-        Assertions.assertTrue(result2.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result2.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result2.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<String> result3 = environmentFeignClient.getEnvironmentNameById(id);
-        Assertions.assertEquals(result3.getStatusCode().value(), 200);
-        Assertions.assertTrue(result3.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result3.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result3.getHeaders().get("Content-Type")).contains("text/plain"));
     }
 
     @Pact(consumer = "atp-ram")

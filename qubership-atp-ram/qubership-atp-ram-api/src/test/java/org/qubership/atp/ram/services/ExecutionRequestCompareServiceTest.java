@@ -186,7 +186,7 @@ public class ExecutionRequestCompareServiceTest {
 
 
         TestRunDetailsCompareResponse testRunDetails = executionRequestCompareService.getLogRecordCompareResponse(request);
-        Assertions.assertEquals(testRunDetails.getRowList().get(0).getName(), "Login");
+        Assertions.assertEquals("Login", testRunDetails.getRowList().getFirst().getName());
 
     }
 
@@ -303,7 +303,7 @@ public class ExecutionRequestCompareServiceTest {
 
         Assertions.assertEquals(4, comparedItemsMatrix.size());
         List<CompareItem> item1 = comparedItemsMatrix.get(0);
-        Assertions.assertEquals("Login", item1.get(0).getItemValue().getName());
+        Assertions.assertEquals("Login", item1.getFirst().getItemValue().getName());
 
         List<CompareItem> item2 = comparedItemsMatrix.get(1);
         Assertions.assertEquals("Open", item2.get(0).getItemValue().getName());

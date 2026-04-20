@@ -160,7 +160,7 @@ public class IssueServiceTest {
         issueService.recalculateIssuesForExecution(executionRequestId);
 
         verify(issueRepository, times(1)).saveAll(argCaptorListIssue.capture());
-        Assertions.assertEquals(2, argCaptorListIssue.getAllValues().get(0).size());
+        Assertions.assertEquals(2, argCaptorListIssue.getAllValues().getFirst().size());
     }
 
     @Test
@@ -187,7 +187,7 @@ public class IssueServiceTest {
         issueService.recalculateIssuesForExecution(executionRequestId);
 
         verify(issueRepository, times(1)).saveAll(argCaptorListIssue.capture());
-        Assertions.assertEquals(3, argCaptorListIssue.getAllValues().get(0).size());
+        Assertions.assertEquals(3, argCaptorListIssue.getAllValues().getFirst().size());
     }
 
     @Test
@@ -313,7 +313,7 @@ public class IssueServiceTest {
 
         List<LogRecord> logRecords2 = logRecords.stream()
                 .filter(logRecord -> !lrIds.contains(logRecord.getUuid()))
-                .collect(Collectors.toList());
+                .toList();
         Stream<LogRecord> logRecordStream2 = logRecords2.stream();
         when(logRecordService.countAllFailedLrByTestRunIds(any())).thenReturn(Long.valueOf(logRecords.size()));
         when(logRecordService
@@ -355,10 +355,10 @@ public class IssueServiceTest {
         List<Issue> listIssue = generateListIssue(logLogRecords.get(0).getUuid(), logLogRecords.get(1).getUuid());
         List<UUID> logRecordIds = Arrays.asList(logLogRecords.get(0).getUuid(), logLogRecords.get(1).getUuid());
         List<LogRecord> logRecords = logLogRecords.stream()
-                .filter(logRecord -> !logRecordIds.contains(logRecord.getUuid())).collect(Collectors.toList());
+                .filter(logRecord -> !logRecordIds.contains(logRecord.getUuid())).toList();
 
-        listIssue.get(0).setFailedTestRunIds(Collections.singletonList(failedTestRunId));
-        listIssue.get(0).setFailReasonId(failReasonId);
+        listIssue.getFirst().setFailedTestRunIds(Collections.singletonList(failedTestRunId));
+        listIssue.getFirst().setFailReasonId(failReasonId);
 
         when(logRecordService.getAllFailedLogRecordsByTestRunIdsStream(any(), any())).thenReturn(logRecords.stream());
         when(logRecordService.countAllFailedLrByTestRunIds(any())).thenReturn(Long.valueOf(logRecords.size()));

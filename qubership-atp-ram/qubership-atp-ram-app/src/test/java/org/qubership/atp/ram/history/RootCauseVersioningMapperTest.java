@@ -87,7 +87,7 @@ public class RootCauseVersioningMapperTest {
         assertEquals(rootCauseHistoryChangeDto.getName(), source.getName());
         assertEquals(rootCauseHistoryChangeDto.getModifiedBy(), userInfo.getFullName());
         assertEquals(rootCauseHistoryChangeDto.getCreatedBy(), userInfo.getFullName());
-        assertEquals(rootCauseHistoryChangeDto.getChildren().get(0), childRootCauseName);
+        assertEquals(rootCauseHistoryChangeDto.getChildren().getFirst(), childRootCauseName);
         assertEquals(rootCauseHistoryChangeDto.getParent(), parentRootCauseName);
     }
 }

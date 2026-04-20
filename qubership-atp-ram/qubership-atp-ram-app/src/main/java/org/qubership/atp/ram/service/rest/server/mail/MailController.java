@@ -37,8 +37,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController()
 public class MailController /*implements MailControllerApi*/ {
     private static final Logger log = LoggerFactory.getLogger(MailController.class);
-    private MailService service;
-    private MailSenderConfig mailSenderConfig;
+    private final MailService service;
+    private final MailSenderConfig mailSenderConfig;
 
     /**
      * Constructor.

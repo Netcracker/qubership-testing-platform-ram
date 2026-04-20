@@ -142,7 +142,7 @@ public class AtpRamExportExecutorTest {
 
         List<FailPattern> actualFailPatterns = getActualFailPatterns();
         assertEquals(1, actualFailPatterns.size());
-        assertEquals(failPattern, actualFailPatterns.get(0));
+        assertEquals(failPattern, actualFailPatterns.getFirst());
     }
 
     private List<RootCause> getActualRootCauses() {

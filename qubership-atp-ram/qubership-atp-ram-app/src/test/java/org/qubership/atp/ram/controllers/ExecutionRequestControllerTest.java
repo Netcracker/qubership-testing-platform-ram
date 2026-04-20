@@ -118,7 +118,7 @@ public class ExecutionRequestControllerTest {
     @MockBean
     private Configuration freemarkerConfiguration;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -165,7 +165,7 @@ public class ExecutionRequestControllerTest {
 
         Assertions.assertTrue(Objects.requireNonNull(result.getHeader(HttpHeaders.CONTENT_DISPOSITION))
                 .contains("attachment; filename="));
-        Assertions.assertEquals(result.getHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS), HttpHeaders.CONTENT_DISPOSITION);
+        Assertions.assertEquals(HttpHeaders.CONTENT_DISPOSITION, result.getHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS));
         Assertions.assertEquals(expectedResult, new String(result.getContentAsByteArray()));
     }
 }

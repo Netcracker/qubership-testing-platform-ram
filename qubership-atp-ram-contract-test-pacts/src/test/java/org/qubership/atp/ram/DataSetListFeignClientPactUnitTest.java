@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.json.JSONException;
@@ -78,12 +79,13 @@ public class DataSetListFeignClientPactUnitTest {
 
         ResponseEntity<List<DatasetResponseDto>> expectedResult =
                 dataSetListFeignClient.getDataSetsWithNameAndDataSetList(getListUuid());
-        Assertions.assertEquals(expectedResult.getStatusCode().value(), 200);
-        Assertions.assertTrue(expectedResult.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, expectedResult.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(expectedResult.getHeaders().get("Content-Type"))
+                .contains("application/json"));
     }
 
     @Pact(consumer = "atp-ram")
-    public RequestResponsePact createPact(PactDslWithProvider builder) throws JSONException, JsonProcessingException {
+    public RequestResponsePact createPact(PactDslWithProvider builder) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
@@ -110,7 +112,7 @@ public class DataSetListFeignClientPactUnitTest {
     }
 
     public List<UUID> getListUuid() {
-        List<UUID> list = new ArrayList();
+        List<UUID> list = new ArrayList<>();
         UUID uuid = UUID.fromString("c2737427-05e4-4c17-8032-455539deaa01");
         UUID uuid2 = UUID.fromString("c2737427-05e4-4c17-8032-455539deaa02");
         list.add(uuid);

@@ -73,7 +73,7 @@ public class LogRecordServiceTest {
     private TestRunRepository testRunRepository;
     private CatalogueService catalogueService;
     private ModelMapper modelMapper;
-    private Mapper<LogRecord, LogRecordShort> logRecordMapper = new LogRecordMapper();
+    private final Mapper<LogRecord, LogRecordShort> logRecordMapper = new LogRecordMapper();
     private CustomLogRecordRepository customLogRecordRepository;
     private LogRecordRepository repository;
     private IssueRepository issueRepository;
@@ -128,11 +128,11 @@ public class LogRecordServiceTest {
 
         when(gridFsService.getScreenShot(any())).thenReturn(sourceShot);
         List<SubstepScreenshotResponse> rep = logRecordService.getSubstepScreenshots(list);
-        SubstepScreenshotResponse expectedResult = rep.get(0);
+        SubstepScreenshotResponse expectedResult = rep.getFirst();
 
-        assertEquals(expectedResult.getId().toString(), "7e9494ae-c77d-4409-b1c7-5b0b338adf4f");
-        assertEquals(expectedResult.getScreenshot(), "content");
-        assertEquals(expectedResult.getScreenshotSource(), "snapshotSource");
+        assertEquals("7e9494ae-c77d-4409-b1c7-5b0b338adf4f", expectedResult.getId().toString());
+        assertEquals("content", expectedResult.getScreenshot());
+        assertEquals("snapshotSource", expectedResult.getScreenshotSource());
     }
 
     @Test
@@ -175,16 +175,14 @@ public class LogRecordServiceTest {
 
     @Test
     public void testGetErrorThrowsErrorIfSourceIsEmpty() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            logRecordService.getErrorMapping(null, "", UUID.randomUUID());
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                logRecordService.getErrorMapping(null, "", UUID.randomUUID()));
     }
 
     @Test
     public void testGetErrorThrowsErrorIfParentUuidIsEmpty() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            logRecordService.getErrorMapping(null, "123", null);
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                logRecordService.getErrorMapping(null, "123", null));
     }
 
     @Test

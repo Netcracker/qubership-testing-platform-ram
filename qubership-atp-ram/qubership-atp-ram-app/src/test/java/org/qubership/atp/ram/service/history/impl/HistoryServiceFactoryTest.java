@@ -17,6 +17,7 @@
 package org.qubership.atp.ram.service.history.impl;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -63,15 +64,15 @@ class HistoryServiceFactoryTest {
         Optional<RetrieveHistoryService> service =
                 factory.getRetrieveHistoryService(HistoryItemTypeDto.FAILPATTERN.toString());
         assertTrue(service.isPresent());
-        assertTrue(service.get() instanceof FailPatternRetrieveHistoryService);
+        assertInstanceOf(FailPatternRetrieveHistoryService.class, service.get());
 
         service = factory.getRetrieveHistoryService(HistoryItemTypeDto.ROOTCAUSE.toString());
         assertTrue(service.isPresent());
-        assertTrue(service.get() instanceof RootCauseRetrieveHistoryService);
+        assertInstanceOf(RootCauseRetrieveHistoryService.class, service.get());
 
         service = factory.getRetrieveHistoryService(HistoryItemTypeDto.EMAILTEMPLATE.toString());
         assertTrue(service.isPresent());
-        assertTrue(service.get() instanceof ReportTemplateRetrieveHistoryService);
+        assertInstanceOf(ReportTemplateRetrieveHistoryService.class, service.get());
 
         service = factory.getRetrieveHistoryService("UnknownType");
         assertFalse(service.isPresent());
@@ -82,15 +83,15 @@ class HistoryServiceFactoryTest {
         Optional<RestoreHistoryService> service =
                 factory.getRestoreHistoryService(HistoryItemTypeDto.FAILPATTERN.toString());
         assertTrue(service.isPresent());
-        assertTrue(service.get() instanceof FailPatternRestoreHistoryService);
+        assertInstanceOf(FailPatternRestoreHistoryService.class, service.get());
 
         service = factory.getRestoreHistoryService(HistoryItemTypeDto.ROOTCAUSE.toString());
         assertTrue(service.isPresent());
-        assertTrue(service.get() instanceof RootCauseRestoreHistoryService);
+        assertInstanceOf(RootCauseRestoreHistoryService.class, service.get());
 
         service = factory.getRestoreHistoryService(HistoryItemTypeDto.EMAILTEMPLATE.toString());
         assertTrue(service.isPresent());
-        assertTrue(service.get() instanceof ReportTemplateRestoreHistoryService);
+        assertInstanceOf(ReportTemplateRestoreHistoryService.class, service.get());
 
         service = factory.getRestoreHistoryService("UnknownType");
         assertFalse(service.isPresent());
@@ -101,15 +102,15 @@ class HistoryServiceFactoryTest {
         Optional<VersioningHistoryService> service =
                 factory.getVersioningHistoryService(HistoryItemTypeDto.FAILPATTERN.toString());
         assertTrue(service.isPresent());
-        assertTrue(service.get() instanceof FailPatternVersioningHistoryService);
+        assertInstanceOf(FailPatternVersioningHistoryService.class, service.get());
 
         service = factory.getVersioningHistoryService(HistoryItemTypeDto.ROOTCAUSE.toString());
         assertTrue(service.isPresent());
-        assertTrue(service.get() instanceof RootCauseVersioningHistoryService);
+        assertInstanceOf(RootCauseVersioningHistoryService.class, service.get());
 
         service = factory.getVersioningHistoryService(HistoryItemTypeDto.EMAILTEMPLATE.toString());
         assertTrue(service.isPresent());
-        assertTrue(service.get() instanceof ReportTemplateVersioningHistoryService);
+        assertInstanceOf(ReportTemplateVersioningHistoryService.class, service.get());
 
         service = factory.getVersioningHistoryService("UnknownType");
         assertFalse(service.isPresent());

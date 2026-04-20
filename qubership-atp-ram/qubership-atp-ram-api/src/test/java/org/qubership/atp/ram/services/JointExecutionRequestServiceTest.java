@@ -86,7 +86,7 @@ class JointExecutionRequestServiceTest {
     @Captor
     private ArgumentCaptor<JointExecutionRequest> jointExecutionRequestCaptor;
 
-    private String jointExecutionKey = "run_1";
+    private final String jointExecutionKey = "run_1";
     private ExecutionRequest executionRequest;
     private UUID executionRequestId;
 
@@ -125,7 +125,7 @@ class JointExecutionRequestServiceTest {
         assertFalse(isEmpty(runs));
         assertEquals(1, runs.size());
 
-        final Run run = runs.get(0);
+        final Run run = runs.getFirst();
         assertEquals(executionRequest.getUuid(), run.getExecutionRequestId());
         assertEquals(executionRequest.getExecutionStatus(), run.getStatus());
     }
@@ -217,9 +217,8 @@ class JointExecutionRequestServiceTest {
 
         when(repository.findAllActiveJointExecutionRequestsByKey(jointExecutionKey)).thenReturn(asList(jointExecutionRequest1, jointExecutionRequest2));
 
-        Assertions.assertThrows(RamMultipleActiveJointExecutionRequestsException.class, () -> {
-            service.getActiveJointExecutionRequest(executionRequestId);
-        });
+        Assertions.assertThrows(RamMultipleActiveJointExecutionRequestsException.class, () ->
+                service.getActiveJointExecutionRequest(executionRequestId));
     }
 
     @Test
@@ -247,9 +246,8 @@ class JointExecutionRequestServiceTest {
         when(repository.findAllByKey(jointExecutionKey)).thenReturn(asList(jointExecutionRequest1, jointExecutionRequest2));
 
         // when
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            service.getJointExecutionRequest(jointExecutionKey);
-        });
+        Assertions.assertThrows(IllegalStateException.class, () ->
+                service.getJointExecutionRequest(jointExecutionKey));
     }
 
     @Test

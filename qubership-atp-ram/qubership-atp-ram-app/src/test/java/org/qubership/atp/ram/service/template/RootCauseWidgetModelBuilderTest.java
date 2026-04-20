@@ -71,11 +71,11 @@ public class RootCauseWidgetModelBuilderTest {
         group.setRootCauseName("ISSUES");
         group.setCount(5);
         group.setPercent(40);
-        response.setRootCausesGroups(new ArrayList<RootCausesStatisticResponse.RootCausesGroup>(){{
+        response.setRootCausesGroups(new ArrayList<>() {{
             add(group);
         }});
 
-        return new ArrayList<RootCausesStatisticResponse>(){{
+        return new ArrayList<>() {{
             add(response);
         }};
     }

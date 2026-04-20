@@ -92,7 +92,7 @@ public class ReportTemplatesServiceTest {
     }
 
     private List<ReportTemplate> generateListOFReportTemplatesWithOneActive() {
-        return new ArrayList<ReportTemplate>(){{
+        return new ArrayList<>() {{
             add(generateReportTemplate(true));
             add(generateReportTemplate(false));
             add(generateReportTemplate(false));
@@ -100,7 +100,7 @@ public class ReportTemplatesServiceTest {
     }
 
     private List<ReportTemplate> generateListOFReportTemplatesWithNoActive() {
-        return new ArrayList<ReportTemplate>(){{
+        return new ArrayList<>() {{
             add(generateReportTemplate(false));
             add(generateReportTemplate(false));
             add(generateReportTemplate(false));

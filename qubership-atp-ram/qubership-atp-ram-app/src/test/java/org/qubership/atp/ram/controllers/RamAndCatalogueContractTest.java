@@ -152,17 +152,17 @@ public class RamAndCatalogueContractTest {
 
 
     public void beforeAll() {
-        when(jiraIntegrationService.getTestRunsForJiraInfoByExecutionId(any())).thenReturn(asList(getTestRunToJiraInfo()));
+        when(jiraIntegrationService.getTestRunsForJiraInfoByExecutionId(any())).thenReturn(List.of(getTestRunToJiraInfo()));
         when(executionRequestService.findById(any())).thenReturn(getExecutionRequest());
         when(executionRequestService.save(any())).thenReturn(getExecutionRequest());
         when(executionRequestDetailsService.createDetails(any(), any())).thenReturn(getExecutionRequestDetails());
 
-        when(jiraIntegrationService.getTestRunsForJiraInfoByIds(any())).thenReturn(asList(getTestRunToJiraInfo()));
+        when(jiraIntegrationService.getTestRunsForJiraInfoByIds(any())).thenReturn(List.of(getTestRunToJiraInfo()));
         when(modelConverter.convertJiraInfoModelToDto(anyList()))
                 .thenReturn(getTestRunToJiraInfoDto());
 
         when(jiraIntegrationService.getTestRunsForRefreshFromJira(any()))
-                .thenReturn(asList(getTestRunForRefreshFromJira()));
+                .thenReturn(List.of(getTestRunForRefreshFromJira()));
         when(modelConverter.convertRefreshFromJiraModelToDto(anyList()))
                 .thenReturn(getTestRunForRefreshFromJiraDto());
 
@@ -180,7 +180,7 @@ public class RamAndCatalogueContractTest {
     }
 
     @BeforeEach
-    void before(PactVerificationContext context) throws Exception {
+    void before(PactVerificationContext context) {
         beforeAll();
         context.setTarget(new MockMvcTestTarget(mockMvc));
     }
@@ -257,12 +257,12 @@ public class RamAndCatalogueContractTest {
         testRun.setDuration(1L);
         testRun.setExecutor("executor");
         testRun.setJiraTicket("jiraTicket");
-        testRun.setTaHost(asList("taHost"));
-        testRun.setQaHost(asList("qaHost"));
-        testRun.setSolutionBuild(asList("solutionBuild"));
+        testRun.setTaHost(List.of("taHost"));
+        testRun.setQaHost(List.of("qaHost"));
+        testRun.setSolutionBuild(List.of("solutionBuild"));
         testRun.setRootCauseId(UUID.randomUUID());
         testRun.setDataSetUrl("dataSetUrl");
-        testRun.setFlags(asList(Flags.TERMINATE_IF_FAIL));
+        testRun.setFlags(List.of(Flags.TERMINATE_IF_FAIL));
         testRun.setDataSetListUrl("dataSetListUrl");
         testRun.setLogCollectorData("logCollectorData");
         testRun.setFdrWasSent(true);
@@ -307,9 +307,9 @@ public class RamAndCatalogueContractTest {
         set2.add(UUID.randomUUID());
         testRun.setLabelIds(set2);
 
-        testRun.setBrowserNames(asList("browserNames"));
+        testRun.setBrowserNames(List.of("browserNames"));
 
-        List<TestRun> listTestRuns = asList(testRun);
+        List<TestRun> listTestRuns = List.of(testRun);
         PaginationResponse<TestRun> paginationResponse = new PaginationResponse<>();
         paginationResponse.setEntities(listTestRuns);
         paginationResponse.setTotalCount(listTestRuns.size());

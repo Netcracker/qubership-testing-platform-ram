@@ -90,12 +90,12 @@ public class JiraIntegrationServiceTest {
         ExecutionRequest executionRequest = ExecutionRequestsMock.generateRequestById(lastTestRun.getExecutionRequestId());
         EnvironmentsInfo environmentsInfo = EnvironmentsInfoMock.generateEnvInfoByUuids(executionRequest.getUuid(),
                 executionRequest.getEnvironmentId());
-        List<UUID> testRunsUuids = Arrays.asList(lastTestRun.getUuid());
-        List<UUID> executionRequestUuids = Arrays.asList(executionRequest.getUuid());
+        List<UUID> testRunsUuids = List.of(lastTestRun.getUuid());
+        List<UUID> executionRequestUuids = List.of(executionRequest.getUuid());
 
-        List<TestRun> testRuns = Arrays.asList(lastTestRun);
-        List<EnvironmentsInfo> environmentsInfos = Arrays.asList(environmentsInfo);
-        List<ExecutionRequest> executionRequests = Arrays.asList(executionRequest);
+        List<TestRun> testRuns = List.of(lastTestRun);
+        List<EnvironmentsInfo> environmentsInfos = List.of(environmentsInfo);
+        List<ExecutionRequest> executionRequests = List.of(executionRequest);
 
         given(repositoryMock.findAllByUuidIn(testRunsUuids)).willReturn(testRuns);
         given(executionRequestRepositoryMock.findAllByUuidIn(executionRequestUuids)).willReturn(executionRequests);
@@ -108,7 +108,7 @@ public class JiraIntegrationServiceTest {
 
         List<TestRunToJiraInfo> actualTestRunInfo = jiraIntegrationService.getTestRunsForJiraInfoByIds(testRunsUuids);
 
-        assertEquals(Arrays.asList(expectedTestRunToJiraInfo), actualTestRunInfo);
+        assertEquals(List.of(expectedTestRunToJiraInfo), actualTestRunInfo);
         verify(repositoryMock, times(1)).findAllByUuidIn(testRunsUuids);
         verify(executionRequestRepositoryMock, times(1)).findAllByUuidIn(executionRequestUuids);
         verify(testRunServiceMock, times(1)).getByTestCase(lastTestRun.getTestCaseId());
@@ -120,11 +120,11 @@ public class JiraIntegrationServiceTest {
 
         TestRun lastTestRun = TestRunsMock.generateSimpleTestRun(UUID.randomUUID());
         ExecutionRequest executionRequest = ExecutionRequestsMock.generateRequestById(lastTestRun.getExecutionRequestId());
-        List<UUID> testRunsUuids = Arrays.asList(lastTestRun.getUuid());
-        List<UUID> executionRequestUuids = Arrays.asList(executionRequest.getUuid());
+        List<UUID> testRunsUuids = List.of(lastTestRun.getUuid());
+        List<UUID> executionRequestUuids = List.of(executionRequest.getUuid());
 
-        List<TestRun> testRuns = Arrays.asList(lastTestRun);
-        List<ExecutionRequest> executionRequests = Arrays.asList(executionRequest);
+        List<TestRun> testRuns = List.of(lastTestRun);
+        List<ExecutionRequest> executionRequests = List.of(executionRequest);
 
         given(repositoryMock.findAllByUuidIn(testRunsUuids)).willReturn(testRuns);
         given(executionRequestRepositoryMock.findAllByUuidIn(executionRequestUuids)).willReturn(executionRequests);
@@ -138,7 +138,7 @@ public class JiraIntegrationServiceTest {
 
         List<TestRunToJiraInfo> actualTestRunInfo = jiraIntegrationService.getTestRunsForJiraInfoByIds(testRunsUuids);
 
-        assertEquals(Arrays.asList(expectedTestRunToJiraInfo), actualTestRunInfo);
+        assertEquals(List.of(expectedTestRunToJiraInfo), actualTestRunInfo);
         verify(repositoryMock, times(1)).findAllByUuidIn(testRunsUuids);
         verify(executionRequestRepositoryMock, times(1)).findAllByUuidIn(executionRequestUuids);
         verify(testRunServiceMock, times(1)).getByTestCase(lastTestRun.getTestCaseId());
@@ -154,12 +154,12 @@ public class JiraIntegrationServiceTest {
         ExecutionRequest executionRequest = ExecutionRequestsMock.generateRequestById(notLastRun.getExecutionRequestId());
         EnvironmentsInfo environmentsInfo = EnvironmentsInfoMock.generateEnvInfoByUuids(executionRequest.getUuid(),
                 executionRequest.getEnvironmentId());
-        List<UUID> testRunsUuids = Arrays.asList(notLastRun.getUuid());
-        List<UUID> executionRequestUuids = Arrays.asList(executionRequest.getUuid());
+        List<UUID> testRunsUuids = List.of(notLastRun.getUuid());
+        List<UUID> executionRequestUuids = List.of(executionRequest.getUuid());
 
-        List<TestRun> testRuns = Arrays.asList(notLastRun);
-        List<EnvironmentsInfo> environmentsInfos = Arrays.asList(environmentsInfo);
-        List<ExecutionRequest> executionRequests = Arrays.asList(executionRequest);
+        List<TestRun> testRuns = List.of(notLastRun);
+        List<EnvironmentsInfo> environmentsInfos = List.of(environmentsInfo);
+        List<ExecutionRequest> executionRequests = List.of(executionRequest);
 
         given(repositoryMock.findAllByUuidIn(testRunsUuids)).willReturn(testRuns);
         given(executionRequestRepositoryMock.findAllByUuidIn(executionRequestUuids)).willReturn(executionRequests);
@@ -172,7 +172,7 @@ public class JiraIntegrationServiceTest {
 
         List<TestRunToJiraInfo> actualData = jiraIntegrationService.getTestRunsForJiraInfoByIds(testRunsUuids);
 
-        assertEquals(Arrays.asList(expectedTestRunToJiraInfo), actualData);
+        assertEquals(List.of(expectedTestRunToJiraInfo), actualData);
         verify(repositoryMock, times(1)).findAllByUuidIn(testRunsUuids);
         verify(executionRequestRepositoryMock, times(1)).findAllByUuidIn(executionRequestUuids);
         verify(testRunServiceMock, times(1)).getByTestCase(notLastRun.getTestCaseId());
@@ -192,11 +192,11 @@ public class JiraIntegrationServiceTest {
         EnvironmentsInfo environmentsInfo = EnvironmentsInfoMock.generateEnvInfoByUuids(executionRequest.getUuid(),
                 executionRequest.getEnvironmentId());
         List<UUID> testRunsUuids = Arrays.asList(lastTestRun.getUuid(), notLastTestRun.getUuid());
-        List<UUID> executionRequestUuids = Arrays.asList(executionRequest.getUuid());
+        List<UUID> executionRequestUuids = List.of(executionRequest.getUuid());
 
         List<TestRun> testRuns = Arrays.asList(lastTestRun, notLastTestRun);
-        List<EnvironmentsInfo> environmentsInfos = Arrays.asList(environmentsInfo);
-        List<ExecutionRequest> executionRequests = Arrays.asList(executionRequest);
+        List<EnvironmentsInfo> environmentsInfos = List.of(environmentsInfo);
+        List<ExecutionRequest> executionRequests = List.of(executionRequest);
 
         given(repositoryMock.findAllByUuidIn(testRunsUuids)).willReturn(testRuns);
         given(executionRequestRepositoryMock.findAllByUuidIn(executionRequestUuids)).willReturn(executionRequests);

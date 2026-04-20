@@ -34,7 +34,7 @@ public class ProjectEventResolver {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private HashMap<EventType, ProjectEventHandler> map;
+    private final HashMap<EventType, ProjectEventHandler> map;
 
     /**
      * Constructor.

@@ -79,8 +79,6 @@ public class EmailSubjectMacrosFactoryIT {
         final String unexistedMacrosName = "Lorem Ipsum";
 
         // when
-        Assertions.assertThrows(AtpEntityNotFoundException.class, () -> {
-            factory.getMacros(unexistedMacrosName);
-        });
+        Assertions.assertThrows(AtpEntityNotFoundException.class, () -> factory.getMacros(unexistedMacrosName));
     }
 }

@@ -173,7 +173,7 @@ public class ExecutionRequestService extends CrudService<ExecutionRequest> {
     @PostConstruct
     public void init() {
         PropertyMap<ExecutionRequest, ExecutionRequestResponse> executionRequestResponsePropertyMap;
-        executionRequestResponsePropertyMap = new PropertyMap<ExecutionRequest, ExecutionRequestResponse>() {
+        executionRequestResponsePropertyMap = new PropertyMap<>() {
             protected void configure() {
                 map(source.getUuid()).setUuid(null);
             }
@@ -828,7 +828,7 @@ public class ExecutionRequestService extends CrudService<ExecutionRequest> {
         Set<UUID> testCaseIds = new HashSet<>();
         compErsWithoutCurrent.forEach(er ->
                 testCaseIds.addAll(er.getTestRuns().stream()
-                        .map(ComparisonTestRun::getTestCaseId).collect(Collectors.toList()))
+                        .map(ComparisonTestRun::getTestCaseId).toList())
         );
         Set<ComparisonTestRun> compTestRuns = currentRequest.getTestRuns();
         currentRequest.setNonComparisonTestRuns(compTestRuns.stream()
@@ -1417,8 +1417,7 @@ public class ExecutionRequestService extends CrudService<ExecutionRequest> {
      * Find all Execution Requests by expired period.
      */
     public List<ExecutionRequest> findExpireExecutionRequest(Timestamp qwe, UUID projectId) {
-        List<ExecutionRequest> expired = repository.findAllByArrivedBetweenAndProjectId(qwe, projectId);
-        return expired;
+        return repository.findAllByArrivedBetweenAndProjectId(qwe, projectId);
     }
 
     /**

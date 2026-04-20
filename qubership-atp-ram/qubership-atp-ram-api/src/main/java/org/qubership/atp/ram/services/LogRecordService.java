@@ -629,7 +629,7 @@ public class LogRecordService extends CrudService<LogRecord> {
                 runs.stream()
                         .map(testRun ->
                                 findLogRecordsWithSpecificFieldsByTestRunIdOrderByStartDateAsc(testRun.getUuid()))
-                        .collect(Collectors.toList())
+                        .toList()
                         .forEach(logRecords::addAll);
                 break;
             default:
@@ -672,8 +672,8 @@ public class LogRecordService extends CrudService<LogRecord> {
         LogRecord logRecord = repository.findByUuid(logRecordUuid);
         List<AkbRecord> newAkbRecords = akbRecordsUuid.stream()
                 .map(akbRecordsRepository::findByUuid)
-                .collect(Collectors.toList());
-        log.debug("Akb Records: {} was added for Log Record: {}", akbRecordsUuid.toString(), logRecordUuid);
+                .toList();
+        log.debug("Akb Records: {} was added for Log Record: {}", akbRecordsUuid, logRecordUuid);
         return save(logRecord);
     }
 
@@ -913,7 +913,7 @@ public class LogRecordService extends CrudService<LogRecord> {
             if (metaFoCurrent != null) {
                 Integer lineForCurrent = metaFoCurrent.getLine();
                 if (lineForCurrent != null) {
-                    lines.add(0, lineForCurrent); // put in first position
+                    lines.addFirst(lineForCurrent); // put in first position
                 }
                 UUID currentScenarioId = metaFoCurrent.getScenarioId();
                 String currentHashSum = metaFoCurrent.getScenarioHashSum();
@@ -1246,7 +1246,7 @@ public class LogRecordService extends CrudService<LogRecord> {
         List<LogRecord> logRecords = testRunRepository.findAllByExecutionRequestId(executionRequestId)
                 .stream()
                 .flatMap(testRun -> getAllFailedLogRecordsByTestRunId(testRun.getUuid()).stream())
-                .collect(Collectors.toList());
+                .toList();
 
         long countAfterUpdateRule = logRecords.stream()
                 .filter(logRecord -> !StringUtils.isEmpty(logRecord.getMessage())

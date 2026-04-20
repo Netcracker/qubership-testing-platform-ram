@@ -80,11 +80,11 @@ public class MailServiceTest {
 
     private ReportParams noRecipientsReportParams;
 
-    private String executionRequestName = "Execution Request";
-    private Timestamp executionRequestStartDate = Timestamp.from(Instant.now());
+    private final String executionRequestName = "Execution Request";
+    private final Timestamp executionRequestStartDate = Timestamp.from(Instant.now());
     private String defaultEmailSubject;
 
-    private String username = "username";
+    private final String username = "username";
 
     @BeforeEach
     public void setUp() {
@@ -115,7 +115,7 @@ public class MailServiceTest {
         ReportParams params = new ReportParams();
         params.setExecutionRequestUuid(UUID.randomUUID());
         params.setSubject("Test Subject");
-        params.setDescriptions(new HashMap<String, String>() {{
+        params.setDescriptions(new HashMap<>() {{
             put(WidgetType.ENVIRONMENTS_INFO.toString(), "description");
         }});
         params.setUserToken("user token");
@@ -126,7 +126,7 @@ public class MailServiceTest {
         ReportParams params = new ReportParams();
         params.setExecutionRequestUuid(UUID.randomUUID());
         params.setRecipients("qstp@some-domain.com");
-        params.setDescriptions(new HashMap<String, String>() {{
+        params.setDescriptions(new HashMap<>() {{
             put(WidgetType.ENVIRONMENTS_INFO.toString(), "description");
         }});
         params.setUserToken("user token");
@@ -138,9 +138,8 @@ public class MailServiceTest {
         when(emailSubjectMacrosService
                 .resolveSubjectMacros(any(), any(), any())).thenReturn(noRecipientsReportParams.getSubject());
 
-        Assertions.assertThrows(RamTestPlanRecipientsNotFoundException.class, () -> {
-            mailService.sendFromTemplate(noRecipientsReportParams);
-        });
+        Assertions.assertThrows(RamTestPlanRecipientsNotFoundException.class, () ->
+                mailService.sendFromTemplate(noRecipientsReportParams));
     }
 
     @Test

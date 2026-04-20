@@ -624,7 +624,7 @@ public class ReportService {
                     .sum();
             currentStatuses.addAll(children.stream()
                     .map(LabelNodeReportResponse::getStatus)
-                    .collect(Collectors.toList())
+                    .toList()
             );
             mergeLabelParams(labelParamMap, children, node -> node.getLabelParams().stream());
         }
@@ -635,7 +635,7 @@ public class ReportService {
                     .mapToLong(TestRunNodeResponse::getDuration).sum();
             currentStatuses.addAll(testRuns.stream()
                     .map(TestRunNodeResponse::getTestingStatus)
-                    .collect(Collectors.toList()));
+                    .toList());
             mergeLabelParams(labelParamMap, testRuns, node -> node.getLabelParams().stream());
         }
 
