@@ -21,7 +21,6 @@ import java.util.UUID;
 
 import org.qubership.atp.integration.configuration.configuration.AuditAction;
 import org.qubership.atp.ram.exceptions.charts.RamChartsExecutionInfoFilterOptionsException;
-import org.qubership.atp.ram.models.ExecutionRequest;
 import org.qubership.atp.ram.service.charts.ChartsService;
 import org.qubership.atp.ram.service.rest.dto.DurationsByStatuses;
 import org.qubership.atp.ram.service.rest.dto.ExecutionInfoOptions;
@@ -105,23 +104,20 @@ public class ChartsController /*implements ChartsControllerApi */ {
      * runs with the given root causes on corresponding date.
      *
      * @param options example1:
-     *                Returns information about last 20 ERs, sorted by
-     *                {@link ExecutionRequest#finishDate}
-     *                with specified test plan id:
+     *   Returns information about last 20 ERs, sorted by ExecutionRequest#finishDate with specified test plan id:
      *                {
      *                  "testPlan": "TestPlanId",
      *                }
-     *
-     *                example 2: several execution requests ids are defined
-     *
+     * <p>
+     *   example 2: several execution requests ids are defined:
      *                {
      *                  "executionRequestIds": [
      *                  "first selected ER ID",
      *                  "second selected ER ID"
      *                  ]
      *                }
-     *
-     *                example 3: filters can be specified in addition to test plan id
+     * <p>
+     *   example 3: filters can be specified in addition to test plan id:
      *                {
      *                 "testPlan": "TestPlanId",
      *                 "filterOptions": {
@@ -131,7 +127,7 @@ public class ChartsController /*implements ChartsControllerApi */ {
      *                   "numberOfEr": 5
      *                 }
      *                }
-     * @return List of {@link StatisticTrByRc}
+     * @return List of {@link StatisticTrByRc}.
      */
     @PostMapping("/trByRootCauses")
     @AuditAction(auditAction = "Get test runs by root causes per day for test plan '{{#options.testPlan}}'")
@@ -141,26 +137,22 @@ public class ChartsController /*implements ChartsControllerApi */ {
     }
 
     /**
-     * Returns the list of statuses and number of test
-     * runs with the given status for each ER.
-     @param options example1:
-     *                Returns information about last 20 ERs, sorted by
-     *                {@link ExecutionRequest#finishDate}
-     *                with specified test plan id:
+     * Returns the list of statuses and number of test runs with the given status for each ER.
+     * @param options example1:
+     *    Returns information about last 20 ERs, sorted by ExecutionRequest#finishDate with specified test plan id:
      *                {
      *                  "testPlan": "TestPlanId",
      *                }
-     *
-     *                example 2: several execution requests ids are defined
-     *
+     * <p>
+     *   example 2: several execution requests ids are defined
      *                {
      *                  "executionRequestIds": [
      *                  "first selected ER ID",
      *                  "second selected ER ID"
      *                  ]
      *                }
-     *
-     *                example 3: filters can be specified in addition to test plan id
+     * <p>
+     *   example 3: filters can be specified in addition to test plan id
      *                {
      *                 "testPlan": "TestPlanId",
      *                 "filterOptions": {
@@ -170,7 +162,7 @@ public class ChartsController /*implements ChartsControllerApi */ {
      *                   "numberOfEr": 5
      *                 }
      *                }
-     * @return List of {@link StatisticTrByStatuses}
+     * @return List of {@link StatisticTrByStatuses}.
      */
     @PostMapping("/trByStatuses")
     @AuditAction(auditAction = "Get test runs by statuses per execution request for test plan '{{#options.testPlan}}'")
@@ -180,28 +172,23 @@ public class ChartsController /*implements ChartsControllerApi */ {
     }
 
     /**
-     * Returns the list of root causes and number of
-     * test runs with specified root cause for all
+     * Returns the list of root causes and number of test runs with specified root cause for all
      * given ERs or all ERs in specified test plan.
-     *
-     @param options example1:
-     *                Returns information about last 20 ERs, sorted by
-     *                {@link ExecutionRequest#finishDate}
-     *                with specified test plan id:
+     * @param options example1:
+     *    Returns information about last 20 ERs, sorted by ExecutionRequest#finishDate with specified test plan id:
      *                {
      *                  "testPlan": "TestPlanId",
      *                }
-     *
-     *                example 2: several execution requests ids are defined
-     *
+     * <p>
+     *   example 2: several execution requests ids are defined
      *                {
      *                  "executionRequestIds": [
      *                  "first selected ER ID",
      *                  "second selected ER ID"
      *                  ]
      *                }
-     *
-     *                example 3: filters can be specified in addition to test plan id
+     * <p>
+     *   example 3: filters can be specified in addition to test plan id
      *                {
      *                 "testPlan": "TestPlanId",
      *                 "filterOptions": {
@@ -220,28 +207,24 @@ public class ChartsController /*implements ChartsControllerApi */ {
     }
 
     /**
-     * Returns the list of statuses and number of
-     * test runs with specified status for all
+     * Returns the list of statuses and number of test runs with specified status for all
      * given ERs or all ERs in specified test plan.
      *
      * @param options example1:
-     *               Returns information about last 20 ERs, sorted by
-     *                {@link ExecutionRequest#finishDate}
-     *                with specified test plan id:
+     *   Returns information about last 20 ERs, sorted by ExecutionRequest#finishDate with specified test plan id:
      *                {
      *                  "testPlan": "TestPlanId",
      *               }
-     *
-     *                example 2: several execution requests ids are defined
-     *
+     * <p>
+     *   example 2: several execution requests ids are defined
      *                {
      *                 "executionRequestIds": [
      *                  "first selected ER ID",
      *                  "second selected ER ID"
      *                  ]
      *                }
-     *
-     *                example 3: filters can be specified in addition to test plan id
+     * <p>
+     *   example 3: filters can be specified in addition to test plan id
      *                {
      *                 "testPlan": "TestPlanId",
      *                 "filterOptions": {
@@ -270,9 +253,9 @@ public class ChartsController /*implements ChartsControllerApi */ {
         ExecutionInfoOptions.FilterOptions filterOptions = options.getFilterOptions();
         if (filterOptions != null) {
             Integer numberOfErs = filterOptions.getNumberOfEr();
-            if (numberOfErs != null && numberOfErs < MIN_NUMBER_OF_ERS || numberOfErs > MAX_NUMBER_OF_ERS) {
-                log.error("Invalid number of execution requests: {}. Value Should be greater than 1 and less than 21",
-                        numberOfErs);
+            if (numberOfErs != null && (numberOfErs < MIN_NUMBER_OF_ERS || numberOfErs > MAX_NUMBER_OF_ERS)) {
+                log.error("Invalid number of execution requests: {}. Value Should be greater than {} and not more {}",
+                        numberOfErs, MIN_NUMBER_OF_ERS, MAX_NUMBER_OF_ERS);
                 throw new RamChartsExecutionInfoFilterOptionsException(numberOfErs);
             }
         }
