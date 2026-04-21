@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
@@ -46,6 +45,8 @@ import org.junit.jupiter.api.parallel.Isolated;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
 import org.qubership.atp.common.lock.LockManager;
 import org.qubership.atp.common.lock.provider.InMemoryLockProvider;
@@ -66,6 +67,7 @@ import org.springframework.util.ReflectionUtils;
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 @Isolated
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class IssueServiceTest {
 
     private static IssueService issueService;

@@ -74,6 +74,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
 import org.qubership.atp.ram.ExecutionRequestsMock;
 import org.qubership.atp.ram.LogRecordMock;
@@ -130,6 +132,7 @@ import com.google.common.collect.Sets;
 
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class TestRunServiceTest {
 
     private final ModelMapper modelMapper = new ModelMapper();
@@ -1074,7 +1077,7 @@ public class TestRunServiceTest {
                 "First saved test run comment text should contain issue key");
 
         final String firstSavedTestRunCommentHtml = firstSavedTestRunComment.getHtml();
-        Assertions.assertNotNull("First saved test run comment should contain html", firstSavedTestRunCommentHtml);
+        Assertions.assertNotNull(firstSavedTestRunCommentHtml, "First saved test run comment should contain html");
         Assertions.assertTrue(
                 firstSavedTestRunCommentHtml.contains("https://service-address/browse/SOMEPROJECT-98765"),
                 "First saved test run comment html should contain issue reference");

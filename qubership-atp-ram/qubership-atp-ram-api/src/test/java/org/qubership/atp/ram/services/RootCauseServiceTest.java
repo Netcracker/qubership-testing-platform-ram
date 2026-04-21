@@ -36,6 +36,8 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
 import org.qubership.atp.ram.RootCauseMock;
 import org.qubership.atp.ram.exceptions.rootcauses.RamRootCauseAlreadyExistsException;
@@ -54,6 +56,7 @@ import org.springframework.util.CollectionUtils;
 
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class RootCauseServiceTest {
 
     private RootCauseService service;

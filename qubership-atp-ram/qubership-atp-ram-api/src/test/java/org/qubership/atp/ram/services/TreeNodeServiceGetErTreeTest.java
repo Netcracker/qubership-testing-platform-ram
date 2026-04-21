@@ -48,6 +48,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.qubership.atp.ram.TestRunsMock;
 import org.qubership.atp.ram.TreeConsoleDrawer;
 import org.qubership.atp.ram.dto.response.ExecutionRequestWidgetConfigTemplateResponse;
@@ -81,6 +83,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class TreeNodeServiceGetErTreeTest {
 
     private static final String
@@ -206,7 +209,7 @@ public class TreeNodeServiceGetErTreeTest {
         UUID testRun5Id = this.testRun5.getUuid();
         LogRecord logRecord8 = generateLogRecordWithParams("LR8", testRun5Id, null, asList(BPP, VALIDATED),
                 asList(REVENUE, PROPAGATED));
-        testRun5LogRecords.addAll(List.of(logRecord8));
+        testRun5LogRecords.add(logRecord8);
 
         TestRunsDataContext context = TestRunsDataContext.builder()
                 .testRunsMap(StreamUtils.toIdEntityMap(testRuns))

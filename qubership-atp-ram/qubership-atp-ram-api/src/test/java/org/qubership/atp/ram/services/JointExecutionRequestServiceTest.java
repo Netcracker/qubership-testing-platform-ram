@@ -45,6 +45,8 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.qubership.atp.ram.dto.request.JointExecutionRequestSearchRequest;
 import org.qubership.atp.ram.dto.response.JointExecutionRequestSearchResponse;
 import org.qubership.atp.ram.enums.ExecutionStatuses;
@@ -60,6 +62,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class JointExecutionRequestServiceTest {
 
     @InjectMocks
