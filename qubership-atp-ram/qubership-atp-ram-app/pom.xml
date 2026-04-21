@@ -512,10 +512,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
             <exclusions>
-<!--                <exclusion>-->
-<!--                    <groupId>org.apache.logging.log4j</groupId>-->
-<!--                    <artifactId>log4j-to-slf4j</artifactId>-->
-<!--                </exclusion>-->
                 <exclusion>
                     <artifactId>log4j-api</artifactId>
                     <groupId>org.apache.logging.log4j</groupId>
@@ -608,6 +604,10 @@
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>
                     <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-engine</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -815,7 +815,6 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.qubership.atp.ei</groupId>
