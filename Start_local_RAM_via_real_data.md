@@ -44,7 +44,7 @@ mail.smtps.auth=false
 mail.smtp.ssl.enable=false
 ##==================atp-auth-spring-boot-starter=====================
 # spring
-spring.profiles.active=${SPRING_PROFILES_ACTIVE:disable-security}
+spring.profiles.active=${ACTIVE_PROFILES_SPRING:disable-security}
 spring.main.allow-bean-definition-overriding=true
 spring.cache.cache-names=auth_projects
 spring.cache.caffeine.spec=maximumSize=100, expireAfterAccess=120s

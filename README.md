@@ -5,7 +5,7 @@ The system consists of two services: ATP RAM and ATP RAM Report Receiver.
 
 |              |          ATP RAM           |  ATP RAM Report Receiver   |
 |--------------|:--------------------------:|:--------------------------:|
-|              | **Requests** / **Limits** | **Requests** / **Limits** |
+|              | **Requests** / **Limits**  | **Requests** / **Limits**  |
 | **CPU**      |        100m / 200m         |        500m / 500m         |
 | **RAM**      |         1Gi / 1Gi          |         1Gi / 1Gi          |
 | **replicas** |             1              |             2              |
@@ -137,7 +137,7 @@ as a result, the **qubership-atp-ram\web** folder will be filled
 4. Add the following parameters in VM options - click Modify Options and select "Add VM Options":
 
 dev04 (kuber):
--DSPRING_PROFILES=default  with security
+-DACTIVE_PROFILES_SPRING=default  with security
 ```text
 -Dspring.config.location=qubership-atp-ram/qubership-atp-ram-app/src/main/config/application.properties
 -DSERVICE_NAME=atp-ram-local
@@ -204,7 +204,7 @@ spec:
                             number: 8080
 ```
 
--DSPRING_PROFILES=disable-security  without security
+-DACTIVE_PROFILES_SPRING=disable-security  without security
 ```text
 -Dspring.config.location=qubership-atp-ram-app/src/main/config/application.properties
 -Dbase.url=localhost
@@ -237,7 +237,7 @@ spec:
 -Dfeign.atp.orchestrator.url=http://atp-orchestrator-service-address
 -Dfeign.atp.mailsender.url=http://atp-mail-sender-service-address
 -DKEYCLOAK_ENABLED=false
--DSPRING_PROFILES=disable-security
+-DACTIVE_PROFILES_SPRING=disable-security
 -Dspring.cloud.consul.config.enabled=false
 -Dkafka.mails.responses.enable=false
 -Dkafka.project.event.enable=false
@@ -281,7 +281,7 @@ dev222:
 -Dfeign.atp.orchestrator.url=http://atp-orchestrator-dev222.dev-atp-cloud.some-domain.com
 -Dfeign.atp.mailsender.url=http://atp-mail-sender-dev222.dev-atp-cloud.some-domain.com
 -DKEYCLOAK_ENABLED=true
--DSPRING_PROFILES=default
+-DACTIVE_PROFILES_SPRING=default
 -Dspring.cloud.consul.config.enabled=false
 ```
 
