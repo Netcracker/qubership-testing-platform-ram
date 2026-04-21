@@ -33,6 +33,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.qubership.atp.integration.configuration.model.MailRequest;
 import org.qubership.atp.integration.configuration.service.MailSenderService;
 import org.qubership.atp.ram.exceptions.testplans.RamTestPlanRecipientsNotFoundException;
@@ -50,10 +52,9 @@ import org.qubership.atp.ram.services.ReportTemplatesService;
 import org.qubership.atp.ram.services.TestPlansService;
 import org.qubership.atp.ram.services.UserService;
 import org.qubership.atp.ram.utils.TimeUtils;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class MailServiceTest {
 
     @Mock

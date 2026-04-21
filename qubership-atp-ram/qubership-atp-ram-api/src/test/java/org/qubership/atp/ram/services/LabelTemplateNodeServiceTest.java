@@ -45,9 +45,7 @@ import org.qubership.atp.ram.models.Label;
 import org.qubership.atp.ram.models.LabelTemplate;
 import org.qubership.atp.ram.models.LabelTemplate.LabelTemplateNode;
 import org.qubership.atp.ram.models.TestRun;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class LabelTemplateNodeServiceTest {
 

@@ -37,9 +37,7 @@ import org.qubership.atp.ram.models.WidgetType;
 import org.qubership.atp.ram.service.mail.ReportParams;
 import org.qubership.atp.ram.service.template.impl.ServerSummaryWidgetModelBuilder;
 import org.qubership.atp.ram.services.ReportService;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class ServerSummaryWidgetModelBuilderTest {
 

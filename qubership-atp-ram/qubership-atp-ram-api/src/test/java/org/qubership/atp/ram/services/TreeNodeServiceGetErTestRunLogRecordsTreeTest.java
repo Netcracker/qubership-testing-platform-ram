@@ -37,9 +37,7 @@ import org.qubership.atp.ram.entities.treenodes.TreeNode;
 import org.qubership.atp.ram.enums.ExecutionStatuses;
 import org.qubership.atp.ram.models.LogRecord;
 import org.qubership.atp.ram.models.TestRun;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class TreeNodeServiceGetErTestRunLogRecordsTreeTest {
 

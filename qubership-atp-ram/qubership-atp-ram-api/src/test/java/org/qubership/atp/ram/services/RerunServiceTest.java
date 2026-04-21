@@ -40,9 +40,7 @@ import org.qubership.atp.ram.enums.TestingStatuses;
 import org.qubership.atp.ram.model.request.RerunRequest;
 import org.qubership.atp.ram.models.ExecutionRequest;
 import org.qubership.atp.ram.models.TestRun;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class RerunServiceTest {
     private final static UUID finalExecutionRequestId = UUID.randomUUID();

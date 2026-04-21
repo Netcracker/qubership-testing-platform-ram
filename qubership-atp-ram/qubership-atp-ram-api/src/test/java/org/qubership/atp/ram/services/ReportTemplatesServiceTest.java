@@ -35,9 +35,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.exceptions.reporttemplates.RamReportTemplateAlreadyExistsException;
 import org.qubership.atp.ram.models.ReportTemplate;
 import org.qubership.atp.ram.repositories.ReportTemplatesRepository;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class ReportTemplatesServiceTest {
 

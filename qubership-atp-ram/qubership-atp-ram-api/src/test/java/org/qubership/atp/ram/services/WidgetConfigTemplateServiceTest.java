@@ -42,9 +42,7 @@ import org.qubership.atp.ram.models.ExecutionRequestConfig;
 import org.qubership.atp.ram.models.WidgetConfigTemplate;
 import org.qubership.atp.ram.repositories.ExecutionRequestConfigRepository;
 import org.qubership.atp.ram.repositories.WidgetConfigTemplateRepository;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class WidgetConfigTemplateServiceTest {
 

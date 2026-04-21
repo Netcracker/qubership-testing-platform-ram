@@ -83,9 +83,7 @@ import org.qubership.atp.ram.services.RootCauseService;
 import org.qubership.atp.ram.services.TestCaseService;
 import org.qubership.atp.ram.services.TestRunService;
 import org.springframework.core.io.Resource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class DefectPredefineServiceTest {
 

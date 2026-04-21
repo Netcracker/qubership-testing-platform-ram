@@ -29,9 +29,7 @@ import org.qubership.atp.ram.model.request.RootCauseUpsertRequest;
 import org.qubership.atp.ram.models.RootCause;
 import org.qubership.atp.ram.models.RootCauseType;
 import org.qubership.atp.ram.repositories.RootCauseRepository;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class RootCauseUpsertRequestValidatorTest {
 

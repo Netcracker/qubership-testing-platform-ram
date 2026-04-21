@@ -79,9 +79,7 @@ import org.qubership.atp.ram.models.logrecords.parts.ValidationTable;
 import org.qubership.atp.ram.models.logrecords.parts.ValidationTableLine;
 import org.qubership.atp.ram.models.tree.TreeWalker;
 import org.qubership.atp.ram.utils.StreamUtils;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class TreeNodeServiceGetErTreeTest {

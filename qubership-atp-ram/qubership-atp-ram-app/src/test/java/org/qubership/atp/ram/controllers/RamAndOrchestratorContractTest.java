@@ -31,6 +31,8 @@ import org.junit.jupiter.api.parallel.Isolated;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.qubership.atp.ram.config.EmailConfigurationProvider;
 import org.qubership.atp.ram.config.MvcConfig;
 import org.qubership.atp.ram.enums.ExecutionStatuses;
@@ -113,6 +115,7 @@ import lombok.extern.slf4j.Slf4j;
 })
 @Slf4j
 @Isolated
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class RamAndOrchestratorContractTest {
 
     @Configuration

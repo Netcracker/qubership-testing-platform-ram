@@ -47,9 +47,7 @@ import org.qubership.atp.ram.converter.DtoConvertService;
 import org.qubership.atp.ram.enums.TestingStatuses;
 import org.qubership.atp.ram.models.TestCaseLastStatus;
 import org.qubership.atp.ram.models.TestRun;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class TestCaseServiceTest {
     private TestCaseService testCaseService;

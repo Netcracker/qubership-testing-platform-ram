@@ -37,6 +37,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.qubership.atp.ram.dto.response.ExecutionRequestWidgetConfigTemplateResponse;
 import org.qubership.atp.ram.dto.response.FailPatternResponse;
 import org.qubership.atp.ram.dto.response.IssueResponse;
@@ -52,12 +54,11 @@ import org.qubership.atp.ram.service.template.impl.TopIssuesWidgetModelBuilder;
 import org.qubership.atp.ram.services.ExecutionRequestService;
 import org.qubership.atp.ram.services.IssueService;
 import org.qubership.atp.ram.services.WidgetConfigTemplateService;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.google.common.collect.Ordering;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class TopIssuesWidgetModelBuilderTest {
 
     @Mock

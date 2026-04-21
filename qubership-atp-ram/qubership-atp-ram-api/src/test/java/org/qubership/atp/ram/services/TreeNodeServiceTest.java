@@ -44,7 +44,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.TestRunsMock;
-import org.qubership.atp.ram.entities.treenodes.ExecutionRequestTreeNode;
 import org.qubership.atp.ram.entities.treenodes.TreeNode;
 import org.qubership.atp.ram.model.datacontext.TestRunsDataContext;
 import org.qubership.atp.ram.models.ExecutionRequest;
@@ -56,11 +55,9 @@ import org.qubership.atp.ram.models.ValidationLabelConfigTemplate;
 import org.qubership.atp.ram.models.ValidationLabelConfigTemplate.LabelConfig;
 import org.qubership.atp.ram.utils.StreamUtils;
 import org.qubership.atp.ram.utils.TestCaseMock;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.google.common.collect.ImmutableSet;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class TreeNodeServiceTest {
 

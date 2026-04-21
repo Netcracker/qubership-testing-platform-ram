@@ -58,9 +58,7 @@ import org.qubership.atp.ram.models.JointExecutionRequest.Status;
 import org.qubership.atp.ram.repositories.JointExecutionRequestRepository;
 import org.qubership.atp.ram.utils.RateCalculator;
 import org.qubership.atp.ram.utils.StreamUtils;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class JointExecutionRequestServiceTest {

@@ -35,12 +35,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.dto.response.ContextVariablesResponse;
 import org.qubership.atp.ram.enums.ContextVariablesActiveTab;
 import org.qubership.atp.ram.models.logrecords.parts.ContextVariable;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class LogRecordContextVariableServiceTest {
 

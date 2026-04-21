@@ -123,14 +123,12 @@ import org.qubership.atp.ram.utils.LabelMock;
 import org.qubership.atp.ram.utils.PatchHelper;
 import org.qubership.atp.ram.utils.StreamUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class TestRunServiceTest {

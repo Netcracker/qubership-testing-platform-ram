@@ -47,12 +47,10 @@ import org.qubership.atp.ram.models.ExecutionRequest;
 import org.qubership.atp.ram.models.TestRun;
 import org.qubership.atp.ram.repositories.ExecutionRequestRepository;
 import org.qubership.atp.ram.repositories.TestRunRepository;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class JiraIntegrationServiceTest {
 

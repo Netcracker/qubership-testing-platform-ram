@@ -33,9 +33,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.client.CatalogueTestCaseFeignClient;
 import org.qubership.atp.ram.converter.DtoConvertService;
 import org.qubership.atp.ram.models.TestRun;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class CatalogueServiceTest {
     @InjectMocks

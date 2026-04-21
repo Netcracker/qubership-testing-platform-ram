@@ -45,12 +45,10 @@ import org.qubership.atp.ram.models.logrecords.parts.FileType;
 import org.qubership.atp.ram.repositories.CustomLogRecordRepository;
 import org.qubership.atp.ram.repositories.LogRecordRepository;
 import org.qubership.atp.ram.repositories.TestRunRepository;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class PotServiceTest {
 

@@ -60,11 +60,9 @@ import org.qubership.atp.ram.repositories.CustomIssueRepository;
 import org.qubership.atp.ram.repositories.ExecutionRequestRepository;
 import org.qubership.atp.ram.repositories.IssueRepository;
 import org.qubership.atp.ram.utils.IssueMock;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.ReflectionUtils;
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 @Isolated
 @MockitoSettings(strictness = Strictness.LENIENT)
