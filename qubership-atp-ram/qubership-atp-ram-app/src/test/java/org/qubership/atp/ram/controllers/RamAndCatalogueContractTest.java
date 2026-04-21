@@ -16,7 +16,6 @@
 
 package org.qubership.atp.ram.controllers;
 
-import static java.util.Arrays.asList;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -94,7 +93,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Provider("atp-ram")
-@PactUrl(urls = {"src/test/resources/pacts/atp-catalogue-atp-ram.json"})
+@PactUrl(urls = {"file:./src/test/resources/pacts/atp-catalogue-atp-ram.json"})
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(properties = {"spring.cloud.consul.config.enabled=false"},
         controllers = {

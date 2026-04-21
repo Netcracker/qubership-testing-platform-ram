@@ -93,7 +93,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Provider("atp-ram")
-@PactUrl(urls = {"src/test/resources/pacts/atp-orchestrator-atp-ram.json"})
+@PactUrl(urls = {"file:./src/test/resources/pacts/atp-orchestrator-atp-ram.json"})
 @AutoConfigureMockMvc(addFilters = false, webDriverEnabled = false)
 @WebMvcTest(properties = {"spring.cloud.consul.config.enabled=false"},
         controllers = {
