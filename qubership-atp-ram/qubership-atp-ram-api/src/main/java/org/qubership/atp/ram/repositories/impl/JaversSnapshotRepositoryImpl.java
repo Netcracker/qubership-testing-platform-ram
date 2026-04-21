@@ -20,7 +20,6 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 import java.util.List;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import org.qubership.atp.ram.model.JaversCountResponse;
 import org.qubership.atp.ram.model.JaversIdsResponse;
@@ -50,7 +49,6 @@ public class JaversSnapshotRepositoryImpl implements JaversSnapshotRepository {
     private static final String GLOBAL_ID = "globalId";
     private static final String CDO_ID = "cdoId";
     private static final String VERSION = "version";
-    private static final String DELETE = "delete";
     private static final String VERSIONS = "versions";
     private static final String TYPE = "type";
     private static final String INITIAL_VALUE = "INITIAL";
@@ -124,10 +122,9 @@ public class JaversSnapshotRepositoryImpl implements JaversSnapshotRepository {
                 .and(LINK_ID).as(CDO_ID)
                 .andExclude(ID);
         Aggregation aggregation = Aggregation.newAggregation(groupOperation, projectionOperation);
-        Iterable<JaversIdsResponse> iterable = () -> mongoTemplate.aggregateStream(aggregation,
+        return mongoTemplate.aggregateStream(aggregation,
                 JV_SNAPSHOT_COLLECTION_NAME,
                 JaversIdsResponse.class);
-        return StreamSupport.stream(iterable.spliterator(), false);
     }
 
     /**
