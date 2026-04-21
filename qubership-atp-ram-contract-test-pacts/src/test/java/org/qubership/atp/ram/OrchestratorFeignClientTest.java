@@ -16,19 +16,15 @@
 
 package org.qubership.atp.ram;
 
-import static java.util.Arrays.asList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.migrationsupport.rules.ExternalResourceSupport;
 import org.qubership.atp.auth.springbootstarter.config.FeignConfiguration;
 import org.qubership.atp.orchestrator.clients.dto.TerminateRequestDto;
 import org.qubership.atp.ram.client.OrchestratorFeignClient;
@@ -48,14 +44,15 @@ import au.com.dius.pact.consumer.dsl.PactDslJsonArray;
 import au.com.dius.pact.consumer.dsl.PactDslJsonRootValue;
 import au.com.dius.pact.consumer.dsl.PactDslResponse;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
-import au.com.dius.pact.consumer.junit.PactProviderRule;
-import au.com.dius.pact.consumer.junit.PactVerification;
+import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
+import au.com.dius.pact.consumer.junit5.PactTestFor;
+import au.com.dius.pact.core.model.PactSpecVersion;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 import lombok.extern.slf4j.Slf4j;
 
 @EnableFeignClients(clients = {OrchestratorFeignClient.class})
-@ExtendWith(ExternalResourceSupport.class)
+@ExtendWith(PactConsumerTestExt.class)
 @SpringJUnitConfig(classes = {OrchestratorFeignClientTest.TestApp.class})
 @Import({JacksonAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class, FeignConfiguration.class,
         FeignAutoConfiguration.class})
@@ -63,15 +60,14 @@ import lombok.extern.slf4j.Slf4j;
         properties = {"feign.atp.orchestrator.name=atp-orchestrator", "feign.atp.orchestrator.route=",
                 "feign.atp.orchestrator.url=http://localhost:8888", "feign.httpclient.enabled=false"})
 @Slf4j
+@PactTestFor(providerName = "atp-orchestrator", port = "8888", pactVersion = PactSpecVersion.V3)
 public class OrchestratorFeignClientTest {
 
-    @Rule
-    public PactProviderRule mockProvider = new PactProviderRule("atp-orchestrator", "localhost", 8888, this);
     @Autowired
     OrchestratorFeignClient orchestratorFeignClient;
 
     @Test
-    @PactVerification()
+    @PactTestFor(pactMethod = "createPact")
     public void allPass() {
         UUID id = UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304");
         List<UUID> uuids = List.of(id);

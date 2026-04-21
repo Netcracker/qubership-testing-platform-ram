@@ -21,11 +21,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.migrationsupport.rules.ExternalResourceSupport;
 import org.qubership.atp.auth.springbootstarter.config.FeignConfiguration;
 import org.qubership.atp.ram.client.DataSetFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,31 +41,31 @@ import au.com.dius.pact.consumer.dsl.DslPart;
 import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.consumer.dsl.PactDslResponse;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
-import au.com.dius.pact.consumer.junit.PactProviderRule;
-import au.com.dius.pact.consumer.junit.PactVerification;
+import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
+import au.com.dius.pact.consumer.junit5.PactTestFor;
+import au.com.dius.pact.core.model.PactSpecVersion;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 
 @EnableFeignClients(clients = {DataSetFeignClient.class})
-@ExtendWith(ExternalResourceSupport.class)
+@ExtendWith(PactConsumerTestExt.class)
 @SpringJUnitConfig(classes = {DataSetFeignClientPactUnitTest.TestApp.class})
 @Import({JacksonAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class, FeignConfiguration.class,
         FeignAutoConfiguration.class})
 @TestPropertySource(
         properties = {"feign.atp.datasets.name=atp-datasets", "feign.atp.datasets.route=",
                 "feign.atp.datasets.url=http://localhost:8888", "feign.httpclient.enabled=false"})
+@PactTestFor(providerName = "atp-datasets", port = "8888", pactVersion = PactSpecVersion.V3)
 public class DataSetFeignClientPactUnitTest {
     @Configuration
     public static class TestApp {
 
     }
-    @Rule
-    public PactProviderRule mockProvider = new PactProviderRule("atp-datasets", "localhost", 8888, this);
     @Autowired
     DataSetFeignClient dataSetFeignClient;
 
     @Test
-    @PactVerification()
+    @PactTestFor(pactMethod = "createPact")
     public void allPass() {
         UUID uuid = UUID.fromString("c2737427-05e4-4c17-8032-455539deaa01");
 

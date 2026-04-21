@@ -23,12 +23,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-import org.json.JSONException;
-import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.migrationsupport.rules.ExternalResourceSupport;
 import org.qubership.atp.auth.springbootstarter.config.FeignConfiguration;
 import org.qubership.atp.dataset.clients.dto.DatasetResponseDto;
 import org.qubership.atp.ram.client.DataSetListFeignClient;
@@ -48,33 +45,32 @@ import au.com.dius.pact.consumer.dsl.PactDslJsonArray;
 import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.consumer.dsl.PactDslResponse;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
-import au.com.dius.pact.consumer.junit.PactProviderRule;
-import au.com.dius.pact.consumer.junit.PactVerification;
+import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
+import au.com.dius.pact.consumer.junit5.PactTestFor;
+import au.com.dius.pact.core.model.PactSpecVersion;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 
 @EnableFeignClients(clients = {DataSetListFeignClient.class})
-@ExtendWith(ExternalResourceSupport.class)
+@ExtendWith(PactConsumerTestExt.class)
 @SpringJUnitConfig(classes = {DataSetListFeignClientPactUnitTest.TestApp.class})
 @Import({JacksonAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class, FeignConfiguration.class,
         FeignAutoConfiguration.class})
 @TestPropertySource(
         properties = {"feign.atp.datasets.name=atp-datasets", "feign.atp.datasets.route=",
                 "feign.atp.datasets.url=http://localhost:8888", "feign.httpclient.enabled=false"})
+@PactTestFor(providerName = "atp-datasets", port = "8888", pactVersion = PactSpecVersion.V3)
 public class DataSetListFeignClientPactUnitTest {
     @Configuration
     public static class TestApp {
 
     }
-    @Rule
-    public PactProviderRule mockProvider = new PactProviderRule("atp-datasets", "localhost", 8888, this);
     @Autowired
     DataSetListFeignClient dataSetListFeignClient;
 
     @Test
-    @PactVerification()
+    @PactTestFor(pactMethod = "createPact")
     public void allPass() {
 
         ResponseEntity<List<DatasetResponseDto>> expectedResult =

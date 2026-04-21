@@ -16,8 +16,6 @@
 
 package org.qubership.atp.ram;
 
-import static java.util.Arrays.asList;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,11 +25,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.migrationsupport.rules.ExternalResourceSupport;
 import org.qubership.atp.auth.springbootstarter.config.FeignConfiguration;
 import org.qubership.atp.ram.client.CatalogueIntegrationFeignClient;
 import org.qubership.atp.ram.client.CatalogueIssueFeignClient;
@@ -84,8 +80,9 @@ import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.consumer.dsl.PactDslJsonRootValue;
 import au.com.dius.pact.consumer.dsl.PactDslResponse;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
-import au.com.dius.pact.consumer.junit.PactProviderRule;
-import au.com.dius.pact.consumer.junit.PactVerification;
+import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
+import au.com.dius.pact.consumer.junit5.PactTestFor;
+import au.com.dius.pact.core.model.PactSpecVersion;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 import com.google.gson.Gson;
@@ -99,16 +96,17 @@ import com.google.gson.Gson;
         CatalogueTestPlanFeignClient.class,
         CatalogueTestScopeFeignClient.class,
         CatalogueLabelFeignClient.class})
-@ExtendWith(ExternalResourceSupport.class)
+@ExtendWith(PactConsumerTestExt.class)
 @SpringJUnitConfig(classes = {CatalogueFeignClientTest.TestApp.class})
-@Import({JacksonAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class, FeignConfiguration.class,
+@Import({JacksonAutoConfiguration.class,
+        HttpMessageConvertersAutoConfiguration.class,
+        FeignConfiguration.class,
         FeignAutoConfiguration.class})
 @TestPropertySource(
         properties = {"feign.atp.catalogue.name=atp-catalogue", "feign.atp.catalogue.route=",
                 "feign.atp.catalogue.url=http://localhost:8888", "feign.httpclient.enabled=false"})
+@PactTestFor(providerName = "atp-catalogue", port = "8888", pactVersion = PactSpecVersion.V3)
 public class CatalogueFeignClientTest {
-    @Rule
-    public PactProviderRule mockProvider = new PactProviderRule("atp-catalogue", "localhost", 8888, this);
     @Autowired
     CatalogueIntegrationFeignClient catalogueIntegrationFeignClient;
     @Autowired
@@ -131,7 +129,7 @@ public class CatalogueFeignClientTest {
     String DATE_TIME_1 = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
 
     @Test
-    @PactVerification()
+    @PactTestFor(pactMethod = "createPact")
     public void allPass() {
         UUID id = UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304");
         Set<UUID> uuids = Collections.singleton(id);
@@ -447,7 +445,7 @@ public class CatalogueFeignClientTest {
                 .stringType("authorizationKey", "authorizationKey")
                 .object("components", listJiraComponentDto)
                 .stringType("defaultTestCaseMapping",
-                        BugTrackingSystemSynchronizationDtoDto.DefaultTestCaseMappingEnum.E2E.toString())
+                        BugTrackingSystemSynchronizationDtoDto.DefaultTestCaseMappingEnum.E2_E.toString())
                 .stringType("projectKey", "projectKey")
                 .stringType("projectName", "projectName")
                 .stringType("synchronizationType",
