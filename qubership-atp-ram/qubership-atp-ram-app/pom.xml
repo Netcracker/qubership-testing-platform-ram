@@ -501,13 +501,6 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.jetbrains.kotlin</groupId>-->
-<!--            <artifactId>kotlin-reflect</artifactId>-->
-<!--            <version>1.6.21</version>-->
-<!--            &lt;!&ndash;            <scope>runtime</scope>&ndash;&gt;-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -692,7 +685,7 @@
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>2.3.30</version>
+            <version>2.3.33</version>
         </dependency>
 
         <dependency>
@@ -763,7 +756,6 @@
 
         <dependency>
             <groupId>com.hazelcast</groupId>
-            <!-- <artifactId>hazelcast-all</artifactId> --> <!-- It was 'hazelcast-all' dependency here. Replaced to 'hazelcast', should be tested -->
             <artifactId>hazelcast</artifactId>
         </dependency>
         <dependency>

@@ -21,6 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Spliterator;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
@@ -41,6 +42,7 @@ import com.mongodb.client.ListIndexesIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoIterable;
+import com.mongodb.client.cursor.TimeoutMode;
 
 @ExtendWith(SpringExtension.class)
 public class UpdatingIndexesHandlerJunitTest {
@@ -88,6 +90,11 @@ public class UpdatingIndexesHandlerJunitTest {
             }
 
             @Override
+            public ListIndexesIterable<Document> timeoutMode(TimeoutMode timeoutMode) {
+                return null;
+            }
+
+            @Override
             public MongoCursor<Document> iterator() {
                 return null;
             }
@@ -115,6 +122,28 @@ public class UpdatingIndexesHandlerJunitTest {
             @Override
             public void forEach(Consumer<? super Document> action) {
                 documentsList.forEach(action);
+            }
+
+            /**
+             * Creates a {@link Spliterator} over the elements described by this
+             * {@code Iterable}.
+             *
+             * @return a {@code Spliterator} over the elements described by this
+             * {@code Iterable}.
+             * @implSpec The default implementation creates an
+             * <em><a href="../util/Spliterator.html#binding">early-binding</a></em>
+             * spliterator from the iterable's {@code Iterator}.  The spliterator
+             * inherits the <em>fail-fast</em> properties of the iterable's iterator.
+             * @implNote The default implementation should usually be overridden.  The
+             * spliterator returned by the default implementation has poor splitting
+             * capabilities, is unsized, and does not report any spliterator
+             * characteristics. Implementing classes can nearly always provide a
+             * better implementation.
+             * @since 1.8
+             */
+            @Override
+            public Spliterator<Document> spliterator() {
+                return ListIndexesIterable.super.spliterator();
             }
         };
 

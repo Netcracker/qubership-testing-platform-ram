@@ -238,19 +238,8 @@
 
             <dependency>
                 <groupId>com.hazelcast</groupId>
-                <artifactId>hazelcast-all</artifactId>
-                <version>${hazelcast-all.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.hazelcast</groupId>
-                        <artifactId>hazelcast</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>com.hazelcast</groupId>
                 <artifactId>hazelcast</artifactId>
-                <version>${hazelcast.version}</version> <!-- Should be tested, because versions are set different currently: 4.2.8 and 5.3.5 -->
+                <version>${hazelcast.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -359,16 +348,6 @@
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
             </dependency>
-            <!--<dependency>
-                <groupId>org.apache.tomcat.embed</groupId>
-                <artifactId>tomcat-embed-el</artifactId>
-                <version>${tomcat.embed.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.tomcat.embed</groupId>
-                <artifactId>tomcat-embed-websocket</artifactId>
-                <version>${tomcat.embed.version}</version>
-            </dependency> -->
         </dependencies>
     </dependencyManagement>
 
@@ -526,7 +505,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <argLine>${tests.argLine}</argLine>
                     <additionalClasspathElements>

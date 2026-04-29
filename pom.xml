@@ -26,10 +26,10 @@
         <maven.compiler.target>21</maven.compiler.target>
         <mapstruct.version>1.6.3</mapstruct.version>
         <scm.revision>local_build</scm.revision>
-        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
         <javers.version>7.9.0</javers.version>
-        <netty.version>4.1.125.Final</netty.version>
-        <lombok.version>1.18.44</lombok.version>
+        <netty.version>4.1.132.Final</netty.version>
+        <lombok.version>1.18.46</lombok.version>
         <logback.version>1.5.32</logback.version>
         <httpclient5.version>5.4.4</httpclient5.version>
         <httpcore5.version>5.3.4</httpcore5.version>
@@ -37,7 +37,7 @@
         <gson.version>2.13.2</gson.version>
         <slf4j.version>2.0.17</slf4j.version>
         <log4j.version>2.23.1</log4j.version>
-        <junit.jupiter.version>5.10.5</junit.jupiter.version>
+        <junit.jupiter.version>5.12.2</junit.jupiter.version>
         <mockito.version>5.23.0</mockito.version>
 
         <atp.auth.version>2.0.3-SNAPSHOT</atp.auth.version>
