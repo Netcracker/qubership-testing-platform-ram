@@ -730,7 +730,6 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-tracing-bridge-brave</artifactId>
-            <version>1.0.12</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

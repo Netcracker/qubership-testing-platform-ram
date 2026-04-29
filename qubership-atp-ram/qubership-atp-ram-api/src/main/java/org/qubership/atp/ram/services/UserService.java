@@ -98,7 +98,7 @@ public class UserService {
         // Keycloak API doesn't provide endpoints to filter users by ids directly
         String url = issuer + "/users";
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url)
                 .queryParam("max", Integer.MAX_VALUE);
 
         UserInfo[] infos = m2mRestTemplate.getForObject(builder.toUriString(), UserInfo[].class);

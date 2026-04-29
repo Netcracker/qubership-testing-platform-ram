@@ -14,8 +14,8 @@
     </modules>
 
     <properties>
-        <spring.boot.version>3.3.13</spring.boot.version>
-        <spring.cloud.version>2023.0.6</spring.cloud.version>
+        <spring.boot.version>3.5.14</spring.boot.version>
+        <spring.cloud.version>2025.0.2</spring.cloud.version>
 
         <tool.config.keys.prefix>${project.name}</tool.config.keys.prefix>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
