@@ -3,7 +3,7 @@
     <parent>
         <artifactId>qubership-atp-ram-aggregator</artifactId>
         <groupId>org.qubership.atp.ram</groupId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>qubership-atp-ram</artifactId>
@@ -36,12 +36,11 @@
         <jettison.version>1.5.4</jettison.version>
         <jboss.xnio.version>3.8.14.Final</jboss.xnio.version>
         <io.undertow.undertow-core.version>2.3.21.Final</io.undertow.undertow-core.version>
-        <!-- <tomcat.embed.version>9.0.110</tomcat.embed.version> -->
 
-        <atp.common.version>1.0.0-SNAPSHOT</atp.common.version>
-        <atp-integration.version>1.0.0-SNAPSHOT</atp-integration.version>
-        <atp.ei.lib.node>1.0.0-SNAPSHOT</atp.ei.lib.node>
-        <atp.common.auditing.mongo>1.0.0-SNAPSHOT</atp.common.auditing.mongo>
+        <atp.common.version>1.0.1-SNAPSHOT</atp.common.version>
+        <atp-integration.version>1.0.1-SNAPSHOT</atp-integration.version>
+        <atp.ei.lib.node>1.0.1-SNAPSHOT</atp.ei.lib.node>
+        <atp.common.auditing.mongo>1.0.1-SNAPSHOT</atp.common.auditing.mongo>
 
         <atp.orchestrator.contract.test.pact.version>0.3.67</atp.orchestrator.contract.test.pact.version>
         <atp.ram.result.importer.contract.test.pact.version>1.1.33</atp.ram.result.importer.contract.test.pact.version>

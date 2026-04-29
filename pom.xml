@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.qubership.atp.ram</groupId>
     <artifactId>qubership-atp-ram-aggregator</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -40,7 +40,7 @@
         <junit.jupiter.version>5.10.5</junit.jupiter.version>
         <mockito.version>5.23.0</mockito.version>
 
-        <atp.auth.version>2.0.2-SNAPSHOT</atp.auth.version>
+        <atp.auth.version>2.0.3-SNAPSHOT</atp.auth.version>
     </properties>
 
     <name>${project.groupId}:${project.artifactId}</name>
