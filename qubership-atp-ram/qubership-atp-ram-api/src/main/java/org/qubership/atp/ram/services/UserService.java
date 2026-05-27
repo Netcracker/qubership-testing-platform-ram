@@ -32,14 +32,16 @@ import org.qubership.atp.ram.models.UserInfo;
 import org.qubership.atp.ram.utils.StreamUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.json.JsonParser;
-import org.springframework.boot.json.JsonParserFactory;
-import org.springframework.security.jwt.JwtHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.nimbusds.jwt.EncryptedJWT;
+import com.nimbusds.jwt.JWT;
+import com.nimbusds.jwt.JWTParser;
+import com.nimbusds.jwt.PlainJWT;
+import com.nimbusds.jwt.SignedJWT;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
@@ -119,10 +121,21 @@ public class UserService {
         UUID userId = null;
         if (StringUtils.isNotBlank(token)) {
             try {
-                token = token.split(" ")[1];
-                JsonParser parser = JsonParserFactory.getJsonParser();
-                Map<String, ?> tokenData = parser.parseMap(JwtHelper.decode(token).getClaims());
-                userId = UUID.fromString(tokenData.get("sub").toString());
+                String[] splitToken = token.split(" ");
+                if (splitToken.length < 2) {
+                    log.warn("Cannot parse token: invalid format");
+                    return null;
+                }
+                JWT jwt = JWTParser.parse(splitToken[1]);
+                Map<String, Object> tokenData = switch (jwt) {
+                    case PlainJWT plainJWT -> plainJWT.getPayload().toJSONObject();
+                    case SignedJWT signedJWT -> signedJWT.getPayload().toJSONObject();
+                    case EncryptedJWT encryptedJWT -> encryptedJWT.getPayload().toJSONObject();
+                    default -> null; // in fact, we never visit it, due to earlier parse exception
+                };
+                if (tokenData != null && tokenData.containsKey("sub")) {
+                    userId = UUID.fromString(tokenData.get("sub").toString());
+                }
             } catch (Exception e) {
                 log.warn("Cannot parse token with error: ", e);
             }
