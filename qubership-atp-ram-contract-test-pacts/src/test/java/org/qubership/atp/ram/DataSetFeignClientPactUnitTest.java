@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -18,12 +18,12 @@ package org.qubership.atp.ram;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.qubership.atp.auth.springbootstarter.config.FeignConfiguration;
 import org.qubership.atp.ram.client.DataSetFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,47 +34,46 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import au.com.dius.pact.consumer.dsl.DslPart;
 import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.consumer.dsl.PactDslResponse;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
-import au.com.dius.pact.consumer.junit.PactProviderRule;
-import au.com.dius.pact.consumer.junit.PactVerification;
+import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
+import au.com.dius.pact.consumer.junit5.PactTestFor;
+import au.com.dius.pact.core.model.PactSpecVersion;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 
-@RunWith(SpringRunner.class)
-
 @EnableFeignClients(clients = {DataSetFeignClient.class})
-@ContextConfiguration(classes = {DataSetFeignClientPactUnitTest.TestApp.class})
+@ExtendWith(PactConsumerTestExt.class)
+@SpringJUnitConfig(classes = {DataSetFeignClientPactUnitTest.TestApp.class})
 @Import({JacksonAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class, FeignConfiguration.class,
         FeignAutoConfiguration.class})
 @TestPropertySource(
         properties = {"feign.atp.datasets.name=atp-datasets", "feign.atp.datasets.route=",
                 "feign.atp.datasets.url=http://localhost:8888", "feign.httpclient.enabled=false"})
+@PactTestFor(providerName = "atp-datasets", port = "8888", pactVersion = PactSpecVersion.V3)
 public class DataSetFeignClientPactUnitTest {
     @Configuration
     public static class TestApp {
 
     }
-    @Rule
-    public PactProviderRule mockProvider = new PactProviderRule("atp-datasets", "localhost", 8888, this);
     @Autowired
     DataSetFeignClient dataSetFeignClient;
 
     @Test
-    @PactVerification()
+    @PactTestFor(pactMethod = "createPact")
     public void allPass() {
         UUID uuid = UUID.fromString("c2737427-05e4-4c17-8032-455539deaa01");
 
         ResponseEntity<Object> expectedResult =
                 dataSetFeignClient.getDataSetById(uuid);
-        Assert.assertEquals(expectedResult.getStatusCode().value(), 200);
-        Assert.assertTrue(expectedResult.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, expectedResult.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(expectedResult.getHeaders().get("Content-Type"))
+                .contains("application/json"));
     }
 
     @Pact(consumer = "atp-ram")

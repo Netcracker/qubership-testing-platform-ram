@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -28,6 +28,6 @@ public class RamExecutionRequestIdNotFoundException extends AtpException {
     public static final String DEFAULT_MESSAGE = "The execution request with id %s not found in database";
 
     public RamExecutionRequestIdNotFoundException(UUID id) {
-        super(String.format(DEFAULT_MESSAGE, id));
+        super(DEFAULT_MESSAGE.formatted(id));
     }
 }

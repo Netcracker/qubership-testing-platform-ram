@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -54,6 +54,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.dto.response.DefectPredefineResponse;
 import org.qubership.atp.ram.dto.response.TestCaseLabelResponse;
 import org.qubership.atp.ram.model.DefectDescriptionRenderModel;
@@ -82,9 +83,8 @@ import org.qubership.atp.ram.services.RootCauseService;
 import org.qubership.atp.ram.services.TestCaseService;
 import org.qubership.atp.ram.services.TestRunService;
 import org.springframework.core.io.Resource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class DefectPredefineServiceTest {
 
     @InjectMocks
@@ -278,7 +278,7 @@ public class DefectPredefineServiceTest {
 
         final List<Link> linkToSvp = model.getSvpLinks();
         assertFalse(linkToSvp.isEmpty());
-        assertEquals(logRecord.getLinkToSvp(), linkToSvp.get(0).getUrl());
+        assertEquals(logRecord.getLinkToSvp(), linkToSvp.getFirst().getUrl());
 
         final List<Link> potLinks = model.getPotLinks();
         assertNotNull(potLinks);

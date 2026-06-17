@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singleton;
 import static java.util.Collections.singletonList;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -47,6 +47,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.qubership.atp.ram.TestRunsMock;
 import org.qubership.atp.ram.TreeConsoleDrawer;
 import org.qubership.atp.ram.dto.response.ExecutionRequestWidgetConfigTemplateResponse;
@@ -76,9 +79,9 @@ import org.qubership.atp.ram.models.logrecords.parts.ValidationTable;
 import org.qubership.atp.ram.models.logrecords.parts.ValidationTableLine;
 import org.qubership.atp.ram.models.tree.TreeWalker;
 import org.qubership.atp.ram.utils.StreamUtils;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class TreeNodeServiceGetErTreeTest {
 
     private static final String
@@ -184,36 +187,36 @@ public class TreeNodeServiceGetErTreeTest {
                         emptyList());
         LogRecord logRecord2 =
                 generateLogRecordWithParams("LR2", testRun1Id, logRecord1.getUuid(), asList(BPP, PROPAGATED, VALIDATED),
-                        asList(REVENUE));
-        LogRecord logRecord3 = generateLogRecordWithParams("LR3", testRun1Id, logRecord1.getUuid(), asList(VALIDATED),
+                        List.of(REVENUE));
+        LogRecord logRecord3 = generateLogRecordWithParams("LR3", testRun1Id, logRecord1.getUuid(), List.of(VALIDATED),
                 asList(REVENUE, BPP, PROPAGATED));
-        LogRecord logRecord4 = generateLogRecordWithParams("LR4", testRun1Id, null, asList(BPP),
+        LogRecord logRecord4 = generateLogRecordWithParams("LR4", testRun1Id, null, List.of(BPP),
                 asList(REVENUE, VALIDATED, PROPAGATED));
         testRun1LogRecords.addAll(asList(logRecord1, logRecord2, logRecord3, logRecord4));
 
         UUID testRun4Id = this.testRun4.getUuid();
         LogRecord logRecord5 = generateLogRecordWithParams("LR5", testRun4Id, null, asList(BPP, REVENUE, VALIDATED),
-                asList(PROPAGATED));
+                List.of(PROPAGATED));
         LogRecord logRecord6 =
                 generateLogRecordWithParams("LR6", testRun4Id, logRecord5.getUuid(), asList(REVENUE, VALIDATED),
                         asList(BPP, PROPAGATED));
         LogRecord logRecord7 = generateLogRecordWithParams("LR7", testRun4Id, null, asList(BPP, REVENUE, VALIDATED),
-                asList(PROPAGATED));
+                List.of(PROPAGATED));
         testRun4LogRecords.addAll(asList(logRecord5, logRecord6, logRecord7));
 
         UUID testRun5Id = this.testRun5.getUuid();
         LogRecord logRecord8 = generateLogRecordWithParams("LR8", testRun5Id, null, asList(BPP, VALIDATED),
                 asList(REVENUE, PROPAGATED));
-        testRun5LogRecords.addAll(asList(logRecord8));
+        testRun5LogRecords.add(logRecord8);
 
         TestRunsDataContext context = TestRunsDataContext.builder()
                 .testRunsMap(StreamUtils.toIdEntityMap(testRuns))
-                .testRunValidationLogRecordsMap(new HashMap<UUID, List<LogRecord>>() {{
+                .testRunValidationLogRecordsMap(new HashMap<>() {{
                     put(testRun1.getUuid(), testRun1LogRecords);
                     put(testRun4.getUuid(), testRun4LogRecords);
                     put(testRun5.getUuid(), testRun5LogRecords);
                 }})
-                .testRunTestCasesMap(new HashMap<UUID, TestCaseLabelResponse>() {{
+                .testRunTestCasesMap(new HashMap<>() {{
                     put(testRun1.getTestCaseId(), mock(TestCaseLabelResponse.class));
                 }})
                 .build();
@@ -229,14 +232,14 @@ public class TreeNodeServiceGetErTreeTest {
                         true, false, 1),
                 new ValidationLabelConfigTemplate.LabelConfig(new HashSet<>(asList(BPP, PROPAGATED)), EMPTY_COLUMN_NAME,
                         true, false, 3),
-                new ValidationLabelConfigTemplate.LabelConfig(new HashSet<>(asList(VALIDATED)), _VALID, true, false, 2)
+                new ValidationLabelConfigTemplate.LabelConfig(new HashSet<>(List.of(VALIDATED)), _VALID, true, false, 2)
         )));
 
         when(testRunService.getTestRunsDataContext(any(), any(), anyBoolean())).thenReturn(context);
         when(testRunService.findAllByExecutionRequestId(any())).thenReturn(testRuns);
         when(testRunService.getTopLevelLogRecords(testRun1Id, null)).thenReturn(asList(logRecord1, logRecord4));
         when(testRunService.getTopLevelLogRecords(testRun4Id, null)).thenReturn(asList(logRecord5, logRecord7));
-        when(testRunService.getTopLevelLogRecords(testRun5Id, null)).thenReturn(asList(logRecord8));
+        when(testRunService.getTopLevelLogRecords(testRun5Id, null)).thenReturn(List.of(logRecord8));
         when(testRunService.getAllLogRecordsByTestRunId(testRun1Id)).thenReturn(testRun1LogRecords);
         when(testRunService.getAllLogRecordsByTestRunId(testRun4Id)).thenReturn(testRun4LogRecords);
         when(testRunService.getAllLogRecordsByTestRunId(testRun5Id)).thenReturn(testRun5LogRecords);
@@ -358,7 +361,7 @@ public class TreeNodeServiceGetErTreeTest {
         Assertions.assertEquals(1, children.size());
 
         // Offline node stats check
-        TreeNode offlineTreeNode = children.get(0);
+        TreeNode offlineTreeNode = children.getFirst();
         Assertions.assertNotNull(offlineTreeNode);
         Assertions.assertEquals(LabelTemplateTreeNode.class, offlineTreeNode.getClass());
 
@@ -382,7 +385,7 @@ public class TreeNodeServiceGetErTreeTest {
         Assertions.assertEquals(2, offlineChildren.size());
 
         // Data National node stats check
-        TreeNode dataNationalTreeNode = offlineChildren.get(0);
+        TreeNode dataNationalTreeNode = offlineChildren.getFirst();
         Assertions.assertNotNull(dataNationalTreeNode);
         Assertions.assertEquals(LabelTemplateTreeNode.class, dataNationalTreeNode.getClass());
 
@@ -510,7 +513,7 @@ public class TreeNodeServiceGetErTreeTest {
                         asList(BPP, PROPAGATED));
         LogRecord childLogRecord =
                 generateLogRecordWithParams("Child LR", testRun1.getUuid(), parentLogRecord.getUuid(),
-                        asList(BPP, REVENUE, VALIDATED), asList(PROPAGATED));
+                        asList(BPP, REVENUE, VALIDATED), List.of(PROPAGATED));
 
         List<UUID> expectedNodeUuids = asList(testRun1.getUuid(), parentLogRecord.getUuid(), childLogRecord.getUuid());
 
@@ -528,7 +531,7 @@ public class TreeNodeServiceGetErTreeTest {
                         expectedNodeUuids.contains(treeNode.getNodeType() == TreeNodeType.TEST_RUN_NODE
                                 ? ((TestRunTreeNode) treeNode).getTestRunId()
                                 : ((LogRecordTreeNode) treeNode).getLogRecordId()),
-                        String.format("Expected tree node %s wasn't included into result list.", treeNode)));
+                        "Expected tree node %s wasn't included into result list.".formatted(treeNode)));
     }
 
     /*
@@ -624,7 +627,7 @@ public class TreeNodeServiceGetErTreeTest {
         List<String> expectedExcludedNodes = asList("Prepaid_", "Rerate", "AutoReplan", "SY", "Unknown");
 
         TreeWalker<TreeNode> treeWalker = new TreeWalker<>();
-        treeWalker.walkWithPreProcess(erNode, TreeNode::getChildren, new BiConsumer<TreeNode, TreeNode>() {
+        treeWalker.walkWithPreProcess(erNode, TreeNode::getChildren, new BiConsumer<>() {
             @Override
             public void accept(TreeNode root, TreeNode child) {
                 String nodeName = child.getName();
@@ -686,7 +689,7 @@ public class TreeNodeServiceGetErTreeTest {
         Assertions.assertEquals(1, children.size());
 
         // Offline node stats check
-        TreeNode offlineTreeNode = children.get(0);
+        TreeNode offlineTreeNode = children.getFirst();
         Assertions.assertNotNull(offlineTreeNode);
         Assertions.assertEquals(LabelTemplateTreeNode.class, offlineTreeNode.getClass());
 
@@ -710,7 +713,7 @@ public class TreeNodeServiceGetErTreeTest {
         Assertions.assertEquals(2, offlineChildren.size());
 
         // Data National node stats check
-        TreeNode dataNationalTreeNode = offlineChildren.get(0);
+        TreeNode dataNationalTreeNode = offlineChildren.getFirst();
         Assertions.assertNotNull(dataNationalTreeNode);
         Assertions.assertEquals(LabelTemplateTreeNode.class, dataNationalTreeNode.getClass());
 
@@ -848,6 +851,6 @@ public class TreeNodeServiceGetErTreeTest {
                 treeNodeService.getExecutionRequestTree(executionRequest, UUID.randomUUID(), validationTemplate, true, false);
         // then
         Assertions.assertNotNull(actualTreeNode);
-        Assertions.assertTrue(((ExecutionRequestTreeNode) actualTreeNode).isExecutionRequestVirtual());
+        Assertions.assertTrue(actualTreeNode.isExecutionRequestVirtual());
     }
 }

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -72,7 +72,7 @@ public class MongoDbUpdateStatusTask extends TimerTask {
                 LOGGER.info("MongoDbUpdateStatusTask stopped for database '{}'", database.getName());
             }
         } catch (Exception e) {
-            LOGGER.error(String.format("MongoDbUpdateStatusTask failed: %s", e.getMessage()), e);
+            LOGGER.error("MongoDbUpdateStatusTask failed: %s".formatted(e.getMessage()), e);
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import org.qubership.atp.integration.configuration.mdc.MdcField;
 import org.qubership.atp.integration.configuration.mdc.MdcUtils;
 import org.qubership.atp.ram.kafka.listeners.project.event.handler.ProjectEventHandler;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -35,14 +34,13 @@ public class ProjectEventResolver {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private HashMap<EventType, ProjectEventHandler> map;
+    private final HashMap<EventType, ProjectEventHandler> map;
 
     /**
      * Constructor.
      *
      * @param projectEventHandlers projectEventHandlers
      */
-    @Autowired
     public ProjectEventResolver(Set<ProjectEventHandler> projectEventHandlers) {
         this.map = new HashMap<>();
         projectEventHandlers.forEach(x -> map.put(x.getType(), x));

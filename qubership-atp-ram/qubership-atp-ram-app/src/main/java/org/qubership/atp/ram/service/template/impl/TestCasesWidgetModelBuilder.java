@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.ram.RamConstants;
 import org.qubership.atp.ram.config.ApiPath;
 import org.qubership.atp.ram.dto.response.LabelNodeReportResponse;
@@ -68,7 +69,6 @@ import org.qubership.atp.ram.services.WidgetConfigTemplateService;
 import org.qubership.atp.ram.utils.StreamUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

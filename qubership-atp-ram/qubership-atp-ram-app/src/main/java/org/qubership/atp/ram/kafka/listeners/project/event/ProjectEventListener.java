@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import static org.qubership.atp.ram.config.KafkaProjectEventConfiguration.KAFKA_
 import java.io.IOException;
 
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -38,7 +37,6 @@ public class ProjectEventListener {
 
     private final ProjectEventResolver projectEventResolver;
 
-    @Autowired
     public ProjectEventListener(ProjectEventResolver projectEventResolver) {
         this.projectEventResolver = projectEventResolver;
     }

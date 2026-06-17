@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -67,15 +67,15 @@ public abstract class AbstractRetrieveHistoryService implements RetrieveHistoryS
      */
     public HistoryItemResponseDto getAllHistory(UUID id, Integer offset, Integer limit) {
 
-        log.debug(String.format("Get All History for entity = %s, offset = %s, limit = %s", id, offset, limit));
+        log.debug("Get All History for entity = %s, offset = %s, limit = %s".formatted(id, offset, limit));
 
         JqlQuery query = getChangesByIdPaginationQuery(id, offset, limit);
 
         Changes changes = javers.findChanges(query);
-        log.debug(String.format("Changes found for entity = %s,  changes = %s", id, changes.prettyPrint()));
+        log.debug("Changes found for entity = %s,  changes = %s".formatted(id, changes.prettyPrint()));
 
         List<CdoSnapshot> snapshots = javers.findSnapshots(query);
-        log.debug(String.format("Snapshots found for entity = %s, snapshots = %s", id, snapshots));
+        log.debug("Snapshots found for entity = %s, snapshots = %s".formatted(id, snapshots));
 
         List<ChangesByCommit> changesByCommits = changes.groupByCommit();
 

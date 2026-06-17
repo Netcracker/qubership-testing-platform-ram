@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -35,9 +35,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import javax.validation.constraints.NotNull;
-
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.ram.enums.RootCauseEnum;
 import org.qubership.atp.ram.models.ExecutionRequest;
 import org.qubership.atp.ram.models.Project;
@@ -51,7 +49,6 @@ import org.qubership.atp.ram.services.TestRunService;
 import org.qubership.atp.ram.utils.JsonHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -61,6 +58,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.base.Strings;
 import com.google.gson.JsonObject;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * CRUD Test run.
@@ -82,7 +80,6 @@ public class TestRunController2 /*implements TestRunControllerApi*/ {
     /**
      * Inject services.
      */
-    @Autowired
     public TestRunController2(TestRunService testRunService, IssueService issueService) {
         this.testRunService = testRunService;
         this.issueService = issueService;

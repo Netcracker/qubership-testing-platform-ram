@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -135,7 +135,7 @@ public abstract class AbstractMongoEvolution {
                 insertUpdateFlag(updatesTracker, currentVersion, false);
             }
         } catch (Exception ex) {
-            LOGGER.error(String.format("Failed to reset inProgress flag for DB: %s", dbName), ex);
+            LOGGER.error("Failed to reset inProgress flag for DB: %s".formatted(dbName), ex);
         }
     }
 
@@ -236,7 +236,7 @@ public abstract class AbstractMongoEvolution {
             }
             throw ex;
         } catch (Exception exception) {
-            LOGGER.error(String.format("Failed to check update status: %s", exception.getMessage()), exception);
+            LOGGER.error("Failed to check update status: %s".formatted(exception.getMessage()), exception);
             throw exception;
         }
     }
@@ -270,7 +270,7 @@ public abstract class AbstractMongoEvolution {
             }
             throw ex;
         } catch (Exception e) {
-            LOGGER.error(String.format("insertUpdateFlag failed: %s", e.getMessage()), e);
+            LOGGER.error("insertUpdateFlag failed: %s".formatted(e.getMessage()), e);
             throw e;
         }
     }

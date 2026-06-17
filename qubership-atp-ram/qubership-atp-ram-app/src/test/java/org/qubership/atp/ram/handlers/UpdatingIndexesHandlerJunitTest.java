@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -21,28 +21,30 @@ import static org.mockito.ArgumentMatchers.any;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Spliterator;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import org.bson.BsonValue;
 import org.bson.Document;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.qubership.atp.ram.migration.MigrationConstants;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.mongodb.Function;
 import com.mongodb.client.ListIndexesIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoIterable;
+import com.mongodb.client.cursor.TimeoutMode;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class UpdatingIndexesHandlerJunitTest {
 
     private UpdatingIndexesHandler updatingIndexesHandler;
@@ -50,7 +52,7 @@ public class UpdatingIndexesHandlerJunitTest {
     @MockBean
     private MongoTemplate mongoTemplate;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         updatingIndexesHandler = Mockito.spy(new UpdatingIndexesHandler(mongoTemplate));
         Mockito.when(mongoTemplate.getConverter()).thenReturn(Mockito.mock(MongoConverter.class));
@@ -66,7 +68,7 @@ public class UpdatingIndexesHandlerJunitTest {
         document.put(MigrationConstants.NAME_INDEX_FIELD, MigrationConstants.CREATED_DATE_INDEX_NAME);
         document.put(MigrationConstants.EXPIRE_DATE_INDEX_FIELD, 100L);
         documentsList.add(document);
-        ListIndexesIterable<Document> documents = new ListIndexesIterable<Document>() {
+        ListIndexesIterable<Document> documents = new ListIndexesIterable<>() {
             @Override
             public ListIndexesIterable<Document> maxTime(long maxTime, TimeUnit timeUnit) {
                 return null;
@@ -84,6 +86,11 @@ public class UpdatingIndexesHandlerJunitTest {
 
             @Override
             public ListIndexesIterable<Document> comment(BsonValue comment) {
+                return null;
+            }
+
+            @Override
+            public ListIndexesIterable<Document> timeoutMode(TimeoutMode timeoutMode) {
                 return null;
             }
 
@@ -115,6 +122,28 @@ public class UpdatingIndexesHandlerJunitTest {
             @Override
             public void forEach(Consumer<? super Document> action) {
                 documentsList.forEach(action);
+            }
+
+            /**
+             * Creates a {@link Spliterator} over the elements described by this
+             * {@code Iterable}.
+             *
+             * @return a {@code Spliterator} over the elements described by this
+             * {@code Iterable}.
+             * @implSpec The default implementation creates an
+             * <em><a href="../util/Spliterator.html#binding">early-binding</a></em>
+             * spliterator from the iterable's {@code Iterator}.  The spliterator
+             * inherits the <em>fail-fast</em> properties of the iterable's iterator.
+             * @implNote The default implementation should usually be overridden.  The
+             * spliterator returned by the default implementation has poor splitting
+             * capabilities, is unsized, and does not report any spliterator
+             * characteristics. Implementing classes can nearly always provide a
+             * better implementation.
+             * @since 1.8
+             */
+            @Override
+            public Spliterator<Document> spliterator() {
+                return ListIndexesIterable.super.spliterator();
             }
         };
 

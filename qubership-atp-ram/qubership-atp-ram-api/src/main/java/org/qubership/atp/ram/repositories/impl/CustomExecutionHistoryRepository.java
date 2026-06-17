@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.ram.dto.request.TestCaseExecutionHistorySearchRequest;
 import org.qubership.atp.ram.dto.response.PaginationResponse;
 import org.qubership.atp.ram.enums.TestingStatuses;
@@ -35,7 +36,6 @@ import org.springframework.data.mongodb.core.aggregation.GroupOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -269,7 +269,7 @@ public class CustomExecutionHistoryRepository implements FieldConstants {
         );
 
         final Aggregation aggregation = Aggregation.newAggregation(aggregationOperations);
-        log.debug("Aggregation query '{}'", aggregation.toString());
+        log.debug("Aggregation query '{}'", aggregation);
 
         return mongoTemplate.aggregate(aggregation, TEST_RUN, TestCaseExecutionPaginationResponse.class)
                 .getUniqueMappedResult();

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -44,7 +44,6 @@ import org.qubership.atp.ram.utils.FileContentTypeDetector;
 import org.qubership.atp.ram.utils.SourceShot;
 import org.qubership.atp.ram.utils.StreamUtils;
 import org.qubership.atp.ram.utils.UrlParamsUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -62,7 +61,6 @@ public class GridFsService {
     @Value("${files.expiration.days.interval}")
     private Integer filesExpirationDaysInterval;
 
-    @Autowired
     public GridFsService(GridFsRepository repository, LogRecordRepository lrRepository) {
         this.repository = repository;
         this.lrRepository = lrRepository;
@@ -82,7 +80,7 @@ public class GridFsService {
             log.debug("LogRecord wasn't found by id {}.", logRecordId);
             return new SourceShot();
         }
-        if (!screenShot.isPresent() && !Strings.isNullOrEmpty(logRecord.getSnapshotId())) {
+        if (screenShot.isEmpty() && !Strings.isNullOrEmpty(logRecord.getSnapshotId())) {
             FileData newScreen = new FileData();
             newScreen.setContentType("message");
             newScreen.setContent("Screenshot was deleted because the storage time is over.".getBytes());

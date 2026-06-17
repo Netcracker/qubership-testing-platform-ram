@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -22,13 +22,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.ram.dto.request.ValidationLabelConfigTemplateSearchRequest;
 import org.qubership.atp.ram.models.ValidationLabelConfigTemplate;
 import org.qubership.atp.ram.models.WidgetConfigTemplate;
 import org.qubership.atp.ram.repositories.ValidationLabelConfigTemplateRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.qubership.atp.ram.config.ApiPath;
 import org.qubership.atp.ram.dto.request.UpdateLogRecordFields;
 import org.qubership.atp.ram.enums.TestingStatuses;
@@ -41,7 +41,6 @@ import org.qubership.atp.ram.services.LogRecordService;
 import org.qubership.atp.ram.utils.ImageUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,7 +68,6 @@ public class LogRecordsController /*implements LogRecordsControllerApi*/ {
     /**
      * Inject services.
      */
-    @Autowired
     public LogRecordsController(GridFsService gridFsService,
                                 LogRecordService logRecordService,
                                 ExecutionRequestService executionRequestService) {

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -36,7 +36,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Isolated;
 import org.mockito.Mockito;
 import org.qubership.atp.ram.enums.TestingStatuses;
@@ -63,9 +62,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.MockBeans;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = ExecutionRequestCompareService.class,
         properties = {"spring.cloud.consul.config.enabled=false"})
 @MockBeans({
@@ -189,7 +186,7 @@ public class ExecutionRequestCompareServiceTest {
 
 
         TestRunDetailsCompareResponse testRunDetails = executionRequestCompareService.getLogRecordCompareResponse(request);
-        Assertions.assertEquals(testRunDetails.getRowList().get(0).getName(), "Login");
+        Assertions.assertEquals("Login", testRunDetails.getRowList().getFirst().getName());
 
     }
 
@@ -306,7 +303,7 @@ public class ExecutionRequestCompareServiceTest {
 
         Assertions.assertEquals(4, comparedItemsMatrix.size());
         List<CompareItem> item1 = comparedItemsMatrix.get(0);
-        Assertions.assertEquals("Login", item1.get(0).getItemValue().getName());
+        Assertions.assertEquals("Login", item1.getFirst().getItemValue().getName());
 
         List<CompareItem> item2 = comparedItemsMatrix.get(1);
         Assertions.assertEquals("Open", item2.get(0).getItemValue().getName());

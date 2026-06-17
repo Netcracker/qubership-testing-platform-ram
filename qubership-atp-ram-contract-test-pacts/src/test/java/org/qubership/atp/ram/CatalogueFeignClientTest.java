@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,20 +16,18 @@
 
 package org.qubership.atp.ram;
 
-import static java.util.Arrays.asList;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.qubership.atp.auth.springbootstarter.config.FeignConfiguration;
 import org.qubership.atp.ram.client.CatalogueIntegrationFeignClient;
 import org.qubership.atp.ram.client.CatalogueIssueFeignClient;
@@ -40,7 +38,31 @@ import org.qubership.atp.ram.client.CatalogueTestCaseFeignClient;
 import org.qubership.atp.ram.client.CatalogueTestPlanFeignClient;
 import org.qubership.atp.ram.client.CatalogueTestScenarioFeignClient;
 import org.qubership.atp.ram.client.CatalogueTestScopeFeignClient;
-import org.qubership.atp.ram.clients.api.dto.catalogue.*;
+import org.qubership.atp.ram.clients.api.dto.catalogue.BugTrackingSystemSynchronizationDtoDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.CaseSearchRequestDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.CheckSumResponseDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.FieldsDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.FieldsFoundInDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.FieldsIssueTypeDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.FieldsParentDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.FieldsPriorityDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.FieldsProjectDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.FieldsStatusDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.IssueDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.JiraComponentDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.JiraIssueCreateRequestDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.JiraIssueCreateResponseDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.JiraIssueDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.LabelDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.LabelTemplateDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.ObjectOperationDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.ProjectDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.TestCaseDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.TestCaseLabelResponseDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.TestCaseLastStatusDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.TestPlanDtoDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.TestRunToJiraInfoDto;
+import org.qubership.atp.ram.clients.api.dto.catalogue.TestScopeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
@@ -49,9 +71,8 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import au.com.dius.pact.consumer.dsl.DslPart;
 import au.com.dius.pact.consumer.dsl.PactDslJsonArray;
@@ -59,13 +80,12 @@ import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.consumer.dsl.PactDslJsonRootValue;
 import au.com.dius.pact.consumer.dsl.PactDslResponse;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
-import au.com.dius.pact.consumer.junit.PactProviderRule;
-import au.com.dius.pact.consumer.junit.PactVerification;
+import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
+import au.com.dius.pact.consumer.junit5.PactTestFor;
+import au.com.dius.pact.core.model.PactSpecVersion;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 import com.google.gson.Gson;
-
-@RunWith(SpringRunner.class)
 
 @EnableFeignClients(clients = {CatalogueIntegrationFeignClient.class,
         CatalogueTestCaseFeignClient.class,
@@ -76,15 +96,17 @@ import com.google.gson.Gson;
         CatalogueTestPlanFeignClient.class,
         CatalogueTestScopeFeignClient.class,
         CatalogueLabelFeignClient.class})
-@ContextConfiguration(classes = {CatalogueFeignClientTest.TestApp.class})
-@Import({JacksonAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class, FeignConfiguration.class,
+@ExtendWith(PactConsumerTestExt.class)
+@SpringJUnitConfig(classes = {CatalogueFeignClientTest.TestApp.class})
+@Import({JacksonAutoConfiguration.class,
+        HttpMessageConvertersAutoConfiguration.class,
+        FeignConfiguration.class,
         FeignAutoConfiguration.class})
 @TestPropertySource(
         properties = {"feign.atp.catalogue.name=atp-catalogue", "feign.atp.catalogue.route=",
                 "feign.atp.catalogue.url=http://localhost:8888", "feign.httpclient.enabled=false"})
+@PactTestFor(providerName = "atp-catalogue", port = "8888", pactVersion = PactSpecVersion.V3)
 public class CatalogueFeignClientTest {
-    @Rule
-    public PactProviderRule mockProvider = new PactProviderRule("atp-catalogue", "localhost", 8888, this);
     @Autowired
     CatalogueIntegrationFeignClient catalogueIntegrationFeignClient;
     @Autowired
@@ -107,7 +129,7 @@ public class CatalogueFeignClientTest {
     String DATE_TIME_1 = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
 
     @Test
-    @PactVerification()
+    @PactTestFor(pactMethod = "createPact")
     public void allPass() {
         UUID id = UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304");
         Set<UUID> uuids = Collections.singleton(id);
@@ -149,9 +171,9 @@ public class CatalogueFeignClientTest {
         fieldsDto.setSummary("summary");
         fieldsDto.setProject(projectInFieldsDto);
         fieldsDto.setPriority(priorityDto);
-        fieldsDto.setLabels(asList("label"));
+        fieldsDto.setLabels(List.of("label"));
         fieldsDto.setIssuetype(issueTypeDto);
-        fieldsDto.setComponents(asList(jiraComponentDto));
+        fieldsDto.setComponents(List.of(jiraComponentDto));
         fieldsDto.setCustomfield17400("atpLinkTms");
         fieldsDto.setCustomfield27320("atpLinkPsup");
         fieldsDto.setCustomfield10014(foundInDto);
@@ -175,80 +197,94 @@ public class CatalogueFeignClientTest {
         labelDto.setName("name");
         labelDto.setTestPlanId(id);
 
-        List<TestRunToJiraInfoDto> testRunToJiraInfos = new ArrayList<TestRunToJiraInfoDto>(){{
+        List<TestRunToJiraInfoDto> testRunToJiraInfos = new ArrayList<>() {{
             add(generateTestRunToJiraInfoDto());
         }};
 
         UUID projectId = UUID.fromString("5a3e9627-630c-48cd-a58f-af157f0771c7");
 
         ResponseEntity<Void> result1 = catalogueIntegrationFeignClient.propagateTestCasesToJira(uuids);
-        Assert.assertEquals(result1.getStatusCode().value(), 204);
+        Assertions.assertEquals(204, result1.getStatusCode().value());
 
         ResponseEntity<Void> result2 = catalogueIntegrationFeignClient.autoSyncTestRunsWithJira(projectId, id,
                 true, true, testRunToJiraInfos);
-        Assert.assertEquals(result2.getStatusCode().value(), 204);
+        Assertions.assertEquals(204, result2.getStatusCode().value());
 
-        ResponseEntity<Void> result3 = catalogueTestCaseFeignClient.updateCaseStatuses(asList(testCaseLastStatusDto));
-        Assert.assertEquals(result3.getStatusCode().value(), 200);
+        ResponseEntity<Void> result3 = catalogueTestCaseFeignClient.updateCaseStatuses(List.of(testCaseLastStatusDto));
+        Assertions.assertEquals(200, result3.getStatusCode().value());
 
         ResponseEntity<UUID> result4 = catalogueTestCaseFeignClient.getScenarioIdByTestCaseId(id);
-        Assert.assertEquals(result4.getStatusCode().value(), 200);
-        Assert.assertTrue(result4.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result4.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result4.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<CheckSumResponseDto> result5 = catalogueTestScenarioFeignClient.checkHashSum(hashSums);
-        Assert.assertEquals(result5.getStatusCode().value(), 200);
-        Assert.assertTrue(result5.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result5.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result5.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<ProjectDto> result6 = catalogueProjectFeignClient.getProjectById(id);
-        Assert.assertEquals(result6.getStatusCode().value(), 200);
-        Assert.assertTrue(result6.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result6.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result6.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<List<TestCaseLabelResponseDto>> result7 = catalogueTestCaseFeignClient.getCaseLabels(uuids);
-        Assert.assertEquals(result7.getStatusCode().value(), 200);
-        Assert.assertTrue(result7.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result7.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result7.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<LabelTemplateDto> result8 = catalogueLabelTemplateFeignClient.get(id);
-        Assert.assertEquals(result8.getStatusCode().value(), 200);
-        Assert.assertTrue(result8.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result8.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result8.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<Void> result9 = catalogueLabelTemplateFeignClient.delete(id);
-        Assert.assertEquals(result9.getStatusCode().value(), 200);
+        Assertions.assertEquals(200, result9.getStatusCode().value());
 
         ResponseEntity<List<IssueDto>> result10 = catalogueIssueFeignClient.getByIds(new ArrayList<>(uuids));
-        Assert.assertEquals(result10.getStatusCode().value(), 200);
-        Assert.assertTrue(result10.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result10.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result10.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<TestPlanDtoDto> result11 = catalogueTestPlanFeignClient.getTestPlanByUuid(id);
-        Assert.assertEquals(result11.getStatusCode().value(), 200);
-        Assert.assertTrue(result11.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result11.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result11.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<TestScopeDto> result12 = catalogueTestScopeFeignClient.getTestScopeByUuid(id);
-        Assert.assertEquals(result12.getStatusCode().value(), 200);
-        Assert.assertTrue(result12.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result12.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result12.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<List<TestCaseDto>> result13 = catalogueTestCaseFeignClient.getTestCasesByIds(caseSearchRequestDto);
-        Assert.assertEquals(result13.getStatusCode().value(), 200);
-        Assert.assertTrue(result13.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result13.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result13.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<TestCaseDto> result14 = catalogueTestCaseFeignClient.getTestCaseWithLabelsByUuid(id);
-        Assert.assertEquals(result14.getStatusCode().value(), 200);
-        Assert.assertTrue(result14.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result14.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result14.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<List<LabelDto>> result15 = catalogueLabelFeignClient.getLabelsByIds(uuids);
-        Assert.assertEquals(result15.getStatusCode().value(), 200);
-        Assert.assertTrue(result15.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result15.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result15.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<JiraIssueCreateResponseDto> result16 = catalogueIntegrationFeignClient.createJiraTicket(id, jiraIssueCreateRequestDto);
-        Assert.assertEquals(result16.getStatusCode().value(), 200);
-        Assert.assertTrue(result16.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result16.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result16.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<JiraIssueDto> result17 = catalogueIntegrationFeignClient.getJiraTicketByKey(id, "key");
-        Assert.assertEquals(result17.getStatusCode().value(), 200);
-        Assert.assertTrue(result17.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result17.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result17.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<List<JiraComponentDto>> result18 = catalogueIntegrationFeignClient.getTestPlanJiraComponents(id);
-        Assert.assertEquals(result18.getStatusCode().value(), 200);
-        Assert.assertTrue(result18.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result18.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result18.getHeaders().get("Content-Type"))
+                .contains("application/json"));
     }
 
     private TestRunToJiraInfoDto generateTestRunToJiraInfoDto() {
@@ -279,14 +315,12 @@ public class CatalogueFeignClientTest {
 
         DslPart testCaseLastStatusDto = new PactDslJsonBody()
                 .stringType("status", "status")
-                .stringType("testCaseId", "testCaseId")
-                ;
+                .stringType("testCaseId", "testCaseId");
 
         DslPart testCaseLastStatusDtoList = new PactDslJsonArray().template(testCaseLastStatusDto);
 
         DslPart checkSumResponseDto = new PactDslJsonBody()
-                .booleanType("valid", true)
-                ;
+                .booleanType("valid", true);
 
         DslPart roles = PactDslJsonArray
                 .arrayEachLike(PactDslJsonRootValue.stringType("role"));
@@ -301,8 +335,7 @@ public class CatalogueFeignClientTest {
 
         DslPart objectOperationDto = new PactDslJsonBody()
                 .stringType("name", "name")
-                .stringType("operationType", ObjectOperationDto.OperationTypeEnum.ADD.toString())
-                ;
+                .stringType("operationType", ObjectOperationDto.OperationTypeEnum.ADD.toString());
 
         DslPart datasets = PactDslJsonArray
                 .arrayEachLike(PactDslJsonRootValue.stringType("dataset"));
@@ -332,8 +365,7 @@ public class CatalogueFeignClientTest {
                 .object("qaTaEngineers", uuids)
                 .object("taTools", uuids)
                 .stringType("tshooterUrl","tshooterUrl")
-                .uuid("uuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                ;
+                .uuid("uuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"));
 
         DslPart labels = new PactDslJsonBody()
                 .stringType("description", "description")
@@ -344,8 +376,7 @@ public class CatalogueFeignClientTest {
 
         DslPart components = new PactDslJsonBody()
                 .stringType("id", "id")
-                .stringType("name", "name")
-                ;
+                .stringType("name", "name");
 
         DslPart testCaseLabelResponseDto = new PactDslJsonBody()
                 .stringType("description", "description")
@@ -363,9 +394,7 @@ public class CatalogueFeignClientTest {
         DslPart labelTemplateNodeDto = new PactDslJsonBody()
                 .uuid("labelId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
                 .stringType("labelName", "labelName")
-                .object("children", null)
-
-                ;
+                .object("children");
 
         DslPart labelTemplateDto = new PactDslJsonBody()
                 .eachLike("labelNodes", labelTemplateNodeDto)
@@ -373,8 +402,7 @@ public class CatalogueFeignClientTest {
                 .uuid("projectId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
                 .uuid("uuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
                 .stringType("name", "name")
-                .uuid("sourceId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                ;
+                .uuid("sourceId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"));
 
         DslPart issueDto = new PactDslJsonBody()
                 .stringType("businessMessage", "businessMessage")
@@ -400,8 +428,7 @@ public class CatalogueFeignClientTest {
 
         DslPart jiraComponentDto = new PactDslJsonBody()
                 .stringType("id", "id")
-                .stringType("name", "name")
-                ;
+                .stringType("name", "name");
 
         DslPart listJiraComponentDto = new PactDslJsonArray().template(jiraComponentDto);
 
@@ -409,14 +436,13 @@ public class CatalogueFeignClientTest {
                 .stringType("authorizationKey", "authorizationKey")
                 .object("components", listJiraComponentDto)
                 .stringType("defaultTestCaseMapping",
-                        BugTrackingSystemSynchronizationDtoDto.DefaultTestCaseMappingEnum.E2E.toString())
+                        BugTrackingSystemSynchronizationDtoDto.DefaultTestCaseMappingEnum.E2_E.toString())
                 .stringType("projectKey", "projectKey")
                 .stringType("projectName", "projectName")
                 .stringType("synchronizationType",
                         BugTrackingSystemSynchronizationDtoDto.SynchronizationTypeEnum.AUTOMATIC.toString())
                 .stringType("systemType", BugTrackingSystemSynchronizationDtoDto.SystemTypeEnum.JIRA.toString())
-                .stringType("systemUrl", "systemUrl")
-                ;
+                .stringType("systemUrl", "systemUrl");
 
         DslPart testPlanDtoDto = new PactDslJsonBody()
                 .integerType("createdDate", 1)
@@ -433,8 +459,7 @@ public class CatalogueFeignClientTest {
                 .uuid("qaDslLibraryId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
                 .object("synchronization", synchronization)
                 .object("taTools", uuids)
-                .uuid("uuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                ;
+                .uuid("uuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"));
 
         DslPart testScopeDto1 = new PactDslJsonBody()
                 .object("modifiedBy", userInfoDto)
@@ -456,34 +481,29 @@ public class CatalogueFeignClientTest {
                 .uuid("widgetConfigTemplateId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
                 .integerType("numberOfThreshold", 1)
                 .object("solutionBuild", solutionBuild)
-                .object("systemUnderTestHost", systemUnderTestHost)
-                ;
+                .object("systemUnderTestHost", systemUnderTestHost);
 
         DslPart testCaseDependencyDto = new PactDslJsonBody()
                 .uuid("testCaseId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                .uuid("testScopeId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                ;
+                .uuid("testScopeId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"));
 
         DslPart testCaseDependencyDtoList = new PactDslJsonArray().template(testCaseDependencyDto);
 
         DslPart testCaseOrderDto = new PactDslJsonBody()
                 .uuid("testScopeId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                .integerType("sequenceNumber", 1)
-                ;
+                .integerType("sequenceNumber", 1);
 
         DslPart testCaseOrderDtoList = new PactDslJsonArray().template(testCaseOrderDto);
 
         DslPart testCaseRepeatCountDto = new PactDslJsonBody()
                 .uuid("testScopeId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                .integerType("repeatCount", 1)
-                ;
+                .integerType("repeatCount", 1);
 
         DslPart testCaseRepeatCountDtoList = new PactDslJsonArray().template(testCaseRepeatCountDto);
 
         DslPart testCaseFlagsDto = new PactDslJsonBody()
                 .uuid("testScopeId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                .object("flags", flags)
-                ;
+                .object("flags", flags);
 
         DslPart testCaseFlagsDtoList = new PactDslJsonArray().template(testCaseFlagsDto);
 
@@ -521,8 +541,7 @@ public class CatalogueFeignClientTest {
                 .object("testCaseRepeatCounts", testCaseRepeatCountDtoList)
                 .uuid("testPlanUuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
                 .uuid("testScenarioUuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                .uuid("uuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                ;
+                .uuid("uuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"));
 
         DslPart listTestCaseDto = new PactDslJsonArray().template(testCaseDto1);
 
@@ -551,60 +570,49 @@ public class CatalogueFeignClientTest {
                 .object("testCaseRepeatCounts", testCaseRepeatCountDtoList)
                 .uuid("testPlanUuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
                 .uuid("testScenarioUuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                .uuid("uuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                ;
+                .uuid("uuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"));
 
         DslPart caseSearchRequestDto = new PactDslJsonBody()
                 .uuid("groupId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
                 .uuid("labelId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
                 .uuid("projectId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                .object("uuids", uuids)
-                ;
+                .object("uuids", uuids);
 
         DslPart labelDto = new PactDslJsonBody()
                 .stringType("description", "description")
                 .stringType("name", "name")
                 .uuid("testPlanId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
                 .uuid("uuid", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                .uuid("projectId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"))
-                ;
+                .uuid("projectId", UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304"));
 
         DslPart listLabelDto = new PactDslJsonArray().template(labelDto);
 
         DslPart fieldsProjectDto = new PactDslJsonBody()
-                .stringType("key", "key2")
-                ;
+                .stringType("key", "key2");
 
         DslPart labelList = PactDslJsonArray
                 .arrayEachLike(PactDslJsonRootValue.stringType("label2"));
 
         DslPart issueTypeDto = new PactDslJsonBody()
-                .stringType("name", "name2")
-                ;
+                .stringType("name", "name2");
 
         DslPart priorityDto = new PactDslJsonBody()
-                .stringType("name", "name2")
-                ;
+                .stringType("name", "name2");
 
         DslPart jiraComponentInFieldsDto = new PactDslJsonBody()
                 .stringType("id", "id2")
-                .stringType("name", "name2")
-                ;
+                .stringType("name", "name2");
 
         DslPart listJiraComponentInFieldsDto = new PactDslJsonArray().template(jiraComponentInFieldsDto);
 
-
         DslPart foundInDto = new PactDslJsonBody()
-                .stringType("value", "value2")
-                ;
+                .stringType("value", "value2");
 
         DslPart statusDto = new PactDslJsonBody()
-                .stringType("name", "name2")
-                ;
+                .stringType("name", "name2");
 
         DslPart parentDto = new PactDslJsonBody()
-                .stringType("key", "key2")
-                ;
+                .stringType("key", "key2");
 
         DslPart fieldsDto = new PactDslJsonBody()
                 .stringType("description", "description2")
@@ -619,26 +627,22 @@ public class CatalogueFeignClientTest {
                 .object("customfield_10014", foundInDto)
                 .object("status", statusDto)
                 .object("parent", parentDto)
-                .stringType("environment", "environment2")
-                ;
+                .stringType("environment", "environment2");
 
         DslPart jiraIssueCreateRequestDto = new PactDslJsonBody()
-                .object("fields", fieldsDto)
-                ;
+                .object("fields", fieldsDto);
 
         DslPart jiraIssueCreateResponseDto = new PactDslJsonBody()
                 .stringType("id", "id")
                 .stringType("key", "key")
                 .stringType("self", "self")
-                .stringType("errorMessage", "errorMessage")
-                ;
+                .stringType("errorMessage", "errorMessage");
 
         DslPart jiraIssueDto = new PactDslJsonBody()
                 .stringType("id", "id")
                 .stringType("key", "key")
                 .stringType("self", "self")
-                .object("fields", fieldsDto)
-                ;
+                .object("fields", fieldsDto);
 
         DslPart testRunToJiraInfoDto = new PactDslJsonBody()
                 .stringType("environmentInfo", "environmentInfo")
@@ -652,7 +656,6 @@ public class CatalogueFeignClientTest {
                 .uuid("uuid");
 
         PactDslResponse response = builder
-
                 .given("all ok")
                 .uponReceiving("POST /catalog/api/v1/integrations/propagate/testcases/catalog/api/v1/integrations/propagate/testcases OK")
                 .path("/catalog/api/v1/integrations/propagate/testcases")
@@ -824,12 +827,10 @@ public class CatalogueFeignClientTest {
                 .willRespondWith()
                 .status(200)
                 .headers(headers)
-                .body(listJiraComponentDto)
-                ;
+                .body(listJiraComponentDto);
 
         return response.toPact();
     }
-
 
     @Configuration
     public static class TestApp {

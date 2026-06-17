@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -30,6 +30,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Isolated;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.qubership.atp.ram.config.EmailConfigurationProvider;
 import org.qubership.atp.ram.config.MvcConfig;
 import org.qubership.atp.ram.enums.ExecutionStatuses;
@@ -53,7 +56,21 @@ import org.qubership.atp.ram.service.rest.server.mongo.ExecutionRequestControlle
 import org.qubership.atp.ram.service.rest.server.mongo.LogRecordController;
 import org.qubership.atp.ram.service.rest.server.mongo.TestRunController;
 import org.qubership.atp.ram.service.template.impl.ScreenshotsReportTemplateRenderService;
-import org.qubership.atp.ram.services.*;
+import org.qubership.atp.ram.services.EnvironmentsService;
+import org.qubership.atp.ram.services.ExecutionRequestCompareService;
+import org.qubership.atp.ram.services.ExecutionRequestDetailsService;
+import org.qubership.atp.ram.services.ExecutionRequestReportingService;
+import org.qubership.atp.ram.services.ExecutionRequestService;
+import org.qubership.atp.ram.services.FileResponseEntityService;
+import org.qubership.atp.ram.services.GridFsService;
+import org.qubership.atp.ram.services.IssueService;
+import org.qubership.atp.ram.services.JiraIntegrationService;
+import org.qubership.atp.ram.services.JointExecutionRequestService;
+import org.qubership.atp.ram.services.LogRecordService;
+import org.qubership.atp.ram.services.OrchestratorService;
+import org.qubership.atp.ram.services.ScriptReportService;
+import org.qubership.atp.ram.services.TestRunService;
+import org.qubership.atp.ram.services.WidgetConfigTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
@@ -63,7 +80,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
@@ -76,7 +93,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Provider("atp-ram")
-@PactUrl(urls = {"src/test/resources/pacts/atp-orchestrator-atp-ram.json"})
+@PactUrl(urls = {"file:./src/test/resources/pacts/atp-orchestrator-atp-ram.json"})
 @AutoConfigureMockMvc(addFilters = false, webDriverEnabled = false)
 @WebMvcTest(properties = {"spring.cloud.consul.config.enabled=false"},
         controllers = {
@@ -85,8 +102,9 @@ import lombok.extern.slf4j.Slf4j;
                 ExecutionRequestController.class,
                 LogRecordController.class
         })
-@ContextConfiguration(classes = {RamAndOrchestratorContractTest.TestApp.class})
+@SpringJUnitConfig(classes = {RamAndOrchestratorContractTest.TestApp.class})
 @EnableAutoConfiguration
+@ExtendWith(MockitoExtension.class)
 @Import({JacksonAutoConfiguration.class,
         HttpMessageConvertersAutoConfiguration.class,
         MvcConfig.class,
@@ -97,6 +115,7 @@ import lombok.extern.slf4j.Slf4j;
 })
 @Slf4j
 @Isolated
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class RamAndOrchestratorContractTest {
 
     @Configuration
@@ -212,7 +231,7 @@ public class RamAndOrchestratorContractTest {
     }
 
     @BeforeEach
-    void before(PactVerificationContext context) throws Exception {
+    void before(PactVerificationContext context) {
         beforeAll();
         context.setTarget(new MockMvcTestTarget(mockMvc));
     }

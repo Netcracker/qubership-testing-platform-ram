@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package org.qubership.atp.ram.services;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -35,40 +35,41 @@ public class FailPatternServiceTest {
     public void checkCorrectPatternPassedResult() {
         failPatternService = mock(FailPatternService.class);
         String pattern = ".*Hazelcast cache check(\\n|.)+?not found(\\n|.)+?";
-        String message = "Situation 'Hazelcast cache check': incoming message validation is failed (Compare Result is 'MODIFIED')\n" +
-                " Details: \n" +
-                "HazelcastAR MODIFIED\n" +
-                "ER\tAR\n" +
-                "8 !=null\n" +
-                "        \n" +
-                "8 not found\n" +
-                "        \n" +
-                "org.qubership.automation.itf.core.integration.EngineIntegrationException: Situation 'Hazelcast cache check': incoming message validation is failed (Compare Result is 'MODIFIED')\n" +
-                " Details: \n" +
-                "HazelcastAR MODIFIED\n" +
-                "ER\tAR\n" +
-                "8 !=null\n" +
-                "        \n" +
-                "8 not found\n" +
-                "        \n" +
-                "\n" +
-                "\tat org.qubership.automation.itf.core.instance.situation.SituationExecutor.validationInIntegration(SituationExecutor.java:591)\n" +
-                "\tat org.qubership.automation.itf.core.instance.situation.SituationExecutor.messageValidation(SituationExecutor.java:584)\n" +
-                "\tat org.qubership.automation.itf.core.instance.situation.SituationExecutor.executeInstanceStep(SituationExecutor.java:304)\n" +
-                "\tat org.qubership.automation.itf.core.instance.situation.SituationExecutor.executeInstance(SituationExecutor.java:84)\n" +
-                "\tat org.qubership.automation.itf.core.instance.situation.SituationExecutor.execute(SituationExecutor.java:632)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.postSituationStep(NextCallChainSubscriber.java:188)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.executeStep(NextCallChainSubscriber.java:282)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.executeNext(NextCallChainSubscriber.java:226)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.executeNext(NextCallChainSubscriber.java:228)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.onEvent(NextCallChainSubscriber.java:136)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.onEvent(NextCallChainSubscriber.java:44)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.AbstractChainSubscriber.handleEvent(AbstractChainSubscriber.java:30)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.handle(NextCallChainSubscriber.java:69)\n" +
-                "\tat sun.reflect.GeneratedMethodAccessor412.invoke(Unknown Source)\n" +
-                "\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n" +
-                "\tat java.lang.reflect.Method.invoke(Method.java:498)\n" +
-                "\tat com.google.common.eventbus.Subscriber.invokeSubscriberMethod(Subscriber.java:91)";
+        String message = """
+                Situation 'Hazelcast cache check': incoming message validation is failed (Compare Result is 'MODIFIED')
+                 Details:\s
+                HazelcastAR MODIFIED
+                ER	AR
+                8 !=null
+                       \s
+                8 not found
+                       \s
+                org.qubership.automation.itf.core.integration.EngineIntegrationException: Situation 'Hazelcast cache check': incoming message validation is failed (Compare Result is 'MODIFIED')
+                 Details:\s
+                HazelcastAR MODIFIED
+                ER	AR
+                8 !=null
+                       \s
+                8 not found
+                       \s
+                
+                	at org.qubership.automation.itf.core.instance.situation.SituationExecutor.validationInIntegration(SituationExecutor.java:591)
+                	at org.qubership.automation.itf.core.instance.situation.SituationExecutor.messageValidation(SituationExecutor.java:584)
+                	at org.qubership.automation.itf.core.instance.situation.SituationExecutor.executeInstanceStep(SituationExecutor.java:304)
+                	at org.qubership.automation.itf.core.instance.situation.SituationExecutor.executeInstance(SituationExecutor.java:84)
+                	at org.qubership.automation.itf.core.instance.situation.SituationExecutor.execute(SituationExecutor.java:632)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.postSituationStep(NextCallChainSubscriber.java:188)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.executeStep(NextCallChainSubscriber.java:282)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.executeNext(NextCallChainSubscriber.java:226)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.executeNext(NextCallChainSubscriber.java:228)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.onEvent(NextCallChainSubscriber.java:136)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.onEvent(NextCallChainSubscriber.java:44)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.AbstractChainSubscriber.handleEvent(AbstractChainSubscriber.java:30)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.handle(NextCallChainSubscriber.java:69)
+                	at sun.reflect.GeneratedMethodAccessor412.invoke(Unknown Source)
+                	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+                	at java.lang.reflect.Method.invoke(Method.java:498)
+                	at com.google.common.eventbus.Subscriber.invokeSubscriberMethod(Subscriber.java:91)""";
         FailPatternCheckRequest failPatternCheckRequest = new FailPatternCheckRequest();
         failPatternCheckRequest.setRule(pattern);
         failPatternCheckRequest.setMessage(message);
@@ -82,40 +83,41 @@ public class FailPatternServiceTest {
     public void checkIncorrectPatternPassedResult() {
         failPatternService = mock(FailPatternService.class);
         String pattern = ".*Hazelcast cache check(\\n|.)*not found(\\n|.)*";
-        String message = "Situation 'Hazelcast cache check': incoming message validation is failed (Compare Result is 'MODIFIED')\n" +
-                " Details: \n" +
-                "HazelcastAR MODIFIED\n" +
-                "ER\tAR\n" +
-                "8 !=null\n" +
-                "        \n" +
-                "8 not found\n" +
-                "        \n" +
-                "org.qubership.automation.itf.core.integration.EngineIntegrationException: Situation 'Hazelcast cache check': incoming message validation is failed (Compare Result is 'MODIFIED')\n" +
-                " Details: \n" +
-                "HazelcastAR MODIFIED\n" +
-                "ER\tAR\n" +
-                "8 !=null\n" +
-                "        \n" +
-                "8 not found\n" +
-                "        \n" +
-                "\n" +
-                "\tat org.qubership.automation.itf.core.instance.situation.SituationExecutor.validationInIntegration(SituationExecutor.java:591)\n" +
-                "\tat org.qubership.automation.itf.core.instance.situation.SituationExecutor.messageValidation(SituationExecutor.java:584)\n" +
-                "\tat org.qubership.automation.itf.core.instance.situation.SituationExecutor.executeInstanceStep(SituationExecutor.java:304)\n" +
-                "\tat org.qubership.automation.itf.core.instance.situation.SituationExecutor.executeInstance(SituationExecutor.java:84)\n" +
-                "\tat org.qubership.automation.itf.core.instance.situation.SituationExecutor.execute(SituationExecutor.java:632)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.postSituationStep(NextCallChainSubscriber.java:188)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.executeStep(NextCallChainSubscriber.java:282)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.executeNext(NextCallChainSubscriber.java:226)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.executeNext(NextCallChainSubscriber.java:228)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.onEvent(NextCallChainSubscriber.java:136)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.onEvent(NextCallChainSubscriber.java:44)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.AbstractChainSubscriber.handleEvent(AbstractChainSubscriber.java:30)\n" +
-                "\tat org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.handle(NextCallChainSubscriber.java:69)\n" +
-                "\tat sun.reflect.GeneratedMethodAccessor412.invoke(Unknown Source)\n" +
-                "\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n" +
-                "\tat java.lang.reflect.Method.invoke(Method.java:498)\n" +
-                "\tat com.google.common.eventbus.Subscriber.invokeSubscriberMethod(Subscriber.java:91)";
+        String message = """
+                Situation 'Hazelcast cache check': incoming message validation is failed (Compare Result is 'MODIFIED')
+                 Details:\s
+                HazelcastAR MODIFIED
+                ER	AR
+                8 !=null
+                       \s
+                8 not found
+                       \s
+                org.qubership.automation.itf.core.integration.EngineIntegrationException: Situation 'Hazelcast cache check': incoming message validation is failed (Compare Result is 'MODIFIED')
+                 Details:\s
+                HazelcastAR MODIFIED
+                ER	AR
+                8 !=null
+                       \s
+                8 not found
+                       \s
+                
+                	at org.qubership.automation.itf.core.instance.situation.SituationExecutor.validationInIntegration(SituationExecutor.java:591)
+                	at org.qubership.automation.itf.core.instance.situation.SituationExecutor.messageValidation(SituationExecutor.java:584)
+                	at org.qubership.automation.itf.core.instance.situation.SituationExecutor.executeInstanceStep(SituationExecutor.java:304)
+                	at org.qubership.automation.itf.core.instance.situation.SituationExecutor.executeInstance(SituationExecutor.java:84)
+                	at org.qubership.automation.itf.core.instance.situation.SituationExecutor.execute(SituationExecutor.java:632)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.postSituationStep(NextCallChainSubscriber.java:188)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.executeStep(NextCallChainSubscriber.java:282)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.executeNext(NextCallChainSubscriber.java:226)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.executeNext(NextCallChainSubscriber.java:228)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.onEvent(NextCallChainSubscriber.java:136)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.onEvent(NextCallChainSubscriber.java:44)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.AbstractChainSubscriber.handleEvent(AbstractChainSubscriber.java:30)
+                	at org.qubership.automation.itf.core.instance.testcase.execution.subscriber.NextCallChainSubscriber.handle(NextCallChainSubscriber.java:69)
+                	at sun.reflect.GeneratedMethodAccessor412.invoke(Unknown Source)
+                	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+                	at java.lang.reflect.Method.invoke(Method.java:498)
+                	at com.google.common.eventbus.Subscriber.invokeSubscriberMethod(Subscriber.java:91)""";
         FailPatternCheckRequest failPatternCheckRequest = new FailPatternCheckRequest();
         failPatternCheckRequest.setRule(pattern);
         failPatternCheckRequest.setMessage(message);

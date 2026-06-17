@@ -107,7 +107,7 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
     @SneakyThrows
     public MongoClient mongoClient() {
         MongoClient mongoClient = super.mongoClient();
-        Map<String, Object> beansMap = new HashMap<String, Object>() {
+        Map<String, Object> beansMap = new HashMap<>() {
             {
                 put("usersService", usersService);
                 put("environments", environment);
@@ -148,7 +148,7 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
     public MappingMongoConverter mappingMongoConverter() throws Exception {
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory());
         MappingMongoConverter mongoConverter = new MappingMongoConverter(dbRefResolver,
-                mongoMappingContext(customConversions()));
+                mongoMappingContext(customConversions(), mongoManagedTypes()));
         mongoConverter.setMapKeyDotReplacement(DOT_REPLACEMENT);
         mongoConverter.setCustomConversions(customConversions());
         return mongoConverter;

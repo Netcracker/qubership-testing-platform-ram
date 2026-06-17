@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -62,7 +61,7 @@ public class EntitiesGenerator {
 
 
         String screenshotName = "snapshot.png";
-        Path screenshotPath = Paths.get("src","test","resources", screenshotName);
+        Path screenshotPath = Path.of("src","test","resources", screenshotName);
         File screenshotFile = new File(String.valueOf(screenshotPath));
         InputStream screenshotInputStream = new FileInputStream(screenshotFile);
         byte[] screenshotBytes = IOUtils.toByteArray(screenshotInputStream);

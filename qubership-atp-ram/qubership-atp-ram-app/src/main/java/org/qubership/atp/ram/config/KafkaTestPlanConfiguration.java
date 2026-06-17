@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -27,6 +27,8 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.CommonErrorHandler;
+import org.springframework.kafka.listener.DefaultErrorHandler;
 
 @Configuration
 @ConditionalOnProperty(
@@ -46,9 +48,17 @@ public class KafkaTestPlanConfiguration {
         ConcurrentKafkaListenerContainerFactory<UUID, TestPlanResponse> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
-        factory.setErrorHandler((e, consumerRecord) -> {
-            throw new RuntimeException("Error during event processing.", e);
-        });
+
+        // Create error handler with default configuration.
+        //  The 2nd (optional) parameter is to set retry config,
+        //  For example:
+        //      - new FixedBackOff(1000L, 3L) // Timeout 1 second, 3 attempts max.
+        CommonErrorHandler commonErrorHandler = new DefaultErrorHandler(
+                // recoverer - What to do after all retries are over
+                (record, exception) -> {
+                    throw new RuntimeException("Error during event processing.", exception);
+                });
+        factory.setCommonErrorHandler(commonErrorHandler);
         return factory;
     }
 

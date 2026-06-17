@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -35,6 +35,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
 import org.qubership.atp.ram.RootCauseMock;
 import org.qubership.atp.ram.exceptions.rootcauses.RamRootCauseAlreadyExistsException;
@@ -48,10 +51,10 @@ import org.qubership.atp.ram.repositories.RootCauseRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.CollectionUtils;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class RootCauseServiceTest {
 
     private RootCauseService service;
@@ -115,9 +118,7 @@ public class RootCauseServiceTest {
         when(repository.findByNameAndProjectId(existedRootCause.getName(), existedRootCause.getProjectId())).thenReturn(existedRootCause);
 
         // when
-        assertThrows(RamRootCauseAlreadyExistsException.class, () -> {
-            service.create(request);
-        });
+        assertThrows(RamRootCauseAlreadyExistsException.class, () -> service.create(request));
     }
 
     @Test
@@ -137,9 +138,7 @@ public class RootCauseServiceTest {
         existedRootCause.setType(RootCauseType.GLOBAL);
 
         // when
-        assertThrows(RamRootCauseIllegalAccessException.class, () -> {
-            service.create(request);
-        });
+        assertThrows(RamRootCauseIllegalAccessException.class, () -> service.create(request));
     }
 
     /*
@@ -169,9 +168,7 @@ public class RootCauseServiceTest {
         final UUID projectId = UUID.randomUUID();
 
         final List<RootCause> customRootCauses = asList(rc2, rc3, rc4, rc5, rc6);
-        customRootCauses.forEach(rootCause -> {
-            rootCause.setProjectId(projectId);
-        });
+        customRootCauses.forEach(rootCause -> rootCause.setProjectId(projectId));
         final List<RootCause> topLevelCustomRootCauses = asList(rc3, rc6);
         final List<RootCause> topLevelGlobalRootCauses = asList(rc1, rc7);
 

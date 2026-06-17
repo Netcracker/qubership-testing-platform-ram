@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ public class TestCase extends RamObject {
     public TestCaseOrder findByScope(UUID testScopeId) {
         return Optional.of(order)
                 .orElseThrow(() -> {
-                    String errMsg = String.format("Cannot found order for test case '%s' in scope '%s'",
+                    String errMsg = "Cannot found order for test case '%s' in scope '%s'".formatted(
                             this.getUuid(), testScopeId);
                     log.error(errMsg);
                     return new IllegalStateException(errMsg);
@@ -53,7 +53,7 @@ public class TestCase extends RamObject {
                 .filter(order -> order.getTestScopeId().equals(testScopeId))
                 .findFirst()
                 .orElseThrow(() -> {
-                    String errMsg = String.format("Cannot found order sequence for test case '%s' in scope '%s'",
+                    String errMsg = "Cannot found order sequence for test case '%s' in scope '%s'".formatted(
                             this.getUuid(), testScopeId);
                     log.error(errMsg);
                     return new IllegalStateException(errMsg);

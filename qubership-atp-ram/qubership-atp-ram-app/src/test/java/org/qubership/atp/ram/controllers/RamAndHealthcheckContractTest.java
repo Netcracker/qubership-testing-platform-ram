@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package org.qubership.atp.ram.controllers;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.UUID;
@@ -36,7 +36,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
@@ -48,13 +48,13 @@ import au.com.dius.pact.provider.spring.junit5.MockMvcTestTarget;
 import lombok.extern.slf4j.Slf4j;
 
 @Provider("atp-ram")
-@PactUrl(urls = {"src/test/resources/pacts/atp-healthcheck-atp-ram.json"})
+@PactUrl(urls = {"file:./src/test/resources/pacts/atp-healthcheck-atp-ram.json"})
 @AutoConfigureMockMvc(addFilters = false, webDriverEnabled = false)
 @WebMvcTest(controllers = {
         EnvironmentsInfoController.class},
         properties = {"spring.cloud.consul.config.enabled=false"}
 )
-@ContextConfiguration(classes = {RamAndHealthcheckContractTest.TestApp.class})
+@SpringJUnitConfig(classes = {RamAndHealthcheckContractTest.TestApp.class})
 @EnableAutoConfiguration
 @Import({JacksonAutoConfiguration.class,
         HttpMessageConvertersAutoConfiguration.class,
@@ -87,7 +87,7 @@ public class RamAndHealthcheckContractTest {
     }
 
     @BeforeEach
-    void before(PactVerificationContext context) throws Exception {
+    void before(PactVerificationContext context) {
         beforeAll();
         context.setTarget(new MockMvcTestTarget(mockMvc));
     }

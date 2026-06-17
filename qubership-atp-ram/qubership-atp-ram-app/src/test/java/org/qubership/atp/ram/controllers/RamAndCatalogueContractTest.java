@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,10 +16,9 @@
 
 package org.qubership.atp.ram.controllers;
 
-import static java.util.Arrays.asList;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
 
 import java.sql.Timestamp;
@@ -81,7 +80,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
@@ -94,7 +93,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Provider("atp-ram")
-@PactUrl(urls = {"src/test/resources/pacts/atp-catalogue-atp-ram.json"})
+@PactUrl(urls = {"file:./src/test/resources/pacts/atp-catalogue-atp-ram.json"})
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(properties = {"spring.cloud.consul.config.enabled=false"},
         controllers = {
@@ -102,7 +101,7 @@ import lombok.extern.slf4j.Slf4j;
                 JiraIntegrationController.class,
                 ExecutionRequestController.class
         })
-@ContextConfiguration(classes = {RamAndCatalogueContractTest.TestApp.class})
+@SpringJUnitConfig(classes = {RamAndCatalogueContractTest.TestApp.class})
 @EnableAutoConfiguration
 @Import({JacksonAutoConfiguration.class,
         HttpMessageConvertersAutoConfiguration.class,
@@ -152,17 +151,17 @@ public class RamAndCatalogueContractTest {
 
 
     public void beforeAll() {
-        when(jiraIntegrationService.getTestRunsForJiraInfoByExecutionId(any())).thenReturn(asList(getTestRunToJiraInfo()));
+        when(jiraIntegrationService.getTestRunsForJiraInfoByExecutionId(any())).thenReturn(List.of(getTestRunToJiraInfo()));
         when(executionRequestService.findById(any())).thenReturn(getExecutionRequest());
         when(executionRequestService.save(any())).thenReturn(getExecutionRequest());
         when(executionRequestDetailsService.createDetails(any(), any())).thenReturn(getExecutionRequestDetails());
 
-        when(jiraIntegrationService.getTestRunsForJiraInfoByIds(any())).thenReturn(asList(getTestRunToJiraInfo()));
+        when(jiraIntegrationService.getTestRunsForJiraInfoByIds(any())).thenReturn(List.of(getTestRunToJiraInfo()));
         when(modelConverter.convertJiraInfoModelToDto(anyList()))
                 .thenReturn(getTestRunToJiraInfoDto());
 
         when(jiraIntegrationService.getTestRunsForRefreshFromJira(any()))
-                .thenReturn(asList(getTestRunForRefreshFromJira()));
+                .thenReturn(List.of(getTestRunForRefreshFromJira()));
         when(modelConverter.convertRefreshFromJiraModelToDto(anyList()))
                 .thenReturn(getTestRunForRefreshFromJiraDto());
 
@@ -180,7 +179,7 @@ public class RamAndCatalogueContractTest {
     }
 
     @BeforeEach
-    void before(PactVerificationContext context) throws Exception {
+    void before(PactVerificationContext context) {
         beforeAll();
         context.setTarget(new MockMvcTestTarget(mockMvc));
     }
@@ -257,12 +256,12 @@ public class RamAndCatalogueContractTest {
         testRun.setDuration(1L);
         testRun.setExecutor("executor");
         testRun.setJiraTicket("jiraTicket");
-        testRun.setTaHost(asList("taHost"));
-        testRun.setQaHost(asList("qaHost"));
-        testRun.setSolutionBuild(asList("solutionBuild"));
+        testRun.setTaHost(List.of("taHost"));
+        testRun.setQaHost(List.of("qaHost"));
+        testRun.setSolutionBuild(List.of("solutionBuild"));
         testRun.setRootCauseId(UUID.randomUUID());
         testRun.setDataSetUrl("dataSetUrl");
-        testRun.setFlags(asList(Flags.TERMINATE_IF_FAIL));
+        testRun.setFlags(List.of(Flags.TERMINATE_IF_FAIL));
         testRun.setDataSetListUrl("dataSetListUrl");
         testRun.setLogCollectorData("logCollectorData");
         testRun.setFdrWasSent(true);
@@ -307,9 +306,9 @@ public class RamAndCatalogueContractTest {
         set2.add(UUID.randomUUID());
         testRun.setLabelIds(set2);
 
-        testRun.setBrowserNames(asList("browserNames"));
+        testRun.setBrowserNames(List.of("browserNames"));
 
-        List<TestRun> listTestRuns = asList(testRun);
+        List<TestRun> listTestRuns = List.of(testRun);
         PaginationResponse<TestRun> paginationResponse = new PaginationResponse<>();
         paginationResponse.setEntities(listTestRuns);
         paginationResponse.setTotalCount(listTestRuns.size());

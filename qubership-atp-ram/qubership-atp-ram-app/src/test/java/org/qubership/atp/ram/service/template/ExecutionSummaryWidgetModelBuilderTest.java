@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 
 package org.qubership.atp.ram.service.template;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -47,10 +47,10 @@ public class ExecutionSummaryWidgetModelBuilderTest {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    private ReportService reportService = mock(ReportService.class);
-    private ProjectsService projectsService = mock(ProjectsService.class);
-    private CatalogueService catalogueService = mock(CatalogueService.class);
-    private ExecutionRequestService executionRequestService = mock(ExecutionRequestService.class);
+    private final ReportService reportService = mock(ReportService.class);
+    private final ProjectsService projectsService = mock(ProjectsService.class);
+    private final CatalogueService catalogueService = mock(CatalogueService.class);
+    private final ExecutionRequestService executionRequestService = mock(ExecutionRequestService.class);
     private ReportParams reportParams;
 
 
@@ -93,7 +93,7 @@ public class ExecutionSummaryWidgetModelBuilderTest {
         response.setFailedCount(20);
         response.setWarningCount(5);
         response.setEnvironmentLink("http://some-domain.com");
-        response.setBrowserSessionLink(new ArrayList<String>(){{
+        response.setBrowserSessionLink(new ArrayList<>() {{
             add("http://some-domain.com");
         }});
 

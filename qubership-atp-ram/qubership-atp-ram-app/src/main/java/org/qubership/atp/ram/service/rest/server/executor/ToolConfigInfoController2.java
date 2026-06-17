@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ import java.util.UUID;
 import org.qubership.atp.ram.services.ToolConfigInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -38,7 +37,6 @@ public class ToolConfigInfoController2 {
     private static final Logger log = LoggerFactory.getLogger(ToolConfigInfoController2.class);
     private final ToolConfigInfoService service;
 
-    @Autowired
     public ToolConfigInfoController2(ToolConfigInfoService service) {
         this.service = service;
     }

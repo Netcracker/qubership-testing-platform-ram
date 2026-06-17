@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@ import org.qubership.atp.ram.models.TestRun;
 import org.qubership.atp.ram.services.TestRunService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -44,7 +43,6 @@ public class TaskScheduler {
     @Value("${terminate.timeout.in.minutes}")
     private int terminateTimeoutInMinutes;
 
-    @Autowired
     public TaskScheduler(TestRunService service, LockManager lockManager) {
         this.testRunService = service;
         this.lockManager = lockManager;

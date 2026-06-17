@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package org.qubership.atp.ram.service.mail;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.sql.Timestamp;
@@ -32,6 +32,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.qubership.atp.integration.configuration.model.MailRequest;
 import org.qubership.atp.integration.configuration.service.MailSenderService;
 import org.qubership.atp.ram.exceptions.testplans.RamTestPlanRecipientsNotFoundException;
@@ -49,9 +52,9 @@ import org.qubership.atp.ram.services.ReportTemplatesService;
 import org.qubership.atp.ram.services.TestPlansService;
 import org.qubership.atp.ram.services.UserService;
 import org.qubership.atp.ram.utils.TimeUtils;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class MailServiceTest {
 
     @Mock
@@ -78,11 +81,11 @@ public class MailServiceTest {
 
     private ReportParams noRecipientsReportParams;
 
-    private String executionRequestName = "Execution Request";
-    private Timestamp executionRequestStartDate = Timestamp.from(Instant.now());
+    private final String executionRequestName = "Execution Request";
+    private final Timestamp executionRequestStartDate = Timestamp.from(Instant.now());
     private String defaultEmailSubject;
 
-    private String username = "username";
+    private final String username = "username";
 
     @BeforeEach
     public void setUp() {
@@ -91,7 +94,7 @@ public class MailServiceTest {
         when(reportTemplatesService.getActiveTemplateByProjectId(any())).thenReturn(new ReportTemplate());
         when(testPlansService.findByTestPlanUuid(any())).thenReturn(new TestPlan());
         when(userService.getUserInfoFromToken(any())).thenReturn(generateUserInfo());
-        defaultEmailSubject = String.format("%s [%s]",
+        defaultEmailSubject = "%s [%s]".formatted(
                 executionRequestName,
                 TimeUtils.formatDateTime(executionRequestStartDate, TimeUtils.DEFAULT_DATE_TIME_PATTERN));
     }
@@ -113,7 +116,7 @@ public class MailServiceTest {
         ReportParams params = new ReportParams();
         params.setExecutionRequestUuid(UUID.randomUUID());
         params.setSubject("Test Subject");
-        params.setDescriptions(new HashMap<String, String>() {{
+        params.setDescriptions(new HashMap<>() {{
             put(WidgetType.ENVIRONMENTS_INFO.toString(), "description");
         }});
         params.setUserToken("user token");
@@ -124,7 +127,7 @@ public class MailServiceTest {
         ReportParams params = new ReportParams();
         params.setExecutionRequestUuid(UUID.randomUUID());
         params.setRecipients("qstp@some-domain.com");
-        params.setDescriptions(new HashMap<String, String>() {{
+        params.setDescriptions(new HashMap<>() {{
             put(WidgetType.ENVIRONMENTS_INFO.toString(), "description");
         }});
         params.setUserToken("user token");
@@ -136,9 +139,8 @@ public class MailServiceTest {
         when(emailSubjectMacrosService
                 .resolveSubjectMacros(any(), any(), any())).thenReturn(noRecipientsReportParams.getSubject());
 
-        Assertions.assertThrows(RamTestPlanRecipientsNotFoundException.class, () -> {
-            mailService.sendFromTemplate(noRecipientsReportParams);
-        });
+        Assertions.assertThrows(RamTestPlanRecipientsNotFoundException.class, () ->
+                mailService.sendFromTemplate(noRecipientsReportParams));
     }
 
     @Test

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package org.qubership.atp.ram.history;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
@@ -87,7 +87,7 @@ public class RootCauseVersioningMapperTest {
         assertEquals(rootCauseHistoryChangeDto.getName(), source.getName());
         assertEquals(rootCauseHistoryChangeDto.getModifiedBy(), userInfo.getFullName());
         assertEquals(rootCauseHistoryChangeDto.getCreatedBy(), userInfo.getFullName());
-        assertEquals(rootCauseHistoryChangeDto.getChildren().get(0), childRootCauseName);
+        assertEquals(rootCauseHistoryChangeDto.getChildren().getFirst(), childRootCauseName);
         assertEquals(rootCauseHistoryChangeDto.getParent(), parentRootCauseName);
     }
 }

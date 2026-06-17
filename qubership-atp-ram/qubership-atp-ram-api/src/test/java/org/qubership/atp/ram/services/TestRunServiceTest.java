@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.qubership.atp.ram.enums.ExecutionStatuses.FINISHED;
 import static org.qubership.atp.ram.enums.ExecutionStatuses.IN_PROGRESS;
@@ -73,6 +73,9 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
 import org.qubership.atp.ram.ExecutionRequestsMock;
 import org.qubership.atp.ram.LogRecordMock;
@@ -120,14 +123,14 @@ import org.qubership.atp.ram.utils.LabelMock;
 import org.qubership.atp.ram.utils.PatchHelper;
 import org.qubership.atp.ram.utils.StreamUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class TestRunServiceTest {
 
     private final ModelMapper modelMapper = new ModelMapper();
@@ -215,7 +218,7 @@ public class TestRunServiceTest {
         List<TestRun> result = testRunService.findTestRunsWithFillStatusByRequestId(any());
 
         List<TestRun> testRunsWithEmptyStatus =
-                result.stream().filter(testRun -> testRun.getTestingStatus() == null).collect(Collectors.toList());
+                result.stream().filter(testRun -> testRun.getTestingStatus() == null).toList();
 
         int countOfTestRunWithoutStatus = 0;
         Assertions.assertEquals(countOfTestRunWithoutStatus, testRunsWithEmptyStatus.size());
@@ -326,9 +329,9 @@ public class TestRunServiceTest {
 
         Assertions.assertEquals(1, simpleTestRunResponse.getBrowserInfos().size(),
                 "SimpleTestRunResponse must contain one browser name and link");
-        Assertions.assertEquals(tr.getBrowserNames().get(0),
-                simpleTestRunResponse.getBrowserInfos().get(0).getBrowserName());
-        Assertions.assertEquals(expectedLink, simpleTestRunResponse.getBrowserInfos().get(0).getBrowserUrl());
+        Assertions.assertEquals(tr.getBrowserNames().getFirst(),
+                simpleTestRunResponse.getBrowserInfos().getFirst().getBrowserName());
+        Assertions.assertEquals(expectedLink, simpleTestRunResponse.getBrowserInfos().getFirst().getBrowserUrl());
     }
 
     @Test
@@ -345,9 +348,9 @@ public class TestRunServiceTest {
 
         Assertions.assertEquals(1, simpleTestRunResponse.getBrowserInfos().size(),
                 "SimpleTestRunResponse must contain one browser name");
-        Assertions.assertEquals(tr.getBrowserNames().get(0),
-                simpleTestRunResponse.getBrowserInfos().get(0).getBrowserName());
-        assertNull(simpleTestRunResponse.getBrowserInfos().get(0).getBrowserUrl(), "Browser URL must be null");
+        Assertions.assertEquals(tr.getBrowserNames().getFirst(),
+                simpleTestRunResponse.getBrowserInfos().getFirst().getBrowserName());
+        assertNull(simpleTestRunResponse.getBrowserInfos().getFirst().getBrowserUrl(), "Browser URL must be null");
     }
 
     @Test
@@ -367,9 +370,9 @@ public class TestRunServiceTest {
 
         Assertions.assertEquals(1, simpleTestRunResponse.getBrowserInfos().size(),
                 "SimpleTestRunResponse must contain one browser name and link");
-        Assertions.assertEquals(tr.getBrowserNames().get(0),
-                simpleTestRunResponse.getBrowserInfos().get(0).getBrowserName());
-        String actualBrowserUrl = simpleTestRunResponse.getBrowserInfos().get(0).getBrowserUrl();
+        Assertions.assertEquals(tr.getBrowserNames().getFirst(),
+                simpleTestRunResponse.getBrowserInfos().getFirst().getBrowserName());
+        String actualBrowserUrl = simpleTestRunResponse.getBrowserInfos().getFirst().getBrowserUrl();
         Assertions.assertNotNull(Long.valueOf(actualBrowserUrl.substring(actualBrowserUrl.indexOf("&to=") + 4)),
                 "No exception should be thrown when searching and parsing the 'to' value in the URL");
     }
@@ -387,9 +390,9 @@ public class TestRunServiceTest {
         List<EnrichedTestRun> result =
                 testRunService.getEnrichedTestRunsByExecutionRequestId(simpleTestRun.getExecutionRequestId());
         Assertions.assertEquals(1, result.size());
-        Assertions.assertEquals(2, result.get(0).getLabels().size());
-        Assertions.assertEquals("label1", result.get(0).getLabels().get(0).getName());
-        Assertions.assertEquals("label2", result.get(0).getLabels().get(1).getName());
+        Assertions.assertEquals(2, result.getFirst().getLabels().size());
+        Assertions.assertEquals("label1", result.getFirst().getLabels().get(0).getName());
+        Assertions.assertEquals("label2", result.getFirst().getLabels().get(1).getName());
     }
 
     @Test
@@ -426,7 +429,7 @@ public class TestRunServiceTest {
         List<EnrichedTestRun> result =
                 testRunService.getEnrichedTestRunsByExecutionRequestId(simpleTestRun.getExecutionRequestId());
 
-        Assertions.assertEquals(0, result.get(0).getLabels().size());
+        Assertions.assertEquals(0, result.getFirst().getLabels().size());
     }
 
     @Test
@@ -613,7 +616,7 @@ public class TestRunServiceTest {
                 StreamUtils.extractIds(resultTestRuns, TestRunStatusUpdateResponse::getId).toArray(),
                 StreamUtils.extractIds(testRuns).toArray());
 
-        final TestRunStatusUpdateResponse resultTestRun1 = resultTestRuns.get(0);
+        final TestRunStatusUpdateResponse resultTestRun1 = resultTestRuns.getFirst();
         Assertions.assertNotNull(resultTestRun1);
         Assertions.assertEquals(testRun1Id, resultTestRun1.getId());
 
@@ -688,7 +691,7 @@ public class TestRunServiceTest {
 
         testRunService.updTestingStatusHard(testRun.getUuid(), FAILED);
 
-        verifyZeroInteractions(testCaseService);
+        verifyNoInteractions(testCaseService);
         Assertions.assertEquals(FAILED, testRun.getTestingStatus());
     }
 
@@ -939,9 +942,9 @@ public class TestRunServiceTest {
         assertTrue(filter.getLabelIds().contains(label1.getUuid()));
         assertTrue(filter.getLabelIds().contains(label2.getUuid()));
         Assertions.assertEquals(Integer.valueOf(1), actualResponse.getTotalNumberOfEntities());
-        Assertions.assertEquals(2, actualResponse.getTestRuns().get(0).getLabels().size());
-        assertTrue(actualResponse.getTestRuns().get(0).getLabels().stream().anyMatch(label -> label.equals(label1)));
-        assertTrue(actualResponse.getTestRuns().get(0).getLabels().stream().anyMatch(label -> label.equals(label2)));
+        Assertions.assertEquals(2, actualResponse.getTestRuns().getFirst().getLabels().size());
+        assertTrue(actualResponse.getTestRuns().getFirst().getLabels().stream().anyMatch(label -> label.equals(label1)));
+        assertTrue(actualResponse.getTestRuns().getFirst().getLabels().stream().anyMatch(label -> label.equals(label2)));
     }
 
     @Test
@@ -1072,7 +1075,7 @@ public class TestRunServiceTest {
                 "First saved test run comment text should contain issue key");
 
         final String firstSavedTestRunCommentHtml = firstSavedTestRunComment.getHtml();
-        Assertions.assertNotNull("First saved test run comment should contain html", firstSavedTestRunCommentHtml);
+        Assertions.assertNotNull(firstSavedTestRunCommentHtml, "First saved test run comment should contain html");
         Assertions.assertTrue(
                 firstSavedTestRunCommentHtml.contains("https://service-address/browse/SOMEPROJECT-98765"),
                 "First saved test run comment html should contain issue reference");

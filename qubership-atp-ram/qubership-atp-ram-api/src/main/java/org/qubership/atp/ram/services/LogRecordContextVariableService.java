@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.ram.dto.response.ContextVariablesResponse;
 import org.qubership.atp.ram.enums.ContextVariablesActiveTab;
 import org.qubership.atp.ram.models.logrecords.parts.ContextVariable;
@@ -68,7 +68,7 @@ public class LogRecordContextVariableService {
         ContextVariablesActiveTab notModifiedTab = ContextVariablesActiveTab.NOT_MODIFIED;
         List<ContextVariablesActiveTab> allTabs = Arrays.asList(modifiedTab, notModifiedTab);
 
-        if (activeTabs.containsAll(allTabs)) {
+        if (new HashSet<>(activeTabs).containsAll(allTabs)) {
             List<ContextVariable> pagedNotModifiedVars = applyPagination(notModifiedVars, page, size, null);
             response.setNotModified(pagedNotModifiedVars);
 

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -44,6 +44,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.qubership.atp.ram.dto.request.JointExecutionRequestSearchRequest;
 import org.qubership.atp.ram.dto.response.JointExecutionRequestSearchResponse;
 import org.qubership.atp.ram.enums.ExecutionStatuses;
@@ -55,9 +58,9 @@ import org.qubership.atp.ram.models.JointExecutionRequest.Status;
 import org.qubership.atp.ram.repositories.JointExecutionRequestRepository;
 import org.qubership.atp.ram.utils.RateCalculator;
 import org.qubership.atp.ram.utils.StreamUtils;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class JointExecutionRequestServiceTest {
 
     @InjectMocks
@@ -84,7 +87,7 @@ class JointExecutionRequestServiceTest {
     @Captor
     private ArgumentCaptor<JointExecutionRequest> jointExecutionRequestCaptor;
 
-    private String jointExecutionKey = "run_1";
+    private final String jointExecutionKey = "run_1";
     private ExecutionRequest executionRequest;
     private UUID executionRequestId;
 
@@ -123,7 +126,7 @@ class JointExecutionRequestServiceTest {
         assertFalse(isEmpty(runs));
         assertEquals(1, runs.size());
 
-        final Run run = runs.get(0);
+        final Run run = runs.getFirst();
         assertEquals(executionRequest.getUuid(), run.getExecutionRequestId());
         assertEquals(executionRequest.getExecutionStatus(), run.getStatus());
     }
@@ -215,9 +218,8 @@ class JointExecutionRequestServiceTest {
 
         when(repository.findAllActiveJointExecutionRequestsByKey(jointExecutionKey)).thenReturn(asList(jointExecutionRequest1, jointExecutionRequest2));
 
-        Assertions.assertThrows(RamMultipleActiveJointExecutionRequestsException.class, () -> {
-            service.getActiveJointExecutionRequest(executionRequestId);
-        });
+        Assertions.assertThrows(RamMultipleActiveJointExecutionRequestsException.class, () ->
+                service.getActiveJointExecutionRequest(executionRequestId));
     }
 
     @Test
@@ -245,9 +247,8 @@ class JointExecutionRequestServiceTest {
         when(repository.findAllByKey(jointExecutionKey)).thenReturn(asList(jointExecutionRequest1, jointExecutionRequest2));
 
         // when
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            service.getJointExecutionRequest(jointExecutionKey);
-        });
+        Assertions.assertThrows(IllegalStateException.class, () ->
+                service.getJointExecutionRequest(jointExecutionKey));
     }
 
     @Test

@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.qubership.atp.ram.TestRunsMock;
 import org.qubership.atp.ram.client.CatalogueExecuteRequestFeignClient;
 import org.qubership.atp.ram.client.CatalogueIntegrationFeignClient;
@@ -46,9 +47,8 @@ import org.qubership.atp.ram.converter.DtoConvertService;
 import org.qubership.atp.ram.enums.TestingStatuses;
 import org.qubership.atp.ram.models.TestCaseLastStatus;
 import org.qubership.atp.ram.models.TestRun;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class TestCaseServiceTest {
     private TestCaseService testCaseService;
     private CatalogueService catalogueService;
@@ -105,10 +105,10 @@ public class TestCaseServiceTest {
 
         Mockito.verify(dtoConvertService, times(1)).convertList(listTestCaseLastStatusCaptor.capture(), any());
 
-        Assertions.assertEquals(listTestCaseLastStatusCaptor.getValue().get(0).getStatus(), TestingStatuses.PASSED.getName(),
+        Assertions.assertEquals(listTestCaseLastStatusCaptor.getValue().getFirst().getStatus(), TestingStatuses.PASSED.getName(),
                 "Testing status set correctly");
-        Assertions.assertNotNull(listTestCaseLastStatusCaptor.getValue().get(0).getTestCaseId(),
+        Assertions.assertNotNull(listTestCaseLastStatusCaptor.getValue().getFirst().getTestCaseId(),
                 "TestCaseId is not null");
-        Assertions.assertEquals(listTestCaseLastStatusCaptor.getValue().size(), 1, "TestRun with null testCaseID is not add");
+        Assertions.assertEquals(1, listTestCaseLastStatusCaptor.getValue().size(), "TestRun with null testCaseID is not add");
     }
 }

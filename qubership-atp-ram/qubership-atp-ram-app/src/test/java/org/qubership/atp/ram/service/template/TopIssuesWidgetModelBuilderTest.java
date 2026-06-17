@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -36,6 +36,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.qubership.atp.ram.dto.response.ExecutionRequestWidgetConfigTemplateResponse;
 import org.qubership.atp.ram.dto.response.FailPatternResponse;
 import org.qubership.atp.ram.dto.response.IssueResponse;
@@ -51,11 +54,11 @@ import org.qubership.atp.ram.service.template.impl.TopIssuesWidgetModelBuilder;
 import org.qubership.atp.ram.services.ExecutionRequestService;
 import org.qubership.atp.ram.services.IssueService;
 import org.qubership.atp.ram.services.WidgetConfigTemplateService;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.google.common.collect.Ordering;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class TopIssuesWidgetModelBuilderTest {
 
     @Mock
@@ -103,7 +106,7 @@ public class TopIssuesWidgetModelBuilderTest {
         IssueResponse issueResponse = new IssueResponse();
         issueResponse.setUuid(UUID.randomUUID());
         issueResponse.setMessage("Error Message " + index);
-        issueResponse.setTestRuns(new ArrayList<IssueTestRunResponse>(){{
+        issueResponse.setTestRuns(new ArrayList<>() {{
             IssueTestRunResponse issueTestRunResponse = new IssueTestRunResponse();
             issueTestRunResponse.setUuid(UUID.randomUUID());
             issueTestRunResponse.setName("Test Run #" + index);
@@ -126,7 +129,7 @@ public class TopIssuesWidgetModelBuilderTest {
         reportParams.setExecutionRequestUuid(UUID.randomUUID());
         reportParams.setRecipients("example@example.com");
         reportParams.setSubject("[E2E017] Top Issues widget");
-        reportParams.setDescriptions(new HashMap<String, String>(){{
+        reportParams.setDescriptions(new HashMap<>() {{
             put(WidgetType.TOP_ISSUES.toString(), "Test description for top issues");
         }});
 
@@ -140,10 +143,10 @@ public class TopIssuesWidgetModelBuilderTest {
         Assertions.assertNotNull(model);
         List<IssueResponseAdapter> topIssues = (List<IssueResponseAdapter>) model.get("topIssues");
         Assertions.assertNotNull(topIssues);
-        Assertions.assertEquals("FailPatternName", topIssues.get(0).getFailPattern());
-        Assertions.assertEquals("Error Message 0", topIssues.get(0).getErrorMessage());
-        Assertions.assertEquals("Big Error", topIssues.get(0).getFailReason());
-        Assertions.assertEquals("PRJ-98765", topIssues.get(0).getTickets().get(0).getName());
+        Assertions.assertEquals("FailPatternName", topIssues.getFirst().getFailPattern());
+        Assertions.assertEquals("Error Message 0", topIssues.getFirst().getErrorMessage());
+        Assertions.assertEquals("Big Error", topIssues.getFirst().getFailReason());
+        Assertions.assertEquals("PRJ-98765", topIssues.getFirst().getTickets().getFirst().getName());
     }
 
     @Test
@@ -165,10 +168,10 @@ public class TopIssuesWidgetModelBuilderTest {
         Assertions.assertNotNull(model);
         List<IssueResponseAdapter> topIssues = (List<IssueResponseAdapter>) model.get("topIssues");
         Assertions.assertNotNull(topIssues);
-        Assertions.assertEquals("", topIssues.get(0).getFailPattern());
-        Assertions.assertEquals("Error Message 0", topIssues.get(0).getErrorMessage());
-        Assertions.assertEquals("Big Error", topIssues.get(0).getFailReason());
-        Assertions.assertEquals("PRJ-98765", topIssues.get(0).getTickets().get(0).getName());
+        Assertions.assertEquals("", topIssues.getFirst().getFailPattern());
+        Assertions.assertEquals("Error Message 0", topIssues.getFirst().getErrorMessage());
+        Assertions.assertEquals("Big Error", topIssues.getFirst().getFailReason());
+        Assertions.assertEquals("PRJ-98765", topIssues.getFirst().getTickets().getFirst().getName());
     }
 
     private IssueResponsesModel createIssuesWithNullFailPattern() {
@@ -190,10 +193,10 @@ public class TopIssuesWidgetModelBuilderTest {
         Assertions.assertNotNull(model);
         List<IssueResponseAdapter> topIssues = (List<IssueResponseAdapter>) model.get("topIssues");
         Assertions.assertNotNull(topIssues);
-        Assertions.assertEquals("FailPatternName", topIssues.get(0).getFailPattern());
-        Assertions.assertEquals("Error Message 0", topIssues.get(0).getErrorMessage());
-        Assertions.assertEquals("", topIssues.get(0).getFailReason());
-        Assertions.assertEquals("PRJ-98765", topIssues.get(0).getTickets().get(0).getName());
+        Assertions.assertEquals("FailPatternName", topIssues.getFirst().getFailPattern());
+        Assertions.assertEquals("Error Message 0", topIssues.getFirst().getErrorMessage());
+        Assertions.assertEquals("", topIssues.getFirst().getFailReason());
+        Assertions.assertEquals("PRJ-98765", topIssues.getFirst().getTickets().getFirst().getName());
     }
 
     private IssueResponsesModel createIssuesWithNullFailReason() {

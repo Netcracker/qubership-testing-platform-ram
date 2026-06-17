@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@ package org.qubership.atp.ram.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -31,7 +31,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -73,7 +73,7 @@ public class LogRecordServiceTest {
     private TestRunRepository testRunRepository;
     private CatalogueService catalogueService;
     private ModelMapper modelMapper;
-    private Mapper<LogRecord, LogRecordShort> logRecordMapper = new LogRecordMapper();
+    private final Mapper<LogRecord, LogRecordShort> logRecordMapper = new LogRecordMapper();
     private CustomLogRecordRepository customLogRecordRepository;
     private LogRecordRepository repository;
     private IssueRepository issueRepository;
@@ -128,11 +128,11 @@ public class LogRecordServiceTest {
 
         when(gridFsService.getScreenShot(any())).thenReturn(sourceShot);
         List<SubstepScreenshotResponse> rep = logRecordService.getSubstepScreenshots(list);
-        SubstepScreenshotResponse expectedResult = rep.get(0);
+        SubstepScreenshotResponse expectedResult = rep.getFirst();
 
-        assertEquals(expectedResult.getId().toString(), "7e9494ae-c77d-4409-b1c7-5b0b338adf4f");
-        assertEquals(expectedResult.getScreenshot(), "content");
-        assertEquals(expectedResult.getScreenshotSource(), "snapshotSource");
+        assertEquals("7e9494ae-c77d-4409-b1c7-5b0b338adf4f", expectedResult.getId().toString());
+        assertEquals("content", expectedResult.getScreenshot());
+        assertEquals("snapshotSource", expectedResult.getScreenshotSource());
     }
 
     @Test
@@ -175,16 +175,14 @@ public class LogRecordServiceTest {
 
     @Test
     public void testGetErrorThrowsErrorIfSourceIsEmpty() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            logRecordService.getErrorMapping(null, "", UUID.randomUUID());
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                logRecordService.getErrorMapping(null, "", UUID.randomUUID()));
     }
 
     @Test
     public void testGetErrorThrowsErrorIfParentUuidIsEmpty() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            logRecordService.getErrorMapping(null, "123", null);
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                logRecordService.getErrorMapping(null, "123", null));
     }
 
     @Test

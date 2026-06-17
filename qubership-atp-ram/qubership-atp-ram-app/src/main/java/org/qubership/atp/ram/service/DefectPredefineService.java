@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.ram.dto.request.DefectCreateRequest;
 import org.qubership.atp.ram.dto.response.DefectPredefineResponse;
 import org.qubership.atp.ram.dto.response.TestCaseLabelResponse;
@@ -74,7 +75,6 @@ import org.qubership.atp.ram.services.TestRunService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import freemarker.template.Template;
 import lombok.RequiredArgsConstructor;
@@ -189,7 +189,7 @@ public class DefectPredefineService {
         final List<UUID> logRecordIds = issue.getLogRecordIds();
         LogRecord logRecord = null;
         if (!isEmpty(logRecordIds)) {
-            final UUID firstLogRecordId = logRecordIds.get(0);
+            final UUID firstLogRecordId = logRecordIds.getFirst();
             logRecord = logRecordService.get(firstLogRecordId);
             final String logRecordUrl = getLogRecordUrl(projectId, executionRequestId, logRecord);
             final UUID testRunId = logRecord.getTestRunId();
@@ -291,7 +291,7 @@ public class DefectPredefineService {
      * Create defect.
      */
     public JiraIssueCreateResponse createDefect(UUID testPlanId, UUID issueId,
-                                                DefectCreateRequest request) throws Exception {
+                                                DefectCreateRequest request) {
         TestPlan testPlan = catalogueService.getTestPlan(testPlanId);
         BugTrackingSystemSynchronization synchronization = testPlan.getSynchronization();
 

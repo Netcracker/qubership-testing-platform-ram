@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 
 package org.qubership.atp.ram.services;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
@@ -45,6 +44,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Isolated;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
 import org.qubership.atp.common.lock.LockManager;
 import org.qubership.atp.common.lock.provider.InMemoryLockProvider;
@@ -58,12 +60,12 @@ import org.qubership.atp.ram.repositories.CustomIssueRepository;
 import org.qubership.atp.ram.repositories.ExecutionRequestRepository;
 import org.qubership.atp.ram.repositories.IssueRepository;
 import org.qubership.atp.ram.utils.IssueMock;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.ReflectionUtils;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 @Isolated
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class IssueServiceTest {
 
     private static IssueService issueService;
@@ -158,7 +160,7 @@ public class IssueServiceTest {
         issueService.recalculateIssuesForExecution(executionRequestId);
 
         verify(issueRepository, times(1)).saveAll(argCaptorListIssue.capture());
-        Assertions.assertEquals(2, argCaptorListIssue.getAllValues().get(0).size());
+        Assertions.assertEquals(2, argCaptorListIssue.getAllValues().getFirst().size());
     }
 
     @Test
@@ -185,7 +187,7 @@ public class IssueServiceTest {
         issueService.recalculateIssuesForExecution(executionRequestId);
 
         verify(issueRepository, times(1)).saveAll(argCaptorListIssue.capture());
-        Assertions.assertEquals(3, argCaptorListIssue.getAllValues().get(0).size());
+        Assertions.assertEquals(3, argCaptorListIssue.getAllValues().getFirst().size());
     }
 
     @Test
@@ -311,7 +313,7 @@ public class IssueServiceTest {
 
         List<LogRecord> logRecords2 = logRecords.stream()
                 .filter(logRecord -> !lrIds.contains(logRecord.getUuid()))
-                .collect(Collectors.toList());
+                .toList();
         Stream<LogRecord> logRecordStream2 = logRecords2.stream();
         when(logRecordService.countAllFailedLrByTestRunIds(any())).thenReturn(Long.valueOf(logRecords.size()));
         when(logRecordService
@@ -353,10 +355,10 @@ public class IssueServiceTest {
         List<Issue> listIssue = generateListIssue(logLogRecords.get(0).getUuid(), logLogRecords.get(1).getUuid());
         List<UUID> logRecordIds = Arrays.asList(logLogRecords.get(0).getUuid(), logLogRecords.get(1).getUuid());
         List<LogRecord> logRecords = logLogRecords.stream()
-                .filter(logRecord -> !logRecordIds.contains(logRecord.getUuid())).collect(Collectors.toList());
+                .filter(logRecord -> !logRecordIds.contains(logRecord.getUuid())).toList();
 
-        listIssue.get(0).setFailedTestRunIds(Collections.singletonList(failedTestRunId));
-        listIssue.get(0).setFailReasonId(failReasonId);
+        listIssue.getFirst().setFailedTestRunIds(Collections.singletonList(failedTestRunId));
+        listIssue.getFirst().setFailReasonId(failReasonId);
 
         when(logRecordService.getAllFailedLogRecordsByTestRunIdsStream(any(), any())).thenReturn(logRecords.stream());
         when(logRecordService.countAllFailedLrByTestRunIds(any())).thenReturn(Long.valueOf(logRecords.size()));

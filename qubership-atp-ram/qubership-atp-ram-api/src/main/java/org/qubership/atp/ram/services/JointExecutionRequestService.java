@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.qubership.atp.ram.clients.api.dto.environments.environment.SystemFullVer1ViewDto;
@@ -63,7 +64,6 @@ import org.qubership.atp.ram.utils.StreamUtils;
 import org.qubership.atp.ram.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -225,7 +225,7 @@ public class JointExecutionRequestService {
             throw new RamMultipleActiveJointExecutionRequestsException();
         }
 
-        final JointExecutionRequest jointExecutionRequest = jointExecutionRequests.get(0);
+        final JointExecutionRequest jointExecutionRequest = jointExecutionRequests.getFirst();
         jointExecutionRequest.upsertRun(executionRequest);
 
         return repository.save(jointExecutionRequest);
@@ -293,9 +293,8 @@ public class JointExecutionRequestService {
         final List<JointExecutionRequest> jointExecutionRequests =
                 repository.findAllActiveJointExecutionRequestsByKey(jointExecutionKey);
 
-        jointExecutionRequests.forEach(jointExecutionRequest -> {
-            jointExecutionRequest.upsertRun(executionRequestId, executionStatus);
-        });
+        jointExecutionRequests.forEach(jointExecutionRequest ->
+                jointExecutionRequest.upsertRun(executionRequestId, executionStatus));
         repository.saveAll(jointExecutionRequests);
     }
 
@@ -570,7 +569,7 @@ public class JointExecutionRequestService {
         String timestamp = null;
 
         if (lastVersionCheck != null) {
-            String dateTimeFormat = String.format("%s %s", DEFAULT_PROJECT_DATE_FORMAT, DEFAULT_PROJECT_TIME_FORMAT);
+            String dateTimeFormat = "%s %s".formatted(DEFAULT_PROJECT_DATE_FORMAT, DEFAULT_PROJECT_TIME_FORMAT);
             Timestamp versionTimestamp = new Timestamp(lastVersionCheck);
             timestamp = TimeUtils.formatDateTime(versionTimestamp, dateTimeFormat, DEFAULT_PROJECT_TIME_ZONE);
         }

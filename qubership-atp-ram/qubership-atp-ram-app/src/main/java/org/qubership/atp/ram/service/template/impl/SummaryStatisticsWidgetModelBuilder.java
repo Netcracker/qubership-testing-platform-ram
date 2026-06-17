@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package org.qubership.atp.ram.service.template.impl;
 
-import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.CollectionUtils.isEmpty;
@@ -123,7 +122,7 @@ public class SummaryStatisticsWidgetModelBuilder extends AbstractWidgetModelBuil
 
     private void addDefaultColumns(Row row, LabelTemplateTreeNode labelNode) {
         boolean isNodeEmpty = labelNode.getTestRunCount() == 0;
-        String passRateSuffix = format(" (%s of %s)", labelNode.getTestRunPassedCount(), labelNode.getTestRunCount());
+        String passRateSuffix = " (%s of %s)".formatted(labelNode.getTestRunPassedCount(), labelNode.getTestRunCount());
         row.addColumns(
                 new Column(labelNode.getName(), Column.BOLD),
                 new Column(labelNode.getTestRunCount()),
@@ -144,7 +143,7 @@ public class SummaryStatisticsWidgetModelBuilder extends AbstractWidgetModelBuil
                     int passedPercent = countParam.getPassed();
                     int passedCount = countParam.getPassedCount();
                     int totalCount = countParam.getTotalCount();
-                    String percentSuffix = format(" (%s of %s)", passedCount, totalCount);
+                    String percentSuffix = " (%s of %s)".formatted(passedCount, totalCount);
                     row.addColumns(new PercentColumn(passedPercent, percentSuffix, Column.BLACK, Column.BOLD));
                 } else {
                     row.addColumns(new Column(Column.N_A));

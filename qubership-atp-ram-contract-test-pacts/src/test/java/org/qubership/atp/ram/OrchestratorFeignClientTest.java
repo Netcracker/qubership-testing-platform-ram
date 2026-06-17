@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -16,17 +16,15 @@
 
 package org.qubership.atp.ram;
 
-import static java.util.Arrays.asList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.qubership.atp.auth.springbootstarter.config.FeignConfiguration;
 import org.qubership.atp.orchestrator.clients.dto.TerminateRequestDto;
 import org.qubership.atp.ram.client.OrchestratorFeignClient;
@@ -38,89 +36,88 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import au.com.dius.pact.consumer.dsl.DslPart;
 import au.com.dius.pact.consumer.dsl.PactDslJsonArray;
 import au.com.dius.pact.consumer.dsl.PactDslJsonRootValue;
 import au.com.dius.pact.consumer.dsl.PactDslResponse;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
-import au.com.dius.pact.consumer.junit.PactProviderRule;
-import au.com.dius.pact.consumer.junit.PactVerification;
+import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
+import au.com.dius.pact.consumer.junit5.PactTestFor;
+import au.com.dius.pact.core.model.PactSpecVersion;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 import lombok.extern.slf4j.Slf4j;
 
-@RunWith(SpringRunner.class)
-
 @EnableFeignClients(clients = {OrchestratorFeignClient.class})
-@ContextConfiguration(classes = {OrchestratorFeignClientTest.TestApp.class})
+@ExtendWith(PactConsumerTestExt.class)
+@SpringJUnitConfig(classes = {OrchestratorFeignClientTest.TestApp.class})
 @Import({JacksonAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class, FeignConfiguration.class,
         FeignAutoConfiguration.class})
 @TestPropertySource(
         properties = {"feign.atp.orchestrator.name=atp-orchestrator", "feign.atp.orchestrator.route=",
                 "feign.atp.orchestrator.url=http://localhost:8888", "feign.httpclient.enabled=false"})
 @Slf4j
+@PactTestFor(providerName = "atp-orchestrator", port = "8888", pactVersion = PactSpecVersion.V3)
 public class OrchestratorFeignClientTest {
 
-    @Rule
-    public PactProviderRule mockProvider = new PactProviderRule("atp-orchestrator", "localhost", 8888, this);
     @Autowired
     OrchestratorFeignClient orchestratorFeignClient;
 
     @Test
-    @PactVerification()
+    @PactTestFor(pactMethod = "createPact")
     public void allPass() {
         UUID id = UUID.fromString("e2490de5-5bd3-43d5-b7c4-526e33f71304");
-        List<UUID> uuids = asList(id);
+        List<UUID> uuids = List.of(id);
         TerminateRequestDto terminateRequestDto = new TerminateRequestDto();
         terminateRequestDto.setExecutionRequestIds(uuids);
         terminateRequestDto.setIsGracefully(false);
 
 
         ResponseEntity<String> result1 = orchestratorFeignClient.terminateProcess(terminateRequestDto);
-        Assert.assertEquals(result1.getStatusCode().value(), 200);
-        Assert.assertTrue(result1.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result1.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result1.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result2 = orchestratorFeignClient.stopProcess(uuids);
-        Assert.assertEquals(result2.getStatusCode().value(), 200);
-        Assert.assertTrue(result2.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result2.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result2.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result3 = orchestratorFeignClient.resumeProcess(uuids);
-        Assert.assertEquals(result3.getStatusCode().value(), 200);
-        Assert.assertTrue(result3.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result3.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result3.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result4 = orchestratorFeignClient.restartProcess(uuids);
-        Assert.assertEquals(result4.getStatusCode().value(), 200);
-        Assert.assertTrue(result4.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result4.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result4.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result5 = orchestratorFeignClient.terminateTestRunProcess(uuids);
-        Assert.assertEquals(result5.getStatusCode().value(), 200);
-        Assert.assertTrue(result5.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result5.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result5.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result6 = orchestratorFeignClient.stopTestRunProcess(id, uuids);
-        Assert.assertEquals(result6.getStatusCode().value(), 200);
-        Assert.assertTrue(result6.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result6.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result6.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result7 = orchestratorFeignClient.resumeTestRunProcess(id, uuids);
-        Assert.assertEquals(result7.getStatusCode().value(), 200);
-        Assert.assertTrue(result7.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result7.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result7.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<String> result8 = orchestratorFeignClient.restartTestRunProcess(id, uuids);
-        Assert.assertEquals(result8.getStatusCode().value(), 200);
-        Assert.assertTrue(result8.getHeaders().get("Content-Type").contains("text/plain"));
+        Assertions.assertEquals(200, result8.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result8.getHeaders().get("Content-Type")).contains("text/plain"));
 
         ResponseEntity<UUID> result9 = orchestratorFeignClient.rerunTestRunsProcess(id, "authorization", uuids);
-        Assert.assertEquals(result9.getStatusCode().value(), 200);
-        Assert.assertTrue(result9.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result9.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result9.getHeaders().get("Content-Type"))
+                .contains("application/json"));
 
         ResponseEntity<UUID> result10 = orchestratorFeignClient.getRunnerProcessIdByExecutionRequestId(id);
-        Assert.assertEquals(result10.getStatusCode().value(), 200);
-        Assert.assertTrue(result10.getHeaders().get("Content-Type").contains("application/json"));
+        Assertions.assertEquals(200, result10.getStatusCode().value());
+        Assertions.assertTrue(Objects.requireNonNull(result10.getHeaders().get("Content-Type"))
+                .contains("application/json"));
     }
-
 
     @Pact(consumer = "atp-ram")
     public RequestResponsePact createPact(PactDslWithProvider builder) {

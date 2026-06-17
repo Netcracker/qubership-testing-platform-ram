@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -40,8 +40,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.annotation.PostConstruct;
-
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.qubership.atp.auth.springbootstarter.exceptions.AtpEntityNotFoundException;
@@ -107,9 +106,9 @@ import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import com.google.common.base.Splitter;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -174,7 +173,7 @@ public class ExecutionRequestService extends CrudService<ExecutionRequest> {
     @PostConstruct
     public void init() {
         PropertyMap<ExecutionRequest, ExecutionRequestResponse> executionRequestResponsePropertyMap;
-        executionRequestResponsePropertyMap = new PropertyMap<ExecutionRequest, ExecutionRequestResponse>() {
+        executionRequestResponsePropertyMap = new PropertyMap<>() {
             protected void configure() {
                 map(source.getUuid()).setUuid(null);
             }
@@ -829,7 +828,7 @@ public class ExecutionRequestService extends CrudService<ExecutionRequest> {
         Set<UUID> testCaseIds = new HashSet<>();
         compErsWithoutCurrent.forEach(er ->
                 testCaseIds.addAll(er.getTestRuns().stream()
-                        .map(ComparisonTestRun::getTestCaseId).collect(Collectors.toList()))
+                        .map(ComparisonTestRun::getTestCaseId).toList())
         );
         Set<ComparisonTestRun> compTestRuns = currentRequest.getTestRuns();
         currentRequest.setNonComparisonTestRuns(compTestRuns.stream()
@@ -1122,7 +1121,7 @@ public class ExecutionRequestService extends CrudService<ExecutionRequest> {
 
                 }, () -> null);
         if (resultExecutionRequestConfig == null) {
-            String message = String.format("Error occurred while obtain config lock for execution request %s",
+            String message = "Error occurred while obtain config lock for execution request %s".formatted(
                     executionRequest.getUuid());
             log.error(message);
             throw new RuntimeException(message);
@@ -1418,8 +1417,7 @@ public class ExecutionRequestService extends CrudService<ExecutionRequest> {
      * Find all Execution Requests by expired period.
      */
     public List<ExecutionRequest> findExpireExecutionRequest(Timestamp qwe, UUID projectId) {
-        List<ExecutionRequest> expired = repository.findAllByArrivedBetweenAndProjectId(qwe, projectId);
-        return expired;
+        return repository.findAllByArrivedBetweenAndProjectId(qwe, projectId);
     }
 
     /**

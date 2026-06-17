@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.qubership.atp.ram.constants.CacheConstants;
 import org.qubership.atp.ram.dto.response.ExecutionRequestWidgetConfigTemplateResponse;
 import org.qubership.atp.ram.entities.treenodes.ExecutionRequestTreeNode;
@@ -76,7 +77,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -89,15 +89,15 @@ public class TreeNodeService {
     public static final String ER_SUFFIX = "-[ER]";
     public static final String AR_SUFFIX = "-[AR]";
 
-    private TestRunService testRunService;
-    private ExecutionRequestService executionRequestService;
-    private LogRecordService logRecordService;
-    private LabelTemplateNodeService labelTemplateNodeService;
-    private WidgetConfigTemplateService widgetConfigTemplateService;
-    private ValidationLabelConfigTemplateService validationLabelConfigTemplateService;
-    private ObjectMapper objectMapper;
+    private final TestRunService testRunService;
+    private final ExecutionRequestService executionRequestService;
+    private final LogRecordService logRecordService;
+    private final LabelTemplateNodeService labelTemplateNodeService;
+    private final WidgetConfigTemplateService widgetConfigTemplateService;
+    private final ValidationLabelConfigTemplateService validationLabelConfigTemplateService;
+    private final ObjectMapper objectMapper;
 
-    private BiFunction<TestingReportLabelParam, TestingReportLabelParam, TestingReportLabelParam> statusMergeFunc =
+    private final BiFunction<TestingReportLabelParam, TestingReportLabelParam, TestingReportLabelParam> statusMergeFunc =
             (oldLabel, newLabel) -> {
                 final TestingStatuses oldStatus = oldLabel.getStatus();
                 final TestingStatuses newStatus = newLabel.getStatus();
@@ -363,13 +363,12 @@ public class TreeNodeService {
     }
 
     private Set<String> getReportLabelParams(List<TreeNode> children) {
-        Set<String> labelTemplateNodesLabelNames = children.stream()
+        return children.stream()
                 .filter(node -> node.getClass().equals(LabelTemplateTreeNode.class))
                 .map(node -> (LabelTemplateTreeNode) node)
                 .flatMap(node -> node.getReportLabelParams().stream())
                 .map(ReportLabelParam::getName)
                 .collect(Collectors.toSet());
-        return labelTemplateNodesLabelNames;
     }
 
     /**
@@ -457,7 +456,7 @@ public class TreeNodeService {
      *
      * @param executionRequestId execution request id
      * @param searchValue        part of test run name to search
-     * @return List of tree nodes
+     * @return Set of tree nodes
      */
     public Set<TreeNode> getExecutionRequestTreeNodesByName(UUID executionRequestId,
                                                             String searchValue) {
@@ -604,9 +603,8 @@ public class TreeNodeService {
             final Set<String> logRecordValidationLabels = logRecord.getValidationLabels();
             if (!isEmpty(logRecordValidationLabels)) {
                 final TestingStatuses status = logRecord.getTestingStatus();
-                logRecordValidationLabels.forEach(label -> {
-                    validationLabelMap.merge(label, new TestingReportLabelParam(label, status), statusMergeFunc);
-                });
+                logRecordValidationLabels.forEach(label ->
+                        validationLabelMap.merge(label, new TestingReportLabelParam(label, status), statusMergeFunc));
                 if (nonNull(template)) {
                     processValidationLabelTemplate(validationLabelMap, logRecordValidationLabels, status, template);
                 }
@@ -642,7 +640,7 @@ public class TreeNodeService {
         if (!isEmpty(entities)) {
             List<TreeNode> children = entities.stream()
                     .map(childrenMapFunc)
-                    .collect(Collectors.toList());
+                    .toList();
             labelTreeNode.getChildren().addAll(children);
         }
     }

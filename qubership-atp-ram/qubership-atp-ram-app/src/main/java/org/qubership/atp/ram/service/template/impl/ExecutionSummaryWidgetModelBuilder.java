@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import java.sql.Timestamp;
 import java.util.Map;
 import java.util.UUID;
 
-import org.apache.commons.lang.time.DurationFormatUtils;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.qubership.atp.ram.config.ApiPath;
 import org.qubership.atp.ram.dto.response.ExecutionSummaryResponse;
 import org.qubership.atp.ram.dto.response.ProjectDataResponse;
@@ -49,11 +49,11 @@ public class ExecutionSummaryWidgetModelBuilder extends AbstractWidgetModelBuild
     @Value("${catalogue.url}")
     private String baseUrl;
 
-    private ReportService reportService;
-    private ProjectsService projectsService;
-    private ExecutionRequestService executionRequestService;
-    private ObjectMapper objectMapper;
-    private CatalogueService catalogueService;
+    private final ReportService reportService;
+    private final ProjectsService projectsService;
+    private final ExecutionRequestService executionRequestService;
+    private final ObjectMapper objectMapper;
+    private final CatalogueService catalogueService;
 
     /**
      * Constructor.
@@ -105,7 +105,7 @@ public class ExecutionSummaryWidgetModelBuilder extends AbstractWidgetModelBuild
 
         setProjectDataFromCatalogIfDateTimeFormatNull(project);
 
-        String dateTimeFormat = String.format("%s %s", project.getDateFormat(), project.getTimeFormat());
+        String dateTimeFormat = "%s %s".formatted(project.getDateFormat(), project.getTimeFormat());
         String timeZone = project.getTimeZone();
 
         Timestamp startDate = executionSummary.getStartDate();

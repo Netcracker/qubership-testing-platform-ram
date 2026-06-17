@@ -1,5 +1,5 @@
 /*
- * # Copyright 2024-2025 NetCracker Technology Corporation
+ * # Copyright 2024-2026 NetCracker Technology Corporation
  * #
  * # Licensed under the Apache License, Version 2.0 (the "License");
  * # you may not use this file except in compliance with the License.
@@ -45,7 +45,6 @@ import org.qubership.atp.ram.tsg.model.TsgFdr;
 import org.qubership.atp.ram.tsg.senders.Sender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.ParameterizedTypeReference;
@@ -74,7 +73,7 @@ public class TsgService {
     private final TsgConfiguration tsgConfiguration;
     private final Sender<List<UUID>> fdrSender;
 
-    private List<ExecutionRequest> executionRequestQueue;
+    private final List<ExecutionRequest> executionRequestQueue;
 
     @Value("${base.url}")
     private String ramUrl;
@@ -88,7 +87,6 @@ public class TsgService {
     /**
      * Constructor.
      */
-    @Autowired
     public TsgService(ExecutionRequestService executionRequestService,
                       TestRunService testRunService,
                       LogRecordService logRecordService,
@@ -149,7 +147,7 @@ public class TsgService {
         fdr.setFinishDate(testRun.getFinishDate().toLocalDateTime().toString());
         fdr.setEnvironment(testRun.getQaHost());
         fdr.setScope("Execution");
-        String url = catalogueUrl.length() > 0 ? catalogueUrl : ramUrl;
+        String url = !catalogueUrl.isEmpty() ? catalogueUrl : ramUrl;
         fdr.setExecutionLink(url + "/project/" + executionRequest.getProjectId() + "/ram/execution-request/"
                 + testRun.getExecutionRequestId() + "/" + testRunUuid);
         fdr.setCheckPoints(fillCheckPointsWithParents(testRunUuid, null, false));
@@ -256,12 +254,14 @@ public class TsgService {
             RestTemplate template = new RestTemplate();
             ResponseEntity<List<FdrResponse>> responseEntity = template
                     .exchange(tsgFdrEndpoint, HttpMethod.POST, entity,
-                            new ParameterizedTypeReference<List<FdrResponse>>() {
+                            new ParameterizedTypeReference<>() {
                             });
             if (responseEntity.getStatusCode() == HttpStatus.OK) {
-                LOG.trace("FDR for TR: {} was sent to {} "
-                                + "\nResponse from TSG Receiver: {}", tr.getUuid(), tsgFdrEndpoint,
-                        responseEntity.toString());
+                LOG.trace("""
+                                FDR for TR: {} was sent to {}\s
+                                Response from TSG Receiver: {}\
+                                """, tr.getUuid(), tsgFdrEndpoint,
+                        responseEntity);
                 List<FdrResponse> fdrResponseList = responseEntity.getBody();
                 if (fdrResponseList != null) {
                     fdrResponseList.forEach(fdrResponse -> {
@@ -274,9 +274,11 @@ public class TsgService {
                 tr.setFdrWasSent(true);
                 testRunService.save(tr);
             } else {
-                LOG.error("FDR for TR: {} was not sent to {} "
-                                + "\nResponse from TSG Receiver: {}", tr.getUuid(), tsgFdrEndpoint,
-                        responseEntity.toString());
+                LOG.error("""
+                                FDR for TR: {} was not sent to {}\s
+                                Response from TSG Receiver: {}\
+                                """, tr.getUuid(), tsgFdrEndpoint,
+                        responseEntity);
             }
         }
     }
