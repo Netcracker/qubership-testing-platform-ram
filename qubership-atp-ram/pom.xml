@@ -3,7 +3,7 @@
     <parent>
         <artifactId>qubership-atp-ram-aggregator</artifactId>
         <groupId>org.qubership.atp.ram</groupId>
-        <version>3.0.1-SNAPSHOT</version>
+        <version>3.0.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>qubership-atp-ram</artifactId>
@@ -518,7 +518,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.4.2</version>
                 <configuration>
                     <archive>
                         <manifest>
