@@ -16,11 +16,13 @@
 
 package org.qubership.atp.ram.enums;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum TestScopeSections {
+public enum TestScopeSections implements Serializable {
     PREREQUISITES("Prerequisites"),
     EXECUTION("Execution"),
     VALIDATION("Validation");
