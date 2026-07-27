@@ -16,10 +16,12 @@
 
 package org.qubership.atp.ram.enums;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 
 @Getter
-public enum TestingStatuses {
+public enum TestingStatuses implements Serializable {
 
     STOPPED("Stopped", 5, 6),
     FAILED("Failed", 4, 3),
@@ -30,9 +32,9 @@ public enum TestingStatuses {
     NOT_STARTED("Not Started", 1, 7),
     UNKNOWN("Unknown", 0, 8);
 
-    private String name;
-    private int id;
-    private int reportsOrder;
+    private final String name;
+    private final int id;
+    private final int reportsOrder;
 
     TestingStatuses(String name, int id, int reportsOrder) {
         this.name = name;
