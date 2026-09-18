@@ -42,8 +42,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
@@ -66,6 +69,7 @@ import org.qubership.atp.ram.testdata.FailPatternMock;
 import com.google.common.collect.Sets;
 
 @ExtendWith(MockitoExtension.class)
+@Execution(ExecutionMode.SAME_THREAD)
 @MockitoSettings(strictness = Strictness.WARN)
 public class AtpRamImportExecutorTest {
 
@@ -96,6 +100,7 @@ public class AtpRamImportExecutorTest {
 
     @BeforeEach
     public void setUp() {
+        Mockito.reset(rootCauseRepository, failPatternRepository, rootCauseService);
         importExecutor = new AtpRamImportExecutor(
                 rootCauseRepository, rootCauseService, failPatternRepository, objectLoaderFromDiskService);
         exportExecutor = new AtpRamExportExecutor(rootCauseService, rootCauseRepository, failPatternRepository,
