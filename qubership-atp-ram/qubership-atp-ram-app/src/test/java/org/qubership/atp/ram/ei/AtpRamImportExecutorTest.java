@@ -106,16 +106,18 @@ public class AtpRamImportExecutorTest {
         exportExecutor = new AtpRamExportExecutor(rootCauseService, rootCauseRepository, failPatternRepository,
                 objectSaverToDiskService);
         projectId = UUID.randomUUID();
-        globalTopLevelRootCause = FailPatternMock.newRootCause(UUID.randomUUID(),
-                "globalTopLevelRootCause");
-        customChildRootCause = FailPatternMock.newRootCause(UUID.randomUUID(),
-                "customChildRootCause");
+
+        globalTopLevelRootCause = FailPatternMock.newRootCause(UUID.randomUUID(), "globalTopLevelRootCause");
+
+        customChildRootCause = FailPatternMock.newRootCause(UUID.randomUUID(), "customChildRootCause");
         customChildRootCause.setParentId(globalTopLevelRootCause.getUuid());
+
         customCustomChildRootCause = FailPatternMock.newRootCause(UUID.randomUUID(),
                 "customCustomChildRootCause");
-        customChildRootCause.setParentId(customChildRootCause.getUuid());
-        customTopLevelRootCause = FailPatternMock.newRootCause(UUID.randomUUID(),
-                "customTopLevelRootCause");
+        customCustomChildRootCause.setParentId(customChildRootCause.getUuid());
+
+        customTopLevelRootCause = FailPatternMock.newRootCause(UUID.randomUUID(), "customTopLevelRootCause");
+
         customTopLevelRootCause.setProjectId(projectId);
         rootCauses = Arrays.asList(
                 globalTopLevelRootCause,
